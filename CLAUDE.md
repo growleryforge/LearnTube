@@ -94,6 +94,13 @@ confirm the right build actually landed on a device.
 - Economy: `minutesPerConcept` (default 20) banks into `earnedMinutes`.
   `maxPlaysPerDay` (default 3) caps repeat farming of one lesson.
   `sessionEndsAt` runs the active YouTube countdown.
+- `ProgressSnapshot` is the synced payload. Newer fields are Optional on
+  purpose so snapshots written by an older build still decode. Keep them
+  Optional when adding more.
+- `DeviceIdentity` in `FamilySync.swift` keeps the per-install `deviceID` in the
+  Keychain (service `com.turley.LearnTube.deviceID`), not UserDefaults.
+  Reinstalling used to wipe the id and spawn a phantom device in the family
+  view. Do not move it back.
 - `parentPIN` gates the grown-up areas on shared devices.
 - Struggle signals (`wrongCounts`, `recentWrong`, `misses`) are day-bucketed on
   purpose, so an old struggle ages out and re-engagement changes the flag rather
