@@ -248,7 +248,7 @@ enum Curriculum {
         "FR-M15": "Something is missing! Count up from the number you have to the number you want, and that jump is the answer.",
         "FR-M16": "Three numbers: look for two that make ten first, add those, then add what is left.",
         "FR-M17": "Adding ones only changes the ones. Adding tens only changes the tens. The other part stays the same.",
-        "FR-M18": "Instead of counting backward, ask what plus this makes the big number. 12 - 9 is 9 and 3 more."
+        "FR-M18": "Instead of counting backward, ask what plus this makes the big number. 12 - 9 is 9 and 3 more.",
         "FR-R1": "Read the word by blending its sounds, then pick the picture it means. c-a-t is cat! 🐱",
         "FR-R2": "Stretch each sound and blend: h-e-n is hen. Then tap the picture that matches.",
         "FR-R3": "Words in a family share an ending, like -ig: pig, wig, dig. Find the one that ends the same.",
