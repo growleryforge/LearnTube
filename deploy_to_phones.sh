@@ -7,6 +7,23 @@
 #
 # Usage:  ./deploy_to_phones.sh
 #
+# LIMITATION - READ THIS BEFORE DEBUGGING A DEVICE THAT WON'T UPDATE:
+# Installs go through `xcrun devicectl`, which is CoreDevice and only supports
+# iOS 17 and later. Devices on iOS 16 or earlier do NOT appear to devicectl at
+# all, so this script can never install to them no matter how they are
+# connected. As of Aug 2026 that includes Gabriel's iPad (iPad6,11, iOS
+# 16.7.16, UDID a83e7d4e1b9252ad7c5ebf53faeef5aee3280dc6).
+#
+# For those devices: open the project in Xcode, pick the device as the run
+# destination, and press Cmd-R. Xcode still supports the legacy install path.
+# Note that Cmd-B only compiles; it does NOT install anything on the device.
+#
+# To see the truth about what is actually connected, use:
+#     xcrun xctrace list devices     # sees every device, all iOS versions
+#     xcrun devicectl list devices   # sees only iOS 17+, and shows stale ghosts
+# devicectl may list a nameless "unavailable" record that is a dead pairing,
+# not the real device. Do not trust it as evidence a device is reachable.
+#
 set -e
 
 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
@@ -65,7 +82,11 @@ for ID in $IDS; do
     echo "    done."
     OK=$((OK+1))
   else
-    echo "    SKIPPED: ${NAME:-$ID} is not reachable (asleep, locked, or off Wi-Fi)."
+    echo "    SKIPPED: ${NAME:-$ID} did not accept the install."
+    echo "             Either it is asleep/locked/off Wi-Fi, OR it runs iOS 16"
+    echo "             or older, which devicectl cannot install to at all."
+    echo "             Check with: xcrun xctrace list devices"
+    echo "             If it is iOS 16 or older, install from Xcode with Cmd-R."
   fi
 done
 

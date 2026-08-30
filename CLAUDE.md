@@ -84,6 +84,19 @@ share.
 Build numbers surface in the app's top bar as `v1.0 · <build>`, which is how you
 confirm the right build actually landed on a device.
 
+**Gabriel's iPad cannot be deployed to by script.** It is an iPad6,11 on iOS
+16.7.16 (UDID `a83e7d4e1b9252ad7c5ebf53faeef5aee3280dc6`). Every deploy script
+installs with `xcrun devicectl`, which is CoreDevice and only supports iOS 17
+and later, so that iPad is invisible to it regardless of cable or Wi-Fi. Install
+to it from Xcode instead: pick it as the run destination and press Cmd-R. Cmd-B
+compiles only and installs nothing, so "Build Succeeded" against that
+destination is not evidence anything reached the device.
+
+When a device seems unreachable, `xcrun xctrace list devices` is the honest
+view: it lists every device on every iOS version. `xcrun devicectl list devices`
+sees only iOS 17+, and will happily show a nameless "unavailable" record that is
+a dead pairing rather than a real device. Chasing that ghost wastes time.
+
 ## State and sync
 
 - `SavedState` in `AppState.swift` is the whole persisted model. UserDefaults,
