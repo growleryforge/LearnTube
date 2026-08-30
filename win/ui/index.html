@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LearnTube</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand"><span class="play">▶</span> LearnTube</div>
+    <div id="minutes" class="minutes">— min</div>
+  </header>
+
+  <!-- HOME: the games grid -->
+  <main id="home" class="screen">
+    <div id="watchCard" class="watch-card hidden">
+      <div class="watch-text">
+        <div class="watch-title">You have <span id="watchMins">0</span> minutes!</div>
+        <div class="watch-sub">Tap to watch YouTube</div>
+      </div>
+      <button id="watchBtn" class="watch-btn">▶ Watch</button>
+    </div>
+    <div id="earnCard" class="earn-card">
+      🎮 Play a game to earn YouTube time!
+    </div>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <!-- TEACHING CARD: shown before every game -->
+  <section id="teachScreen" class="screen hidden">
+    <div class="teach-wrap">
+      <div class="mascot">🦉</div>
+      <h1 id="teachTitle"></h1>
+      <div id="teachText" class="teach-box"></div>
+      <button id="teachGo" class="big-btn">Let's play!  ▶</button>
+    </div>
+  </section>
+
+  <!-- GAME: engines render into here -->
+  <section id="gameScreen" class="screen hidden">
+    <button id="quitBtn" class="quit">✕</button>
+    <div id="gameBody"></div>
+  </section>
+
+  <!-- WIN -->
+  <section id="winScreen" class="screen hidden">
+    <div class="teach-wrap">
+      <div class="mascot big">🎉</div>
+      <h1>Great job!</h1>
+      <div id="winText" class="teach-box"></div>
+      <button id="winGo" class="big-btn">Back to games</button>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

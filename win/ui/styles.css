@@ -1,0 +1,106 @@
+:root{
+  --bg:#12161a; --surface:#1c2228; --surface-hi:#262e36;
+  --ink:#2a3238; --text:#f2f5f7; --muted:#9aa7b2;
+  --green:#34c759; --red:#e0393e; --gold:#ffcc00;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,"Segoe UI Variable","Segoe UI",system-ui,sans-serif;
+  overflow-x:hidden;
+}
+.hidden{display:none !important}
+
+#topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;background:var(--surface);position:sticky;top:0;z-index:10;
+}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.3px}
+.brand .play{color:var(--red);margin-right:4px}
+.minutes{background:var(--red);color:#fff;font-weight:800;padding:6px 12px;border-radius:999px;font-size:14px}
+
+.screen{padding:16px 18px 40px}
+
+/* --- watch / earn cards --- */
+.watch-card{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:linear-gradient(135deg,#e0393e,#ff6b52);border-radius:18px;padding:16px 18px;margin-bottom:14px;
+}
+.watch-title{font-size:20px;font-weight:800}
+.watch-sub{font-size:13px;opacity:.9}
+.watch-btn{
+  background:#fff;color:#c62828;border:0;border-radius:999px;
+  padding:12px 20px;font-size:16px;font-weight:800;cursor:pointer;
+}
+.earn-card{
+  background:var(--surface);border-radius:18px;padding:16px 18px;margin-bottom:14px;
+  font-weight:700;color:var(--muted);
+}
+
+/* --- games grid --- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.card{
+  background:var(--surface);border-radius:16px;overflow:hidden;cursor:pointer;
+  border:0;padding:0;text-align:left;color:var(--text);transition:transform .12s;
+}
+.card:hover{transform:translateY(-3px)}
+.thumb{height:110px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:42px}
+.card-body{padding:10px 12px 14px}
+.card-title{font-weight:800;font-size:15px;line-height:1.2}
+.card-sub{color:var(--muted);font-size:12px;margin-top:4px}
+.card.done{opacity:.55}
+.badge-done{font-size:11px;color:var(--green);font-weight:800;margin-top:4px}
+
+/* --- teaching card / win --- */
+.teach-wrap{max-width:620px;margin:6vh auto;text-align:center}
+.mascot{font-size:72px}
+.mascot.big{font-size:86px}
+.teach-wrap h1{font-size:28px;margin:10px 0 16px}
+.teach-box{
+  background:#fff;color:var(--ink);border-radius:20px;padding:20px 22px;
+  font-size:19px;font-weight:600;line-height:1.45;
+}
+.big-btn{
+  margin-top:24px;background:var(--green);color:#fff;border:0;border-radius:18px;
+  padding:18px 34px;font-size:21px;font-weight:800;cursor:pointer;width:100%;max-width:420px;
+}
+.big-btn:hover{filter:brightness(1.06)}
+
+/* --- game --- */
+.quit{
+  position:absolute;top:14px;right:18px;background:var(--surface-hi);color:var(--text);
+  border:0;border-radius:999px;width:40px;height:40px;font-size:18px;cursor:pointer;z-index:5;
+}
+#gameScreen{position:relative}
+.stage{max-width:640px;margin:0 auto;text-align:center}
+.prompt{
+  background:#fff;color:var(--ink);border-radius:18px;padding:14px 20px;
+  font-size:21px;font-weight:800;margin:14px auto 18px;display:inline-block;
+}
+.visual{font-size:76px;margin:6px 0 4px;min-height:86px}
+.teachline{color:var(--muted);font-size:15px;font-weight:600;margin-bottom:14px}
+.choices{display:flex;flex-direction:column;gap:12px;max-width:460px;margin:0 auto}
+.choice{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  border:0;border-radius:16px;padding:16px;font-size:22px;font-weight:800;
+  color:#fff;cursor:pointer;background:#3a86d6;
+}
+.choice:nth-child(2){background:#f2913a}
+.choice:nth-child(3){background:#9e6bd6}
+.choice:nth-child(4){background:#2fb3a6}
+.choice .emo{font-size:30px}
+.choice.right{background:var(--green) !important}
+.choice.wrong{background:var(--red) !important;animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.dots{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.dot{width:10px;height:8px;border-radius:999px;background:#ffffff55}
+.dot.on{background:var(--green);width:22px}
+
+/* --- tracing --- */
+.trace-card{background:#fff;border-radius:22px;margin:0 auto;max-width:460px}
+#traceCanvas{display:block;width:100%;height:340px;border-radius:22px;touch-action:none;cursor:crosshair}
+.redo{
+  margin-top:14px;background:#3a86d6;color:#fff;border:0;border-radius:999px;
+  padding:10px 18px;font-weight:800;cursor:pointer;
+}

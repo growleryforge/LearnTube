@@ -1,0 +1,5666 @@
+{
+ "generatedFrom": "LearnTube Swift sources",
+ "liveStops": [
+  "K-S18",
+  "K-S19",
+  "K-S21",
+  "K-S20",
+  "K-S22",
+  "K-S23",
+  "K-S6",
+  "K-MATH12",
+  "K-S7",
+  "K-S8",
+  "K-S9",
+  "K-S12",
+  "K-S13",
+  "K-S10",
+  "K-S11",
+  "K-S2",
+  "K-S3",
+  "K-S4",
+  "K-S14",
+  "K-S15",
+  "K-S16",
+  "K-S17",
+  "K-MATH1",
+  "K-MATH2",
+  "K-MATH3",
+  "K-MATH14",
+  "K-MATH16",
+  "K-MATH17",
+  "K-MATH18",
+  "K-MATH15",
+  "K-MATH13",
+  "K-MATH20",
+  "K-MATH19",
+  "K-M4",
+  "K-MATH21",
+  "K-MATH22",
+  "K-MATH7",
+  "K-MATH9",
+  "K-MATH4",
+  "K-MATH5",
+  "K-MATH10",
+  "K-MATH8",
+  "K-MATH6",
+  "K-MATH11",
+  "K-R14",
+  "K-R15",
+  "K-R9",
+  "K-R3",
+  "K-R10",
+  "K-R11",
+  "K-R5",
+  "K-R6",
+  "K-R12",
+  "K-R13",
+  "K-R7",
+  "K-R8",
+  "K-STORY1",
+  "K-W1",
+  "K-W2",
+  "K-W3",
+  "K-SS1",
+  "K-SS2",
+  "K-SS3",
+  "K-SS4",
+  "K-L1",
+  "K-L2",
+  "K-L3",
+  "K-M5",
+  "G1-R1",
+  "G1-R2",
+  "G1-R7",
+  "G1-R3",
+  "G1-R4",
+  "G1-R6",
+  "G1-R5",
+  "G1-M1",
+  "G1-M2",
+  "G1-M3",
+  "G1-M4",
+  "G1-M5",
+  "G1-M6",
+  "G1-M9",
+  "G1-M10",
+  "G1-M7",
+  "G1-M8",
+  "G1-W1",
+  "G1-W3",
+  "G1-W2",
+  "G1-S1",
+  "G1-S2",
+  "G1-S3",
+  "G1-L1",
+  "G1-L2",
+  "G1-L3"
+ ],
+ "skills": [
+  {
+   "id": "K-STORY1",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Story: The Day the Sun Slept In",
+   "standard": "CA CCSS RL.K.1-10",
+   "activity": "Read a farm story, then play games about it. Stars Bodhi and Kona the dogs!",
+   "parentTip": "Read it together first. This one story covers all the Kindergarten reading skills.",
+   "lesson": {
+    "type": "story",
+    "storyId": "sun-slept-in"
+   },
+   "teach": "Read a farm story, then play games about it. Stars Bodhi and Kona the dogs!",
+   "live": true
+  },
+  {
+   "id": "K-MATH1",
+   "grade": 0,
+   "subject": "math",
+   "title": "Counting Critters",
+   "standard": "CA CCSS K.CC.1-7",
+   "activity": "Count, compare, and find out how many with the Counting Critters!",
+   "parentTip": "Covers all the Kindergarten counting and comparing skills.",
+   "lesson": {
+    "type": "story",
+    "storyId": "counting-critters"
+   },
+   "teach": "Count, compare, and find out how many with the Counting Critters!",
+   "live": true
+  },
+  {
+   "id": "K-MATH2",
+   "grade": 0,
+   "subject": "math",
+   "title": "Gabriel's Family of 10",
+   "standard": "CA CCSS K.OA.1-5",
+   "activity": "Add and take away with Gabriel's 7 cats, 2 dogs, and 1 Gabriel!",
+   "parentTip": "Addition and subtraction to 10, built on the family of 10.",
+   "lesson": {
+    "type": "story",
+    "storyId": "family-add"
+   },
+   "teach": "Add and take away with Gabriel's 7 cats, 2 dogs, and 1 Gabriel!",
+   "live": true
+  },
+  {
+   "id": "K-MATH3",
+   "grade": 0,
+   "subject": "math",
+   "title": "Sort the Farm Animals",
+   "standard": "CA CCSS K.MD.3",
+   "activity": "Sort the chickens, sheep, cats, and dogs into their groups, then count how many are in each!",
+   "parentTip": "Sorting into categories and counting each group. Uses our real farm: lots of chickens, just a couple of dogs.",
+   "lesson": {
+    "type": "story",
+    "storyId": "farm-sort"
+   },
+   "teach": "Sort the chickens, sheep, cats, and dogs into their groups, then count how many are in each!",
+   "live": true
+  },
+  {
+   "id": "K-MATH4",
+   "grade": 0,
+   "subject": "math",
+   "title": "Shape Detective",
+   "standard": "CA CCSS K.G.2",
+   "activity": "Find the circle, square, triangle, rectangle, and hexagon by name or by how many sides!",
+   "parentTip": "Naming and describing flat shapes. He learns each shape's name and its number of sides.",
+   "lesson": {
+    "type": "story",
+    "storyId": "shapes"
+   },
+   "teach": "Find the circle, square, triangle, rectangle, and hexagon by name or by how many sides!",
+   "live": true
+  },
+  {
+   "id": "K-MATH5",
+   "grade": 0,
+   "subject": "math",
+   "title": "Shape Spotter",
+   "standard": "CA CCSS K.G.2",
+   "activity": "Find every triangle, even the small or turned ones! Spot each shape no matter its size or which way it faces.",
+   "parentTip": "Naming shapes regardless of size or orientation. A triangle is still a triangle when it is tiny or rotated.",
+   "lesson": {
+    "type": "story",
+    "storyId": "shape-spot"
+   },
+   "teach": "Find every triangle, even the small or turned ones! Spot each shape no matter its size or which way it faces.",
+   "live": true
+  },
+  {
+   "id": "K-MATH10",
+   "grade": 0,
+   "subject": "math",
+   "title": "Build a Shape",
+   "standard": "CA CCSS K.G.6",
+   "activity": "Put shapes together to make a picture! A triangle and a square make a house. Tap the missing shape to finish each one.",
+   "parentTip": "Composing simple shapes into a bigger shape. At home, build pictures from blocks or cut-paper shapes together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "build-shape"
+   },
+   "teach": "Put shapes together to make a picture! A triangle and a square make a house. Tap the missing shape to finish each one.",
+   "live": true
+  },
+  {
+   "id": "K-MATH11",
+   "grade": 0,
+   "subject": "math",
+   "title": "Where Is It?",
+   "standard": "CA CCSS K.G.1",
+   "activity": "On top, under, or next to? Tap the picture that matches the words!",
+   "parentTip": "Position words. Narrate them at home: the cat is ON the chair, the ball is UNDER the table.",
+   "lesson": {
+    "type": "story",
+    "storyId": "position-words"
+   },
+   "teach": "On top, under, or next to? Tap the picture that matches the words!",
+   "live": true
+  },
+  {
+   "id": "K-MATH12",
+   "grade": 0,
+   "subject": "math",
+   "title": "How Many Legs?",
+   "standard": "CA CCSS K.CC.4",
+   "activity": "Count the animal's legs and tap the number! A bird has 2, a dog has 4.",
+   "parentTip": "Counting to tell how many. Count the legs on your real animals together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "animal-legs"
+   },
+   "teach": "Count the animal's legs and tap the number! A bird has 2, a dog has 4.",
+   "live": true
+  },
+  {
+   "id": "K-MATH16",
+   "grade": 0,
+   "subject": "math",
+   "title": "Make 10",
+   "standard": "CA CCSS K.OA.4",
+   "activity": "Some animals are here. Tap how many MORE make 10!",
+   "parentTip": "Making ten with a missing part. Practice on fingers: 6 and 4 more make 10.",
+   "lesson": {
+    "type": "story",
+    "storyId": "make-10"
+   },
+   "teach": "Some animals are here. Tap how many MORE make 10!",
+   "live": true
+  },
+  {
+   "id": "K-MATH17",
+   "grade": 0,
+   "subject": "math",
+   "title": "Take Away",
+   "standard": "CA CCSS K.OA.1",
+   "activity": "Some animals hop away. Count how many are LEFT!",
+   "parentTip": "Subtraction within 10 by taking away. Act it out with toys or snacks.",
+   "lesson": {
+    "type": "story",
+    "storyId": "take-away"
+   },
+   "teach": "Some animals hop away. Count how many are LEFT!",
+   "live": true
+  },
+  {
+   "id": "K-MATH18",
+   "grade": 0,
+   "subject": "math",
+   "title": "Doubles",
+   "standard": "CA CCSS 1.OA.6",
+   "activity": "Double it! 2 and 2 more makes 4. Tap the total!",
+   "parentTip": "Doubles facts — quick building blocks for adding. Say them like a chant.",
+   "lesson": {
+    "type": "story",
+    "storyId": "doubles"
+   },
+   "teach": "Double it! 2 and 2 more makes 4. Tap the total!",
+   "live": true
+  },
+  {
+   "id": "K-MATH19",
+   "grade": 0,
+   "subject": "math",
+   "title": "First, Second, Third",
+   "standard": "CA CCSS K.CC.4",
+   "activity": "Who is first, second, third? Count from the front and tap it!",
+   "parentTip": "Ordinal numbers. Line up toys and name their places together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "ordinals"
+   },
+   "teach": "Who is first, second, third? Count from the front and tap it!",
+   "live": true
+  },
+  {
+   "id": "K-R11",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Beginning Sounds",
+   "standard": "CA CCSS RF.K.3",
+   "activity": "Which animal starts with that letter? Tap the matching sound!",
+   "parentTip": "Letter-sound matching. Say the animal's name slowly: b-b-bear.",
+   "lesson": {
+    "type": "story",
+    "storyId": "beginning-sounds"
+   },
+   "teach": "Which animal starts with that letter? Tap the matching sound!",
+   "live": true
+  },
+  {
+   "id": "K-S14",
+   "grade": 0,
+   "subject": "science",
+   "title": "Growing Up",
+   "standard": "CA NGSS 1-LS1-1",
+   "activity": "Living things grow and change! Tap what comes next.",
+   "parentTip": "Life cycles. Talk about how your animals grow from babies.",
+   "lesson": {
+    "type": "story",
+    "storyId": "life-cycle"
+   },
+   "teach": "Living things grow and change! Tap what comes next.",
+   "live": true
+  },
+  {
+   "id": "K-MATH20",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count by 10s",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Ten, twenty, thirty... tap what comes next when you count by tens!",
+   "parentTip": "Skip counting by tens. Count in groups of ten together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "count-tens"
+   },
+   "teach": "Ten, twenty, thirty... tap what comes next when you count by tens!",
+   "live": true
+  },
+  {
+   "id": "K-S15",
+   "grade": 0,
+   "subject": "science",
+   "title": "Fast or Slow",
+   "standard": "CA NGSS K-PS2-1",
+   "activity": "Is the animal fast or slow? Tap to sort it!",
+   "parentTip": "Comparing how things move. Talk about fast and slow animals you know.",
+   "lesson": {
+    "type": "story",
+    "storyId": "fast-slow"
+   },
+   "teach": "Is the animal fast or slow? Tap to sort it!",
+   "live": true
+  },
+  {
+   "id": "K-S16",
+   "grade": 0,
+   "subject": "science",
+   "title": "Sink or Float",
+   "standard": "CA NGSS 2-PS1-1",
+   "activity": "Will it sink or float? Tap your guess!",
+   "parentTip": "Predicting sink or float. Try it in the bath or a bowl of water together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "sink-float"
+   },
+   "teach": "Will it sink or float? Tap your guess!",
+   "live": true
+  },
+  {
+   "id": "K-R12",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Big & Little Letters",
+   "standard": "CA CCSS RF.K.1d",
+   "activity": "Find the little letter that matches the big one!",
+   "parentTip": "Matching uppercase and lowercase. Point them out on signs and books.",
+   "lesson": {
+    "type": "story",
+    "storyId": "letter-case"
+   },
+   "teach": "Find the little letter that matches the big one!",
+   "live": true
+  },
+  {
+   "id": "K-S17",
+   "grade": 0,
+   "subject": "science",
+   "title": "Five Senses",
+   "standard": "CA NGSS K-LS1",
+   "activity": "See, hear, smell, taste, touch — tap the part you use!",
+   "parentTip": "The five senses. Name which sense you're using during the day.",
+   "lesson": {
+    "type": "story",
+    "storyId": "five-senses"
+   },
+   "teach": "See, hear, smell, taste, touch — tap the part you use!",
+   "live": true
+  },
+  {
+   "id": "K-R13",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Opposites",
+   "standard": "CA CCSS L.K.5b",
+   "activity": "What's the opposite? Big and little, hot and cold!",
+   "parentTip": "Opposite words. Play an opposites game while you walk or cook.",
+   "lesson": {
+    "type": "story",
+    "storyId": "opposites"
+   },
+   "teach": "What's the opposite? Big and little, hot and cold!",
+   "live": true
+  },
+  {
+   "id": "K-S6",
+   "grade": 0,
+   "subject": "science",
+   "title": "Animal Homes",
+   "standard": "CA NGSS K-ESS3-1",
+   "activity": "Where does each animal live? Farm, ocean, cold places, or jungle. Tap the one that fits!",
+   "parentTip": "Animals and where they live. Talk about where your farm animals live vs. ocean or jungle animals.",
+   "lesson": {
+    "type": "story",
+    "storyId": "animal-homes"
+   },
+   "teach": "Where does each animal live? Farm, ocean, cold places, or jungle. Tap the one that fits!",
+   "live": true
+  },
+  {
+   "id": "K-S7",
+   "grade": 0,
+   "subject": "science",
+   "title": "Fur, Feathers, Scales",
+   "standard": "CA NGSS 1-LS1-1",
+   "activity": "Is it covered in fur, feathers, or scales? Tap the animal that matches!",
+   "parentTip": "Animal body coverings. Feel your animals' fur and feathers together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "animal-coverings"
+   },
+   "teach": "Is it covered in fur, feathers, or scales? Tap the animal that matches!",
+   "live": true
+  },
+  {
+   "id": "K-S8",
+   "grade": 0,
+   "subject": "science",
+   "title": "What Do Animals Eat?",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Every animal eats! Tap the food each animal likes to eat.",
+   "parentTip": "What animals need to live. Talk about what you feed your animals each day.",
+   "lesson": {
+    "type": "story",
+    "storyId": "animal-eats"
+   },
+   "teach": "Every animal eats! Tap the food each animal likes to eat.",
+   "live": true
+  },
+  {
+   "id": "K-R14",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Syllable Safari",
+   "standard": "CA CCSS RF.K.2",
+   "activity": "Clap out each animal's name and count the beats. Tap how many claps!",
+   "parentTip": "Breaking words into syllables. Clap names together — RAB-BIT, EL-E-PHANT.",
+   "lesson": {
+    "type": "story",
+    "storyId": "syllables"
+   },
+   "teach": "Syllables are the beats in a word. Clap as you say it: el-e-phant has 3 claps!",
+   "live": true
+  },
+  {
+   "id": "K-S18",
+   "grade": 0,
+   "subject": "science",
+   "title": "Animal Groups",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Mammal, bird, fish, reptile, or bug? Tap the group each animal belongs to!",
+   "parentTip": "Sorting animals into groups by their traits (fur, feathers, scales, fins, six legs).",
+   "lesson": {
+    "type": "story",
+    "storyId": "animal-groups"
+   },
+   "teach": "Animals come in groups: mammals have fur, birds have feathers, fish have fins, insects have 6 legs.",
+   "live": true
+  },
+  {
+   "id": "K-S19",
+   "grade": 0,
+   "subject": "science",
+   "title": "Animal Sounds",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Moo, woof, quack! Tap the sound each animal makes.",
+   "parentTip": "Animal sounds. Make the sounds together and guess the animal.",
+   "lesson": {
+    "type": "story",
+    "storyId": "animal-sounds"
+   },
+   "teach": "Every animal makes its own sound. A cow says moo, a duck says quack, a sheep says baa.",
+   "live": true
+  },
+  {
+   "id": "K-S20",
+   "grade": 0,
+   "subject": "science",
+   "title": "Four Seasons",
+   "standard": "CA NGSS K-ESS2-1",
+   "activity": "Spring, summer, fall, or winter? Tap the season that matches the picture.",
+   "parentTip": "The four seasons and their weather. Talk about what changes each season.",
+   "lesson": {
+    "type": "story",
+    "storyId": "seasons"
+   },
+   "teach": "The year has 4 seasons: spring flowers, hot summer, falling leaves in fall, and cold snowy winter.",
+   "live": true
+  },
+  {
+   "id": "K-S21",
+   "grade": 0,
+   "subject": "science",
+   "title": "Swim, Fly, or Walk?",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Does the animal swim, fly, or walk? Tap how each one gets around!",
+   "parentTip": "How animals move. Point out swimmers, fliers, and walkers when you're outside.",
+   "lesson": {
+    "type": "story",
+    "storyId": "move-how"
+   },
+   "teach": "Animals move in different ways. Fish swim, birds fly, dogs walk. How does each one get around?",
+   "live": true
+  },
+  {
+   "id": "K-MATH21",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count by 5s",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Count by fives! 5, 10, 15... Tap the number that comes next.",
+   "parentTip": "Skip counting by 5s. Count hands and fingers together — 5, 10, 15.",
+   "lesson": {
+    "type": "story",
+    "storyId": "count-5s"
+   },
+   "teach": "Counting by 5s is like counting hands: 5, 10, 15, 20. It's a quick way to count.",
+   "live": true
+  },
+  {
+   "id": "K-MATH22",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count by 2s",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Count by twos! 2, 4, 6... Tap the number that comes next.",
+   "parentTip": "Skip counting by 2s. Count pairs — eyes, ears, socks — 2, 4, 6.",
+   "lesson": {
+    "type": "story",
+    "storyId": "count-2s"
+   },
+   "teach": "Counting by 2s skips every other number: 2, 4, 6, 8. It's faster than counting by ones!",
+   "live": true
+  },
+  {
+   "id": "K-R15",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Baby Animal Names",
+   "standard": "CA CCSS L.K.5",
+   "activity": "A baby dog is a puppy! Tap the special name for each baby animal.",
+   "parentTip": "Animal vocabulary. Quiz each other on baby animal names.",
+   "lesson": {
+    "type": "story",
+    "storyId": "baby-names"
+   },
+   "teach": "Baby animals have special names. A baby dog is a puppy, a baby cat is a kitten, a baby cow is a calf.",
+   "live": true
+  },
+  {
+   "id": "K-S22",
+   "grade": 0,
+   "subject": "science",
+   "title": "Parts of a Plant",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Roots, stem, leaves, or flower? Tap the part that does each job!",
+   "parentTip": "Parts of a plant and their jobs. Look at a real plant together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "plant-parts"
+   },
+   "teach": "A plant has parts with jobs: roots drink water, the stem holds it up, leaves catch sun, the flower makes seeds.",
+   "live": true
+  },
+  {
+   "id": "K-S23",
+   "grade": 0,
+   "subject": "science",
+   "title": "Hot or Cold?",
+   "standard": "CA NGSS K-PS3",
+   "activity": "Fire, ice, sun, snow — tap whether each thing is hot or cold!",
+   "parentTip": "Temperature — hot vs cold. Point out hot and cold things at home.",
+   "lesson": {
+    "type": "story",
+    "storyId": "hot-cold"
+   },
+   "teach": "Some things are HOT, like the sun and fire. Some are COLD, like ice and snow. Be careful with hot things!",
+   "live": true
+  },
+  {
+   "id": "K-MATH13",
+   "grade": 0,
+   "subject": "math",
+   "title": "Teen Numbers",
+   "standard": "CA CCSS K.NBT.1",
+   "activity": "A teen number is ten and some more! Count the ten plus the extras and tap the number.",
+   "parentTip": "Teen numbers as ten and ones. Build 10 with objects, then add a few more.",
+   "lesson": {
+    "type": "story",
+    "storyId": "teen-numbers"
+   },
+   "teach": "A teen number is ten and some more! Count the ten plus the extras and tap the number.",
+   "live": true
+  },
+  {
+   "id": "K-S9",
+   "grade": 0,
+   "subject": "science",
+   "title": "Baby Animals",
+   "standard": "CA NGSS 1-LS3-1",
+   "activity": "Baby animals look like their parents! Find each animal's baby.",
+   "parentTip": "Young animals resemble their parents. Look at baby and grown animals together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "baby-animals"
+   },
+   "teach": "Baby animals look like their parents! Find each animal's baby.",
+   "live": true
+  },
+  {
+   "id": "K-S10",
+   "grade": 0,
+   "subject": "science",
+   "title": "Alive or Not?",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Living things grow, eat, and move! Tap what's alive and what's not.",
+   "parentTip": "Characteristics of living things. Point out what's alive vs. an object on a walk.",
+   "lesson": {
+    "type": "story",
+    "storyId": "living-not"
+   },
+   "teach": "Living things grow, eat, and move! Tap what's alive and what's not.",
+   "live": true
+  },
+  {
+   "id": "K-S11",
+   "grade": 0,
+   "subject": "science",
+   "title": "Day or Night?",
+   "standard": "CA NGSS K-ESS1",
+   "activity": "Owls and bats wake at night, bees buzz in the day. Tap when each animal is awake!",
+   "parentTip": "Day and night patterns in animal behavior. Talk about which animals you see when.",
+   "lesson": {
+    "type": "story",
+    "storyId": "day-night"
+   },
+   "teach": "Owls and bats wake at night, bees buzz in the day. Tap when each animal is awake!",
+   "live": true
+  },
+  {
+   "id": "K-MATH14",
+   "grade": 0,
+   "subject": "math",
+   "title": "Make 5",
+   "standard": "CA CCSS K.OA.4",
+   "activity": "Some animals are here! Tap how many more make 5.",
+   "parentTip": "Making 5 from two parts. Use fingers or beans to show 3 and 2 make 5.",
+   "lesson": {
+    "type": "story",
+    "storyId": "make-5"
+   },
+   "teach": "Some animals are here! Tap how many more make 5.",
+   "live": true
+  },
+  {
+   "id": "K-MATH15",
+   "grade": 0,
+   "subject": "math",
+   "title": "Which Has More?",
+   "standard": "CA CCSS K.CC.6",
+   "activity": "Two groups of animals! Tap the group with more, or with fewer.",
+   "parentTip": "Comparing groups. Line up two sets of objects and compare which has more.",
+   "lesson": {
+    "type": "story",
+    "storyId": "which-more"
+   },
+   "teach": "Two groups of animals! Tap the group with more, or with fewer.",
+   "live": true
+  },
+  {
+   "id": "K-S12",
+   "grade": 0,
+   "subject": "science",
+   "title": "Egg or Not?",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Which animals hatch from eggs? Tap the egg-layers and the ones born live.",
+   "parentTip": "How animals have young. Hens lay eggs; puppies are born live.",
+   "lesson": {
+    "type": "story",
+    "storyId": "egg-or-not"
+   },
+   "teach": "Which animals hatch from eggs? Tap the egg-layers and the ones born live.",
+   "live": true
+  },
+  {
+   "id": "K-S13",
+   "grade": 0,
+   "subject": "science",
+   "title": "Wild or Pet?",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Pets live with us, wild animals live on their own. Tap which is which!",
+   "parentTip": "Classifying animals. Talk about your pets vs. animals at the zoo.",
+   "lesson": {
+    "type": "story",
+    "storyId": "wild-or-pet"
+   },
+   "teach": "Pets live with us, wild animals live on their own. Tap which is which!",
+   "live": true
+  },
+  {
+   "id": "K-MATH9",
+   "grade": 0,
+   "subject": "math",
+   "title": "Bigger or Smaller?",
+   "standard": "CA CCSS K.MD.2",
+   "activity": "Compare two things! Which is bigger, taller, or heavier? Which is smaller, shorter, or lighter?",
+   "parentTip": "Comparing size, height, and weight. Compare real objects around the house together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "bigger-smaller"
+   },
+   "teach": "Compare two things! Which is bigger, taller, or heavier? Which is smaller, shorter, or lighter?",
+   "live": true
+  },
+  {
+   "id": "K-MATH7",
+   "grade": 0,
+   "subject": "math",
+   "title": "What Comes Next?",
+   "standard": "CA CCSS K (Patterns)",
+   "activity": "Look at the color pattern and tap what comes next! Red, blue, red, blue...",
+   "parentTip": "Recognizing and extending patterns. Try clap-stomp body patterns together too.",
+   "lesson": {
+    "type": "story",
+    "storyId": "patterns"
+   },
+   "teach": "Look at the color pattern and tap what comes next! Red, blue, red, blue...",
+   "live": true
+  },
+  {
+   "id": "K-MATH8",
+   "grade": 0,
+   "subject": "math",
+   "title": "Flat or Solid?",
+   "standard": "CA CCSS K.G.3",
+   "activity": "Some shapes are flat like a circle, some are solid like a ball. Tell which is which!",
+   "parentTip": "Flat (2D) vs solid (3D) shapes. Hold a ball, a box, and a can while you play.",
+   "lesson": {
+    "type": "story",
+    "storyId": "flat-or-solid"
+   },
+   "teach": "Some shapes are flat like a circle, some are solid like a ball. Tell which is which!",
+   "live": true
+  },
+  {
+   "id": "K-S5",
+   "grade": 0,
+   "subject": "science",
+   "title": "Plant or Animal?",
+   "standard": "CA NGSS K-LS1",
+   "activity": "Sort living things! Which is a plant, which is an animal, which can fly, which lives in water?",
+   "parentTip": "Sorting plants and animals by observable characteristics. Spot living things together on a walk.",
+   "lesson": {
+    "type": "story",
+    "storyId": "plant-or-animal"
+   },
+   "teach": "Sort living things! Which is a plant, which is an animal, which can fly, which lives in water?",
+   "live": false
+  },
+  {
+   "id": "K-R10",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Rhyme Time",
+   "standard": "CA CCSS RF.K.2a",
+   "activity": "Find the word that rhymes! Cat and hat, dog and frog. Say them out loud!",
+   "parentTip": "Rhyming is a key reading sound skill. Say the words aloud together to hear the rhyme.",
+   "lesson": {
+    "type": "story",
+    "storyId": "rhyme-time"
+   },
+   "teach": "Find the word that rhymes! Cat and hat, dog and frog. Say them out loud!",
+   "live": true
+  },
+  {
+   "id": "K-MATH6",
+   "grade": 0,
+   "subject": "math",
+   "title": "Number Detective",
+   "standard": "CA CCSS K.CC.4",
+   "activity": "Count the dots and find the number, or read the number and find the group that shows it!",
+   "parentTip": "Connecting numbers to how many. He counts a group and matches it to the numeral, both directions.",
+   "lesson": {
+    "type": "story",
+    "storyId": "number-detective"
+   },
+   "teach": "Count the dots and find the number, or read the number and find the group that shows it!",
+   "live": true
+  },
+  {
+   "id": "K-R1",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Capital Letter Detective",
+   "standard": "CA CCSS RF.K.1d",
+   "activity": "Capital letters are the big ones. Spot the capitals hiding in each row!",
+   "parentTip": "Big letters start sentences and names. Let him say each one aloud.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Tap the CAPITAL (big) letter.",
+      "correct": "B",
+      "wrong": [
+       "b",
+       "d"
+      ]
+     },
+     {
+      "prompt": "Which one is uppercase?",
+      "correct": "G",
+      "wrong": [
+       "g",
+       "q"
+      ]
+     },
+     {
+      "prompt": "Find the big letter.",
+      "correct": "R",
+      "wrong": [
+       "r",
+       "n"
+      ]
+     }
+    ]
+   },
+   "teach": "Capital letters are the big ones. Spot the capitals hiding in each row!",
+   "live": false
+  },
+  {
+   "id": "K-R2",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Match the Letter Buddies",
+   "standard": "CA CCSS RF.K.1d",
+   "activity": "Every big letter has a little buddy. Tap a letter, then tap its partner!",
+   "parentTip": "Matching big to small builds letter recognition both ways.",
+   "lesson": {
+    "type": "match",
+    "prompt": "Match the big letter to its little buddy.",
+    "pairs": [
+     {
+      "left": "A",
+      "right": "a"
+     },
+     {
+      "left": "B",
+      "right": "b"
+     },
+     {
+      "left": "C",
+      "right": "c"
+     },
+     {
+      "left": "D",
+      "right": "d"
+     }
+    ]
+   },
+   "teach": "Every big letter has a little buddy. Tap a letter, then tap its partner!",
+   "live": false
+  },
+  {
+   "id": "K-R3",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Letter Sounds Safari",
+   "standard": "CA CCSS RF.K.3a",
+   "activity": "Letters make sounds. Hunt for the word that starts with the same sound!",
+   "parentTip": "Say the sound, not the letter name: /k/, not 'see'.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Same first sound as CAT  /k/",
+      "correct": "Cow",
+      "wrong": [
+       "Dog",
+       "Pig"
+      ]
+     },
+     {
+      "prompt": "Same first sound as SUN  /s/",
+      "correct": "Sock",
+      "wrong": [
+       "Hat",
+       "Map"
+      ]
+     },
+     {
+      "prompt": "Same first sound as HEN  /h/",
+      "correct": "Hat",
+      "wrong": [
+       "Pig",
+       "Net"
+      ]
+     }
+    ]
+   },
+   "teach": "Every letter makes a sound. A says 'ah', B says 'buh'. Match the letter to its sound.",
+   "live": true
+  },
+  {
+   "id": "K-R4",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Barnyard Rhyme Time",
+   "standard": "CA CCSS RF.K.2a",
+   "activity": "Rhyming words sound alike at the end. Tap the one that rhymes!",
+   "parentTip": "Say the words out loud together so he hears the rhyme.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Rhymes with HEN",
+      "correct": "pen",
+      "wrong": [
+       "dog",
+       "cup"
+      ]
+     },
+     {
+      "prompt": "Rhymes with CAT",
+      "correct": "hat",
+      "wrong": [
+       "sun",
+       "pig"
+      ]
+     },
+     {
+      "prompt": "Rhymes with PIG",
+      "correct": "wig",
+      "wrong": [
+       "cow",
+       "hen"
+      ]
+     }
+    ]
+   },
+   "teach": "Rhyming words sound alike at the end. Tap the one that rhymes!",
+   "live": false
+  },
+  {
+   "id": "K-R5",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Sound It Out",
+   "standard": "CA CCSS RF.K.2c",
+   "activity": "Stretch the sounds, then snap them together into a word!",
+   "parentTip": "Robot-talk the sounds slowly, then blend fast.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Blend it:  c - a - t",
+      "correct": "cat",
+      "wrong": [
+       "cot",
+       "can"
+      ]
+     },
+     {
+      "prompt": "Blend it:  d - o - g",
+      "correct": "dog",
+      "wrong": [
+       "dig",
+       "dot"
+      ]
+     },
+     {
+      "prompt": "Blend it:  p - i - g",
+      "correct": "pig",
+      "wrong": [
+       "peg",
+       "pin"
+      ]
+     }
+    ]
+   },
+   "teach": "To read a word, blend the sounds together: c-a-t makes 'cat'. Slide the sounds into one word.",
+   "live": true
+  },
+  {
+   "id": "K-R6",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Star Words",
+   "standard": "CA CCSS RF.K.3c",
+   "activity": "These words pop up everywhere. Find the matching word!",
+   "parentTip": "Sight words are memorized by shape. Quick and snappy is best.",
+   "lesson": {
+    "type": "story",
+    "storyId": "sight-words"
+   },
+   "teach": "Star words are ones we see a lot, like 'the' and 'is'. We just remember them by sight.",
+   "live": true
+  },
+  {
+   "id": "K-R7",
+   "grade": 0,
+   "subject": "reading",
+   "title": "What Happens First?",
+   "standard": "CA CCSS RL.K.2",
+   "activity": "Stories happen in order. Put the day in the right order!",
+   "parentTip": "Sequencing a familiar routine builds story retelling.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Put the day in order, first to last.",
+    "items": [
+     "Wake up",
+     "Eat breakfast",
+     "Play outside",
+     "Go to bed"
+    ]
+   },
+   "teach": "Stories happen in order. Think about what happened FIRST, then next, then last.",
+   "live": true
+  },
+  {
+   "id": "K-R8",
+   "grade": 0,
+   "subject": "reading",
+   "title": "How Books Work",
+   "standard": "CA CCSS RF.K.1a",
+   "activity": "Books have a secret map. Show that you know which way the words go!",
+   "parentTip": "These print rules make reading click.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Where do we start reading?",
+      "correct": "Top left",
+      "wrong": [
+       "Bottom right",
+       "The middle"
+      ]
+     },
+     {
+      "prompt": "Which way do the words go?",
+      "correct": "Left to right",
+      "wrong": [
+       "Right to left",
+       "Up and down"
+      ]
+     },
+     {
+      "prompt": "When a line ends, go to the...",
+      "correct": "Next line down",
+      "wrong": [
+       "Back of the book",
+       "Same line again"
+      ]
+     }
+    ]
+   },
+   "teach": "A book has a front cover, and we read the words from left to right, top to bottom.",
+   "live": true
+  },
+  {
+   "id": "K-R9",
+   "grade": 0,
+   "subject": "reading",
+   "title": "Letter Detective",
+   "standard": "CA CCSS RF.K.1d / RF.K.3a",
+   "activity": "Find letters by their name or the sound they make. Big and little letters with a sound and a word for each!",
+   "parentTip": "Letter recognition and letter sounds. Say the sound, not the name: /b/, not 'bee'.",
+   "lesson": {
+    "type": "story",
+    "storyId": "letter-detective"
+   },
+   "teach": "Find letters by their name or the sound they make. Big and little letters with a sound and a word for each!",
+   "live": true
+  },
+  {
+   "id": "K-W1",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Write Your Name",
+   "standard": "CA CCSS L.K.1a",
+   "activity": "Trace each letter of your name with your finger!",
+   "parentTip": "Tracing the letters of his name with a finger is real early handwriting.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace your name!",
+    "items": [
+     "G",
+     "A",
+     "B",
+     "R",
+     "I",
+     "E",
+     "L"
+    ]
+   },
+   "teach": "Your name is special! Follow the dots with your finger to trace each letter of your name.",
+   "live": true
+  },
+  {
+   "id": "K-W2",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Trace Capital Letters",
+   "standard": "CA CCSS L.K.1a",
+   "activity": "Trace each big capital letter with your finger!",
+   "parentTip": "Forming capital letters by tracing builds handwriting control.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the letters!",
+    "items": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F"
+    ]
+   },
+   "teach": "Capital letters are the BIG letters. Follow the dots with your finger to trace each one.",
+   "live": true
+  },
+  {
+   "id": "K-W3",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Label the Animal",
+   "standard": "CA CCSS W.K.2",
+   "activity": "Labeling is writing the first letter. Trace the starting letter of each animal!",
+   "parentTip": "Hearing the first sound and writing its letter is early labeling/writing.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the first letter!",
+    "items": [
+     "C",
+     "P",
+     "H",
+     "D",
+     "S"
+    ]
+   },
+   "teach": "To label something, you write its first letter. Say the animal, hear the first sound, then trace that letter.",
+   "live": true
+  },
+  {
+   "id": "K-M1",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count to 20",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Tap each animal and count out loud all the way to 20!",
+   "parentTip": "Counting things he can see keeps it concrete.",
+   "lesson": {
+    "type": "count",
+    "target": 20,
+    "symbol": "pawprint.fill",
+    "prompt": "Tap each paw and count to 20!"
+   },
+   "teach": "Tap each animal and count out loud all the way to 20!",
+   "live": false
+  },
+  {
+   "id": "K-M2",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count by Tens",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Big numbers zoom by tens. Put them in order!",
+   "parentTip": "Clap on each ten to add rhythm.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Tap the tens in order.",
+    "items": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60",
+     "70",
+     "80",
+     "90",
+     "100"
+    ]
+   },
+   "teach": "Big numbers zoom by tens. Put them in order!",
+   "live": false
+  },
+  {
+   "id": "K-M3",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count the Eggs",
+   "standard": "CA CCSS K.CC.4",
+   "activity": "Touch one egg for each number. Count carefully to 10!",
+   "parentTip": "One tap per number builds one-to-one counting.",
+   "lesson": {
+    "type": "count",
+    "target": 10,
+    "symbol": "circle.fill",
+    "prompt": "Tap each egg as you count to 10!"
+   },
+   "teach": "Touch one egg for each number. Count carefully to 10!",
+   "live": false
+  },
+  {
+   "id": "K-M4",
+   "grade": 0,
+   "subject": "math",
+   "title": "Number Order 0-10",
+   "standard": "CA CCSS K.CC.3",
+   "activity": "Numbers have an order too. Line them up from 0 to 10!",
+   "parentTip": "Recognizing order supports writing the numbers.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Tap the numbers in order.",
+    "items": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10"
+    ]
+   },
+   "teach": "Numbers have an order too. Line them up from 0 to 10!",
+   "live": true
+  },
+  {
+   "id": "K-M5",
+   "grade": 0,
+   "subject": "math",
+   "title": "More or Less",
+   "standard": "CA CCSS K.CC.4-6",
+   "activity": "What comes next when we count? Which number is more or less? Tap it!",
+   "parentTip": "Connect to snacks: 'who has more?' and count up together.",
+   "lesson": {
+    "type": "story",
+    "storyId": "number-order"
+   },
+   "teach": "What comes next when we count? Which number is more or less? Tap it!",
+   "live": true
+  },
+  {
+   "id": "K-M6",
+   "grade": 0,
+   "subject": "math",
+   "title": "Adding On",
+   "standard": "CA CCSS K.OA.1",
+   "activity": "Put groups together to make more. Solve each one!",
+   "parentTip": "Let him use fingers or beans to check.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "3 eggs + 2 eggs = ?",
+      "answer": 5
+     },
+     {
+      "prompt": "4 + 1 = ?",
+      "answer": 5
+     },
+     {
+      "prompt": "2 + 2 = ?",
+      "answer": 4
+     }
+    ]
+   },
+   "teach": "Put groups together to make more. Solve each one!",
+   "live": false
+  },
+  {
+   "id": "K-M7",
+   "grade": 0,
+   "subject": "math",
+   "title": "Taking Away",
+   "standard": "CA CCSS K.OA.1",
+   "activity": "Some go away, and you find what's left. Solve each one!",
+   "parentTip": "Act it out with carrots and a hungry bunny.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "5 carrots - 2 = ?",
+      "answer": 3
+     },
+     {
+      "prompt": "4 - 1 = ?",
+      "answer": 3
+     },
+     {
+      "prompt": "5 - 5 = ?",
+      "answer": 0
+     }
+    ]
+   },
+   "teach": "Some go away, and you find what's left. Solve each one!",
+   "live": false
+  },
+  {
+   "id": "K-M8",
+   "grade": 0,
+   "subject": "math",
+   "title": "2D Shape Hunt",
+   "standard": "CA CCSS K.G.2",
+   "activity": "Flat shapes have names. Tap the right one!",
+   "parentTip": "Spot these shapes together on a walk.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Round, with no corners",
+      "correct": "Circle",
+      "wrong": [
+       "Square",
+       "Triangle"
+      ]
+     },
+     {
+      "prompt": "Has 3 sides",
+      "correct": "Triangle",
+      "wrong": [
+       "Circle",
+       "Square"
+      ]
+     },
+     {
+      "prompt": "Has 4 equal sides",
+      "correct": "Square",
+      "wrong": [
+       "Triangle",
+       "Rectangle"
+      ]
+     }
+    ]
+   },
+   "teach": "Flat shapes have names. Tap the right one!",
+   "live": false
+  },
+  {
+   "id": "K-M9",
+   "grade": 0,
+   "subject": "math",
+   "title": "Solid Shapes",
+   "standard": "CA CCSS K.G.2",
+   "activity": "Some shapes you can hold. Match the object to its shape!",
+   "parentTip": "Hold a ball, a box, and a can while you play.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A ball is shaped like a...",
+      "correct": "Sphere",
+      "wrong": [
+       "Cube",
+       "Cylinder"
+      ]
+     },
+     {
+      "prompt": "A box is shaped like a...",
+      "correct": "Cube",
+      "wrong": [
+       "Sphere",
+       "Cone"
+      ]
+     },
+     {
+      "prompt": "A can is shaped like a...",
+      "correct": "Cylinder",
+      "wrong": [
+       "Cube",
+       "Sphere"
+      ]
+     }
+    ]
+   },
+   "teach": "Some shapes you can hold. Match the object to its shape!",
+   "live": false
+  },
+  {
+   "id": "K-M10",
+   "grade": 0,
+   "subject": "math",
+   "title": "Which One Is Different?",
+   "standard": "CA CCSS K.MD.3",
+   "activity": "Sorting means things that belong together. Tap the odd one out!",
+   "parentTip": "Ask him to explain why it doesn't belong.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which is NOT an animal?",
+      "correct": "Apple",
+      "wrong": [
+       "Cow",
+       "Hen"
+      ]
+     },
+     {
+      "prompt": "Which is NOT a color?",
+      "correct": "Dog",
+      "wrong": [
+       "Red",
+       "Green"
+      ]
+     },
+     {
+      "prompt": "Which is NOT a shape?",
+      "correct": "Banana",
+      "wrong": [
+       "Circle",
+       "Square"
+      ]
+     }
+    ]
+   },
+   "teach": "Sorting means things that belong together. Tap the odd one out!",
+   "live": false
+  },
+  {
+   "id": "K-M11",
+   "grade": 0,
+   "subject": "math",
+   "title": "What Comes Next?",
+   "standard": "CA CCSS K (Patterns)",
+   "activity": "Patterns repeat. Find what comes next in the pattern!",
+   "parentTip": "Try clap-stomp body patterns too.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "red, blue, red, blue, ___",
+      "correct": "red",
+      "wrong": [
+       "blue",
+       "green"
+      ]
+     },
+     {
+      "prompt": "sun, moon, sun, moon, ___",
+      "correct": "sun",
+      "wrong": [
+       "moon",
+       "star"
+      ]
+     },
+     {
+      "prompt": "A, B, A, B, ___",
+      "correct": "A",
+      "wrong": [
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "teach": "Patterns repeat. Find what comes next in the pattern!",
+   "live": false
+  },
+  {
+   "id": "K-S1",
+   "grade": 0,
+   "subject": "science",
+   "title": "Weather Watcher",
+   "standard": "CA NGSS K-ESS2-1",
+   "activity": "Be the weather reporter. Match the weather to what you'd do!",
+   "parentTip": "Look out the window together first.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "If it's raining, wear a...",
+      "correct": "Raincoat",
+      "wrong": [
+       "Swimsuit",
+       "Sunglasses only"
+      ]
+     },
+     {
+      "prompt": "Hot sunny day, wear a...",
+      "correct": "Sun hat",
+      "wrong": [
+       "Heavy coat",
+       "Mittens"
+      ]
+     },
+     {
+      "prompt": "Snow means it is...",
+      "correct": "Cold",
+      "wrong": [
+       "Hot",
+       "Warm"
+      ]
+     }
+    ]
+   },
+   "teach": "Be the weather reporter. Match the weather to what you'd do!",
+   "live": false
+  },
+  {
+   "id": "K-S2",
+   "grade": 0,
+   "subject": "science",
+   "title": "What They Need",
+   "standard": "CA NGSS K-LS1-1",
+   "activity": "Plants and animals need food, water, and sunlight. Tap what each one needs!",
+   "parentTip": "Walk to your plants and animals and talk about what they need.",
+   "lesson": {
+    "type": "story",
+    "storyId": "living-needs"
+   },
+   "teach": "Plants and animals need food, water, and sunlight. Tap what each one needs!",
+   "live": true
+  },
+  {
+   "id": "K-S3",
+   "grade": 0,
+   "subject": "science",
+   "title": "Push or Pull?",
+   "standard": "CA NGSS K-PS2-1",
+   "activity": "Things move when we push or pull. Tap how each one moves!",
+   "parentTip": "Try it together with a cart, a door, and a wagon afterward.",
+   "lesson": {
+    "type": "story",
+    "storyId": "push-pull"
+   },
+   "teach": "Things move when we push or pull. Tap how each one moves!",
+   "live": true
+  },
+  {
+   "id": "K-S4",
+   "grade": 0,
+   "subject": "science",
+   "title": "Weather Detective",
+   "standard": "CA NGSS K-ESS2-1",
+   "activity": "Look at the weather and name it: sunny, rainy, cloudy, snowy, windy, or stormy. Find it by name or by what it does!",
+   "parentTip": "Observing and describing weather. Look out the window together and name today's weather.",
+   "lesson": {
+    "type": "story",
+    "storyId": "weather-watch"
+   },
+   "teach": "Look at the weather and name it: sunny, rainy, cloudy, snowy, windy, or stormy. Find it by name or by what it does!",
+   "live": true
+  },
+  {
+   "id": "K-SS1",
+   "grade": 0,
+   "subject": "life",
+   "title": "American Symbols",
+   "standard": "CA HSS K.2",
+   "activity": "Find the U.S. flag, the Statue of Liberty, the bald eagle, and more! Learn what each one means.",
+   "parentTip": "Identifying national symbols. Point them out on money, at school, and around town.",
+   "lesson": {
+    "type": "story",
+    "storyId": "american-symbols"
+   },
+   "teach": "Find the U.S. flag, the Statue of Liberty, the bald eagle, and more! Learn what each one means.",
+   "live": true
+  },
+  {
+   "id": "K-SS2",
+   "grade": 0,
+   "subject": "life",
+   "title": "Community Helpers",
+   "standard": "CA HSS K.3",
+   "activity": "Who puts out fires? Who helps you learn? Find the community helpers and what they do!",
+   "parentTip": "Identifying helpers in school and the community. Talk about helpers you meet in daily life.",
+   "lesson": {
+    "type": "story",
+    "storyId": "community-helpers"
+   },
+   "teach": "Who puts out fires? Who helps you learn? Find the community helpers and what they do!",
+   "live": true
+  },
+  {
+   "id": "K-SS3",
+   "grade": 0,
+   "subject": "life",
+   "title": "Holidays",
+   "standard": "CA HSS K.1",
+   "activity": "What does Thanksgiving celebrate? What about MLK Day? Match each holiday to what it means!",
+   "parentTip": "Knowing what major holidays celebrate. Connect each to your own family traditions.",
+   "lesson": {
+    "type": "story",
+    "storyId": "holidays"
+   },
+   "teach": "What does Thanksgiving celebrate? What about MLK Day? Match each holiday to what it means!",
+   "live": true
+  },
+  {
+   "id": "K-SS4",
+   "grade": 0,
+   "subject": "life",
+   "title": "My Family",
+   "standard": "CA HSS K.3",
+   "activity": "Meet your family and what everyone does at home! Two moms, Mommy and Maddy, plus all the cats and dogs.",
+   "parentTip": "Naming family members and their roles. Families come in all kinds; this one celebrates yours.",
+   "lesson": {
+    "type": "story",
+    "storyId": "my-family"
+   },
+   "teach": "Meet your family and what everyone does at home! Two moms, Mommy and Maddy, plus all the cats and dogs.",
+   "live": true
+  },
+  {
+   "id": "K-L1",
+   "grade": 0,
+   "subject": "life",
+   "title": "Name Your Feelings",
+   "standard": "CA SEL",
+   "activity": "Drag each face to the feeling it shows. A new mix of feelings every time!",
+   "parentTip": "No pressure to feel any of these, just to name them. Talk about times he's felt each one.",
+   "lesson": {
+    "type": "faceMatch"
+   },
+   "teach": "Drag each face to the feeling it shows. A new mix of feelings every time!",
+   "live": true
+  },
+  {
+   "id": "K-L2",
+   "grade": 0,
+   "subject": "life",
+   "title": "Days of the Week",
+   "standard": "CA SEL / Calendar",
+   "activity": "The week repeats in order. Put the days in order!",
+   "parentTip": "A days-of-the-week song helps the order stick.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Tap the days in order.",
+    "items": [
+     "Sunday",
+     "Monday",
+     "Tuesday",
+     "Wednesday",
+     "Thursday",
+     "Friday",
+     "Saturday"
+    ]
+   },
+   "teach": "The week has 7 days in order: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday.",
+   "live": true
+  },
+  {
+   "id": "K-L3",
+   "grade": 0,
+   "subject": "life",
+   "title": "Be a Helper",
+   "standard": "CA SEL / Self-help",
+   "activity": "Good helpers make the farm run. Tap the helpful choice!",
+   "parentTip": "Talk about real jobs he could pick afterward, his choice.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A good helper job is...",
+      "correct": "Feeding the animals",
+      "wrong": [
+       "Breaking toys",
+       "Hiding shoes"
+      ]
+     },
+     {
+      "prompt": "If you spill something, you...",
+      "correct": "Help clean it up",
+      "wrong": [
+       "Run away",
+       "Blame the dog"
+      ]
+     },
+     {
+      "prompt": "A kind helper word is...",
+      "correct": "Please",
+      "wrong": [
+       "No way",
+       "Mine"
+      ]
+     }
+    ]
+   },
+   "teach": "Being a helper means doing kind things, like cleaning up or helping a friend. Helpers make everyone happy.",
+   "live": true
+  },
+  {
+   "id": "G1-R1",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Short and Long Vowels",
+   "standard": "CA CCSS RF.1.2a",
+   "activity": "Long vowels say their name. Tap the word with the long vowel sound!",
+   "parentTip": "Stretch the vowel: cake says a long A, cat says short a.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which has a LONG a (says 'a')?",
+      "correct": "cake",
+      "wrong": [
+       "cat",
+       "hat"
+      ]
+     },
+     {
+      "prompt": "Which has a LONG i (says 'i')?",
+      "correct": "ride",
+      "wrong": [
+       "pig",
+       "hit"
+      ]
+     },
+     {
+      "prompt": "Which has a SHORT o?",
+      "correct": "hop",
+      "wrong": [
+       "rope",
+       "boat"
+      ]
+     }
+    ]
+   },
+   "teach": "Long vowels say their own name, like the A in CAKE. Short vowels are quick, like the a in CAT. Listen for the name!",
+   "live": true
+  },
+  {
+   "id": "G1-R2",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Team Sounds (sh, ch, th)",
+   "standard": "CA CCSS RF.1.3a",
+   "activity": "Two letters, one sound. Tap the word that starts with the team sound!",
+   "parentTip": "sh, ch, th each make one sound from two letters.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Starts with SH",
+      "correct": "ship",
+      "wrong": [
+       "sip",
+       "tip"
+      ]
+     },
+     {
+      "prompt": "Starts with CH",
+      "correct": "chin",
+      "wrong": [
+       "tin",
+       "win"
+      ]
+     },
+     {
+      "prompt": "Starts with TH",
+      "correct": "that",
+      "wrong": [
+       "hat",
+       "bat"
+      ]
+     }
+    ]
+   },
+   "teach": "Some letters team up to make ONE sound: SH says shhh, CH says choo-choo, TH says this. Two letters, one sound.",
+   "live": true
+  },
+  {
+   "id": "G1-R3",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Word-Wall Words",
+   "standard": "CA CCSS RF.1.3g",
+   "activity": "Tricky words you just have to know. Tap the right spelling!",
+   "parentTip": "A few each day beats all of them at once.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which spells  SAID?",
+      "correct": "said",
+      "wrong": [
+       "sed",
+       "sayd"
+      ]
+     },
+     {
+      "prompt": "Which spells  THEY?",
+      "correct": "they",
+      "wrong": [
+       "thay",
+       "tey"
+      ]
+     },
+     {
+      "prompt": "Which spells  WHAT?",
+      "correct": "what",
+      "wrong": [
+       "wut",
+       "whut"
+      ]
+     }
+    ]
+   },
+   "teach": "Some words we just KNOW by sight, like 'said' and 'the'. You don't sound them out, you just remember them.",
+   "live": true
+  },
+  {
+   "id": "G1-R4",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Read and Answer",
+   "standard": "CA CCSS RF.1.4",
+   "activity": "Read each little sentence, then tap the answer!",
+   "parentTip": "Reading for meaning is the goal. Read it together if he likes.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "'The hen is red.'  What color is the hen?",
+      "correct": "Red",
+      "wrong": [
+       "Blue",
+       "Green"
+      ]
+     },
+     {
+      "prompt": "'A pig can run.'  What can the pig do?",
+      "correct": "Run",
+      "wrong": [
+       "Fly",
+       "Swim"
+      ]
+     },
+     {
+      "prompt": "'I see two cows.'  How many cows?",
+      "correct": "Two",
+      "wrong": [
+       "One",
+       "Ten"
+      ]
+     }
+    ]
+   },
+   "teach": "Good readers stop and think. Read the sentence, then answer what happened in it.",
+   "live": true
+  },
+  {
+   "id": "G1-R5",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Question Words",
+   "standard": "CA CCSS RL.1.1",
+   "activity": "Good readers ask questions. Match the question word to what it asks!",
+   "parentTip": "Who/what/where/when help him think about a story.",
+   "lesson": {
+    "type": "match",
+    "prompt": "Match the question word to what it asks about.",
+    "pairs": [
+     {
+      "left": "Who",
+      "right": "a person"
+     },
+     {
+      "left": "Where",
+      "right": "a place"
+     },
+     {
+      "left": "When",
+      "right": "a time"
+     },
+     {
+      "left": "What",
+      "right": "a thing"
+     }
+    ]
+   },
+   "teach": "Asking words: WHO is a person, WHERE is a place, WHEN is a time, WHY is a reason.",
+   "live": true
+  },
+  {
+   "id": "G1-R6",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Main Idea",
+   "standard": "CA CCSS RI.1.2",
+   "activity": "The main idea is what it's mostly about. Tap the best main idea!",
+   "parentTip": "Prompt: 'In one breath, what was it about?'",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A book about feeding, brushing, and walking a dog is mostly about...",
+      "correct": "Taking care of a dog",
+      "wrong": [
+       "The color red",
+       "Riding bikes"
+      ]
+     },
+     {
+      "prompt": "A book about seeds, sun, and water growing a plant is mostly about...",
+      "correct": "How plants grow",
+      "wrong": [
+       "Going to the moon",
+       "Baking a cake"
+      ]
+     }
+    ]
+   },
+   "teach": "The main idea is what the story is MOSTLY about. Ask yourself: what's the big thing here?",
+   "live": true
+  },
+  {
+   "id": "G1-R7",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Blends",
+   "standard": "CA CCSS RF.1.2b",
+   "activity": "Blends keep both sounds. Tap the word that starts with the blend!",
+   "parentTip": "Unlike team sounds, you hear both letters in a blend.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Starts with ST",
+      "correct": "stop",
+      "wrong": [
+       "top",
+       "sop"
+      ]
+     },
+     {
+      "prompt": "Starts with FR",
+      "correct": "frog",
+      "wrong": [
+       "fog",
+       "rog"
+      ]
+     },
+     {
+      "prompt": "Starts with CL",
+      "correct": "clap",
+      "wrong": [
+       "cap",
+       "lap"
+      ]
+     }
+    ]
+   },
+   "teach": "In a blend you hear each letter, but they slide together fast, like S+T in STOP or B+L in BLUE.",
+   "live": true
+  },
+  {
+   "id": "G1-W1",
+   "grade": 1,
+   "subject": "writing",
+   "title": "Build a Sentence",
+   "standard": "CA CCSS L.1.2b",
+   "activity": "Tap the words in order to build a sentence that makes sense!",
+   "parentTip": "It starts with a capital and ends with a period. Point that out.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Tap the words in order to make a sentence.",
+    "items": [
+     "The",
+     "hen",
+     "ran",
+     "fast."
+    ]
+   },
+   "teach": "A sentence has a naming part (who) and an action part (does what). It starts with a capital and ends with a period.",
+   "live": true
+  },
+  {
+   "id": "G1-W2",
+   "grade": 1,
+   "subject": "writing",
+   "title": "Spot the Opinion",
+   "standard": "CA CCSS W.1.1",
+   "activity": "An opinion tells what YOU think. Tap the opinion sentence!",
+   "parentTip": "A fact can be checked; an opinion is a feeling or favorite.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which one is an OPINION?",
+      "correct": "Goats are the best animal!",
+      "wrong": [
+       "A goat has four legs.",
+       "Goats eat hay."
+      ]
+     },
+     {
+      "prompt": "Which one is an OPINION?",
+      "correct": "Red is the prettiest color.",
+      "wrong": [
+       "The barn is red.",
+       "Apples can be red."
+      ]
+     },
+     {
+      "prompt": "Which one is an OPINION?",
+      "correct": "Summer is the most fun season.",
+      "wrong": [
+       "Summer is warm.",
+       "Summer comes after spring."
+      ]
+     }
+    ]
+   },
+   "teach": "A FACT is true for everyone. An OPINION is what someone feels, like 'I think ice cream is best'.",
+   "live": true
+  },
+  {
+   "id": "G1-W3",
+   "grade": 1,
+   "subject": "writing",
+   "title": "Put the Story in Order",
+   "standard": "CA CCSS W.1.3",
+   "activity": "A story happens in order. Tap the parts first to last!",
+   "parentTip": "Sequencing words: first, then, next, last.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Tap the story parts in order.",
+    "items": [
+     "First we woke up,",
+     "then we fed the hens,",
+     "next we found eggs,",
+     "last we ate breakfast."
+    ]
+   },
+   "teach": "Stories go in order: first, next, then, last. Put the parts in the order they happened.",
+   "live": true
+  },
+  {
+   "id": "G1-M1",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count to 120",
+   "standard": "CA CCSS 1.NBT.1",
+   "activity": "Numbers keep going past 100. Tap what comes next!",
+   "parentTip": "Starting mid-count is the real skill.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "What comes after 99?",
+      "correct": "100",
+      "wrong": [
+       "110",
+       "90"
+      ]
+     },
+     {
+      "prompt": "What comes after 109?",
+      "correct": "110",
+      "wrong": [
+       "120",
+       "200"
+      ]
+     },
+     {
+      "prompt": "What comes after 119?",
+      "correct": "120",
+      "wrong": [
+       "121",
+       "110"
+      ]
+     }
+    ]
+   },
+   "teach": "Numbers keep going past 100! After 119 comes 120. Keep counting up and don't stop at 100.",
+   "live": true
+  },
+  {
+   "id": "G1-M2",
+   "grade": 1,
+   "subject": "math",
+   "title": "Add Within 20",
+   "standard": "CA CCSS 1.OA.6",
+   "activity": "Add the numbers and type your answer!",
+   "parentTip": "Any strategy that gets there is a good one.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "8 + 5 = ?",
+      "answer": 13
+     },
+     {
+      "prompt": "9 + 6 = ?",
+      "answer": 15
+     },
+     {
+      "prompt": "7 + 7 = ?",
+      "answer": 14
+     }
+    ]
+   },
+   "teach": "Adding puts groups together to get MORE. 8 + 5 means start at 8 and count up 5 more.",
+   "live": true
+  },
+  {
+   "id": "G1-M3",
+   "grade": 1,
+   "subject": "math",
+   "title": "Subtract Within 20",
+   "standard": "CA CCSS 1.OA.6",
+   "activity": "Take away and type what's left!",
+   "parentTip": "Counting up or counting back both work.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "14 - 6 = ?",
+      "answer": 8
+     },
+     {
+      "prompt": "17 - 8 = ?",
+      "answer": 9
+     },
+     {
+      "prompt": "20 - 10 = ?",
+      "answer": 10
+     }
+    ]
+   },
+   "teach": "Subtracting means taking AWAY. 14 − 6 means start at 14 and count back 6.",
+   "live": true
+  },
+  {
+   "id": "G1-M4",
+   "grade": 1,
+   "subject": "math",
+   "title": "Story Problems",
+   "standard": "CA CCSS 1.OA.1",
+   "activity": "See the story: some come, some go away. Tap how many!",
+   "parentTip": "He solves it by looking, not reading. Add and subtract within 20.",
+   "lesson": {
+    "type": "story",
+    "storyId": "word-problems"
+   },
+   "teach": "Word problems tell a little story with numbers. Read it, find the numbers, then decide to add or take away.",
+   "live": true
+  },
+  {
+   "id": "G1-M5",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tens and Ones",
+   "standard": "CA CCSS 1.NBT.2",
+   "activity": "Numbers are made of tens and ones. Solve each one!",
+   "parentTip": "Bundles of ten straws make this real.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "3 tens and 4 ones = ?",
+      "answer": 34
+     },
+     {
+      "prompt": "2 tens and 7 ones = ?",
+      "answer": 27
+     },
+     {
+      "prompt": "How many ones in 1 ten?",
+      "answer": 10
+     }
+    ]
+   },
+   "teach": "A two-digit number has tens and ones. In 34, the 3 means 3 tens (30) and the 4 means 4 ones.",
+   "live": true
+  },
+  {
+   "id": "G1-M6",
+   "grade": 1,
+   "subject": "math",
+   "title": "Compare Numbers",
+   "standard": "CA CCSS 1.NBT.3",
+   "activity": "Which number is bigger? Tap the right one!",
+   "parentTip": "The 'alligator mouth' eats the bigger number.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which is BIGGER?",
+      "correct": "54",
+      "wrong": [
+       "45"
+      ]
+     },
+     {
+      "prompt": "Which is SMALLER?",
+      "correct": "23",
+      "wrong": [
+       "32"
+      ]
+     },
+     {
+      "prompt": "Which is BIGGER?",
+      "correct": "70",
+      "wrong": [
+       "67"
+      ]
+     }
+    ]
+   },
+   "teach": "The > sign is like a hungry mouth that eats the BIGGER number. 54 > 45.",
+   "live": true
+  },
+  {
+   "id": "G1-M7",
+   "grade": 1,
+   "subject": "math",
+   "title": "Measure with Paperclips",
+   "standard": "CA CCSS 1.MD.2",
+   "activity": "Measure by lining up units with no gaps. Solve the measuring puzzle!",
+   "parentTip": "No gaps and no overlaps is the key rule.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "A pencil is 5 paperclips long. How many clips?",
+      "answer": 5
+     },
+     {
+      "prompt": "A carrot is 4 clips, a worm is 2 clips. How many longer is the carrot?",
+      "answer": 2
+     },
+     {
+      "prompt": "3 clips + 3 clips of length = ? clips",
+      "answer": 6
+     }
+    ]
+   },
+   "teach": "To measure length, line up units end to end, like paperclips, and count how many fit.",
+   "live": true
+  },
+  {
+   "id": "G1-M8",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tell Time",
+   "standard": "CA CCSS 1.MD.3",
+   "activity": "Read the clock to the hour and half hour. Tap the time!",
+   "parentTip": "The short hand is the hour, the long hand is minutes.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Both hands on 12 means...",
+      "correct": "12 o'clock",
+      "wrong": [
+       "6 o'clock",
+       "Half past 1"
+      ]
+     },
+     {
+      "prompt": "Short hand on 3, long hand on 12",
+      "correct": "3:00",
+      "wrong": [
+       "12:03",
+       "3:30"
+      ]
+     },
+     {
+      "prompt": "Long hand on 6 means it's...",
+      "correct": "Half past the hour",
+      "wrong": [
+       "O'clock",
+       "Almost midnight"
+      ]
+     }
+    ]
+   },
+   "teach": "On a clock the SHORT hand shows the hour, the LONG hand shows minutes. Long hand on 12 means o'clock!",
+   "live": true
+  },
+  {
+   "id": "G1-M9",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tally and Count",
+   "standard": "CA CCSS 1.MD.4",
+   "activity": "Tally marks count in groups. Solve the counting puzzle!",
+   "parentTip": "Four lines and a slash makes a group of five.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "4 chickens + 3 goats = how many animals?",
+      "answer": 7
+     },
+     {
+      "prompt": "A group of tally marks (a 5) plus 2 more = ?",
+      "answer": 7
+     },
+     {
+      "prompt": "6 dogs, 2 run away. How many left?",
+      "answer": 4
+     }
+    ]
+   },
+   "teach": "Tally marks count by ones: one line for each thing. The 5th mark crosses the group so you can count by 5s.",
+   "live": true
+  },
+  {
+   "id": "G1-M10",
+   "grade": 1,
+   "subject": "math",
+   "title": "Halves and Fourths",
+   "standard": "CA CCSS 1.G.3",
+   "activity": "Equal parts have fancy names. Tap the right one!",
+   "parentTip": "Sharing a snack equally makes this real.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Cut into 2 equal parts =",
+      "correct": "Halves",
+      "wrong": [
+       "Fourths",
+       "Thirds"
+      ]
+     },
+     {
+      "prompt": "Cut into 4 equal parts =",
+      "correct": "Fourths",
+      "wrong": [
+       "Halves",
+       "Twos"
+      ]
+     },
+     {
+      "prompt": "Which is BIGGER, one half or one fourth?",
+      "correct": "One half",
+      "wrong": [
+       "One fourth"
+      ]
+     }
+    ]
+   },
+   "teach": "Halves are 2 EQUAL parts. Fourths are 4 EQUAL parts. Equal means all the same size.",
+   "live": true
+  },
+  {
+   "id": "G1-S1",
+   "grade": 1,
+   "subject": "science",
+   "title": "Light and Sound",
+   "standard": "CA NGSS 1-PS4",
+   "activity": "Sound comes from vibrations, shadows come from light. Tap what's true!",
+   "parentTip": "Let him feel his throat hum to feel a vibration.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "What makes a sound?",
+      "correct": "Something vibrating",
+      "wrong": [
+       "Something still",
+       "A picture"
+      ]
+     },
+     {
+      "prompt": "A shadow is made when something blocks...",
+      "correct": "Light",
+      "wrong": [
+       "Water",
+       "Wind"
+      ]
+     },
+     {
+      "prompt": "Pluck a rubber band. It makes sound because it...",
+      "correct": "Vibrates",
+      "wrong": [
+       "Freezes",
+       "Glows"
+      ]
+     }
+    ]
+   },
+   "teach": "We need LIGHT to see. SOUND happens when something shakes, or vibrates, like a drum or a guitar string.",
+   "live": true
+  },
+  {
+   "id": "G1-S2",
+   "grade": 1,
+   "subject": "science",
+   "title": "Plant and Animal Parts",
+   "standard": "CA NGSS 1-LS1-1",
+   "activity": "Body parts have jobs. Match the part to what it does!",
+   "parentTip": "Walk the farm and let him be the tour guide after.",
+   "lesson": {
+    "type": "match",
+    "prompt": "Match the part to its job.",
+    "pairs": [
+     {
+      "left": "Roots",
+      "right": "drink water"
+     },
+     {
+      "left": "Wings",
+      "right": "help fly"
+     },
+     {
+      "left": "Ears",
+      "right": "hear sounds"
+     },
+     {
+      "left": "Leaves",
+      "right": "catch sunlight"
+     }
+    ]
+   },
+   "teach": "Every part has a job! Roots drink water, leaves catch sunlight, wings help birds fly, ears help us hear.",
+   "live": true
+  },
+  {
+   "id": "G1-S3",
+   "grade": 1,
+   "subject": "science",
+   "title": "Sky Patterns",
+   "standard": "CA NGSS 1-ESS1-1",
+   "activity": "The sky changes in patterns. Tap what's true about the sky!",
+   "parentTip": "A few nights of moon drawings show the pattern.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "In the morning, the sun is in the...",
+      "correct": "Sky, rising in the east",
+      "wrong": [
+       "Ground",
+       "Ocean only"
+      ]
+     },
+     {
+      "prompt": "At night we usually see the...",
+      "correct": "Moon and stars",
+      "wrong": [
+       "Sun",
+       "Rainbow"
+      ]
+     },
+     {
+      "prompt": "The sun seems to move across the sky during the...",
+      "correct": "Day",
+      "wrong": [
+       "Night",
+       "Winter only"
+      ]
+     }
+    ]
+   },
+   "teach": "The sun rises in the morning and sets at night. The moon and stars come out at night. It repeats every day.",
+   "live": true
+  },
+  {
+   "id": "G1-L1",
+   "grade": 1,
+   "subject": "life",
+   "title": "Today's Date",
+   "standard": "CA Calendar",
+   "activity": "A date has a month, day, and year. Put a date in order!",
+   "parentTip": "A wall calendar he can point to helps.",
+   "lesson": {
+    "type": "order",
+    "prompt": "Put a date in the right order.",
+    "items": [
+     "Month",
+     "Day",
+     "Year"
+    ]
+   },
+   "teach": "A date has a day, a month, and a year. A calendar helps us find what day today is.",
+   "live": true
+  },
+  {
+   "id": "G1-L2",
+   "grade": 1,
+   "subject": "life",
+   "title": "Know Your Coins",
+   "standard": "CA CCSS 1 (Money)",
+   "activity": "Coins are worth different amounts. Match each coin to its value!",
+   "parentTip": "Real coins to hold make the values stick.",
+   "lesson": {
+    "type": "match",
+    "prompt": "Match the coin to how much it's worth.",
+    "pairs": [
+     {
+      "left": "Penny",
+      "right": "1 cent"
+     },
+     {
+      "left": "Nickel",
+      "right": "5 cents"
+     },
+     {
+      "left": "Dime",
+      "right": "10 cents"
+     },
+     {
+      "left": "Quarter",
+      "right": "25 cents"
+     }
+    ]
+   },
+   "teach": "A penny is 1¢, a nickel is 5¢, a dime is 10¢, a quarter is 25¢. Coins are worth different amounts.",
+   "live": true
+  },
+  {
+   "id": "G1-L3",
+   "grade": 1,
+   "subject": "life",
+   "title": "Calm-Down Game",
+   "standard": "CA SEL",
+   "activity": "Big feelings need calm tools. Tap the healthy choice!",
+   "parentTip": "Knowing the tools when calm makes them easier to use later.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A good way to calm down is...",
+      "correct": "Take slow belly breaths",
+      "wrong": [
+       "Yell louder",
+       "Throw things"
+      ]
+     },
+     {
+      "prompt": "If you feel mad, you can...",
+      "correct": "Go to a quiet spot",
+      "wrong": [
+       "Hit something",
+       "Stomp on toys"
+      ]
+     },
+     {
+      "prompt": "Slow breathing helps you feel...",
+      "correct": "Calm",
+      "wrong": [
+       "Angry",
+       "Grumpy"
+      ]
+     }
+    ]
+   },
+   "teach": "When big feelings come, we can pause and breathe slow. Breathe in like smelling a flower, out like blowing a candle.",
+   "live": true
+  }
+ ],
+ "stories": {
+  "family-add": {
+   "id": "family-add",
+   "title": "Gabriel's Family of 10",
+   "covers": "Adding up to 10, one easy step at a time: counting, adding one more, putting two groups together, counting on, number bonds, and making 10. Brand-new questions every time you play.",
+   "pages": [],
+   "questions": []
+  },
+  "farm-sort": {
+   "id": "farm-sort",
+   "title": "Sort the Farm Animals",
+   "covers": "Sort the farm animals into their groups (chickens, sheep, cats, and dogs), then see how many are in each. Builds sorting into categories and counting each group (CA CCSS K.MD.B.3).",
+   "pages": [],
+   "questions": []
+  },
+  "shapes": {
+   "id": "shapes",
+   "title": "Shape Detective",
+   "covers": "Name and describe flat shapes: circle, square, triangle, rectangle, and hexagon. Find each shape by its name or by how many sides it has (CA CCSS K.G.2).",
+   "pages": [],
+   "questions": []
+  },
+  "shape-spot": {
+   "id": "shape-spot",
+   "title": "Shape Spotter",
+   "covers": "Find every triangle, circle, square, rectangle, or hexagon, even when it is big, small, or turned. Names shapes no matter their size or which way they face (CA CCSS K.G.2).",
+   "pages": [],
+   "questions": []
+  },
+  "letter-detective": {
+   "id": "letter-detective",
+   "title": "Letter Detective",
+   "covers": "Find letters by their name or by the sound they make. Each letter shows its big and little form, and every answer gives the sound and a key word (CA CCSS RF.K).",
+   "pages": [],
+   "questions": []
+  },
+  "weather-watch": {
+   "id": "weather-watch",
+   "title": "Weather Detective",
+   "covers": "Look at the weather and name it: sunny, rainy, cloudy, snowy, windy, or stormy. Find it by name or by what it does, and learn what to wear (CA NGSS K-ESS2-1).",
+   "pages": [],
+   "questions": []
+  },
+  "number-detective": {
+   "id": "number-detective",
+   "title": "Number Detective",
+   "covers": "Count the dots and find the number, or read the number and find the matching group. Connects numbers to how many (CA CCSS K.CC.4-5).",
+   "pages": [],
+   "questions": []
+  },
+  "american-symbols": {
+   "id": "american-symbols",
+   "title": "American Symbols",
+   "covers": "Find the U.S. flag, the Statue of Liberty, the bald eagle, the Liberty Bell, and the White House, and learn a little about each (CA HSS K.2).",
+   "pages": [],
+   "questions": []
+  },
+  "community-helpers": {
+   "id": "community-helpers",
+   "title": "Community Helpers",
+   "covers": "Meet the people who help us: firefighters, police officers, doctors, teachers, farmers, chefs, and builders. Find each helper and learn what they do (CA HSS K.3).",
+   "pages": [],
+   "questions": []
+  },
+  "holidays": {
+   "id": "holidays",
+   "title": "Holidays",
+   "covers": "Learn what our holidays celebrate: Thanksgiving, the Fourth of July, MLK Day, New Year's Day, Valentine's Day, and Halloween (CA HSS K.1).",
+   "pages": [],
+   "questions": []
+  },
+  "my-family": {
+   "id": "my-family",
+   "title": "My Family",
+   "covers": "Families come in all kinds! Meet Gabriel's family, his two moms Mommy and Maddy plus the cats and dogs, and learn what everyone does at home (CA HSS K.3).",
+   "pages": [
+    {
+     "scene": "family",
+     "text": "Families come in all kinds! 💛 A mom and a dad, two moms, two dads, or grandparents."
+    },
+    {
+     "scene": "family",
+     "text": "This is YOUR family! 🦁 Maddy the Lion, Mommy the Lioness, and you, the Lion Cub! Plus your cats and dogs. 🐱🐶"
+    }
+   ],
+   "questions": []
+  },
+  "patterns": {
+   "id": "patterns",
+   "title": "What Comes Next?",
+   "covers": "Look at the repeating color pattern and tap the color that comes next. Builds pattern thinking, an early math skill.",
+   "pages": [],
+   "questions": []
+  },
+  "rhyme-time": {
+   "id": "rhyme-time",
+   "title": "Rhyme Time",
+   "covers": "Find the word that rhymes! Cat and hat, dog and frog. Builds the rhyming sound skill that powers reading (CA CCSS RF.K.2a).",
+   "pages": [],
+   "questions": []
+  },
+  "flat-or-solid": {
+   "id": "flat-or-solid",
+   "title": "Flat or Solid?",
+   "covers": "Some shapes are flat, like a circle you draw. Some are solid, like a ball you hold. Tell flat (2D) from solid (3D) shapes (CA CCSS K.G.3).",
+   "pages": [],
+   "questions": []
+  },
+  "plant-or-animal": {
+   "id": "plant-or-animal",
+   "title": "Plant or Animal?",
+   "covers": "Sort living things by what you can see: which is a plant, which is an animal, which can fly, and which lives in water (CA NGSS K).",
+   "pages": [],
+   "questions": []
+  },
+  "bigger-smaller": {
+   "id": "bigger-smaller",
+   "title": "Bigger or Smaller?",
+   "covers": "Compare two things: which is bigger or smaller, taller or shorter, heavier or lighter? Describes and compares size, height, and weight (CA CCSS K.MD.1-2).",
+   "pages": [],
+   "questions": []
+  },
+  "build-shape": {
+   "id": "build-shape",
+   "title": "Build a Shape",
+   "covers": "Put simple shapes together to make a picture - a triangle and a square make a house! Finish each picture by tapping the missing shape (CA CCSS K.G.6).",
+   "pages": [],
+   "questions": []
+  },
+  "word-problems": {
+   "id": "word-problems",
+   "title": "Story Problems",
+   "covers": "Solve add and subtract story problems you can see: some come, some go away. Find the answer within 20 (CA CCSS 1.OA.1).",
+   "pages": [],
+   "questions": []
+  },
+  "push-pull": {
+   "id": "push-pull",
+   "title": "Push or Pull?",
+   "covers": "Things move when we push or pull them. Look at each one and tap how it moves (CA NGSS K-PS2-1).",
+   "pages": [],
+   "questions": []
+  },
+  "living-needs": {
+   "id": "living-needs",
+   "title": "What They Need",
+   "covers": "Plants and animals need food, water, and sunlight to live. Tap what each one needs (CA NGSS K-LS1-1).",
+   "pages": [],
+   "questions": []
+  },
+  "position-words": {
+   "id": "position-words",
+   "title": "Where Is It?",
+   "covers": "Describe where things are: on top, under, or next to. Tap the picture that matches (CA CCSS K.G.1).",
+   "pages": [],
+   "questions": []
+  },
+  "sight-words": {
+   "id": "sight-words",
+   "title": "Star Words",
+   "covers": "Read the words that pop up everywhere: the, and, see, my, like. Find the matching word (CA CCSS RF.K.3c).",
+   "pages": [],
+   "questions": []
+  },
+  "number-order": {
+   "id": "number-order",
+   "title": "More or Less",
+   "covers": "What comes next when we count, and which number is more or less? Tap the right number (CA CCSS K.CC.4-6).",
+   "pages": [],
+   "questions": []
+  },
+  "animal-homes": {
+   "id": "animal-homes",
+   "title": "Animal Homes",
+   "covers": "Animals live in different places: the farm, the ocean, cold snowy places, and the jungle. Match each animal to its home (CA NGSS K-ESS3-1).",
+   "pages": [],
+   "questions": []
+  },
+  "animal-legs": {
+   "id": "animal-legs",
+   "title": "How Many Legs?",
+   "covers": "Count an animal's legs: birds have 2, dogs have 4, bugs have 6, spiders have 8. Counting to tell how many (CA CCSS K.CC.4).",
+   "pages": [],
+   "questions": []
+  },
+  "animal-coverings": {
+   "id": "animal-coverings",
+   "title": "Fur, Feathers, Scales",
+   "covers": "Animals are covered in fur, feathers, or scales. Sort each animal by its body covering (CA NGSS 1-LS1-1).",
+   "pages": [],
+   "questions": []
+  },
+  "animal-eats": {
+   "id": "animal-eats",
+   "title": "What Do Animals Eat?",
+   "covers": "Every animal eats to live. Match each animal to the food it eats (CA NGSS K-LS1).",
+   "pages": [],
+   "questions": []
+  },
+  "teen-numbers": {
+   "id": "teen-numbers",
+   "title": "Teen Numbers",
+   "covers": "Teen numbers are a ten and some more: 13 is ten and three. Count the group of ten plus the extra ones (CA CCSS K.NBT.1).",
+   "pages": [],
+   "questions": []
+  },
+  "baby-animals": {
+   "id": "baby-animals",
+   "title": "Baby Animals",
+   "covers": "Baby animals look like their parents, just smaller. Match each parent to its baby (CA NGSS 1-LS3-1).",
+   "pages": [],
+   "questions": []
+  },
+  "living-not": {
+   "id": "living-not",
+   "title": "Alive or Not?",
+   "covers": "Living things grow, eat, and move. Tell what's alive (animals and plants) from what's not (toys and rocks) - CA NGSS K.",
+   "pages": [],
+   "questions": []
+  },
+  "day-night": {
+   "id": "day-night",
+   "title": "Day or Night?",
+   "covers": "Some animals are awake at night, like owls and bats; others in the day, like bees. Match each animal to when it's awake (CA NGSS day & night patterns).",
+   "pages": [],
+   "questions": []
+  },
+  "make-5": {
+   "id": "make-5",
+   "title": "Make 5",
+   "covers": "Find how many more make 5: 3 and 2, 4 and 1. Building the number 5 with two parts (CA CCSS K.OA.4).",
+   "pages": [],
+   "questions": []
+  },
+  "which-more": {
+   "id": "which-more",
+   "title": "Which Has More?",
+   "covers": "Count two groups of animals and tap the one with more (or fewer). Comparing quantities (CA CCSS K.CC.6).",
+   "pages": [],
+   "questions": []
+  },
+  "egg-or-not": {
+   "id": "egg-or-not",
+   "title": "Egg or Not?",
+   "covers": "Some animals hatch from eggs (hens, turtles, fish); others are born (puppies, calves). Sort animals by how they have young (CA NGSS K).",
+   "pages": [],
+   "questions": []
+  },
+  "wild-or-pet": {
+   "id": "wild-or-pet",
+   "title": "Wild or Pet?",
+   "covers": "Pets live with people, like dogs and cats. Wild animals live on their own, like lions. Sort each animal (CA NGSS K).",
+   "pages": [],
+   "questions": []
+  },
+  "make-10": {
+   "id": "make-10",
+   "title": "Make 10",
+   "covers": "Some animals are here. Find how many more make ten (CA CCSS K.OA.4).",
+   "pages": [],
+   "questions": []
+  },
+  "take-away": {
+   "id": "take-away",
+   "title": "Take Away",
+   "covers": "Some animals hop away. Count how many are left (CA CCSS K.OA.1).",
+   "pages": [],
+   "questions": []
+  },
+  "doubles": {
+   "id": "doubles",
+   "title": "Doubles",
+   "covers": "A double is a number and itself. 2 and 2 makes 4 (CA CCSS 1.OA.6).",
+   "pages": [],
+   "questions": []
+  },
+  "ordinals": {
+   "id": "ordinals",
+   "title": "First, Second, Third",
+   "covers": "Count from the front to find each place — first, second, third (CA CCSS K.CC.4).",
+   "pages": [],
+   "questions": []
+  },
+  "beginning-sounds": {
+   "id": "beginning-sounds",
+   "title": "Beginning Sounds",
+   "covers": "Every word starts with a sound. Match the animal to its first letter (CA CCSS RF.K.3).",
+   "pages": [],
+   "questions": []
+  },
+  "life-cycle": {
+   "id": "life-cycle",
+   "title": "Growing Up",
+   "covers": "Living things grow and change. An egg becomes a caterpillar becomes a butterfly (CA NGSS 1-LS1).",
+   "pages": [],
+   "questions": []
+  },
+  "count-tens": {
+   "id": "count-tens",
+   "title": "Count by 10s",
+   "covers": "Skip count by tens: 10, 20, 30, 40 (CA CCSS K.CC.1).",
+   "pages": [],
+   "questions": []
+  },
+  "fast-slow": {
+   "id": "fast-slow",
+   "title": "Fast or Slow",
+   "covers": "Some animals are fast, some are slow. Sort each one (CA NGSS K-PS2).",
+   "pages": [],
+   "questions": []
+  },
+  "sink-float": {
+   "id": "sink-float",
+   "title": "Sink or Float",
+   "covers": "Some things float on water, some sink. Predict each one (CA NGSS 2-PS1).",
+   "pages": [],
+   "questions": []
+  },
+  "letter-case": {
+   "id": "letter-case",
+   "title": "Big & Little Letters",
+   "covers": "Match each big letter to its little letter (CA CCSS RF.K.1d).",
+   "pages": [],
+   "questions": []
+  },
+  "five-senses": {
+   "id": "five-senses",
+   "title": "Five Senses",
+   "covers": "See, hear, smell, taste, and touch — your five senses (CA NGSS K).",
+   "pages": [],
+   "questions": []
+  },
+  "opposites": {
+   "id": "opposites",
+   "title": "Opposites",
+   "covers": "Opposites are totally different — big/little, hot/cold (CA CCSS L.K.5b).",
+   "pages": [],
+   "questions": []
+  },
+  "syllables": {
+   "id": "syllables",
+   "title": "Syllable Safari",
+   "covers": "Breaking words into syllables by clapping the beats — an early reading skill (CA CCSS RF.K.2).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🐱"
+     ],
+     "teach": "Clap the name: CAT. Just one clap! 👏",
+     "prompts": [
+      "How many claps in 🐱 CAT?",
+      "Clap 🐱 CAT — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": true
+      },
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": false
+      },
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐶"
+     ],
+     "teach": "DOG — one clap! 👏",
+     "prompts": [
+      "How many claps in 🐶 DOG?",
+      "Clap 🐶 DOG — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": true
+      },
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": false
+      },
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐰"
+     ],
+     "teach": "RAB · BIT — two claps! 👏👏",
+     "prompts": [
+      "How many claps in 🐰 RABBIT?",
+      "Clap 🐰 RAB-BIT — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": true
+      },
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": false
+      },
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦒"
+     ],
+     "teach": "GI · RAFFE — two claps! 👏👏",
+     "prompts": [
+      "How many claps in 🦒 GIRAFFE?",
+      "Clap 🦒 GI-RAFFE — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": true
+      },
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": false
+      },
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐧"
+     ],
+     "teach": "PEN · GUIN — two claps! 👏👏",
+     "prompts": [
+      "How many claps in 🐧 PENGUIN?",
+      "Clap 🐧 PEN-GUIN — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": true
+      },
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": false
+      },
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐘"
+     ],
+     "teach": "EL · E · PHANT — three claps! 👏👏👏",
+     "prompts": [
+      "How many claps in 🐘 ELEPHANT?",
+      "Clap 🐘 EL-E-PHANT — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": true
+      },
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": false
+      },
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦋"
+     ],
+     "teach": "BUT · TER · FLY — three claps! 👏👏👏",
+     "prompts": [
+      "How many claps in 🦋 BUTTERFLY?",
+      "Clap 🦋 BUT-TER-FLY — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": true
+      },
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": false
+      },
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐊"
+     ],
+     "teach": "CROC · O · DILE — three claps! 👏👏👏",
+     "prompts": [
+      "How many claps in 🐊 CROCODILE?",
+      "Clap 🐊 CROC-O-DILE — how many beats?"
+     ],
+     "choices": [
+      {
+       "emoji": "3️⃣",
+       "label": "3 claps",
+       "correct": true
+      },
+      {
+       "emoji": "2️⃣",
+       "label": "2 claps",
+       "correct": false
+      },
+      {
+       "emoji": "1️⃣",
+       "label": "1 clap",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "animal-groups": {
+   "id": "animal-groups",
+   "title": "Animal Groups",
+   "covers": "Sorting animals into groups — mammals, birds, fish, reptiles, and bugs — by their traits (CA NGSS K-LS1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🐕"
+     ],
+     "teach": "A 🐕 dog has FUR and drank milk as a baby — it is a MAMMAL.",
+     "prompts": [
+      "What group is a 🐕 dog?",
+      "🐕 dogs belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐻",
+       "label": "Mammal",
+       "correct": true
+      },
+      {
+       "emoji": "🐦",
+       "label": "Bird",
+       "correct": false
+      },
+      {
+       "emoji": "🐟",
+       "label": "Fish",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦅"
+     ],
+     "teach": "An 🦅 eagle has FEATHERS and WINGS — it is a BIRD.",
+     "prompts": [
+      "What group is an 🦅 eagle?",
+      "🦅 eagles belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐦",
+       "label": "Bird",
+       "correct": true
+      },
+      {
+       "emoji": "🐻",
+       "label": "Mammal",
+       "correct": false
+      },
+      {
+       "emoji": "🦎",
+       "label": "Reptile",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐠"
+     ],
+     "teach": "A 🐠 fish has FINS and lives underwater — it is a FISH.",
+     "prompts": [
+      "What group is a 🐠 fish?",
+      "🐠 fish belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐟",
+       "label": "Fish",
+       "correct": true
+      },
+      {
+       "emoji": "🐦",
+       "label": "Bird",
+       "correct": false
+      },
+      {
+       "emoji": "🐛",
+       "label": "Bug",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐍"
+     ],
+     "teach": "A 🐍 snake has dry SCALES and is cold-blooded — it is a REPTILE.",
+     "prompts": [
+      "What group is a 🐍 snake?",
+      "🐍 snakes belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🦎",
+       "label": "Reptile",
+       "correct": true
+      },
+      {
+       "emoji": "🐻",
+       "label": "Mammal",
+       "correct": false
+      },
+      {
+       "emoji": "🐦",
+       "label": "Bird",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐝"
+     ],
+     "teach": "A 🐝 bee has SIX legs — it is a BUG (an insect).",
+     "prompts": [
+      "What group is a 🐝 bee?",
+      "🐝 bees belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐛",
+       "label": "Bug",
+       "correct": true
+      },
+      {
+       "emoji": "🐟",
+       "label": "Fish",
+       "correct": false
+      },
+      {
+       "emoji": "🦎",
+       "label": "Reptile",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐢"
+     ],
+     "teach": "A 🐢 turtle has SCALES and a shell — it is a REPTILE.",
+     "prompts": [
+      "What group is a 🐢 turtle?",
+      "🐢 turtles belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🦎",
+       "label": "Reptile",
+       "correct": true
+      },
+      {
+       "emoji": "🐟",
+       "label": "Fish",
+       "correct": false
+      },
+      {
+       "emoji": "🐻",
+       "label": "Mammal",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦆"
+     ],
+     "teach": "A 🦆 duck has FEATHERS — it is a BIRD, even though it swims!",
+     "prompts": [
+      "What group is a 🦆 duck?",
+      "🦆 ducks belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐦",
+       "label": "Bird",
+       "correct": true
+      },
+      {
+       "emoji": "🐟",
+       "label": "Fish",
+       "correct": false
+      },
+      {
+       "emoji": "🐛",
+       "label": "Bug",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐬"
+     ],
+     "teach": "A 🐬 dolphin lives in water but has no scales and feeds its babies milk — it is a MAMMAL!",
+     "prompts": [
+      "What group is a 🐬 dolphin?",
+      "🐬 dolphins belong to which group?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐻",
+       "label": "Mammal",
+       "correct": true
+      },
+      {
+       "emoji": "🐟",
+       "label": "Fish",
+       "correct": false
+      },
+      {
+       "emoji": "🦎",
+       "label": "Reptile",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "animal-sounds": {
+   "id": "animal-sounds",
+   "title": "Animal Sounds",
+   "covers": "Matching farm and wild animals to the sounds they make — listening and animal knowledge (CA NGSS K-LS1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🐄"
+     ],
+     "teach": "A 🐄 cow says MOO! 🎵",
+     "prompts": [
+      "What does a 🐄 cow say?",
+      "Which sound does a 🐄 cow make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Moo",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Woof",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Quack",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐶"
+     ],
+     "teach": "A 🐶 dog says WOOF! 🎵",
+     "prompts": [
+      "What does a 🐶 dog say?",
+      "Which sound does a 🐶 dog make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Woof",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Meow",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Moo",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐱"
+     ],
+     "teach": "A 🐱 cat says MEOW! 🎵",
+     "prompts": [
+      "What does a 🐱 cat say?",
+      "Which sound does a 🐱 cat make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Meow",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Oink",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Baa",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦆"
+     ],
+     "teach": "A 🦆 duck says QUACK! 🎵",
+     "prompts": [
+      "What does a 🦆 duck say?",
+      "Which sound does a 🦆 duck make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Quack",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Neigh",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Woof",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐷"
+     ],
+     "teach": "A 🐷 pig says OINK! 🎵",
+     "prompts": [
+      "What does a 🐷 pig say?",
+      "Which sound does a 🐷 pig make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Oink",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Baa",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Meow",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐑"
+     ],
+     "teach": "A 🐑 sheep says BAA! 🎵",
+     "prompts": [
+      "What does a 🐑 sheep say?",
+      "Which sound does a 🐑 sheep make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Baa",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Moo",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Roar",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦁"
+     ],
+     "teach": "A 🦁 lion says ROAR! 🎵",
+     "prompts": [
+      "What does a 🦁 lion say?",
+      "Which sound does a 🦁 lion make?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Roar",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Quack",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Oink",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐔"
+     ],
+     "teach": "A 🐔 rooster says COCK-A-DOODLE-DOO to wake the farm! 🎵",
+     "prompts": [
+      "What does a 🐔 rooster say?",
+      "Which sound wakes the whole farm?"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Cock-a-doodle-doo",
+       "correct": true
+      },
+      {
+       "emoji": "🎵",
+       "label": "Moo",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Meow",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "seasons": {
+   "id": "seasons",
+   "title": "Four Seasons",
+   "covers": "The four seasons and the weather and changes that come with each (CA NGSS K-ESS2-1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "In SPRING, 🌸 flowers bloom and 🐣 baby animals are born.",
+     "prompts": [
+      "When do flowers bloom and babies hatch?",
+      "🌸🐣 — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌸",
+       "label": "Spring",
+       "correct": true
+      },
+      {
+       "emoji": "❄️",
+       "label": "Winter",
+       "correct": false
+      },
+      {
+       "emoji": "🍂",
+       "label": "Fall",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "In SUMMER it is HOT and sunny — perfect for the 🏖️ beach.",
+     "prompts": [
+      "When is it hot and sunny?",
+      "☀️🏖️ — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "☀️",
+       "label": "Summer",
+       "correct": true
+      },
+      {
+       "emoji": "❄️",
+       "label": "Winter",
+       "correct": false
+      },
+      {
+       "emoji": "🌸",
+       "label": "Spring",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "In FALL, leaves turn colors and drop 🍂, and we pick 🎃 pumpkins.",
+     "prompts": [
+      "When do the leaves fall from the trees?",
+      "🍂🎃 — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "🍂",
+       "label": "Fall",
+       "correct": true
+      },
+      {
+       "emoji": "☀️",
+       "label": "Summer",
+       "correct": false
+      },
+      {
+       "emoji": "🌸",
+       "label": "Spring",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "In WINTER it is COLD and it can ❄️ snow — time for a ⛄ snowman.",
+     "prompts": [
+      "When is it cold and snowy?",
+      "❄️⛄ — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "❄️",
+       "label": "Winter",
+       "correct": true
+      },
+      {
+       "emoji": "☀️",
+       "label": "Summer",
+       "correct": false
+      },
+      {
+       "emoji": "🍂",
+       "label": "Fall",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "🐻 Bears sleep (hibernate) all through the cold WINTER.",
+     "prompts": [
+      "When do bears hibernate?",
+      "Bears sleep through which season?"
+     ],
+     "choices": [
+      {
+       "emoji": "❄️",
+       "label": "Winter",
+       "correct": true
+      },
+      {
+       "emoji": "🌸",
+       "label": "Spring",
+       "correct": false
+      },
+      {
+       "emoji": "☀️",
+       "label": "Summer",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "🌻 Sunflowers love the long, hot days of SUMMER.",
+     "prompts": [
+      "When is it hottest, with long sunny days?",
+      "🌻 — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "☀️",
+       "label": "Summer",
+       "correct": true
+      },
+      {
+       "emoji": "❄️",
+       "label": "Winter",
+       "correct": false
+      },
+      {
+       "emoji": "🍂",
+       "label": "Fall",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "🌷 Tulips pop up when the snow melts in SPRING.",
+     "prompts": [
+      "When do tulips pop up after the snow melts?",
+      "🌷 — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌸",
+       "label": "Spring",
+       "correct": true
+      },
+      {
+       "emoji": "🍂",
+       "label": "Fall",
+       "correct": false
+      },
+      {
+       "emoji": "☀️",
+       "label": "Summer",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🗓️"
+     ],
+     "teach": "🍁 Falling leaves and a 🦃 turkey dinner mean it is FALL.",
+     "prompts": [
+      "When do we see falling leaves and turkeys?",
+      "🦃🍁 — which season is it?"
+     ],
+     "choices": [
+      {
+       "emoji": "🍂",
+       "label": "Fall",
+       "correct": true
+      },
+      {
+       "emoji": "❄️",
+       "label": "Winter",
+       "correct": false
+      },
+      {
+       "emoji": "🌸",
+       "label": "Spring",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "move-how": {
+   "id": "move-how",
+   "title": "Swim, Fly, or Walk?",
+   "covers": "How different animals move — swimming, flying, or walking on land (CA NGSS K-LS1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🐟"
+     ],
+     "teach": "A 🐟 fish has FINS and SWIMS through the water. 🌊",
+     "prompts": [
+      "How does a 🐟 fish get around?",
+      "🐟 fish move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": true
+      },
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": false
+      },
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦅"
+     ],
+     "teach": "An 🦅 eagle has WINGS and FLIES high in the sky. ☁️",
+     "prompts": [
+      "How does an 🦅 eagle get around?",
+      "🦅 eagles move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": true
+      },
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": false
+      },
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐕"
+     ],
+     "teach": "A 🐕 dog has four legs and WALKS and runs on land. 🌳",
+     "prompts": [
+      "How does a 🐕 dog get around?",
+      "🐕 dogs move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": true
+      },
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": false
+      },
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🦋"
+     ],
+     "teach": "A 🦋 butterfly has wings and FLIES from flower to flower. 🌸",
+     "prompts": [
+      "How does a 🦋 butterfly get around?",
+      "🦋 butterflies move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": true
+      },
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": false
+      },
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐬"
+     ],
+     "teach": "A 🐬 dolphin SWIMS in the ocean with its strong tail. 🌊",
+     "prompts": [
+      "How does a 🐬 dolphin get around?",
+      "🐬 dolphins move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": true
+      },
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": false
+      },
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐘"
+     ],
+     "teach": "An 🐘 elephant is big and heavy — it WALKS on land. 🌍",
+     "prompts": [
+      "How does an 🐘 elephant get around?",
+      "🐘 elephants move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": true
+      },
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": false
+      },
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐦"
+     ],
+     "teach": "A 🐦 bird flaps its wings and FLIES. ☁️",
+     "prompts": [
+      "How does a 🐦 bird get around?",
+      "🐦 birds move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": true
+      },
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": false
+      },
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐠"
+     ],
+     "teach": "A 🐠 clownfish SWIMS around the coral reef. 🌊",
+     "prompts": [
+      "How does a 🐠 fish get around?",
+      "🐠 fish move by..."
+     ],
+     "choices": [
+      {
+       "emoji": "🌊",
+       "label": "Swimming",
+       "correct": true
+      },
+      {
+       "emoji": "🚶",
+       "label": "Walking",
+       "correct": false
+      },
+      {
+       "emoji": "☁️",
+       "label": "Flying",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "count-5s": {
+   "id": "count-5s",
+   "title": "Count by 5s",
+   "covers": "Skip counting by fives — an early counting pattern (CA CCSS K.CC.1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🖐️"
+     ],
+     "teach": "One hand has 5 fingers. Count by 5s: 5... what's next?",
+     "prompts": [
+      "Count by 5s: 5, then?",
+      "5, __? Count by fives!"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "10",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "6",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "15",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "5, 10... keep counting by 5s!",
+     "prompts": [
+      "5, 10, then?",
+      "What comes after 10 counting by 5s?"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "15",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "11",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "20",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "5, 10, 15... what's next?",
+     "prompts": [
+      "5, 10, 15, then?",
+      "What comes after 15 counting by 5s?"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "20",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "16",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "25",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️"
+     ],
+     "teach": "20, 25... what's next?",
+     "prompts": [
+      "20, 25, then?",
+      "What comes after 25 counting by 5s?"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "30",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "26",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "35",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "How many fingers on TWO whole hands?",
+     "prompts": [
+      "Two hands — how many fingers in all?",
+      "5 and 5 more makes?"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "10",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "7",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "2",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️",
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "5, 10, 15, 20... what's next?",
+     "prompts": [
+      "5, 10, 15, 20, then?",
+      "What comes after 20 counting by 5s?"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "25",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "21",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "30",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️"
+     ],
+     "teach": "30, 35... what's next?",
+     "prompts": [
+      "30, 35, then?",
+      "What comes after 35 counting by 5s?"
+     ],
+     "choices": [
+      {
+       "emoji": "🖐️",
+       "label": "40",
+       "correct": true
+      },
+      {
+       "emoji": "🖐️",
+       "label": "36",
+       "correct": false
+      },
+      {
+       "emoji": "🖐️",
+       "label": "45",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "count-2s": {
+   "id": "count-2s",
+   "title": "Count by 2s",
+   "covers": "Skip counting by twos — an early counting pattern (CA CCSS K.CC.1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "👀"
+     ],
+     "teach": "Eyes come in 2s! Count by 2s: 2... what's next?",
+     "prompts": [
+      "Count by 2s: 2, then?",
+      "2, __? Count by twos!"
+     ],
+     "choices": [
+      {
+       "emoji": "👀",
+       "label": "4",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "3",
+       "correct": false
+      },
+      {
+       "emoji": "👀",
+       "label": "6",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👀",
+      "👀"
+     ],
+     "teach": "2, 4... keep counting by 2s!",
+     "prompts": [
+      "2, 4, then?",
+      "What comes after 4 counting by 2s?"
+     ],
+     "choices": [
+      {
+       "emoji": "👀",
+       "label": "6",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "5",
+       "correct": false
+      },
+      {
+       "emoji": "👀",
+       "label": "8",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👀",
+      "👀",
+      "👀"
+     ],
+     "teach": "2, 4, 6... what's next?",
+     "prompts": [
+      "2, 4, 6, then?",
+      "What comes after 6 counting by 2s?"
+     ],
+     "choices": [
+      {
+       "emoji": "👀",
+       "label": "8",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "7",
+       "correct": false
+      },
+      {
+       "emoji": "👀",
+       "label": "10",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👀"
+     ],
+     "teach": "8, 10... what's next?",
+     "prompts": [
+      "8, 10, then?",
+      "What comes after 10 counting by 2s?"
+     ],
+     "choices": [
+      {
+       "emoji": "👀",
+       "label": "12",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "11",
+       "correct": false
+      },
+      {
+       "emoji": "👀",
+       "label": "20",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐾",
+      "🐾"
+     ],
+     "teach": "A cat has 2 ears. TWO cats have how many ears?",
+     "prompts": [
+      "Two cats — how many ears in all?",
+      "2 and 2 more makes?"
+     ],
+     "choices": [
+      {
+       "emoji": "👂",
+       "label": "4",
+       "correct": true
+      },
+      {
+       "emoji": "👂",
+       "label": "3",
+       "correct": false
+      },
+      {
+       "emoji": "👂",
+       "label": "2",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👀",
+      "👀",
+      "👀",
+      "👀"
+     ],
+     "teach": "2, 4, 6, 8... what's next?",
+     "prompts": [
+      "2, 4, 6, 8, then?",
+      "What comes after 8 counting by 2s?"
+     ],
+     "choices": [
+      {
+       "emoji": "👀",
+       "label": "10",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "9",
+       "correct": false
+      },
+      {
+       "emoji": "👀",
+       "label": "12",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👀"
+     ],
+     "teach": "12, 14... what's next?",
+     "prompts": [
+      "12, 14, then?",
+      "What comes after 14 counting by 2s?"
+     ],
+     "choices": [
+      {
+       "emoji": "👀",
+       "label": "16",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "15",
+       "correct": false
+      },
+      {
+       "emoji": "👀",
+       "label": "20",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "baby-names": {
+   "id": "baby-names",
+   "title": "Baby Animal Names",
+   "covers": "The special names for baby animals — puppy, kitten, calf, and more (vocabulary, CA CCSS L.K.5).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐕 dog is called a PUPPY! 🐶",
+     "prompts": [
+      "What is a baby dog called?",
+      "A baby 🐕 dog is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐶",
+       "label": "Puppy",
+       "correct": true
+      },
+      {
+       "emoji": "🐱",
+       "label": "Kitten",
+       "correct": false
+      },
+      {
+       "emoji": "🐮",
+       "label": "Calf",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐈 cat is called a KITTEN! 🐱",
+     "prompts": [
+      "What is a baby cat called?",
+      "A baby 🐈 cat is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐱",
+       "label": "Kitten",
+       "correct": true
+      },
+      {
+       "emoji": "🐶",
+       "label": "Puppy",
+       "correct": false
+      },
+      {
+       "emoji": "🐑",
+       "label": "Lamb",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐄 cow is called a CALF!",
+     "prompts": [
+      "What is a baby cow called?",
+      "A baby 🐄 cow is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐮",
+       "label": "Calf",
+       "correct": true
+      },
+      {
+       "emoji": "🐴",
+       "label": "Foal",
+       "correct": false
+      },
+      {
+       "emoji": "🐷",
+       "label": "Piglet",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐎 horse is called a FOAL!",
+     "prompts": [
+      "What is a baby horse called?",
+      "A baby 🐎 horse is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐴",
+       "label": "Foal",
+       "correct": true
+      },
+      {
+       "emoji": "🐮",
+       "label": "Calf",
+       "correct": false
+      },
+      {
+       "emoji": "🐶",
+       "label": "Puppy",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐑 sheep is called a LAMB!",
+     "prompts": [
+      "What is a baby sheep called?",
+      "A baby 🐑 sheep is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐑",
+       "label": "Lamb",
+       "correct": true
+      },
+      {
+       "emoji": "🐐",
+       "label": "Kid",
+       "correct": false
+      },
+      {
+       "emoji": "🐷",
+       "label": "Piglet",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐔 chicken is called a CHICK! 🐣",
+     "prompts": [
+      "What is a baby chicken called?",
+      "A baby 🐔 chicken is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐣",
+       "label": "Chick",
+       "correct": true
+      },
+      {
+       "emoji": "🐴",
+       "label": "Foal",
+       "correct": false
+      },
+      {
+       "emoji": "🐮",
+       "label": "Calf",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🐸 frog is called a TADPOLE!",
+     "prompts": [
+      "What is a baby frog called?",
+      "A baby 🐸 frog is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐟",
+       "label": "Tadpole",
+       "correct": true
+      },
+      {
+       "emoji": "🐛",
+       "label": "Caterpillar",
+       "correct": false
+      },
+      {
+       "emoji": "🐣",
+       "label": "Chick",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍼"
+     ],
+     "teach": "A baby 🦘 kangaroo is called a JOEY!",
+     "prompts": [
+      "What is a baby kangaroo called?",
+      "A baby 🦘 kangaroo is a...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🦘",
+       "label": "Joey",
+       "correct": true
+      },
+      {
+       "emoji": "🐶",
+       "label": "Puppy",
+       "correct": false
+      },
+      {
+       "emoji": "🐱",
+       "label": "Kitten",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "plant-parts": {
+   "id": "plant-parts",
+   "title": "Parts of a Plant",
+   "covers": "The parts of a plant — roots, stem, leaves, and flower — and what each does (CA NGSS K-LS1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "The ROOTS grow underground and drink up water. 💧",
+     "prompts": [
+      "Which part drinks water underground?",
+      "What is under the soil, drinking water?"
+     ],
+     "choices": [
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": true
+      },
+      {
+       "emoji": "🌸",
+       "label": "Flower",
+       "correct": false
+      },
+      {
+       "emoji": "🍃",
+       "label": "Leaves",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "The STEM holds the plant up tall and carries water to the top.",
+     "prompts": [
+      "Which part holds the plant up?",
+      "What carries water up the plant?"
+     ],
+     "choices": [
+      {
+       "emoji": "🟩",
+       "label": "Stem",
+       "correct": true
+      },
+      {
+       "emoji": "🌸",
+       "label": "Flower",
+       "correct": false
+      },
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "The LEAVES catch sunlight ☀️ to make food for the plant.",
+     "prompts": [
+      "Which part catches sunlight to make food?",
+      "What uses the sun to make food?"
+     ],
+     "choices": [
+      {
+       "emoji": "🍃",
+       "label": "Leaves",
+       "correct": true
+      },
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": false
+      },
+      {
+       "emoji": "🌸",
+       "label": "Flower",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "The FLOWER is pretty and makes seeds for new plants. 🌱",
+     "prompts": [
+      "Which part makes seeds?",
+      "What part becomes seeds for new plants?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌸",
+       "label": "Flower",
+       "correct": true
+      },
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": false
+      },
+      {
+       "emoji": "🟩",
+       "label": "Stem",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "🐝 Bees visit the FLOWER to help it make seeds.",
+     "prompts": [
+      "Which part do bees visit?",
+      "Where does a bee land on a plant?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌸",
+       "label": "Flower",
+       "correct": true
+      },
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": false
+      },
+      {
+       "emoji": "🍃",
+       "label": "Leaves",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "When you water a plant, the ROOTS drink it up first.",
+     "prompts": [
+      "Water goes into which part first?",
+      "Which part takes in the water?"
+     ],
+     "choices": [
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": true
+      },
+      {
+       "emoji": "🌸",
+       "label": "Flower",
+       "correct": false
+      },
+      {
+       "emoji": "🍃",
+       "label": "Leaves",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🪴"
+     ],
+     "teach": "Leaves are usually green and flat to soak up the ☀️ sun.",
+     "prompts": [
+      "Which green, flat part soaks up sun?",
+      "What part is green and catches light?"
+     ],
+     "choices": [
+      {
+       "emoji": "🍃",
+       "label": "Leaves",
+       "correct": true
+      },
+      {
+       "emoji": "🟤",
+       "label": "Roots",
+       "correct": false
+      },
+      {
+       "emoji": "🟩",
+       "label": "Stem",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "hot-cold": {
+   "id": "hot-cold",
+   "title": "Hot or Cold?",
+   "covers": "Sorting things by temperature — hot or cold — an early science idea (CA NGSS K-PS3).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🔥"
+     ],
+     "teach": "🔥 Fire is HOT! Never touch it.",
+     "prompts": [
+      "Is 🔥 fire hot or cold?",
+      "🔥 fire is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": true
+      },
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "❄️"
+     ],
+     "teach": "❄️ Snow is COLD! Brrr!",
+     "prompts": [
+      "Is ❄️ snow hot or cold?",
+      "❄️ snow is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": true
+      },
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "☀️"
+     ],
+     "teach": "The ☀️ sun makes a hot, sunny day.",
+     "prompts": [
+      "Is the ☀️ sun hot or cold?",
+      "A bright sunny day is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": true
+      },
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍦"
+     ],
+     "teach": "🍦 Ice cream is COLD and yummy!",
+     "prompts": [
+      "Is 🍦 ice cream hot or cold?",
+      "🍦 ice cream is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": true
+      },
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "☕"
+     ],
+     "teach": "☕ Hot cocoa warms you up. It is HOT!",
+     "prompts": [
+      "Is ☕ cocoa hot or cold?",
+      "A cup of ☕ cocoa is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": true
+      },
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🧊"
+     ],
+     "teach": "🧊 An ice cube is COLD and frozen.",
+     "prompts": [
+      "Is 🧊 ice hot or cold?",
+      "🧊 an ice cube is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": true
+      },
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🌋"
+     ],
+     "teach": "🌋 Lava from a volcano is VERY HOT!",
+     "prompts": [
+      "Is 🌋 lava hot or cold?",
+      "🌋 volcano lava is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": true
+      },
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "⛄"
+     ],
+     "teach": "⛄ A snowman is made of COLD snow.",
+     "prompts": [
+      "Is a ⛄ snowman hot or cold?",
+      "⛄ a snowman is...?"
+     ],
+     "choices": [
+      {
+       "emoji": "🥶",
+       "label": "Cold",
+       "correct": true
+      },
+      {
+       "emoji": "🥵",
+       "label": "Hot",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "counting-critters": {
+   "id": "counting-critters",
+   "title": "Counting Critters",
+   "covers": "Counting to 100, counting by tens, counting on from any number, reading numbers 0-20, one-to-one counting, how many, and comparing groups and numbers.",
+   "pages": [],
+   "questions": []
+  },
+  "sun-slept-in": {
+   "id": "sun-slept-in",
+   "title": "The Day the Sun Slept In",
+   "covers": "This story covers all 9 Kindergarten reading skills: key details, beginning-middle-end, characters and setting, new words, story vs. poem, author and illustrator, how pictures help, comparing characters, and reading with interest.",
+   "pages": [
+    {
+     "scene": "nightWake",
+     "text": "🌅 The farm was dark and quiet. Henrietta the 🐔 hen woke up."
+    },
+    {
+     "scene": "problem",
+     "text": "\"Where is 🐓 Rooster? He crows to wake the ☀️ sun!\""
+    },
+    {
+     "scene": "pasture",
+     "text": "She ran to the 🌱 pasture. 🐐 Maple the goat came to help."
+    },
+    {
+     "scene": "barn",
+     "text": "At the 🛖 barn, the 🐕 dogs Bodhi and Kona sniffed for Rooster."
+    },
+    {
+     "scene": "hayloft",
+     "text": "They found 🐓 Rooster asleep 😴 in the 🌾 hay. He overslept!"
+    },
+    {
+     "scene": "sunrise",
+     "text": "\"Cock-a-doodle-doo! 🐓\" The ☀️ sun came up. The farm woke up. 😊"
+    }
+   ],
+   "questions": [
+    {
+     "visuals": [],
+     "teach": "🌅 Henrietta the 🐔 hen woke up, but the farm was still 🌙 dark and quiet. Someone special was missing!",
+     "prompts": [
+      "Who was Henrietta looking for? 🔍",
+      "Henrietta was searching for someone. Who was it?",
+      "Who did Henrietta want to find?"
+     ],
+     "choices": [
+      {
+       "emoji": "🐔",
+       "label": "Rooster",
+       "correct": true
+      },
+      {
+       "emoji": "🍎",
+       "label": "A snack",
+       "correct": false
+      },
+      {
+       "emoji": "🥚",
+       "label": "Her eggs",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🐓 Rooster has a BIG job! When he crows, the ☀️ sun comes up and the whole farm 🐮🐷 wakes up.",
+     "prompts": [
+      "Why does Rooster crow? 🎺",
+      "What is Rooster's special job?",
+      "What does Rooster's crow do?"
+     ],
+     "choices": [
+      {
+       "emoji": "☀️",
+       "label": "To wake the sun",
+       "correct": true
+      },
+      {
+       "emoji": "🍽️",
+       "label": "To find food",
+       "correct": false
+      },
+      {
+       "emoji": "🎲",
+       "label": "To play",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🐕 Bodhi sniffed and sniffed and led everyone up high. There was 🐓 Rooster, fast asleep in the 🌾 hay!",
+     "prompts": [
+      "Where was Rooster hiding? 🔎",
+      "Where did they finally find Rooster?",
+      "Where was Rooster sleeping?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌾",
+       "label": "In the hay loft",
+       "correct": true
+      },
+      {
+       "emoji": "💧",
+       "label": "In the pond",
+       "correct": false
+      },
+      {
+       "emoji": "🏚️",
+       "label": "Under the barn",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🎭 The characters are the WHO of a story. Ours are 🐔 Henrietta, 🐐 Maple, 🐕 Bodhi, and 🐓 Rooster.",
+     "prompts": [
+      "Who is a character in the story? 🎭",
+      "Which one is a character?",
+      "Pick a character from our story."
+     ],
+     "choices": [
+      {
+       "emoji": "🐐",
+       "label": "Maple the goat",
+       "correct": true
+      },
+      {
+       "emoji": "🚲",
+       "label": "A bicycle",
+       "correct": false
+      },
+      {
+       "emoji": "☁️",
+       "label": "A cloud",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🗺️ The setting is the WHERE. Our whole story happens in one place, with a 🛖 barn and a 🌱 pasture.",
+     "prompts": [
+      "Where does the story happen? 🗺️",
+      "What is the setting of the story?",
+      "Where does our story take place?"
+     ],
+     "choices": [
+      {
+       "emoji": "🚜",
+       "label": "On the farm",
+       "correct": true
+      },
+      {
+       "emoji": "🏖️",
+       "label": "At the beach",
+       "correct": false
+      },
+      {
+       "emoji": "🚀",
+       "label": "In space",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🤔 Characters are living things that DO things. The 🌾 hay is just a thing Rooster slept on.",
+     "prompts": [
+      "Which one is NOT a character? 🚫",
+      "Which one is just a thing, not a character?",
+      "Which of these is NOT alive in the story?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌾",
+       "label": "The hay",
+       "correct": true
+      },
+      {
+       "emoji": "🐶",
+       "label": "Bodhi",
+       "correct": false
+      },
+      {
+       "emoji": "🐔",
+       "label": "Henrietta",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🌅 Henrietta woke up at DAWN. Dawn is the early morning time when the ☀️ sun first comes up.",
+     "prompts": [
+      "What does DAWN mean? 🌅",
+      "DAWN is the time when...",
+      "When does dawn happen?"
+     ],
+     "choices": [
+      {
+       "emoji": "☀️",
+       "label": "When the sun comes up",
+       "correct": true
+      },
+      {
+       "emoji": "🌱",
+       "label": "A grassy field",
+       "correct": false
+      },
+      {
+       "emoji": "🛖",
+       "label": "The top of the barn",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🌱 Henrietta hurried to the PASTURE. A pasture is a big grassy field 🌾 where the animals eat.",
+     "prompts": [
+      "What does PASTURE mean? 🌱",
+      "A PASTURE is...",
+      "What is a pasture?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌱",
+       "label": "A grassy field",
+       "correct": true
+      },
+      {
+       "emoji": "☀️",
+       "label": "When the sun comes up",
+       "correct": false
+      },
+      {
+       "emoji": "😴",
+       "label": "Slept too long",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🛖 They found Rooster in the HAY LOFT. A hay loft is the space up high at the top of the barn, full of 🌾 hay.",
+     "prompts": [
+      "What does HAY LOFT mean? 🛖",
+      "A HAY LOFT is...",
+      "Where is the hay loft?"
+     ],
+     "choices": [
+      {
+       "emoji": "🛖",
+       "label": "The top of the barn",
+       "correct": true
+      },
+      {
+       "emoji": "🌱",
+       "label": "A grassy field",
+       "correct": false
+      },
+      {
+       "emoji": "💧",
+       "label": "In the pond",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "😴 Rooster OVERSLEPT! That means he slept too long ⏰ and missed his job of waking the sun.",
+     "prompts": [
+      "What does OVERSLEPT mean? 😴",
+      "OVERSLEPT means...",
+      "What did Rooster do?"
+     ],
+     "choices": [
+      {
+       "emoji": "😴",
+       "label": "Slept too long",
+       "correct": true
+      },
+      {
+       "emoji": "🌱",
+       "label": "A grassy field",
+       "correct": false
+      },
+      {
+       "emoji": "🏃",
+       "label": "Ran away fast",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "📖 A story tells what happens. A 🎵 poem is shorter, and the ending words often rhyme, like a little song.",
+     "prompts": [
+      "What does a poem often do? 🎵",
+      "What is special about a poem?",
+      "A poem usually does this:"
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Rhymes",
+       "correct": true
+      },
+      {
+       "emoji": "📚",
+       "label": "Has chapters",
+       "correct": false
+      },
+      {
+       "emoji": "📜",
+       "label": "Is always long",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🎶 Listen: 'the sky is 💙 blue, cock-a-doodle-🐓 doo!' Blue and doo rhyme, so it is a poem.",
+     "prompts": [
+      "\\\"...sky so blue, cock-a-doodle-doo\\\" is a... 🎵",
+      "The little rhyme Rooster sings is a...",
+      "A short rhyme like that is called a..."
+     ],
+     "choices": [
+      {
+       "emoji": "🎵",
+       "label": "Poem",
+       "correct": true
+      },
+      {
+       "emoji": "📖",
+       "label": "Story",
+       "correct": false
+      },
+      {
+       "emoji": "📋",
+       "label": "List",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "✍️ Every book has helpers. The author is the person who thinks up and writes all the 📝 words.",
+     "prompts": [
+      "The author makes the... ✍️",
+      "An author's job is to make the...",
+      "The author of a book writes the..."
+     ],
+     "choices": [
+      {
+       "emoji": "✍️",
+       "label": "Words",
+       "correct": true
+      },
+      {
+       "emoji": "🎨",
+       "label": "Pictures",
+       "correct": false
+      },
+      {
+       "emoji": "🎵",
+       "label": "Music",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🎨 The illustrator is the helper who draws all the 🖼️ pictures that go with the words.",
+     "prompts": [
+      "The illustrator makes the... 🎨",
+      "An illustrator's job is to make the...",
+      "The illustrator of a book draws the..."
+     ],
+     "choices": [
+      {
+       "emoji": "🎨",
+       "label": "Pictures",
+       "correct": true
+      },
+      {
+       "emoji": "✍️",
+       "label": "Words",
+       "correct": false
+      },
+      {
+       "emoji": "🍪",
+       "label": "Snacks",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🌟 Maddy Turley did BOTH jobs — she wrote the ✍️ words AND drew the 🎨 pictures!",
+     "prompts": [
+      "Maddy did both jobs, so she is the... 🌟",
+      "Maddy wrote AND drew it, so she is the...",
+      "Someone who writes and draws a book is the..."
+     ],
+     "choices": [
+      {
+       "emoji": "🌟",
+       "label": "Author and illustrator",
+       "correct": true
+      },
+      {
+       "emoji": "👀",
+       "label": "Reader only",
+       "correct": false
+      },
+      {
+       "emoji": "🖨️",
+       "label": "Printer",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🖼️ Pictures help us understand a story. In the first picture, the 🌙 moon and ⭐ stars show it is night.",
+     "prompts": [
+      "In the first picture, the sky is... 🌙",
+      "What does the first picture tell us about the sky?",
+      "Look at picture one. The sky looks..."
+     ],
+     "choices": [
+      {
+       "emoji": "🌙",
+       "label": "Dark",
+       "correct": true
+      },
+      {
+       "emoji": "☀️",
+       "label": "Sunny",
+       "correct": false
+      },
+      {
+       "emoji": "🌸",
+       "label": "Pink",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "👀 Look closely at this picture. 🐓 Rooster is lying in the 🌾 hay with his eyes shut. 😴",
+     "prompts": [
+      "In the hay loft picture, Rooster is... 😴",
+      "What is Rooster doing in this picture?",
+      "The picture shows Rooster..."
+     ],
+     "choices": [
+      {
+       "emoji": "😴",
+       "label": "Asleep",
+       "correct": true
+      },
+      {
+       "emoji": "🦅",
+       "label": "Flying",
+       "correct": false
+      },
+      {
+       "emoji": "🏊",
+       "label": "Swimming",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🌅 The last picture is bright and golden. That big yellow circle is the ☀️ sun coming up over the hills.",
+     "prompts": [
+      "The last picture shows the... ☀️",
+      "What is in the last picture?",
+      "Look at the final picture. It shows the..."
+     ],
+     "choices": [
+      {
+       "emoji": "☀️",
+       "label": "Sun rising",
+       "correct": true
+      },
+      {
+       "emoji": "🌙",
+       "label": "Moon",
+       "correct": false
+      },
+      {
+       "emoji": "🌧️",
+       "label": "Rain",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🐕 Bodhi is a dog, and dogs have a super 👃 nose. He used it to follow Rooster's tracks. 🐾",
+     "prompts": [
+      "How did Bodhi help? 🐾",
+      "What did Bodhi do to help find Rooster?",
+      "Bodhi helped the friends by..."
+     ],
+     "choices": [
+      {
+       "emoji": "👃",
+       "label": "Sniffed the tracks",
+       "correct": true
+      },
+      {
+       "emoji": "🦅",
+       "label": "Flew up high",
+       "correct": false
+      },
+      {
+       "emoji": "🏊",
+       "label": "Swam across",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🐐 Maple the goat is a good friend. She had no special nose, but she came along to 🔍 help search.",
+     "prompts": [
+      "How did Maple help? 🐐",
+      "What did Maple do to help?",
+      "Maple was a good friend because she..."
+     ],
+     "choices": [
+      {
+       "emoji": "🐐",
+       "label": "Came along to search",
+       "correct": true
+      },
+      {
+       "emoji": "🍳",
+       "label": "Cooked dinner",
+       "correct": false
+      },
+      {
+       "emoji": "😴",
+       "label": "Kept sleeping",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🤝 Bodhi and Maple are different animals, but they did the same kind thing — they both helped 🐔 Henrietta.",
+     "prompts": [
+      "Bodhi and Maple BOTH... 🤝",
+      "What did Bodhi AND Maple both do?",
+      "What is the same about Bodhi and Maple?"
+     ],
+     "choices": [
+      {
+       "emoji": "🤝",
+       "label": "Helped Henrietta",
+       "correct": true
+      },
+      {
+       "emoji": "🙈",
+       "label": "Hid from her",
+       "correct": false
+      },
+      {
+       "emoji": "🐓",
+       "label": "Crowed loudly",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [],
+     "teach": "🎉 You read the WHOLE story! Good readers have favorite parts, and there is no wrong answer here. 💛",
+     "prompts": [
+      "Which part did you like best? ⭐",
+      "What was your favorite part of the story?",
+      "Which part did you enjoy the most?"
+     ],
+     "choices": [
+      {
+       "emoji": "🌙",
+       "label": "The night search",
+       "correct": true
+      },
+      {
+       "emoji": "🐓",
+       "label": "Finding Rooster",
+       "correct": true
+      },
+      {
+       "emoji": "☀️",
+       "label": "The sunrise",
+       "correct": true
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
