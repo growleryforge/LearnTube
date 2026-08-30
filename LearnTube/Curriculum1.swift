@@ -33,9 +33,9 @@ extension Curriculum {
               activity: "Tricky words you just have to know. Tap the right spelling!",
               parentTip: "A few each day beats all of them at once.",
               lesson: .quiz([
-                Question("Which spells  SAID?", correct: "said", wrong: ["sed", "sayd"]),
-                Question("Which spells  THEY?", correct: "they", wrong: ["thay", "tey"]),
-                Question("Which spells  WHAT?", correct: "what", wrong: ["wut", "whut"])
+                Question("She ___ hello to me.", correct: "said", wrong: ["sed", "sayd"]),
+                Question("___ are my good friends.", correct: "They", wrong: ["Thay", "Tey"]),
+                Question("___ is your name?", correct: "What", wrong: ["Wut", "Whut"])
               ])),
 
         Skill(id: "G1-R4", grade: 1, subject: .reading,
@@ -44,9 +44,9 @@ extension Curriculum {
               activity: "Read each little sentence, then tap the answer!",
               parentTip: "Reading for meaning is the goal. Read it together if he likes.",
               lesson: .quiz([
-                Question("'The hen is red.'  What color is the hen?", correct: "Red", wrong: ["Blue", "Green"]),
-                Question("'A pig can run.'  What can the pig do?", correct: "Run", wrong: ["Fly", "Swim"]),
-                Question("'I see two cows.'  How many cows?", correct: "Two", wrong: ["One", "Ten"])
+                Question("'The hen is red.'  What color is the hen?", correct: "🔴", wrong: ["🔵", "🟢"]),
+                Question("'A pig can run.'  Can the pig run?", correct: "Yes", wrong: ["No"]),
+                Question("'I see two cows.'  How many cows?", correct: "2", wrong: ["1", "10"])
               ])),
 
         Skill(id: "G1-R5", grade: 1, subject: .reading,
@@ -146,7 +146,7 @@ extension Curriculum {
               lesson: .numberPad([
                 NumberProblem("14 - 6 = ?", 8),
                 NumberProblem("17 - 8 = ?", 9),
-                NumberProblem("20 - 10 = ?", 10)
+                NumberProblem("18 - 6 = ?", 12)
               ])),
 
         Skill(id: "G1-M4", grade: 1, subject: .math,
@@ -184,8 +184,8 @@ extension Curriculum {
               activity: "Measure by lining up units with no gaps. Solve the measuring puzzle!",
               parentTip: "No gaps and no overlaps is the key rule.",
               lesson: .numberPad([
-                NumberProblem("A pencil is 5 paperclips long. How many clips?", 5),
-                NumberProblem("A carrot is 4 clips, a worm is 2 clips. How many longer is the carrot?", 2),
+                NumberProblem("How long is the pencil? Count the clips!", 5, visual: ["📎","📎","📎","📎","📎"]),
+                NumberProblem("A carrot is 4 clips, a worm is 1 clip. How many longer is the carrot?", 3),
                 NumberProblem("3 clips + 3 clips of length = ? clips", 6)
               ])),
 
@@ -377,10 +377,10 @@ extension Curriculum {
               activity: "Read the little sentence, then answer about it!",
               parentTip: "He reads one short sentence and answers who or what. That's real comprehension.",
               lesson: .quiz([
-                Question("The cat is big. Who is big?", correct: "cat", wrong: ["dog", "sun"]),
-                Question("A dog can run. What can run?", correct: "dog", wrong: ["cat", "hat"]),
-                Question("The sun is hot. What is hot?", correct: "sun", wrong: ["ice", "dog"]),
-                Question("I see a red bug. What color is it?", correct: "red", wrong: ["blue", "big"])
+                Question("The cat is big. Who is big?", correct: "🐱", wrong: ["🐶", "☀️"]),
+                Question("A dog can run. What can run?", correct: "🐶", wrong: ["🐱", "🐦"]),
+                Question("The sun is hot. What is hot?", correct: "☀️", wrong: ["❄️", "🐶"]),
+                Question("I see a red bug. What color is it?", correct: "🔴", wrong: ["🔵", "🟢"])
               ])),
 
         Skill(id: "ST-R2", grade: 0, subject: .reading,
@@ -430,9 +430,9 @@ extension Curriculum {
               activity: "Some go away. Count the ones that are LEFT!",
               parentTip: "Use snacks: start with a few, eat one, count what's left. That's subtracting.",
               lesson: .numberPad([
-                NumberProblem("2 🍪, eat 1. How many are left?", 1, visual: ["🍪"]),
+                NumberProblem("4 🍪, eat 1. How many are left?", 3, visual: ["🍪","🍪","🍪"]),
                 NumberProblem("3 🍎, eat 1. How many are left?", 2, visual: ["🍎","🍎"]),
-                NumberProblem("4 🍌, give 2 away. How many are left?", 2, visual: ["🍌","🍌"]),
+                NumberProblem("5 🍌, give 2 away. How many are left?", 3, visual: ["🍌","🍌","🍌"]),
                 NumberProblem("5 🍇, eat 1. How many are left?", 4, visual: ["🍇","🍇","🍇","🍇"])
               ])),
 
@@ -480,7 +480,7 @@ extension Curriculum {
               lesson: .numberPad([
                 NumberProblem("5 🦆 swim. 2 swim away. How many left?", 3, visual: ["🦆","🦆","🦆"]),
                 NumberProblem("4 🐰 hop. 1 hops away. How many left?", 3, visual: ["🐰","🐰","🐰"]),
-                NumberProblem("6 🐟 swim. 3 swim off. How many left?", 3, visual: ["🐟","🐟","🐟"]),
+                NumberProblem("6 🐟 swim. 2 swim off. How many left?", 4, visual: ["🐟","🐟","🐟","🐟"]),
                 NumberProblem("7 🐥 peck. 2 run off. How many left?", 5, visual: ["🐥","🐥","🐥","🐥","🐥"])
               ])),
 
@@ -592,9 +592,9 @@ extension Curriculum {
               activity: "Shapes have names. Tap the one that matches!",
               parentTip: "Hunt for circles and squares around the house together.",
               lesson: .quiz([
-                Question("Which one is a circle?", correct: "circle", wrong: ["square", "triangle"]),
-                Question("Which one is a square?", correct: "square", wrong: ["circle", "triangle"]),
-                Question("Which one is a triangle?", correct: "triangle", wrong: ["circle", "square"])
+                Question("Which one is a circle?", correct: "🔵", wrong: ["🟦", "🔺"]),
+                Question("Which one is a square?", correct: "🟦", wrong: ["🔵", "🔺"]),
+                Question("Which one is a triangle?", correct: "🔺", wrong: ["🔵", "🟦"])
               ])),
 
         Skill(id: "TK-C1", grade: -1, subject: .math,
@@ -676,7 +676,7 @@ extension Curriculum {
                 Question("A baby dog is a...", correct: "puppy", wrong: ["kitten", "calf"]),
                 Question("A baby cat is a...", correct: "kitten", wrong: ["puppy", "chick"]),
                 Question("A baby cow is a...", correct: "calf", wrong: ["lamb", "puppy"]),
-                Question("A baby chicken is a...", correct: "chick", wrong: ["kitten", "calf"])
+                Question("A baby hen is a...", correct: "chick", wrong: ["kitten", "calf"])
               ])),
 
         // ---------- Life & feelings (kept light and picture-based) ----------
@@ -834,6 +834,325 @@ extension Curriculum {
                 NumberProblem("15 and 10 more. How many?", 25),
                 NumberProblem("30, now ten less. How many?", 20),
                 NumberProblem("60, now ten less. How many?", 50)
+              ]))
+    ]
+}
+
+// MARK: - First-Grade Readiness bank (a deep, self-sustaining stretch set)
+//
+// A large, varied bank of winnable first-grade-readiness games so Gabriel has
+// weeks of fresh, confidence-building work without new games being added. Heavy
+// on his strengths — number entry, concrete counting, and animal story problems
+// — with gently scaffolded reading (picture answers, two choices, sight words in
+// context) and animal science for variety. Everything is graded First Grade so
+// the Progress tab shows him climbing, teaches first, reveals answers after two
+// misses, and stays winnable.
+extension Curriculum {
+    static let readiness: [Skill] = [
+
+        // ============ MATH (number entry + concrete counting) ============
+        Skill(id: "FR-M1", grade: 1, subject: .math,
+              title: "Count by 10s",
+              standard: "Readiness · CCSS 1.NBT.1",
+              activity: "Count by tens: 10, 20, 30… Type the next number!",
+              parentTip: "Counting by tens is the fast way to count big groups. Only the tens digit changes.",
+              lesson: .numberPad([
+                NumberProblem("10, 20, 30, ?", 40),
+                NumberProblem("40, 50, 60, ?", 70),
+                NumberProblem("10, 20, ?", 30),
+                NumberProblem("70, 80, 90, ?", 100)
+              ])),
+
+        Skill(id: "FR-M2", grade: 1, subject: .math,
+              title: "Count by 5s",
+              standard: "Readiness · CCSS 1.NBT.1",
+              activity: "Count by fives: 5, 10, 15… Type the next number!",
+              parentTip: "Counting by fives is like counting hands. Great for telling time later.",
+              lesson: .numberPad([
+                NumberProblem("5, 10, 15, ?", 20),
+                NumberProblem("20, 25, 30, ?", 35),
+                NumberProblem("5, 10, ?", 15),
+                NumberProblem("30, 35, 40, ?", 45)
+              ])),
+
+        Skill(id: "FR-M3", grade: 1, subject: .math,
+              title: "Count by 2s",
+              standard: "Readiness · CCSS 1.NBT.1",
+              activity: "Count by twos: 2, 4, 6… Type the next number!",
+              parentTip: "Counting by twos skips every other number. Count socks or shoes in twos.",
+              lesson: .numberPad([
+                NumberProblem("2, 4, 6, ?", 8),
+                NumberProblem("8, 10, 12, ?", 14),
+                NumberProblem("2, 4, ?", 6),
+                NumberProblem("12, 14, 16, ?", 18)
+              ])),
+
+        Skill(id: "FR-M4", grade: 1, subject: .math,
+              title: "Doubles Plus One",
+              standard: "Readiness · CCSS 1.OA.6",
+              activity: "Almost a double! Do the double, then add one more.",
+              parentTip: "6 + 7 is just 6 + 6 and one more. Knowing doubles makes these easy.",
+              lesson: .numberPad([
+                NumberProblem("5 + 6  (5 and 5, then 1 more)", 11),
+                NumberProblem("6 + 7  (6 and 6, then 1 more)", 13),
+                NumberProblem("7 + 8  (7 and 7, then 1 more)", 15),
+                NumberProblem("8 + 9  (8 and 8, then 1 more)", 17)
+              ])),
+
+        Skill(id: "FR-M5", grade: 1, subject: .math,
+              title: "Tens and Some More",
+              standard: "Readiness · CCSS 1.NBT.2",
+              activity: "A whole ten (or two!) and some more. Type how many in all.",
+              parentTip: "20 and 3 more is 23. See the tens first, then count on the extra ones.",
+              lesson: .numberPad([
+                NumberProblem("20 and 3 more. How many?", 23),
+                NumberProblem("30 and 5 more. How many?", 35),
+                NumberProblem("40 and 2 more. How many?", 42),
+                NumberProblem("20 and 7 more. How many?", 27)
+              ])),
+
+        Skill(id: "FR-M6", grade: 1, subject: .math,
+              title: "How Many More?",
+              standard: "Readiness · CCSS 1.OA.1",
+              activity: "Two groups. Count how many MORE the bigger group has!",
+              parentTip: "Line them up and see the extra. Comparing is a kind of subtracting.",
+              lesson: .numberPad([
+                NumberProblem("5 🐶 and 3 🐱. How many MORE dogs?", 2, visual: ["🐶","🐶","🐶","🐶","🐶","🐱","🐱","🐱"]),
+                NumberProblem("6 🐤 and 2 🐰. How many MORE chicks?", 4, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","🐰","🐰"]),
+                NumberProblem("7 🐟 and 4 🐸. How many MORE fish?", 3, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","🐟","🐸","🐸","🐸","🐸"]),
+                NumberProblem("5 🐝 and 1 🐞. How many MORE bees?", 4, visual: ["🐝","🐝","🐝","🐝","🐝","🐞"])
+              ])),
+
+        Skill(id: "FR-M7", grade: 1, subject: .math,
+              title: "Barn Story Problems",
+              standard: "Readiness · CCSS 1.OA.1",
+              activity: "A little story on the farm. Read it, then type the answer!",
+              parentTip: "Some come, some go. Act it out with his toy animals if he likes.",
+              lesson: .numberPad([
+                NumberProblem("6 🐮 in the barn. 3 more come in. How many now?", 9),
+                NumberProblem("10 🐔 pecking. 4 go outside. How many left?", 6),
+                NumberProblem("5 🐑 here and 7 🐑 there. How many sheep?", 12),
+                NumberProblem("8 🐷 by the trough. 2 run to the mud. How many left?", 6)
+              ])),
+
+        Skill(id: "FR-M8", grade: 1, subject: .math,
+              title: "Pond Story Problems",
+              standard: "Readiness · CCSS 1.OA.1",
+              activity: "More animal stories! Read it, then type how many.",
+              parentTip: "Pull out the numbers and decide: are we adding more, or taking some away?",
+              lesson: .numberPad([
+                NumberProblem("9 🦆 on the pond. 5 fly away. How many left?", 4),
+                NumberProblem("7 🐴 in the field and 6 more come. How many?", 13),
+                NumberProblem("12 🐝 at the hive. 4 fly off. How many left?", 8),
+                NumberProblem("3 🐰, then 4 🐰, then 2 🐰. How many rabbits?", 9)
+              ])),
+
+        Skill(id: "FR-M9", grade: 1, subject: .math,
+              title: "Make a Ten to Add",
+              standard: "Readiness · CCSS 1.OA.6",
+              activity: "Fill up to ten first, then add the rest. Type the total!",
+              parentTip: "9 + 3: give 1 to the 9 to make 10, then 2 more is 12. A big first-grade trick.",
+              lesson: .numberPad([
+                NumberProblem("9 + 3  (make 10 first!)", 12),
+                NumberProblem("8 + 4  (make 10 first!)", 12),
+                NumberProblem("9 + 5  (make 10 first!)", 14),
+                NumberProblem("8 + 5  (make 10 first!)", 13)
+              ])),
+
+        Skill(id: "FR-M10", grade: 1, subject: .math,
+              title: "Count On Past Ten",
+              standard: "Readiness · CCSS 1.OA.5",
+              activity: "Start at the big number and count up a few more!",
+              parentTip: "Don't start from one. Start at 16 and count 17, 18, 19.",
+              lesson: .numberPad([
+                NumberProblem("Start at 16. Count on 3 more. Where do you land?", 19),
+                NumberProblem("Start at 14. Count on 5 more. Where do you land?", 19),
+                NumberProblem("Start at 11. Count on 4 more. Where do you land?", 15),
+                NumberProblem("Start at 15. Count on 2 more. Where do you land?", 17)
+              ])),
+
+        Skill(id: "FR-M11", grade: 1, subject: .math,
+              title: "The Number Before",
+              standard: "Readiness · CCSS 1.NBT.1",
+              activity: "Which number comes right BEFORE? Type it!",
+              parentTip: "The number before is one less. Before 13 is 12. Count backward one step.",
+              lesson: .numberPad([
+                NumberProblem("What number comes right before 13?", 12),
+                NumberProblem("What number comes right before 20?", 19),
+                NumberProblem("What number comes right before 16?", 15),
+                NumberProblem("What number comes right before 11?", 10)
+              ])),
+
+        Skill(id: "FR-M12", grade: 1, subject: .math,
+              title: "Count the Pennies",
+              standard: "Readiness · CCSS 1.MD / Money",
+              activity: "Each penny is 1 cent. Count them and type the cents!",
+              parentTip: "A penny is worth 1¢, so counting pennies is just counting. Real coins make it click.",
+              lesson: .numberPad([
+                NumberProblem("Count the pennies! Each is 1¢.", 5, visual: ["🪙","🪙","🪙","🪙","🪙"]),
+                NumberProblem("Count the pennies! Each is 1¢.", 3, visual: ["🪙","🪙","🪙"]),
+                NumberProblem("Count the pennies! Each is 1¢.", 7, visual: ["🪙","🪙","🪙","🪙","🪙","🪙","🪙"]),
+                NumberProblem("A dime is worth ten cents. How many cents?", 10)
+              ])),
+
+        Skill(id: "FR-M13", grade: 1, subject: .math,
+              title: "More or Less",
+              standard: "Readiness · CCSS 1.NBT.3",
+              activity: "Which number is bigger (or smaller)? Tap it!",
+              parentTip: "Bigger numbers are farther along when you count. 14 comes after 9, so it's more.",
+              lesson: .quiz([
+                Question("Which is MORE?", correct: "14", wrong: ["9"]),
+                Question("Which is LESS?", correct: "8", wrong: ["12"]),
+                Question("Which is MORE?", correct: "17", wrong: ["11"]),
+                Question("Which is LESS?", correct: "6", wrong: ["10"])
+              ])),
+
+        // ============ READING (picture answers, two choices) ============
+        Skill(id: "FR-R1", grade: 1, subject: .reading,
+              title: "Read the Word",
+              standard: "Readiness · CCSS RF.1.3",
+              activity: "Read the word, then tap the picture it means!",
+              parentTip: "Sound it out slowly, then tap what it means. Picture answers, so he truly reads the word.",
+              lesson: .quiz([
+                Question("Read it:  cat", correct: "🐱", wrong: ["🐶"]),
+                Question("Read it:  dog", correct: "🐶", wrong: ["🐷"]),
+                Question("Read it:  pig", correct: "🐷", wrong: ["🐔"]),
+                Question("Read it:  sun", correct: "☀️", wrong: ["🌙"]),
+                Question("Read it:  bug", correct: "🐛", wrong: ["🐟"])
+              ])),
+
+        Skill(id: "FR-R2", grade: 1, subject: .reading,
+              title: "Read the Word 2",
+              standard: "Readiness · CCSS RF.1.3",
+              activity: "More words to read! Tap the picture it means.",
+              parentTip: "Three-sound words like hen and fox. Stretch the sounds, then blend.",
+              lesson: .quiz([
+                Question("Read it:  hen", correct: "🐔", wrong: ["🐮"]),
+                Question("Read it:  fox", correct: "🦊", wrong: ["🐭"]),
+                Question("Read it:  bee", correct: "🐝", wrong: ["🐛"]),
+                Question("Read it:  cow", correct: "🐮", wrong: ["🐷"]),
+                Question("Read it:  fish", correct: "🐟", wrong: ["🐤"])
+              ])),
+
+        Skill(id: "FR-R3", grade: 1, subject: .reading,
+              title: "Word Families",
+              standard: "Readiness · CCSS RF.1.3",
+              activity: "Words in a family end the same. Tap the one that fits!",
+              parentTip: "The -ig family: pig, wig, dig. Same ending, just a new first sound.",
+              lesson: .quiz([
+                Question("Which word is in the  -ig  family?", correct: "wig", wrong: ["cup"]),
+                Question("Which word is in the  -op  family?", correct: "mop", wrong: ["cat"]),
+                Question("Which word is in the  -ed  family?", correct: "bed", wrong: ["dog"]),
+                Question("Which word is in the  -un  family?", correct: "bun", wrong: ["pig"])
+              ])),
+
+        Skill(id: "FR-R4", grade: 1, subject: .reading,
+              title: "Beginning Blends",
+              standard: "Readiness · CCSS RF.1.2",
+              activity: "Two letters slide together at the start. Tap the picture!",
+              parentTip: "In a blend you hear both letters fast: st in star, fr in frog, sn in snake.",
+              lesson: .quiz([
+                Question("Starts with  st  (like star)", correct: "⭐️", wrong: ["🐟"]),
+                Question("Starts with  fr  (like frog)", correct: "🐸", wrong: ["🐶"]),
+                Question("Starts with  sn  (like snake)", correct: "🐍", wrong: ["🐰"]),
+                Question("Starts with  tr  (like tree)", correct: "🌳", wrong: ["🐝"])
+              ])),
+
+        Skill(id: "FR-R5", grade: 1, subject: .reading,
+              title: "Team Sounds",
+              standard: "Readiness · CCSS RF.1.3",
+              activity: "Two letters make ONE sound. Tap the picture!",
+              parentTip: "sh, ch, and th each make one sound from two letters: ship, chick, thumb.",
+              lesson: .quiz([
+                Question("Starts with  sh  (like ship)", correct: "🚢", wrong: ["🐟"]),
+                Question("Starts with  ch  (like chick)", correct: "🐤", wrong: ["🐛"]),
+                Question("Starts with  sh  (like sheep)", correct: "🐑", wrong: ["🐮"]),
+                Question("Starts with  th  (like thumb)", correct: "👍", wrong: ["🐶"])
+              ])),
+
+        Skill(id: "FR-R6", grade: 1, subject: .reading,
+              title: "Finish the Sentence",
+              standard: "Readiness · CCSS RF.1.4",
+              activity: "Pick the word that makes the sentence make sense!",
+              parentTip: "Read the whole sentence with each choice and hear which one sounds right.",
+              lesson: .quiz([
+                Question("The 🐟 can ___.", correct: "swim", wrong: ["jump"]),
+                Question("The 🐦 can ___.", correct: "fly", wrong: ["sit"]),
+                Question("I ___ my mom.", correct: "love", wrong: ["run"]),
+                Question("We ___ to the barn.", correct: "go", wrong: ["sun"])
+              ])),
+
+        Skill(id: "FR-R7", grade: 1, subject: .reading,
+              title: "Read and Answer",
+              standard: "Readiness · CCSS RF.1.4",
+              activity: "Read the little sentence, then answer yes or no!",
+              parentTip: "He reads for meaning and answers yes or no — no word to copy, so he has to understand it.",
+              lesson: .quiz([
+                Question("The 🐶 runs fast.  Can the dog run?", correct: "Yes", wrong: ["No"]),
+                Question("The 🐱 is asleep.  Is the cat awake?", correct: "No", wrong: ["Yes"]),
+                Question("The 🐮 eats grass.  Does the cow eat grass?", correct: "Yes", wrong: ["No"]),
+                Question("The 🐟 can swim.  Can the fish fly?", correct: "No", wrong: ["Yes"])
+              ])),
+
+        // ============ SCIENCE & WORLD (animal interest, winnable) ============
+        Skill(id: "FR-S1", grade: 1, subject: .science,
+              title: "Living or Not?",
+              standard: "Readiness · CA NGSS 1-LS",
+              activity: "Living things grow and eat. Tap the one that is ALIVE!",
+              parentTip: "Living things need food, water, and air and can grow. Rocks and toys do not.",
+              lesson: .quiz([
+                Question("Which one is ALIVE?", correct: "🐶", wrong: ["🪨"]),
+                Question("Which one is ALIVE?", correct: "🌷", wrong: ["🚗"]),
+                Question("Which one is ALIVE?", correct: "🐟", wrong: ["⚽️"]),
+                Question("Which one is ALIVE?", correct: "🐝", wrong: ["🧱"])
+              ])),
+
+        Skill(id: "FR-S2", grade: 1, subject: .science,
+              title: "Animal Groups",
+              standard: "Readiness · CA NGSS 1-LS1",
+              activity: "Animals come in groups. Tap the group it belongs to!",
+              parentTip: "Mammals have fur, birds have feathers, fish have fins, bugs have six legs.",
+              lesson: .quiz([
+                Question("A 🐶 dog is a...", correct: "mammal", wrong: ["fish"]),
+                Question("A 🐟 that swims with fins is a...", correct: "fish", wrong: ["bird"]),
+                Question("A 🐦 robin is a...", correct: "bird", wrong: ["bug"]),
+                Question("A 🐝 bee is a...", correct: "bug", wrong: ["fish"])
+              ])),
+
+        Skill(id: "FR-S3", grade: 1, subject: .science,
+              title: "What Do They Eat?",
+              standard: "Readiness · CA NGSS K-LS1",
+              activity: "Every animal has a favorite food. Tap what it eats!",
+              parentTip: "Rabbits love carrots, cows eat grass, bees drink from flowers. Talk about your farm animals.",
+              lesson: .quiz([
+                Question("A 🐰 rabbit loves to eat...", correct: "🥕", wrong: ["🦴"]),
+                Question("A 🐮 cow eats...", correct: "🌾", wrong: ["🐟"]),
+                Question("A 🐝 bee drinks from...", correct: "🌷", wrong: ["🪨"]),
+                Question("A 🐶 dog chews a...", correct: "🦴", wrong: ["🌷"])
+              ])),
+
+        Skill(id: "FR-S4", grade: 1, subject: .science,
+              title: "Float or Sink?",
+              standard: "Readiness · CA NGSS Physical Science",
+              activity: "Some things float, some sink. Tap what happens!",
+              parentTip: "Try it in the bathtub! Heavy dense things sink, light things float.",
+              lesson: .quiz([
+                Question("A heavy 🪨 rock will...", correct: "sink", wrong: ["float"]),
+                Question("A 🦆 duck will...", correct: "float", wrong: ["sink"]),
+                Question("A 🍃 leaf will...", correct: "float", wrong: ["sink"]),
+                Question("A metal 🔩 will...", correct: "sink", wrong: ["float"])
+              ])),
+
+        Skill(id: "FR-S5", grade: 1, subject: .life,
+              title: "Push or Pull?",
+              standard: "Readiness · CA NGSS K-PS2",
+              activity: "We move things by pushing or pulling. Tap which one!",
+              parentTip: "A push moves something away, a pull brings it closer. Point them out around the house.",
+              lesson: .quiz([
+                Question("To open a heavy door, you...", correct: "push", wrong: ["eat"]),
+                Question("A wagon behind you, you...", correct: "pull", wrong: ["sing"]),
+                Question("To ring a doorbell, you...", correct: "push", wrong: ["read"]),
+                Question("A dog on a leash, you...", correct: "pull", wrong: ["sleep"])
               ]))
     ]
 }

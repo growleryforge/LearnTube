@@ -505,7 +505,7 @@ struct LessonThumb: View {
             LinearGradient(colors: [Color(red: 0.42, green: 0.66, blue: 0.96), Color(red: 0.80, green: 0.90, blue: 0.99)],
                            startPoint: .top, endPoint: .bottom)
             hills(Color(red: 0.42, green: 0.70, blue: 0.44))
-        case "K-W1", "K-W2", "K-W3":   // writing — warm pencil/paper
+        case "K-W1", "K-W2", "K-W3", "K-W4", "K-W5", "K-W6", "K-W7", "K-W8", "K-W9":   // writing — warm pencil/paper
             LinearGradient(colors: [Color(red: 0.98, green: 0.80, blue: 0.46), Color(red: 0.99, green: 0.93, blue: 0.78)],
                            startPoint: .top, endPoint: .bottom)
         case "K-L2", "K-L3":   // life — warm
@@ -529,8 +529,163 @@ struct LessonThumb: View {
         let sid = skill.id
         if sid.hasPrefix("WU-") || sid.hasPrefix("TK-") || sid.hasPrefix("ST-") { bridgeContent }
         else if sid.hasPrefix("BR-") { brContent }
+        else if sid.hasPrefix("FR-M") { frMathContent }
+        else if sid.hasPrefix("FR-R") { frReadContent }
+        else if sid.hasPrefix("FR-S") { frWorldContent }
+        else if sid.hasPrefix("K-W") { writingContent }
         else if sid.hasPrefix("G1-") { g1Content }
         else { kContent }
+    }
+
+    @ViewBuilder private var writingContent: some View {
+        switch skill.id {
+        case "K-W1":   // Write Your Name
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 42, tint: .white)
+                Text("name").font(.system(size: 26, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W2":   // Trace Capital Letters
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 42, tint: .white)
+                Text("ABC").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W3":   // Label the Animal
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                EmojiView(emoji: "🐄", size: 40, tint: .white)
+            }
+        case "K-W4":   // Write Numbers 1-5
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                Text("1 2 3").font(.system(size: 32, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W5":   // Write Numbers 6-10
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                Text("7 8 9").font(.system(size: 32, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W6":   // Trace Letters G-L
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                Text("G H I").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W7":   // Trace Letters M-R
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                Text("M N O").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W8":   // Trace Letters S-Z
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                Text("X Y Z").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "K-W9":   // Write Mama's Name
+            HStack(spacing: 8) {
+                EmojiView(emoji: "✏️", size: 40, tint: .white)
+                Text("PAIGE").font(.system(size: 24, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        default: EmptyView()
+        }
+    }
+
+    @ViewBuilder private var frMathContent: some View {
+        switch skill.id {
+        case "FR-M1": Text("10·20·30").font(.system(size: 26, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M2": Text("5·10·15").font(.system(size: 28, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M3": Text("2·4·6").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M4": Text("6 + 7").font(.system(size: 38, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M5": Text("20 + 3").font(.system(size: 36, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M6":
+            HStack(spacing: 5) {
+                EmojiView(emoji: "🐶", size: 30, tint: .white)
+                EmojiView(emoji: "🐱", size: 24, tint: .white)
+                Text("?").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "FR-M7":
+            HStack(spacing: 5) {
+                EmojiView(emoji: "🐮", size: 32, tint: .white)
+                Text("+?").font(.system(size: 26, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "FR-M8":
+            HStack(spacing: 5) {
+                EmojiView(emoji: "🦆", size: 32, tint: .white)
+                Text("−?").font(.system(size: 26, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "FR-M9": Text("9 + 3").font(.system(size: 38, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M10": Text("16 →").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M11": Text("? · 13").font(.system(size: 32, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-M12":
+            HStack(spacing: 3) {
+                EmojiView(emoji: "🪙", size: 26, tint: .white)
+                EmojiView(emoji: "🪙", size: 26, tint: .white)
+                EmojiView(emoji: "🪙", size: 26, tint: .white)
+                Text("=?").font(.system(size: 22, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "FR-M13": Text("14 › 9").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
+        default: EmptyView()
+        }
+    }
+
+    @ViewBuilder private var frReadContent: some View {
+        switch skill.id {
+        case "FR-R1":
+            HStack(spacing: 8) {
+                Text("cat").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
+                EmojiView(emoji: "🐱", size: 34, tint: .white)
+            }
+        case "FR-R2":
+            HStack(spacing: 8) {
+                Text("hen").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
+                EmojiView(emoji: "🐔", size: 34, tint: .white)
+            }
+        case "FR-R3": Text("-ig").font(.system(size: 44, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-R4": Text("st-").font(.system(size: 44, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-R5": Text("sh · ch").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+        case "FR-R6":
+            HStack(spacing: 8) {
+                EmojiView(emoji: "🐟", size: 34, tint: .white)
+                Text("___").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        case "FR-R7":
+            HStack(spacing: 10) {
+                EmojiView(emoji: "📖", size: 40, tint: .white)
+                Text("?").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
+            }
+        default: EmptyView()
+        }
+    }
+
+    @ViewBuilder private var frWorldContent: some View {
+        switch skill.id {
+        case "FR-S1":
+            HStack(spacing: 8) {
+                EmojiView(emoji: "🐶", size: 34, tint: .white)
+                EmojiView(emoji: "🪨", size: 30, tint: .white)
+            }
+        case "FR-S2":
+            HStack(spacing: 6) {
+                EmojiView(emoji: "🐶", size: 28, tint: .white)
+                EmojiView(emoji: "🐟", size: 28, tint: .white)
+                EmojiView(emoji: "🐦", size: 28, tint: .white)
+            }
+        case "FR-S3":
+            HStack(spacing: 6) {
+                EmojiView(emoji: "🐰", size: 32, tint: .white)
+                Text("→").font(.system(size: 22, weight: .black, design: .rounded)).foregroundStyle(.white)
+                EmojiView(emoji: "🥕", size: 30, tint: .white)
+            }
+        case "FR-S4":
+            HStack(spacing: 8) {
+                EmojiView(emoji: "🦆", size: 32, tint: .white)
+                EmojiView(emoji: "🪨", size: 28, tint: .white)
+            }
+        case "FR-S5":
+            HStack(spacing: 8) {
+                EmojiView(emoji: "🖐️", size: 32, tint: .white)
+                EmojiView(emoji: "📦", size: 30, tint: .white)
+            }
+        default: EmptyView()
+        }
     }
 
     @ViewBuilder private var brContent: some View {
@@ -871,21 +1026,6 @@ struct LessonThumb: View {
             HStack(spacing: 8) {
                 EmojiView(emoji: "🖐️", size: 40, tint: .white)
                 Text("5·10").font(.system(size: 24, weight: .black, design: .rounded)).foregroundStyle(.white)
-            }
-        case "K-W1":   // Write Your Name
-            HStack(spacing: 8) {
-                EmojiView(emoji: "✏️", size: 42, tint: .white)
-                Text("name").font(.system(size: 26, weight: .black, design: .rounded)).foregroundStyle(.white)
-            }
-        case "K-W2":   // Trace Capital Letters
-            HStack(spacing: 8) {
-                EmojiView(emoji: "✏️", size: 42, tint: .white)
-                Text("ABC").font(.system(size: 34, weight: .black, design: .rounded)).foregroundStyle(.white)
-            }
-        case "K-W3":   // Label the Animal
-            HStack(spacing: 8) {
-                EmojiView(emoji: "✏️", size: 40, tint: .white)
-                EmojiView(emoji: "🐄", size: 40, tint: .white)
             }
         case "K-M4":   // Number Order
             Text("0 1 2 3").font(.system(size: 30, weight: .black, design: .rounded)).foregroundStyle(.white)

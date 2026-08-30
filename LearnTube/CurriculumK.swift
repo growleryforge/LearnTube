@@ -466,6 +466,57 @@ extension Curriculum {
               lesson: .trace(prompt: "Trace the first letter!",
                              items: ["C", "P", "H", "D", "S"])),
 
+        // ----- More writing practice (Gabriel is choosing to write on screen
+        // and succeeding — writing is one of his harder skills, so lean in with
+        // numbers, the rest of the alphabet, and his family's names). -----
+        Skill(id: "K-W4", grade: 0, subject: .writing,
+              title: "Write Numbers 1-5",
+              standard: "CA CCSS K.CC.3",
+              activity: "Write the numbers! Trace each one with your finger.",
+              parentTip: "He's great with numbers — now he writes them. Say the number as he traces it.",
+              lesson: .trace(prompt: "Trace the number!",
+                             items: ["1", "2", "3", "4", "5"])),
+
+        Skill(id: "K-W5", grade: 0, subject: .writing,
+              title: "Write Numbers 6-10",
+              standard: "CA CCSS K.CC.3",
+              activity: "Write the bigger numbers! Trace each one with your finger.",
+              parentTip: "Writing numbers cements what he already counts. Zero is a nice round loop.",
+              lesson: .trace(prompt: "Trace the number!",
+                             items: ["6", "7", "8", "9", "0"])),
+
+        Skill(id: "K-W6", grade: 0, subject: .writing,
+              title: "Trace Letters G-L",
+              standard: "CA CCSS L.K.1a",
+              activity: "More capital letters! Trace each one with your finger.",
+              parentTip: "A few letters at a time. Trace slowly; neatness comes with practice.",
+              lesson: .trace(prompt: "Trace the letter!",
+                             items: ["G", "H", "I", "J", "K", "L"])),
+
+        Skill(id: "K-W7", grade: 0, subject: .writing,
+              title: "Trace Letters M-R",
+              standard: "CA CCSS L.K.1a",
+              activity: "Keep going through the alphabet! Trace each letter.",
+              parentTip: "He's building the whole alphabet now. Cheer each finished letter.",
+              lesson: .trace(prompt: "Trace the letter!",
+                             items: ["M", "N", "O", "P", "Q", "R"])),
+
+        Skill(id: "K-W8", grade: 0, subject: .writing,
+              title: "Trace Letters S-Z",
+              standard: "CA CCSS L.K.1a",
+              activity: "The last letters of the alphabet! Trace each one.",
+              parentTip: "Finishing the alphabet is a big deal — make it a celebration.",
+              lesson: .trace(prompt: "Trace the letter!",
+                             items: ["S", "T", "U", "V", "W", "X", "Y", "Z"])),
+
+        Skill(id: "K-W9", grade: 0, subject: .writing,
+              title: "Write Mama's Name",
+              standard: "CA CCSS L.K.1a",
+              activity: "Write a name you love! Trace each letter of PAIGE.",
+              parentTip: "Writing a family name is meaningful practice. Say each letter with him: P-A-I-G-E.",
+              lesson: .trace(prompt: "Trace the letter!",
+                             items: ["P", "A", "I", "G", "E"])),
+
         // ---------- Math ----------
         // Concrete "count what you see" number games — built in Gabriel's
         // winning style to attack the number gaps his miss data revealed.
@@ -502,10 +553,10 @@ extension Curriculum {
               activity: "Count the pairs 2 at a time, then type how many!",
               parentTip: "Real pairs make the 'skip' visible; typing the total can't be guessed.",
               lesson: .numberPad([
-                NumberProblem("One pair of shoes. How many? 2!", 2, visual: ["👟","👟"]),
+                NumberProblem("How many shoes in one pair? Count them!", 2, visual: ["👟","👟"]),
                 NumberProblem("How many shoes? Count by 2s.", 4, visual: ["👟","👟","👟","👟"]),
-                NumberProblem("How many socks? 2, 4, 6...", 6, visual: ["🧦","🧦","🧦","🧦","🧦","🧦"]),
-                NumberProblem("How many shoes? 2, 4, 6, 8...", 8, visual: ["👟","👟","👟","👟","👟","👟","👟","👟"])
+                NumberProblem("How many socks? Count by 2s.", 6, visual: ["🧦","🧦","🧦","🧦","🧦","🧦"]),
+                NumberProblem("How many shoes? Count by 2s.", 8, visual: ["👟","👟","👟","👟","👟","👟","👟","👟"])
               ])),
 
         Skill(id: "K-NUM4", grade: 0, subject: .math,
@@ -515,8 +566,8 @@ extension Curriculum {
               parentTip: "Hands give him a built-in group of 5; he skip-counts and types the total.",
               lesson: .numberPad([
                 NumberProblem("How many fingers? Count by 5s.", 10, visual: ["🖐️","🖐️"]),
-                NumberProblem("How many fingers? 5, 10, 15...", 15, visual: ["🖐️","🖐️","🖐️"]),
-                NumberProblem("How many fingers? 5, 10, 15, 20...", 20, visual: ["🖐️","🖐️","🖐️","🖐️"])
+                NumberProblem("How many fingers? Count by 5s.", 15, visual: ["🖐️","🖐️","🖐️"]),
+                NumberProblem("How many fingers? Count by 5s.", 20, visual: ["🖐️","🖐️","🖐️","🖐️"])
               ])),
 
         Skill(id: "K-M1", grade: 0, subject: .math,

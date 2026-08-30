@@ -128,8 +128,10 @@ enum Curriculum {
         // games above and in Warm-Ups/Stretch. K math stays in the app for later.
         // Reading & letters (the long story K-STORY1 pulled — too much at once)
         "K-R14", "K-R15", "K-R9", "K-R3", "K-R10", "K-R11", "K-R5", "K-R6", "K-R12", "K-R13", "K-R7", "K-R8",
-        // Writing — trace letters with a finger
-        "K-W1", "K-W2", "K-W3",
+        // Writing — trace letters and numbers with a finger. He's choosing to
+        // write on screen and succeeding, so there's a full set now: his name,
+        // the whole alphabet, the numbers he's so good at, and Mama's name.
+        "K-W1", "K-W4", "K-W2", "K-W6", "K-W5", "K-W7", "K-W8", "K-W3", "K-W9",
         // Life & social (Name Your Feelings drag + Days-of-Week ordering pulled —
         // both too hard; TK "Happy or Sad?" covers feelings gently now)
         "K-SS1", "K-SS2", "K-SS3", "K-SS4", "K-L3", "K-M5",
@@ -141,7 +143,14 @@ enum Curriculum {
         // First-Grade work (count on, make ten, add/subtract within 20, ten
         // more/less). All concrete numberPad games in his winning style, and
         // graded First Grade so the Progress tab shows him moving up.
-        "BR-M1", "BR-M2", "BR-M3", "BR-M4", "BR-M5", "BR-M6", "BR-M7", "BR-M8", "BR-M9"
+        "BR-M1", "BR-M2", "BR-M3", "BR-M4", "BR-M5", "BR-M6", "BR-M7", "BR-M8", "BR-M9",
+        // First-Grade Readiness bank — a deep, self-sustaining stretch set (weeks
+        // of fresh work). Interleaved math / reading / science so the climb stays
+        // varied, math-heavy in his winning number-entry style. Graded First
+        // Grade, so mastering these shows real First-Grade progress.
+        "FR-M1", "FR-R1", "FR-M7", "FR-S1", "FR-M2", "FR-R3", "FR-M4", "FR-S2",
+        "FR-M9", "FR-R6", "FR-M5", "FR-S3", "FR-M8", "FR-R2", "FR-M3", "FR-S4",
+        "FR-M10", "FR-R4", "FR-M12", "FR-R7", "FR-M6", "FR-R5", "FR-M11", "FR-S5", "FR-M13"
         // The rest of First grade is still NOT in his daily feed yet — he's still
         // working through TK and Kindergarten, and serving First Grade games
         // (add/subtract within 20, long stories) just piled up losses. When he's
@@ -217,7 +226,33 @@ enum Curriculum {
         "BR-M6": "To make ten, fill every spot. Count the EMPTY boxes — that's how many more you need to reach ten.",
         "BR-M7": "Adding past ten works the same way: put both groups together and count them all, right across ten.",
         "BR-M8": "Taking away from a bigger number: start at the number and count back, or count up from the smaller one.",
-        "BR-M9": "Ten more or ten less only changes the TENS. Ten more than 25 is 35. Ten less than 30 is 20."
+        "BR-M9": "Ten more or ten less only changes the TENS. Ten more than 25 is 35. Ten less than 30 is 20.",
+        // ----- First-Grade Readiness bank -----
+        "FR-M1": "Counting by tens jumps ten each time: 10, 20, 30, 40. Only the first digit changes.",
+        "FR-M2": "Counting by fives goes 5, 10, 15, 20 — like counting fingers on each hand.",
+        "FR-M3": "Counting by twos skips every other number: 2, 4, 6, 8. Count in pairs.",
+        "FR-M4": "A near-double is a double plus one. 6 + 7 is 6 + 6 (that's 12) and one more makes 13.",
+        "FR-M5": "See the tens first, then add the ones. 20 and 3 more is 23. Two tens and three.",
+        "FR-M6": "To find how many MORE, match them up and count the extras the bigger group has.",
+        "FR-M7": "A story problem hides numbers in words. Find the numbers, then add if more come or take away if some go.",
+        "FR-M8": "Read the animal story, find the two numbers, and decide: are we putting together or taking away?",
+        "FR-M9": "Make a ten first! For 9 + 3, move 1 over to make 10, then 2 more is 12. Tens are easy to add on.",
+        "FR-M10": "Start at the big number and count on the small one: 16, then 17, 18, 19. No need to start at one.",
+        "FR-M11": "The number before is one less — the one you say just before it when counting. Before 13 is 12.",
+        "FR-M12": "A penny is worth 1 cent, so the number of pennies IS the number of cents. Count them up!",
+        "FR-M13": "The bigger number is the one you reach later when counting. 14 is more than 9.",
+        "FR-R1": "Read the word by blending its sounds, then pick the picture it means. c-a-t is cat! 🐱",
+        "FR-R2": "Stretch each sound and blend: h-e-n is hen. Then tap the picture that matches.",
+        "FR-R3": "Words in a family share an ending, like -ig: pig, wig, dig. Find the one that ends the same.",
+        "FR-R4": "A blend slides two sounds together: st in star, fr in frog. You hear both letters, fast.",
+        "FR-R5": "Team sounds make ONE sound from two letters: sh in ship, ch in chick, th in thumb.",
+        "FR-R6": "Read the whole sentence and pick the word that makes sense. A fish can swim, not jump.",
+        "FR-R7": "Read the little sentence carefully, then decide yes or no. You have to understand it, not just match a word.",
+        "FR-S1": "Living things eat, grow, and need water and air — like animals and plants. Rocks and toys do not.",
+        "FR-S2": "Animals come in groups: mammals have fur, birds have feathers, fish have fins, bugs have six legs.",
+        "FR-S3": "Different animals eat different foods. Rabbits love carrots, cows eat grass, bees sip from flowers.",
+        "FR-S4": "Heavy, dense things sink; light things float. A rock sinks, a leaf floats. Try it in the tub!",
+        "FR-S5": "A push moves something away from you; a pull brings it toward you. Doors, wagons, swings — push or pull."
     ]
 
     /// All 13 levels (K + grades 1-12). K and 1 are seeded; the rest grow over time.
@@ -232,12 +267,12 @@ enum Curriculum {
         case -2: return warmUps
         case -1: return transitionalK
         case 0: return kindergarten + stretch
-        case 1: return firstGrade + bridge
+        case 1: return firstGrade + bridge + readiness
         default: return []
         }
     }
 
-    static var allSeededSkills: [Skill] { warmUps + transitionalK + kindergarten + stretch + firstGrade + bridge }
+    static var allSeededSkills: [Skill] { warmUps + transitionalK + kindergarten + stretch + firstGrade + bridge + readiness }
 
     static func skill(id: String) -> Skill? {
         allSeededSkills.first { $0.id == id }
