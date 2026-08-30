@@ -150,7 +150,10 @@ enum Curriculum {
         // Grade, so mastering these shows real First-Grade progress.
         "FR-M1", "FR-R1", "FR-M7", "FR-S1", "FR-M2", "FR-R3", "FR-M4", "FR-S2",
         "FR-M9", "FR-R6", "FR-M5", "FR-S3", "FR-M8", "FR-R2", "FR-M3", "FR-S4",
-        "FR-M10", "FR-R4", "FR-M12", "FR-R7", "FR-M6", "FR-R5", "FR-M11", "FR-S5", "FR-M13"
+        "FR-M10", "FR-R4", "FR-M12", "FR-R7", "FR-M6", "FR-R5", "FR-M11", "FR-S5", "FR-M13",
+        // Gap-fillers, added last so they land as fresh work once the
+        // bank above is worked through. New standards, familiar style.
+        "FR-M14", "FR-M15", "FR-M16", "FR-M17", "FR-M18"
         // The rest of First grade is still NOT in his daily feed yet — he's still
         // working through TK and Kindergarten, and serving First Grade games
         // (add/subtract within 20, long stories) just piled up losses. When he's
@@ -241,6 +244,11 @@ enum Curriculum {
         "FR-M11": "The number before is one less — the one you say just before it when counting. Before 13 is 12.",
         "FR-M12": "A penny is worth 1 cent, so the number of pennies IS the number of cents. Count them up!",
         "FR-M13": "The bigger number is the one you reach later when counting. 14 is more than 9.",
+        "FR-M14": "Adding in either order gives the same answer. If you know 8 + 3, you already know 3 + 8.",
+        "FR-M15": "Something is missing! Count up from the number you have to the number you want, and that jump is the answer.",
+        "FR-M16": "Three numbers: look for two that make ten first, add those, then add what is left.",
+        "FR-M17": "Adding ones only changes the ones. Adding tens only changes the tens. The other part stays the same.",
+        "FR-M18": "Instead of counting backward, ask what plus this makes the big number. 12 - 9 is 9 and 3 more."
         "FR-R1": "Read the word by blending its sounds, then pick the picture it means. c-a-t is cat! 🐱",
         "FR-R2": "Stretch each sound and blend: h-e-n is hen. Then tap the picture that matches.",
         "FR-R3": "Words in a family share an ending, like -ig: pig, wig, dig. Find the one that ends the same.",

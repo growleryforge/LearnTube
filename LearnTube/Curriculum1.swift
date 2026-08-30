@@ -1007,6 +1007,70 @@ extension Curriculum {
                 Question("Which is LESS?", correct: "6", wrong: ["10"])
               ])),
 
+        // ----- Gap-fillers: first-grade standards the bank above misses.
+        // All number-entry, the style he wins in. Each one turns a new standard
+        // into arithmetic he can already do, rather than adding new difficulty.
+
+        Skill(id: "FR-M14", grade: 1, subject: .math,
+              title: "Turn-Around Facts",
+              standard: "Readiness · CCSS 1.OA.3",
+              activity: "8 + 3 or 3 + 8? Same answer! Flip it and see.",
+              parentTip: "Adding in either order gives the same total. Every fact he knows is secretly two facts, so this halves what there is to learn.",
+              lesson: .numberPad([
+                NumberProblem("8 + 3 = 11,  so  3 + 8 = ?", 11),
+                NumberProblem("9 + 2 = 11,  so  2 + 9 = ?", 11),
+                NumberProblem("7 + 5 = 12,  so  5 + 7 = ?", 12),
+                NumberProblem("6 + 9 = 15,  so  9 + 6 = ?", 15)
+              ])),
+
+        Skill(id: "FR-M15", grade: 1, subject: .math,
+              title: "Find the Missing Number",
+              standard: "Readiness · CCSS 1.OA.8",
+              activity: "A number is hiding! Which one finishes it?",
+              parentTip: "Ask how many more to get there. Counting up from the smaller number is the easiest way in, and it is the same move as make-a-ten.",
+              lesson: .numberPad([
+                NumberProblem("5 + ? = 9", 4),
+                NumberProblem("7 + ? = 10", 3),
+                NumberProblem("6 + ? = 12", 6),
+                NumberProblem("8 + ? = 13", 5)
+              ])),
+
+        Skill(id: "FR-M16", grade: 1, subject: .math,
+              title: "Add Three Numbers",
+              standard: "Readiness · CCSS 1.OA.2",
+              activity: "Three numbers at once! Add two, then the last one.",
+              parentTip: "Look for a pair that makes ten first. 4 + 6 + 3 is much easier as 10 + 3, and spotting the pair is the real skill.",
+              lesson: .numberPad([
+                NumberProblem("2 + 3 + 4", 9),
+                NumberProblem("4 + 6 + 3   (4 and 6 make ten!)", 13),
+                NumberProblem("5 + 5 + 2", 12),
+                NumberProblem("3 + 7 + 6   (3 and 7 make ten!)", 16)
+              ])),
+
+        Skill(id: "FR-M17", grade: 1, subject: .math,
+              title: "Add Tens and Ones",
+              standard: "Readiness · CCSS 1.NBT.4",
+              activity: "Bigger numbers, easy way. Add the ones, or jump by tens.",
+              parentTip: "23 + 5 only changes the ones. 40 + 30 only changes the tens. The other part stays exactly where it was.",
+              lesson: .numberPad([
+                NumberProblem("23 + 5   (the tens stay put)", 28),
+                NumberProblem("41 + 6", 47),
+                NumberProblem("40 + 30   (4 tens and 3 tens)", 70),
+                NumberProblem("20 + 50", 70)
+              ])),
+
+        Skill(id: "FR-M18", grade: 1, subject: .math,
+              title: "Think Adding to Subtract",
+              standard: "Readiness · CCSS 1.OA.4",
+              activity: "Taking away? Think adding instead. Same puzzle, easier way.",
+              parentTip: "10 - 8 is really eight and how many more make ten. Turning subtraction into addition lets him use facts he already owns instead of counting backward.",
+              lesson: .numberPad([
+                NumberProblem("10 - 8    (8 + ? = 10)", 2),
+                NumberProblem("12 - 9    (9 + ? = 12)", 3),
+                NumberProblem("11 - 7    (7 + ? = 11)", 4),
+                NumberProblem("14 - 8    (8 + ? = 14)", 6)
+              ])),
+
         // ============ READING (picture answers, two choices) ============
         Skill(id: "FR-R1", grade: 1, subject: .reading,
               title: "Read the Word",
