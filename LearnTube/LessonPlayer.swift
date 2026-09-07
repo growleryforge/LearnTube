@@ -94,6 +94,8 @@ struct LessonRunner: View {
                 StoryPlayer(storyId: id, accent: accent, onComplete: onComplete)
             case .trace(let prompt, let items):
                 TracePlayer(prompt: prompt, items: items, accent: accent, onComplete: onComplete)
+            case .traceScene(let prompt, let steps):
+                TracePlayer(prompt: prompt, steps: steps, accent: accent, onComplete: onComplete)
             }
         }
     }

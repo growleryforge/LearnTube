@@ -132,6 +132,13 @@ enum Curriculum {
         // write on screen and succeeding, so there's a full set now: his name,
         // the whole alphabet, the numbers he's so good at, and Mama's name.
         "K-W1", "K-W4", "K-W2", "K-W6", "K-W5", "K-W7", "K-W8", "K-W3", "K-W9",
+        // The Farm Writing Club (CurriculumWriting.swift): finger tracing is the
+        // one thing that has visibly moved his writing, so here is the whole
+        // ladder: pre-writing strokes, lowercase by stroke family, capitals,
+        // animal names, numbers. Every rung is an animal.
+        "TW-S1", "TW-S2", "TW-S3", "TW-S4", "TW-S5", "TW-S6", "TW-S7", "TW-S8", "TW-S9", "TW-S10",
+        "TW-L1", "TW-L2", "TW-L3", "TW-L4", "TW-L5", "TW-L6",
+        "TW-W1", "TW-W2", "TW-W3", "TW-W4", "TW-W5", "TW-N1", "TW-N2",
         // Life & social (Name Your Feelings drag + Days-of-Week ordering pulled —
         // both too hard; TK "Happy or Sad?" covers feelings gently now)
         "K-SS1", "K-SS2", "K-SS3", "K-SS4", "K-L3", "K-M5",
@@ -274,13 +281,13 @@ enum Curriculum {
         switch grade {
         case -2: return warmUps
         case -1: return transitionalK
-        case 0: return kindergarten + stretch
+        case 0: return kindergarten + stretch + writingClub
         case 1: return firstGrade + bridge + readiness
         default: return []
         }
     }
 
-    static var allSeededSkills: [Skill] { warmUps + transitionalK + kindergarten + stretch + firstGrade + bridge + readiness }
+    static var allSeededSkills: [Skill] { warmUps + transitionalK + kindergarten + stretch + writingClub + firstGrade + bridge + readiness }
 
     static func skill(id: String) -> Skill? {
         allSeededSkills.first { $0.id == id }

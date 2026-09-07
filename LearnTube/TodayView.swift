@@ -342,6 +342,22 @@ struct LessonThumb: View {
     let skill: Skill
 
     var body: some View {
+        // v2.0 art: a Canva-designed thumbnail named "thumb-<skill id>" in
+        // Assets.xcassets wins over the drawn preview whenever one exists, so
+        // art can land game by game without touching this code.
+        if UIImage(named: "thumb-\(skill.id)") != nil {
+            Image("thumb-\(skill.id)")
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity)
+                .frame(height: 116)
+                .clipped()
+        } else {
+            drawn
+        }
+    }
+
+    private var drawn: some View {
         ZStack {
             background
             content

@@ -69,6 +69,50 @@ struct NumberProblem: Identifiable, Hashable {
     }
 }
 
+// MARK: - Tracing with animals
+
+/// The shape a finger traces. Pre-writing strokes come first in handwriting
+/// (top-to-bottom line, left-to-right line, circle, cross, diagonals, then
+/// curves and zigzags for fluency); letters are built out of them. All shapes
+/// are described in a unit square (0...1, y down) and scaled to the canvas.
+enum TraceStroke: Hashable {
+    case down           // vertical line, top to bottom (l, t, i)
+    case across         // horizontal line, left to right
+    case circle         // counter-clockwise from the top, the c/o/a/d start
+    case arc            // a hump, left to right (h, m, n)
+    case wave           // gentle waves, left to right
+    case zigzag         // sharp diagonals, left to right (v, w, z)
+    case loops          // three loops, left to right (e, l in cursive)
+    case spiral         // outside in
+    case cross          // a plus: down, then across
+    case square
+    case triangle
+    case diagonalDown   // top-left to bottom-right (\)
+    case diagonalUp     // bottom-left to top-right (/)
+    case xMark
+    case glyph(String)  // a letter or digit, exactly as written (case kept)
+    /// A free polyline in unit coordinates, for one-off shapes.
+    case points([UnitPoint])
+
+    struct UnitPoint: Hashable { let x: Double; let y: Double
+        init(_ x: Double, _ y: Double) { self.x = x; self.y = y } }
+}
+
+/// One tracing round: who is at the start, where they are going, the stroke
+/// between, and the one line Leo says about it.
+struct TraceStep: Hashable {
+    let say: String        // "Help the duck swim to the pond"
+    let stroke: TraceStroke
+    let from: String       // emoji at the start of the stroke ("🦆")
+    let to: String         // emoji at the end ("🏞️"); empty for none
+    /// A word shown under the canvas ("duck"), so the letter he traces is
+    /// tied to the animal it starts. Empty for none.
+    var word: String = ""
+    init(_ say: String, _ stroke: TraceStroke, from: String, to: String = "", word: String = "") {
+        self.say = say; self.stroke = stroke; self.from = from; self.to = to; self.word = word
+    }
+}
+
 /// The number games that generate a fresh problem every round instead of
 /// replaying four fixed ones. Each kind reads `GameDifficulty` for its ceiling,
 /// so a game climbs as he masters it (see `AppState.levelableSkills`).
@@ -119,6 +163,11 @@ enum Lesson: Hashable {
     case story(id: String)
     /// Trace each letter/word with a finger — real on-screen writing practice.
     case trace(prompt: String, items: [String])
+    /// Tracing with a story: an animal at the start of every stroke, somewhere
+    /// to get to at the end, and the stroke itself can be a pre-writing shape
+    /// (line, wave, zigzag, circle, loop) or a letter in either case. This is
+    /// the writing-mechanics ladder, dressed as animals on the farm.
+    case traceScene(prompt: String, steps: [TraceStep])
 
     struct Pair: Hashable { let left: String; let right: String
         init(_ l: String, _ r: String) { left = l; right = r } }
@@ -135,6 +184,7 @@ enum Lesson: Hashable {
         case .faceMatch(let e, _): return e.count
         case .story: return 9
         case .trace(_, let i): return i.count
+        case .traceScene(_, let s): return s.count
         }
     }
 
@@ -147,7 +197,7 @@ enum Lesson: Hashable {
         case .numberPad, .numberGen: return "Solve it"
         case .faceMatch: return "Tap to match"
         case .story: return "Story time"
-        case .trace: return "Trace it"
+        case .trace, .traceScene: return "Trace it"
         }
     }
 }
