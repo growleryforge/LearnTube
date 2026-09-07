@@ -87,7 +87,7 @@ struct LessonRunner: View {
                 NumberPadPlayer(problems: problems, accent: accent, onComplete: onComplete)
             case .numberGen(let game, let rounds, let boost):
                 // Fresh problems every play, at the difficulty the home tile set.
-                NumberPadPlayer(problems: NumberGen.problems(game, rounds: rounds, boost: boost), accent: accent, onComplete: onComplete)
+                NumberPadPlayer(problems: ProblemGen.problems(game, rounds: rounds, boost: boost), accent: accent, onComplete: onComplete)
             case .faceMatch(let exprs, let perRound):
                 DragMatchPlayer(exprs: exprs, perRound: perRound, accent: accent, onComplete: onComplete)
             case .story(let id):

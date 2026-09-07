@@ -140,7 +140,7 @@ Number-pad math comes in two shapes:
 - `.numberPad([NumberProblem])`: fixed problems, shuffled per play. Each
   `NumberProblem` carries a `NumberVisual` (`draw:`); the old `visual: [String]`
   init still works and becomes `.tokens`. Every problem should draw something.
-- `.numberGen(NumberGame, rounds:, boost:)`: `NumberGen.swift` makes fresh
+- `.numberGen(NumberGame, rounds:, boost:)`: `ProblemGen.swift` makes fresh
   problems each play, reading `GameDifficulty.level` (1...3), so a game climbs
   as he masters it. `boost` opens a game higher on the ladder (First Grade
   "add within 20" should not start at sums to 8). All the live count/add/

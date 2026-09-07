@@ -6,14 +6,14 @@ import Foundation
 // play Gabriel had seen every one three times, and the take-away games only
 // drew the leftover group, so "5 ducks, 2 swim away" was a counting-to-3 game.
 //
-// `NumberGen` makes a fresh problem per round for every `NumberGame`, reading
+// `ProblemGen` makes a fresh problem per round for every `NumberGame`, reading
 // `GameDifficulty.level` (1...3, set from how many times he has mastered the
 // skill) so each game climbs: counting 6 -> 10 -> 15, adding toward 20. Every
 // problem draws something concrete (see `NumberVisual`), because his math is
 // counting what he can see, and the picture is what lets him discover the
 // shortcut (counting on, ten and some more) on his own.
 
-enum NumberGen {
+enum ProblemGen {
 
     // The farm, more or less.
     static let critters = ["🐤", "🐔", "🦆", "🐐", "🐑", "🐷", "🐮", "🐴", "🐰", "🐶", "🐱", "🐝", "🐸", "🐟"]

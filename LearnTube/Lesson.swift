@@ -109,7 +109,7 @@ enum Lesson: Hashable {
     /// Solve with the on-screen number pad.
     case numberPad([NumberProblem])
     /// Number pad again, but the problems are generated fresh each play by
-    /// `NumberGen`, `rounds` per game, at the current difficulty level.
+    /// `ProblemGen`, `rounds` per game, at the current difficulty level.
     /// `boost` starts a game higher up the ladder (a First Grade "add within
     /// 20" should not open at sums to 8 just because it's never been mastered).
     case numberGen(NumberGame, rounds: Int, boost: Int = 0)
