@@ -525,50 +525,28 @@ extension Curriculum {
               standard: "CA CCSS K.CC.4",
               activity: "Count the animals, then type how many!",
               parentTip: "He has to actually count and type the number — no guessing from choices.",
-              lesson: .numberPad([
-                NumberProblem("How many kittens?", 2, visual: ["🐱","🐱"]),
-                NumberProblem("How many puppies?", 3, visual: ["🐶","🐶","🐶"]),
-                NumberProblem("How many chicks?", 4, visual: ["🐤","🐤","🐤","🐤"]),
-                NumberProblem("How many fish?", 5, visual: ["🐟","🐟","🐟","🐟","🐟"]),
-                NumberProblem("How many bees?", 6, visual: ["🐝","🐝","🐝","🐝","🐝","🐝"]),
-                NumberProblem("How many cows?", 7, visual: ["🐮","🐮","🐮","🐮","🐮","🐮","🐮"])
-              ])),
+              lesson: .numberGen(.count, rounds: 5)),
 
         Skill(id: "K-NUM2", grade: 0, subject: .math,
               title: "How Many in All?",
               standard: "CA CCSS K.OA.1",
               activity: "Put both groups together, count them ALL, and type it!",
               parentTip: "Adding as 'put together and count all,' then producing the number.",
-              lesson: .numberPad([
-                NumberProblem("How many chicks in all?", 4, visual: ["🐤","🐤","➕","🐤","🐤"]),
-                NumberProblem("How many dogs in all?", 3, visual: ["🐶","➕","🐶","🐶"]),
-                NumberProblem("How many apples in all?", 5, visual: ["🍎","🍎","🍎","➕","🍎","🍎"]),
-                NumberProblem("How many stars in all?", 5, visual: ["⭐","⭐","⭐","⭐","➕","⭐"]),
-                NumberProblem("How many flowers in all?", 6, visual: ["🌸","🌸","🌸","➕","🌸","🌸","🌸"])
-              ])),
+              lesson: .numberGen(.add, rounds: 4)),
 
         Skill(id: "K-NUM3", grade: 0, subject: .math,
               title: "Count by 2s",
               standard: "CA CCSS K.CC.1",
               activity: "Count the pairs 2 at a time, then type how many!",
               parentTip: "Real pairs make the 'skip' visible; typing the total can't be guessed.",
-              lesson: .numberPad([
-                NumberProblem("How many shoes in one pair? Count them!", 2, visual: ["👟","👟"]),
-                NumberProblem("How many shoes? Count by 2s.", 4, visual: ["👟","👟","👟","👟"]),
-                NumberProblem("How many socks? Count by 2s.", 6, visual: ["🧦","🧦","🧦","🧦","🧦","🧦"]),
-                NumberProblem("How many shoes? Count by 2s.", 8, visual: ["👟","👟","👟","👟","👟","👟","👟","👟"])
-              ])),
+              lesson: .numberGen(.skipTwos, rounds: 4)),
 
         Skill(id: "K-NUM4", grade: 0, subject: .math,
               title: "Count by 5s",
               standard: "CA CCSS K.CC.1",
               activity: "Each hand is 5 fingers. Count by 5s and type it!",
               parentTip: "Hands give him a built-in group of 5; he skip-counts and types the total.",
-              lesson: .numberPad([
-                NumberProblem("How many fingers? Count by 5s.", 10, visual: ["🖐️","🖐️"]),
-                NumberProblem("How many fingers? Count by 5s.", 15, visual: ["🖐️","🖐️","🖐️"]),
-                NumberProblem("How many fingers? Count by 5s.", 20, visual: ["🖐️","🖐️","🖐️","🖐️"])
-              ])),
+              lesson: .numberGen(.skipFives, rounds: 4)),
 
         Skill(id: "K-M1", grade: 0, subject: .math,
               title: "Count to 20",
@@ -760,9 +738,13 @@ extension Curriculum {
               activity: "Good helpers make the farm run. Tap the helpful choice!",
               parentTip: "Talk about real jobs he could pick afterward, his choice.",
               lesson: .quiz([
-                Question("A good helper job is...", correct: "Feeding the animals", wrong: ["Breaking toys", "Hiding shoes"]),
-                Question("If you spill something, you...", correct: "Help clean it up", wrong: ["Run away", "Blame the dog"]),
-                Question("A kind helper word is...", correct: "Please", wrong: ["No way", "Mine"])
+                // The wrong answers here are jokes, and he taps them on purpose
+                // ("Blame the dog" every time). `jokes:` gets a laugh line and
+                // is never counted as a miss, so this game stops reading as a
+                // struggle in the dashboard.
+                Question("A good helper job is...", correct: "Feeding the animals", wrong: [], jokes: ["Breaking toys", "Hiding shoes"]),
+                Question("If you spill something, you...", correct: "Help clean it up", wrong: [], jokes: ["Run away", "Blame the dog"]),
+                Question("A kind helper word is...", correct: "Please", wrong: [], jokes: ["No way", "Mine"])
               ]))
     ]
 }

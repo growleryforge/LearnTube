@@ -85,6 +85,9 @@ struct LessonRunner: View {
                 MatchPlayer(prompt: prompt, pairs: pairs, accent: accent, onComplete: onComplete)
             case .numberPad(let problems):
                 NumberPadPlayer(problems: problems, accent: accent, onComplete: onComplete)
+            case .numberGen(let game, let rounds, let boost):
+                // Fresh problems every play, at the difficulty the home tile set.
+                NumberPadPlayer(problems: NumberGen.problems(game, rounds: rounds, boost: boost), accent: accent, onComplete: onComplete)
             case .faceMatch(let exprs, let perRound):
                 DragMatchPlayer(exprs: exprs, perRound: perRound, accent: accent, onComplete: onComplete)
             case .story(let id):
@@ -285,6 +288,13 @@ struct QuizPlayer: View {
                     index += 1; correctId = nil; wrongId = nil; mood = .idle; load()
                 } else { SFX.win(); onComplete() }
             }
+        } else if c.isJoke {
+            // He picked the funny one on purpose. Laugh with him, take the tile
+            // out of play, and record nothing: a joke is not a struggle signal.
+            disabled.insert(c.id); SFX.tap(); mood = .happy
+            hint = ["😂 Ha! Good one. Now the real one?", "🤣 Nice try! Which one really helps?"].randomElement()!
+            locked = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { locked = false }
         } else {
             // Rule this wrong choice out for good, so re-tapping it does nothing.
             wrongId = c.id; disabled.insert(c.id); missCount += 1
@@ -604,8 +614,10 @@ struct NumberPadPlayer: View {
             VStack(spacing: 12) {
                 ProgressDots(total: items.count, done: index, accent: accent)
                 // Objects to count for the answer (he can't guess a number pad).
+                // Keyed by problem id so a take-away's leaving animation
+                // restarts on every new problem.
                 if !items[index].visual.isEmpty {
-                    EmojiCountView(tokens: items[index].visual)
+                    NumberVisualView(visual: items[index].visual).id(items[index].id)
                 }
                 Text(entry.isEmpty ? "?" : entry)
                     .font(.system(size: 50, weight: .black, design: .rounded))

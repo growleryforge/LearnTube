@@ -18,21 +18,44 @@ struct HomeFeedView: View {
     private var available: [Skill] {
         let live = state.todaySkills.filter { !state.isRetired($0.id) }
         // Serve the easiest games first so he opens on a win, never on a fight:
-        // games he's struggled with lately sink toward the bottom. Games already
+        // games he's struggled with lately sink toward the bottom of the WHOLE
+        // feed, not just their grade band. (Sorting grade-first meant the two
+        // leftover Warm-Ups he kept missing led the feed for weeks while 39
+        // unopened First Grade games sat below everything.) Games already
         // finished today sink furthest, nudging him to a fresh one. He can still
         // scroll down to replay or tackle a harder one whenever he wants.
-        return live.enumerated().sorted { a, b in
-            // Kindergarten before Grade 1: he finishes the earlier grade first,
-            // so brand-new higher-grade games can't jump ahead of unfinished K.
-            if a.element.grade != b.element.grade { return a.element.grade < b.element.grade }
+        // Score once per game: each score merges every synced snapshot, and
+        // the sort asks about each game many times.
+        var struggle: [String: Double] = [:]
+        var started: [String: Bool] = [:]
+        for s in live {
+            struggle[s.id] = state.struggleScore(s.id)
+            started[s.id] = state.everStarted(s.id)
+        }
+        let sorted = live.enumerated().sorted { a, b in
             let aDone = state.isDoneToday(a.element.id)
             let bDone = state.isDoneToday(b.element.id)
             if aDone != bDone { return !aDone }              // not-yet-done first
-            let sa = state.struggleScore(a.element.id)
-            let sb = state.struggleScore(b.element.id)
+            let sa = struggle[a.element.id] ?? 0
+            let sb = struggle[b.element.id] ?? 0
             if sa != sb { return sa < sb }                   // easiest (least struggle) first
+            if a.element.grade != b.element.grade { return a.element.grade < b.element.grade }
             return a.offset < b.offset                       // stable fallback
         }.map { $0.element }
+        // Fresh mix: among the calm games (no recent struggle, not done today),
+        // weave a never-opened game in after every two familiar ones, so
+        // something new is on the first screen every day instead of only
+        // after he has exhausted Kindergarten.
+        let calm = sorted.filter { !state.isDoneToday($0.id) && (struggle[$0.id] ?? 0) == 0 }
+        let rest = sorted.filter { !calm.contains($0) }
+        var seen = calm.filter { started[$0.id] ?? false }
+        var fresh = calm.filter { !(started[$0.id] ?? false) }
+        var mix: [Skill] = []
+        while !seen.isEmpty || !fresh.isEmpty {
+            for _ in 0..<2 where !seen.isEmpty { mix.append(seen.removeFirst()) }
+            if !fresh.isEmpty { mix.append(fresh.removeFirst()) }
+        }
+        return mix + rest
     }
 
     var body: some View {
@@ -60,7 +83,8 @@ struct HomeFeedView: View {
                                     StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
                                              plays: state.completionCount(skill.id),
                                              masteryGoal: state.saved.masteryThreshold,
-                                             level: state.currentLevel(skill.id))
+                                             level: state.currentLevel(skill.id),
+                                             isNew: !state.everStarted(skill.id))
                                         .onTapGesture { if !maxed { GameDifficulty.level = state.currentLevel(skill.id); GameStats.begin(skill.id); watch = skill } }
                                 }
                             }
@@ -236,6 +260,7 @@ struct StopTile: View {
     var plays: Int = 0          // how many times this game has been completed
     var masteryGoal: Int = 3    // completions needed to count as mastered
     var level: Int = 1          // current difficulty level (shown when > 1)
+    var isNew: Bool = false     // never opened on any device: gets a NEW badge
     private var buddy: Buddy { Buddies.forSkill(skill) }
     private var mastered: Bool { plays >= masteryGoal }
 
@@ -262,9 +287,11 @@ struct StopTile: View {
                         .background(.black.opacity(0.7)).clipShape(Capsule())
                         .padding(7)
                 } }
-                if level > 1 {
+                if level > 1 || isNew {
+                    // Top-left badge, YouTube-style: NEW for a game he has never
+                    // opened, otherwise the difficulty level once it climbs.
                     VStack { HStack {
-                        Text("Lv \(level)")
+                        Text(isNew ? "NEW" : "Lv \(level)")
                             .font(.system(size: 11, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                             .padding(.horizontal, 7).padding(.vertical, 3)
                             .background(Theme.redGradient).clipShape(Capsule())

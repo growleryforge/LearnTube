@@ -133,12 +133,52 @@ order. Authoring a skill does not ship it; adding its id to `liveStops` does.
 Pulled concepts stay in the source with a comment explaining why (see `TK-M5`,
 patterns, pulled because he taps the last item every time).
 
+### Number games
+
+Number-pad math comes in two shapes:
+
+- `.numberPad([NumberProblem])`: fixed problems, shuffled per play. Each
+  `NumberProblem` carries a `NumberVisual` (`draw:`); the old `visual: [String]`
+  init still works and becomes `.tokens`. Every problem should draw something.
+- `.numberGen(NumberGame, rounds:, boost:)`: `NumberGen.swift` makes fresh
+  problems each play, reading `GameDifficulty.level` (1...3), so a game climbs
+  as he masters it. `boost` opens a game higher on the ladder (First Grade
+  "add within 20" should not start at sums to 8). All the live count/add/
+  take-away/teen/doubles/skip-count games use this since 2026-09-06.
+
+`NumberVisual` (in `Lesson.swift`, drawn by `NumberVisualView.swift`):
+`.takeAway` draws the WHOLE starting group and fades and crosses off the ones
+that leave after a beat. Never draw only the leftover group for a subtraction:
+that shipped for months and turned every take-away game into a counting game.
+`.tens` and `.frame` are real 5x2 ten-frames; `.compare` lines two groups up in
+columns; `.groups` is pairs/hands for skip counting.
+
+`AppState.levelableSkills` is every `.numberGen` skill. A levelable game only
+retires after mastery at all three levels.
+
+### Quizzes
+
+`Question(prompt, correct:, wrong:, jokes:)`. Put deliberately funny wrong
+answers ("Blame the dog") in `jokes:`; tapping one gets a laugh line and is not
+recorded as a miss, because he picks those on purpose and a joke is not a
+struggle signal.
+
+### Feed order
+
+`HomeFeedView.available` sorts the whole feed by recent struggle (easiest
+first), not within grade bands, and weaves a never-opened game (NEW badge) in
+after every two familiar ones. Sorting grade-first used to keep two Warm-Ups he
+kept missing at the top for weeks while 39 unopened First Grade games sat below
+everything.
+
 Run the guardrail after touching any curriculum file:
 
     python3 tools/check_qa.py
 
-It fails if a correct answer is visibly contained in its own prompt, which would
-let a kid pattern-match instead of read.
+It fails if a correct answer is visibly contained in its own prompt (a kid
+pattern-matches instead of reading), or if a take-away `NumberProblem` draws
+only its answer. Three pulled games (`G1-M10`, `TK-M5`) trip the first rule
+and always have; ignore those unless they come back to `liveStops`.
 
 ## Windows / web client
 

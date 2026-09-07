@@ -302,24 +302,14 @@ extension Curriculum {
               standard: "Stretch · CCSS K.OA / 1.OA",
               activity: "Bigger groups now! Put them together and count them all.",
               parentTip: "Same idea as Add to 5, just larger. Counting on from the bigger group is the next step.",
-              lesson: .numberPad([
-                NumberProblem("4 🍎 and 3 🍎. How many in all?", 7, visual: ["🍎","🍎","🍎","🍎","➕","🍎","🍎","🍎"]),
-                NumberProblem("5 ⭐️ and 4 ⭐️. How many in all?", 9, visual: ["⭐️","⭐️","⭐️","⭐️","⭐️","➕","⭐️","⭐️","⭐️","⭐️"]),
-                NumberProblem("6 🐟 and 2 🐟. How many in all?", 8, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","➕","🐟","🐟"]),
-                NumberProblem("5 🍪 and 5 🍪. How many in all?", 10, visual: ["🍪","🍪","🍪","🍪","🍪","➕","🍪","🍪","🍪","🍪","🍪"])
-              ])),
+              lesson: .numberGen(.add, rounds: 4, boost: 1)),
 
         Skill(id: "ST-M2", grade: 0, subject: .math,
               title: "Take Away from 10",
               standard: "Stretch · CCSS K.OA / 1.OA",
               activity: "Bigger numbers. Some go away — count what's left!",
               parentTip: "Start from 10 and count back. Fingers help: put some down, count what's up.",
-              lesson: .numberPad([
-                NumberProblem("8 🍌, eat 2. How many are left?", 6, visual: ["🍌","🍌","🍌","🍌","🍌","🍌"]),
-                NumberProblem("10 🍇, eat 4. How many are left?", 6, visual: ["🍇","🍇","🍇","🍇","🍇","🍇"]),
-                NumberProblem("7 🐠, 3 swim away. How many are left?", 4, visual: ["🐠","🐠","🐠","🐠"]),
-                NumberProblem("9 🍎, give 5 away. How many are left?", 4, visual: ["🍎","🍎","🍎","🍎"])
-              ])),
+              lesson: .numberGen(.takeAway, rounds: 4, boost: 1)),
 
         Skill(id: "ST-M3", grade: 0, subject: .math,
               title: "What's Missing?",
@@ -338,38 +328,21 @@ extension Curriculum {
               standard: "Stretch · CCSS 1.OA",
               activity: "Two groups the SAME size. Count them all!",
               parentTip: "Doubles are easy to remember and make bigger adding faster: 4 and 4 is 8.",
-              lesson: .numberPad([
-                NumberProblem("2 🐶 and 2 🐶. Double!", 4, visual: ["🐶","🐶","➕","🐶","🐶"]),
-                NumberProblem("3 🐱 and 3 🐱. Double!", 6, visual: ["🐱","🐱","🐱","➕","🐱","🐱","🐱"]),
-                NumberProblem("4 🐰 and 4 🐰. Double!", 8, visual: ["🐰","🐰","🐰","🐰","➕","🐰","🐰","🐰","🐰"]),
-                NumberProblem("5 🐥 and 5 🐥. Double!", 10, visual: ["🐥","🐥","🐥","🐥","🐥","➕","🐥","🐥","🐥","🐥","🐥"])
-              ])),
+              lesson: .numberGen(.doubles, rounds: 4)),
 
         Skill(id: "ST-M5", grade: 0, subject: .math,
               title: "Make 10",
               standard: "Stretch · CCSS K.OA / 1.OA",
               activity: "The nest holds 10 eggs. Count the EMPTY spots to fill it!",
               parentTip: "Ten spots, some have a chick. He counts the empty boxes — the amount needed to make ten. Concrete counting, no mental math.",
-              lesson: .numberPad([
-                // He counts the empty ⬜ boxes (a real thing on screen), which IS
-                // the amount that makes ten. No imagining the missing part.
-                NumberProblem("The nest holds 10. Count the empty ⬜ spots!", 3, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","🐤","⬜","⬜","⬜"]),
-                NumberProblem("The nest holds 10. Count the empty ⬜ spots!", 4, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","⬜","⬜","⬜","⬜"]),
-                NumberProblem("The nest holds 10. Count the empty ⬜ spots!", 2, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","🐤","🐤","⬜","⬜"]),
-                NumberProblem("The nest holds 10. Count the empty ⬜ spots!", 5, visual: ["🐤","🐤","🐤","🐤","🐤","⬜","⬜","⬜","⬜","⬜"])
-              ])),
+              lesson: .numberGen(.makeTen, rounds: 4)),
 
         Skill(id: "ST-M6", grade: 0, subject: .math,
               title: "Add Three Groups",
               standard: "Stretch · CCSS 1.OA",
               activity: "Three little groups. Put them together and count all!",
               parentTip: "Adding three numbers is a first-grade step. Count every object, group by group.",
-              lesson: .numberPad([
-                NumberProblem("1 🍎 and 2 🍎 and 1 🍎?", 4, visual: ["🍎","➕","🍎","🍎","➕","🍎"]),
-                NumberProblem("2 🐶 and 1 🐶 and 2 🐶?", 5, visual: ["🐶","🐶","➕","🐶","➕","🐶","🐶"]),
-                NumberProblem("2 ⭐️ and 2 ⭐️ and 2 ⭐️?", 6, visual: ["⭐️","⭐️","➕","⭐️","⭐️","➕","⭐️","⭐️"]),
-                NumberProblem("3 🐥 and 1 🐥 and 3 🐥?", 7, visual: ["🐥","🐥","🐥","➕","🐥","➕","🐥","🐥","🐥"])
-              ])),
+              lesson: .numberGen(.addThree, rounds: 4)),
 
         Skill(id: "ST-R1", grade: 0, subject: .reading,
               title: "Read a Sentence",
@@ -417,72 +390,42 @@ extension Curriculum {
               standard: "Warm-Up · CCSS K.OA",
               activity: "Put the two groups together and count them ALL!",
               parentTip: "Point to every object and count from one — that's what adding is.",
-              lesson: .numberPad([
-                NumberProblem("1 🐶 and 1 🐶. How many in all?", 2, visual: ["🐶","➕","🐶"]),
-                NumberProblem("2 🐱 and 1 🐱. How many in all?", 3, visual: ["🐱","🐱","➕","🐱"]),
-                NumberProblem("2 🐰 and 2 🐰. How many in all?", 4, visual: ["🐰","🐰","➕","🐰","🐰"]),
-                NumberProblem("3 🐥 and 2 🐥. How many in all?", 5, visual: ["🐥","🐥","🐥","➕","🐥","🐥"])
-              ])),
+              lesson: .numberGen(.add, rounds: 4)),
 
         Skill(id: "WU-M2", grade: -2, subject: .math,
               title: "Take Away to 5",
               standard: "Warm-Up · CCSS K.OA",
               activity: "Some go away. Count the ones that are LEFT!",
               parentTip: "Use snacks: start with a few, eat one, count what's left. That's subtracting.",
-              lesson: .numberPad([
-                NumberProblem("4 🍪, eat 1. How many are left?", 3, visual: ["🍪","🍪","🍪"]),
-                NumberProblem("3 🍎, eat 1. How many are left?", 2, visual: ["🍎","🍎"]),
-                NumberProblem("5 🍌, give 2 away. How many are left?", 3, visual: ["🍌","🍌","🍌"]),
-                NumberProblem("5 🍇, eat 1. How many are left?", 4, visual: ["🍇","🍇","🍇","🍇"])
-              ])),
+              lesson: .numberGen(.takeAway, rounds: 4)),
 
         Skill(id: "WU-M3", grade: -2, subject: .math,
               title: "Teen Numbers",
               standard: "Warm-Up · CCSS K.NBT",
               activity: "A teen number is 10 and some more. Count them all!",
               parentTip: "Ten and 3 more is 13. Seeing the ten first makes the big numbers easy.",
-              lesson: .numberPad([
-                NumberProblem("10 and 1 more. How many?", 11, visual: ["🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔴"]),
-                NumberProblem("10 and 2 more. How many?", 12, visual: ["🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔴","🔴"]),
-                NumberProblem("10 and 3 more. How many?", 13, visual: ["🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔴","🔴","🔴"]),
-                NumberProblem("10 and 5 more. How many?", 15, visual: ["🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔵","🔴","🔴","🔴","🔴","🔴"])
-              ])),
+              lesson: .numberGen(.teen, rounds: 4)),
 
         Skill(id: "WU-M4", grade: -2, subject: .math,
               title: "Count to 10",
               standard: "Warm-Up · CCSS K.CC",
               activity: "Point to each one and count. How many in all?",
               parentTip: "Touch one object per number word, all the way to ten.",
-              lesson: .numberPad([
-                NumberProblem("Count the 🐤!", 6, visual: ["🐤","🐤","🐤","🐤","🐤","🐤"]),
-                NumberProblem("Count the 🐟!", 8, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","🐟","🐟"]),
-                NumberProblem("Count the ⭐️!", 10, visual: ["⭐️","⭐️","⭐️","⭐️","⭐️","⭐️","⭐️","⭐️","⭐️","⭐️"]),
-                NumberProblem("Count the 🐝!", 7, visual: ["🐝","🐝","🐝","🐝","🐝","🐝","🐝"])
-              ])),
+              lesson: .numberGen(.count, rounds: 4)),
 
         Skill(id: "WU-M5", grade: -2, subject: .math,
               title: "Animal Add",
               standard: "Warm-Up · CCSS K.OA",
               activity: "More animals come! Put them together and count them all.",
               parentTip: "Act it out with his toy animals: a few here, a few more, count them all.",
-              lesson: .numberPad([
-                NumberProblem("3 🦆 in the pond. 2 more come. How many now?", 5, visual: ["🦆","🦆","🦆","➕","🦆","🦆"]),
-                NumberProblem("2 🐰 hop. 3 more hop over. How many?", 5, visual: ["🐰","🐰","➕","🐰","🐰","🐰"]),
-                NumberProblem("4 🐥 and 3 more 🐥. How many?", 7, visual: ["🐥","🐥","🐥","🐥","➕","🐥","🐥","🐥"]),
-                NumberProblem("5 🐟 and 4 🐟 join them. How many?", 9, visual: ["🐟","🐟","🐟","🐟","🐟","➕","🐟","🐟","🐟","🐟"])
-              ])),
+              lesson: .numberGen(.add, rounds: 4)),
 
         Skill(id: "WU-M6", grade: -2, subject: .math,
               title: "Animal Take-Away",
               standard: "Warm-Up · CCSS K.OA",
               activity: "Some animals leave! Count the ones that are LEFT.",
               parentTip: "Line up his animals, walk a few away, count who stays.",
-              lesson: .numberPad([
-                NumberProblem("5 🦆 swim. 2 swim away. How many left?", 3, visual: ["🦆","🦆","🦆"]),
-                NumberProblem("4 🐰 hop. 1 hops away. How many left?", 3, visual: ["🐰","🐰","🐰"]),
-                NumberProblem("6 🐟 swim. 2 swim off. How many left?", 4, visual: ["🐟","🐟","🐟","🐟"]),
-                NumberProblem("7 🐥 peck. 2 run off. How many left?", 5, visual: ["🐥","🐥","🐥","🐥","🐥"])
-              ])),
+              lesson: .numberGen(.takeAway, rounds: 4)),
 
         Skill(id: "WU-R1", grade: -2, subject: .reading,
               title: "Blend It",
@@ -549,13 +492,7 @@ extension Curriculum {
               standard: "CA PLF Math",
               activity: "Count the animals, then tap the number that says how many.",
               parentTip: "The LAST number he counts is the answer — that's cardinality.",
-              lesson: .numberPad([
-                NumberProblem("How many bees?", 3, visual: ["🐝", "🐝", "🐝"]),
-                NumberProblem("How many cats?", 5, visual: ["🐱", "🐱", "🐱", "🐱", "🐱"]),
-                NumberProblem("How many ducks?", 2, visual: ["🦆", "🦆"]),
-                NumberProblem("How many frogs?", 6, visual: ["🐸", "🐸", "🐸", "🐸", "🐸", "🐸"]),
-                NumberProblem("How many puppies?", 4, visual: ["🐶", "🐶", "🐶", "🐶"])
-              ])),
+              lesson: .numberGen(.count, rounds: 5)),
 
         Skill(id: "TK-M4", grade: -1, subject: .math,
               title: "Bigger or Smaller",
@@ -719,26 +656,14 @@ extension Curriculum {
               standard: "Bridge · CCSS K.CC / 1.OA",
               activity: "One more hops in! Count them all and type how many.",
               parentTip: "One more is just the next counting number. 6, then one more is 7. Count up by one.",
-              lesson: .numberPad([
-                NumberProblem("6 🐤 and 1 more hops in. How many now?", 7, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","➕","🐤"]),
-                NumberProblem("8 🐰 and 1 more. How many now?", 9, visual: ["🐰","🐰","🐰","🐰","🐰","🐰","🐰","🐰","➕","🐰"]),
-                NumberProblem("9 🦆 and 1 more. How many now?", 10, visual: ["🦆","🦆","🦆","🦆","🦆","🦆","🦆","🦆","🦆","➕","🦆"]),
-                NumberProblem("12 🐟 and 1 more. How many now?", 13),
-                NumberProblem("15 🐝 and 1 more. How many now?", 16)
-              ])),
+              lesson: .numberGen(.oneMore, rounds: 5, boost: 1)),
 
         Skill(id: "BR-M2", grade: 1, subject: .math,
               title: "One Less",
               standard: "Bridge · CCSS K.CC / 1.OA",
               activity: "One goes away. Count what's LEFT and type it.",
               parentTip: "One less is the number right before it. 7, one less is 6. Count back by one.",
-              lesson: .numberPad([
-                NumberProblem("7 🍎, 1 rolls away. How many left?", 6, visual: ["🍎","🍎","🍎","🍎","🍎","🍎"]),
-                NumberProblem("10 🐤, 1 wanders off. How many left?", 9, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","🐤","🐤","🐤"]),
-                NumberProblem("6 🐶, 1 runs off. How many left?", 5, visual: ["🐶","🐶","🐶","🐶","🐶"]),
-                NumberProblem("13 🐟, 1 swims away. How many left?", 12),
-                NumberProblem("16 ⭐️, 1 fades. How many left?", 15)
-              ])),
+              lesson: .numberGen(.oneLess, rounds: 5, boost: 1)),
 
         // ---- Doubles to 20 (builds on Stretch Doubles) ----
         Skill(id: "BR-M3", grade: 1, subject: .math,
@@ -746,13 +671,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.OA.6",
               activity: "Two groups the SAME size. Count them all!",
               parentTip: "Doubles are the easiest facts to memorize and they make bigger adding fast: 7 and 7 is 14.",
-              lesson: .numberPad([
-                NumberProblem("5 🐣 and 5 🐣. Double!", 10, visual: ["🐣","🐣","🐣","🐣","🐣","➕","🐣","🐣","🐣","🐣","🐣"]),
-                NumberProblem("6 🐟 and 6 🐟. Double!", 12, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","➕","🐟","🐟","🐟","🐟","🐟","🐟"]),
-                NumberProblem("7 🐝 and 7 🐝. Double!", 14, visual: ["🐝","🐝","🐝","🐝","🐝","🐝","🐝","➕","🐝","🐝","🐝","🐝","🐝","🐝","🐝"]),
-                NumberProblem("8 ⭐️ and 8 ⭐️. Double!", 16),
-                NumberProblem("9 🍎 and 9 🍎. Double!", 18)
-              ])),
+              lesson: .numberGen(.doubles, rounds: 5, boost: 1)),
 
         // ---- Teen numbers as ten-and-some (place value on-ramp) ----
         Skill(id: "BR-M4", grade: 1, subject: .math,
@@ -760,13 +679,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.NBT.2",
               activity: "A teen number is a full ten and some more. Count them all!",
               parentTip: "See the ten first, then count on the extras: ten and 4 more is 14. This is how teen numbers work.",
-              lesson: .numberPad([
-                NumberProblem("10 🥚 and 4 more. How many?", 14, visual: ["🥚","🥚","🥚","🥚","🥚","🥚","🥚","🥚","🥚","🥚","➕","🐤","🐤","🐤","🐤"]),
-                NumberProblem("10 🥚 and 2 more. How many?", 12, visual: ["🥚","🥚","🥚","🥚","🥚","🥚","🥚","🥚","🥚","🥚","➕","🐤","🐤"]),
-                NumberProblem("10 🥚 and 6 more. How many?", 16),
-                NumberProblem("10 🥚 and 8 more. How many?", 18),
-                NumberProblem("10 🥚 and 9 more. How many?", 19)
-              ])),
+              lesson: .numberGen(.teen, rounds: 5, boost: 1)),
 
         // ---- Counting on (a real first-grade strategy) ----
         Skill(id: "BR-M5", grade: 1, subject: .math,
@@ -774,12 +687,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.OA.5",
               activity: "Start big, then count up a few more. Where do you land?",
               parentTip: "Instead of counting from one, start at the big number and count on: start at 12, count 13, 14, 15. Faster and first-grade smart.",
-              lesson: .numberPad([
-                NumberProblem("Start at 10. Count on 3 more. Where do you land?", 13),
-                NumberProblem("Start at 15. Count on 2 more. Where do you land?", 17),
-                NumberProblem("Start at 12. Count on 4 more. Where do you land?", 16),
-                NumberProblem("Start at 8. Count on 5 more. Where do you land?", 13)
-              ])),
+              lesson: .numberGen(.countOn, rounds: 4)),
 
         // ---- Make ten (missing addend, kept concrete: count the empties) ----
         Skill(id: "BR-M6", grade: 1, subject: .math,
@@ -787,12 +695,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.OA.6",
               activity: "The tank holds 10 fish. Count the empty ⬜ spots to fill it!",
               parentTip: "Ten spots, some already have a fish. He counts the empty boxes — that's how many MORE make ten. Concrete, no mental math.",
-              lesson: .numberPad([
-                NumberProblem("The tank holds 10. Count the empty ⬜ spots!", 4, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","⬜","⬜","⬜","⬜"]),
-                NumberProblem("The tank holds 10. Count the empty ⬜ spots!", 3, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","🐟","⬜","⬜","⬜"]),
-                NumberProblem("The tank holds 10. Count the empty ⬜ spots!", 6, visual: ["🐟","🐟","🐟","🐟","⬜","⬜","⬜","⬜","⬜","⬜"]),
-                NumberProblem("The tank holds 10. Count the empty ⬜ spots!", 1, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","🐟","🐟","🐟","⬜"])
-              ])),
+              lesson: .numberGen(.makeTen, rounds: 4, boost: 1)),
 
         // ---- Add within 20 (crossing the ten) ----
         Skill(id: "BR-M7", grade: 1, subject: .math,
@@ -800,13 +703,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.OA.6",
               activity: "Bigger groups that cross ten. Put them together and count all!",
               parentTip: "Same as Add to 10, just past ten now. He can make a ten first, or just count them all.",
-              lesson: .numberPad([
-                NumberProblem("8 🐟 and 5 🐟. How many in all?", 13, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","🐟","🐟","➕","🐟","🐟","🐟","🐟","🐟"]),
-                NumberProblem("9 🐤 and 4 🐤. How many in all?", 13, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","🐤","🐤","🐤","➕","🐤","🐤","🐤","🐤"]),
-                NumberProblem("7 🐝 and 6 🐝. How many in all?", 13),
-                NumberProblem("8 🍎 and 6 🍎. How many in all?", 14),
-                NumberProblem("9 ⭐️ and 8 ⭐️. How many in all?", 17)
-              ])),
+              lesson: .numberGen(.add, rounds: 5, boost: 2)),
 
         // ---- Subtract within 20 ----
         Skill(id: "BR-M8", grade: 1, subject: .math,
@@ -814,13 +711,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.OA.6",
               activity: "Bigger numbers now. Some go away — count what's left!",
               parentTip: "Start at the big number and count back, or count up from the small one. Either way works.",
-              lesson: .numberPad([
-                NumberProblem("12 🍇, eat 4. How many are left?", 8, visual: ["🍇","🍇","🍇","🍇","🍇","🍇","🍇","🍇"]),
-                NumberProblem("11 🐰, 3 hop away. How many are left?", 8, visual: ["🐰","🐰","🐰","🐰","🐰","🐰","🐰","🐰"]),
-                NumberProblem("15 🐟, 6 swim away. How many are left?", 9),
-                NumberProblem("16 🐤, 7 hop off. How many are left?", 9),
-                NumberProblem("13 🍎, give 5 away. How many are left?", 8)
-              ])),
+              lesson: .numberGen(.takeAway, rounds: 5, boost: 2)),
 
         // ---- Ten more / ten less (place-value pattern) ----
         Skill(id: "BR-M9", grade: 1, subject: .math,
@@ -828,13 +719,7 @@ extension Curriculum {
               standard: "Bridge · CCSS 1.NBT.5",
               activity: "Ten more or ten less just changes the tens. Type the new number!",
               parentTip: "Ten more than 25 is 35 — only the tens digit goes up by one. Ten less goes down by one ten.",
-              lesson: .numberPad([
-                NumberProblem("20 and 10 more. How many?", 30),
-                NumberProblem("40 and 10 more. How many?", 50),
-                NumberProblem("15 and 10 more. How many?", 25),
-                NumberProblem("30, now ten less. How many?", 20),
-                NumberProblem("60, now ten less. How many?", 50)
-              ]))
+              lesson: .numberGen(.tenMoreLess, rounds: 5))
     ]
 }
 
@@ -856,72 +741,42 @@ extension Curriculum {
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Count by tens: 10, 20, 30… Type the next number!",
               parentTip: "Counting by tens is the fast way to count big groups. Only the tens digit changes.",
-              lesson: .numberPad([
-                NumberProblem("10, 20, 30, ?", 40),
-                NumberProblem("40, 50, 60, ?", 70),
-                NumberProblem("10, 20, ?", 30),
-                NumberProblem("70, 80, 90, ?", 100)
-              ])),
+              lesson: .numberGen(.skipTens, rounds: 4)),
 
         Skill(id: "FR-M2", grade: 1, subject: .math,
               title: "Count by 5s",
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Count by fives: 5, 10, 15… Type the next number!",
               parentTip: "Counting by fives is like counting hands. Great for telling time later.",
-              lesson: .numberPad([
-                NumberProblem("5, 10, 15, ?", 20),
-                NumberProblem("20, 25, 30, ?", 35),
-                NumberProblem("5, 10, ?", 15),
-                NumberProblem("30, 35, 40, ?", 45)
-              ])),
+              lesson: .numberGen(.skipFives, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M3", grade: 1, subject: .math,
               title: "Count by 2s",
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Count by twos: 2, 4, 6… Type the next number!",
               parentTip: "Counting by twos skips every other number. Count socks or shoes in twos.",
-              lesson: .numberPad([
-                NumberProblem("2, 4, 6, ?", 8),
-                NumberProblem("8, 10, 12, ?", 14),
-                NumberProblem("2, 4, ?", 6),
-                NumberProblem("12, 14, 16, ?", 18)
-              ])),
+              lesson: .numberGen(.skipTwos, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M4", grade: 1, subject: .math,
               title: "Doubles Plus One",
               standard: "Readiness · CCSS 1.OA.6",
               activity: "Almost a double! Do the double, then add one more.",
               parentTip: "6 + 7 is just 6 + 6 and one more. Knowing doubles makes these easy.",
-              lesson: .numberPad([
-                NumberProblem("5 + 6  (5 and 5, then 1 more)", 11),
-                NumberProblem("6 + 7  (6 and 6, then 1 more)", 13),
-                NumberProblem("7 + 8  (7 and 7, then 1 more)", 15),
-                NumberProblem("8 + 9  (8 and 8, then 1 more)", 17)
-              ])),
+              lesson: .numberGen(.doublesPlusOne, rounds: 4)),
 
         Skill(id: "FR-M5", grade: 1, subject: .math,
               title: "Tens and Some More",
               standard: "Readiness · CCSS 1.NBT.2",
               activity: "A whole ten (or two!) and some more. Type how many in all.",
               parentTip: "20 and 3 more is 23. See the tens first, then count on the extra ones.",
-              lesson: .numberPad([
-                NumberProblem("20 and 3 more. How many?", 23),
-                NumberProblem("30 and 5 more. How many?", 35),
-                NumberProblem("40 and 2 more. How many?", 42),
-                NumberProblem("20 and 7 more. How many?", 27)
-              ])),
+              lesson: .numberGen(.tensAndOnes, rounds: 4)),
 
         Skill(id: "FR-M6", grade: 1, subject: .math,
               title: "How Many More?",
               standard: "Readiness · CCSS 1.OA.1",
               activity: "Two groups. Count how many MORE the bigger group has!",
               parentTip: "Line them up and see the extra. Comparing is a kind of subtracting.",
-              lesson: .numberPad([
-                NumberProblem("5 🐶 and 3 🐱. How many MORE dogs?", 2, visual: ["🐶","🐶","🐶","🐶","🐶","🐱","🐱","🐱"]),
-                NumberProblem("6 🐤 and 2 🐰. How many MORE chicks?", 4, visual: ["🐤","🐤","🐤","🐤","🐤","🐤","🐰","🐰"]),
-                NumberProblem("7 🐟 and 4 🐸. How many MORE fish?", 3, visual: ["🐟","🐟","🐟","🐟","🐟","🐟","🐟","🐸","🐸","🐸","🐸"]),
-                NumberProblem("5 🐝 and 1 🐞. How many MORE bees?", 4, visual: ["🐝","🐝","🐝","🐝","🐝","🐞"])
-              ])),
+              lesson: .numberGen(.howManyMore, rounds: 4)),
 
         Skill(id: "FR-M7", grade: 1, subject: .math,
               title: "Barn Story Problems",
@@ -929,10 +784,10 @@ extension Curriculum {
               activity: "A little story on the farm. Read it, then type the answer!",
               parentTip: "Some come, some go. Act it out with his toy animals if he likes.",
               lesson: .numberPad([
-                NumberProblem("6 🐮 in the barn. 3 more come in. How many now?", 9),
-                NumberProblem("10 🐔 pecking. 4 go outside. How many left?", 6),
-                NumberProblem("5 🐑 here and 7 🐑 there. How many sheep?", 12),
-                NumberProblem("8 🐷 by the trough. 2 run to the mud. How many left?", 6)
+                NumberProblem("6 🐮 in the barn. 3 more come in. How many now?", 9, visual: Array(repeating: "🐮", count: 6) + ["➕"] + Array(repeating: "🐮", count: 3)),
+                NumberProblem("10 🐔 pecking. 4 go outside. How many left?", 6, draw: .takeAway(emoji: "🐔", start: 10, gone: 4)),
+                NumberProblem("5 🐑 here and 7 🐑 there. How many sheep?", 12, visual: Array(repeating: "🐑", count: 5) + ["➕"] + Array(repeating: "🐑", count: 7)),
+                NumberProblem("8 🐷 by the trough. 2 run to the mud. How many left?", 6, draw: .takeAway(emoji: "🐷", start: 8, gone: 2))
               ])),
 
         Skill(id: "FR-M8", grade: 1, subject: .math,
@@ -941,10 +796,10 @@ extension Curriculum {
               activity: "More animal stories! Read it, then type how many.",
               parentTip: "Pull out the numbers and decide: are we adding more, or taking some away?",
               lesson: .numberPad([
-                NumberProblem("9 🦆 on the pond. 5 fly away. How many left?", 4),
-                NumberProblem("7 🐴 in the field and 6 more come. How many?", 13),
-                NumberProblem("12 🐝 at the hive. 4 fly off. How many left?", 8),
-                NumberProblem("3 🐰, then 4 🐰, then 2 🐰. How many rabbits?", 9)
+                NumberProblem("9 🦆 on the pond. 5 fly away. How many left?", 4, draw: .takeAway(emoji: "🦆", start: 9, gone: 5)),
+                NumberProblem("7 🐴 in the field and 6 more come. How many?", 13, visual: Array(repeating: "🐴", count: 7) + ["➕"] + Array(repeating: "🐴", count: 6)),
+                NumberProblem("12 🐝 at the hive. 4 fly off. How many left?", 8, draw: .takeAway(emoji: "🐝", start: 12, gone: 4)),
+                NumberProblem("3 🐰, then 4 🐰, then 2 🐰. How many rabbits?", 9, visual: Array(repeating: "🐰", count: 3) + ["➕"] + Array(repeating: "🐰", count: 4) + ["➕"] + Array(repeating: "🐰", count: 2))
               ])),
 
         Skill(id: "FR-M9", grade: 1, subject: .math,
@@ -953,10 +808,10 @@ extension Curriculum {
               activity: "Fill up to ten first, then add the rest. Type the total!",
               parentTip: "9 + 3: give 1 to the 9 to make 10, then 2 more is 12. A big first-grade trick.",
               lesson: .numberPad([
-                NumberProblem("9 + 3  (make 10 first!)", 12),
-                NumberProblem("8 + 4  (make 10 first!)", 12),
-                NumberProblem("9 + 5  (make 10 first!)", 14),
-                NumberProblem("8 + 5  (make 10 first!)", 13)
+                NumberProblem("9 + 3  (make 10 first!)", 12, draw: .compare(top: "🐤", topCount: 9, bottom: "🐤", bottomCount: 3)),
+                NumberProblem("8 + 4  (make 10 first!)", 12, draw: .compare(top: "🐰", topCount: 8, bottom: "🐰", bottomCount: 4)),
+                NumberProblem("9 + 5  (make 10 first!)", 14, draw: .compare(top: "🦆", topCount: 9, bottom: "🦆", bottomCount: 5)),
+                NumberProblem("8 + 5  (make 10 first!)", 13, draw: .compare(top: "🍎", topCount: 8, bottom: "🍎", bottomCount: 5))
               ])),
 
         Skill(id: "FR-M10", grade: 1, subject: .math,
@@ -964,36 +819,21 @@ extension Curriculum {
               standard: "Readiness · CCSS 1.OA.5",
               activity: "Start at the big number and count up a few more!",
               parentTip: "Don't start from one. Start at 16 and count 17, 18, 19.",
-              lesson: .numberPad([
-                NumberProblem("Start at 16. Count on 3 more. Where do you land?", 19),
-                NumberProblem("Start at 14. Count on 5 more. Where do you land?", 19),
-                NumberProblem("Start at 11. Count on 4 more. Where do you land?", 15),
-                NumberProblem("Start at 15. Count on 2 more. Where do you land?", 17)
-              ])),
+              lesson: .numberGen(.countOn, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M11", grade: 1, subject: .math,
               title: "The Number Before",
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Which number comes right BEFORE? Type it!",
               parentTip: "The number before is one less. Before 13 is 12. Count backward one step.",
-              lesson: .numberPad([
-                NumberProblem("What number comes right before 13?", 12),
-                NumberProblem("What number comes right before 20?", 19),
-                NumberProblem("What number comes right before 16?", 15),
-                NumberProblem("What number comes right before 11?", 10)
-              ])),
+              lesson: .numberGen(.numberBefore, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M12", grade: 1, subject: .math,
               title: "Count the Pennies",
               standard: "Readiness · CCSS 1.MD / Money",
               activity: "Each penny is 1 cent. Count them and type the cents!",
               parentTip: "A penny is worth 1¢, so counting pennies is just counting. Real coins make it click.",
-              lesson: .numberPad([
-                NumberProblem("Count the pennies! Each is 1¢.", 5, visual: ["🪙","🪙","🪙","🪙","🪙"]),
-                NumberProblem("Count the pennies! Each is 1¢.", 3, visual: ["🪙","🪙","🪙"]),
-                NumberProblem("Count the pennies! Each is 1¢.", 7, visual: ["🪙","🪙","🪙","🪙","🪙","🪙","🪙"]),
-                NumberProblem("A dime is worth ten cents. How many cents?", 10)
-              ])),
+              lesson: .numberGen(.pennies, rounds: 4)),
 
         Skill(id: "FR-M13", grade: 1, subject: .math,
               title: "More or Less",
@@ -1016,60 +856,35 @@ extension Curriculum {
               standard: "Readiness · CCSS 1.OA.3",
               activity: "8 + 3 or 3 + 8? Same answer! Flip it and see.",
               parentTip: "Adding in either order gives the same total. Every fact he knows is secretly two facts, so this halves what there is to learn.",
-              lesson: .numberPad([
-                NumberProblem("8 + 3 = 11,  so  3 + 8 = ?", 11),
-                NumberProblem("9 + 2 = 11,  so  2 + 9 = ?", 11),
-                NumberProblem("7 + 5 = 12,  so  5 + 7 = ?", 12),
-                NumberProblem("6 + 9 = 15,  so  9 + 6 = ?", 15)
-              ])),
+              lesson: .numberGen(.turnAround, rounds: 4)),
 
         Skill(id: "FR-M15", grade: 1, subject: .math,
               title: "Find the Missing Number",
               standard: "Readiness · CCSS 1.OA.8",
               activity: "A number is hiding! Which one finishes it?",
               parentTip: "Ask how many more to get there. Counting up from the smaller number is the easiest way in, and it is the same move as make-a-ten.",
-              lesson: .numberPad([
-                NumberProblem("5 + ? = 9", 4),
-                NumberProblem("7 + ? = 10", 3),
-                NumberProblem("6 + ? = 12", 6),
-                NumberProblem("8 + ? = 13", 5)
-              ])),
+              lesson: .numberGen(.missingAddend, rounds: 4)),
 
         Skill(id: "FR-M16", grade: 1, subject: .math,
               title: "Add Three Numbers",
               standard: "Readiness · CCSS 1.OA.2",
               activity: "Three numbers at once! Add two, then the last one.",
               parentTip: "Look for a pair that makes ten first. 4 + 6 + 3 is much easier as 10 + 3, and spotting the pair is the real skill.",
-              lesson: .numberPad([
-                NumberProblem("2 + 3 + 4", 9),
-                NumberProblem("4 + 6 + 3   (4 and 6 make ten!)", 13),
-                NumberProblem("5 + 5 + 2", 12),
-                NumberProblem("3 + 7 + 6   (3 and 7 make ten!)", 16)
-              ])),
+              lesson: .numberGen(.addThree, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M17", grade: 1, subject: .math,
               title: "Add Tens and Ones",
               standard: "Readiness · CCSS 1.NBT.4",
               activity: "Bigger numbers, easy way. Add the ones, or jump by tens.",
               parentTip: "23 + 5 only changes the ones. 40 + 30 only changes the tens. The other part stays exactly where it was.",
-              lesson: .numberPad([
-                NumberProblem("23 + 5   (the tens stay put)", 28),
-                NumberProblem("41 + 6", 47),
-                NumberProblem("40 + 30   (4 tens and 3 tens)", 70),
-                NumberProblem("20 + 50", 70)
-              ])),
+              lesson: .numberGen(.addTensOnes, rounds: 4)),
 
         Skill(id: "FR-M18", grade: 1, subject: .math,
               title: "Think Adding to Subtract",
               standard: "Readiness · CCSS 1.OA.4",
               activity: "Taking away? Think adding instead. Same puzzle, easier way.",
               parentTip: "10 - 8 is really eight and how many more make ten. Turning subtraction into addition lets him use facts he already owns instead of counting backward.",
-              lesson: .numberPad([
-                NumberProblem("10 - 8    (8 + ? = 10)", 2),
-                NumberProblem("12 - 9    (9 + ? = 12)", 3),
-                NumberProblem("11 - 7    (7 + ? = 11)", 4),
-                NumberProblem("14 - 8    (8 + ? = 14)", 6)
-              ])),
+              lesson: .numberGen(.thinkAddition, rounds: 4)),
 
         // ============ READING (picture answers, two choices) ============
         Skill(id: "FR-R1", grade: 1, subject: .reading,

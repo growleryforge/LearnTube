@@ -621,6 +621,9 @@ final class AppState: ObservableObject {
         return out
     }
     func mergedStartedCount(_ id: String) -> Int { mergedStarted[id] ?? 0 }
+    /// Has this game ever been opened on any device? Older records only kept
+    /// finishes (`startedCounts` came later), so a finish counts as a start.
+    func everStarted(_ id: String) -> Bool { mergedStartedCount(id) > 0 || mergedCount(id) > 0 }
 
     /// Games opened but not finished (a frustration / difficulty signal).
     func mergedAbandoned(_ id: String) -> Int {
@@ -717,7 +720,13 @@ final class AppState: ObservableObject {
     static let maxLevel = 3
     /// Skills whose difficulty scales each time he masters them — counting,
     /// adding, and subtracting climb from Kindergarten counts toward within 20.
-    static let levelableSkills: Set<String> = ["K-MATH1", "K-MATH2", "K-MATH17"]
+    /// Every generated number game (`.numberGen`) is levelable, so the ladder
+    /// applies to what is actually live instead of three ids that were pulled
+    /// from the feed. A levelable game leaves the feed only after it has been
+    /// mastered at every level (see `isRetired`).
+    static let levelableSkills: Set<String> = Set(Curriculum.allSeededSkills.compactMap { s -> String? in
+        if case .numberGen = s.lesson { return s.id } else { return nil }
+    })
 
     /// Current difficulty level (1...maxLevel) for a skill, from how many times
     /// it has been mastered across the family.
