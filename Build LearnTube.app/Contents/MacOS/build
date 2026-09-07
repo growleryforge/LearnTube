@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# The Dock button. Opens Terminal and runs tools/run.sh there, so the build
+# log is visible and a failure is readable rather than a silently dead icon.
+# Same launcher as I Can Fly's; only the repo name differs.
+
+SELF_REPO="$(cd "$(dirname "$0")/../../.." 2>/dev/null && pwd)"
+FALLBACK="/Volumes/Home/Dev/LearnTube"
+FALLBACK2="/Volumes/Home-1/Dev/LearnTube"
+
+if [ -f "$SELF_REPO/tools/run.sh" ]; then
+    REPO="$SELF_REPO"
+elif [ -f "$FALLBACK/tools/run.sh" ]; then
+    REPO="$FALLBACK"
+elif [ -f "$FALLBACK2/tools/run.sh" ]; then
+    REPO="$FALLBACK2"
+else
+    osascript -e 'display alert "Cannot find the LearnTube repo" message "Looked next to this app and at /Volumes/Home/Dev/LearnTube. If the NAS is not mounted, mount it and try again." as critical'
+    exit 1
+fi
+
+# Terminal shows the log live; `exit` closes the tab when it finishes cleanly.
+osascript <<END
+tell application "Terminal"
+    activate
+    do script "clear; cd " & quoted form of "$REPO" & " && bash tools/run.sh; echo; echo '--- done, press any key to close'; read -n 1; exit"
+end tell
+END

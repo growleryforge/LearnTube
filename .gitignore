@@ -8,3 +8,6 @@ dist/
 *.ipa
 *.app
 .smbdelete*
+
+# The double-click builder is source, not a build product
+!/Build LearnTube.app/
