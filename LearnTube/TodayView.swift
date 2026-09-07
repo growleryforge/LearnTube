@@ -55,7 +55,11 @@ struct HomeFeedView: View {
             for _ in 0..<2 where !seen.isEmpty { mix.append(seen.removeFirst()) }
             if !fresh.isEmpty { mix.append(fresh.removeFirst()) }
         }
-        return mix + rest
+        // Featured games lead the feed in their own order until he has done
+        // them today; everything else keeps the order worked out above.
+        let feed = mix + rest
+        let pinned = Curriculum.featured.compactMap { id in feed.first { $0.id == id && !state.isDoneToday(id) } }
+        return pinned + feed.filter { !pinned.contains($0) }
     }
 
     var body: some View {

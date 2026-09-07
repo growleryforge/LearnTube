@@ -168,6 +168,16 @@ enum Curriculum {
         // still show full progress on the Progress tab.
     ]
 
+    /// Pinned to the top of the home feed, in this order, until finished for the
+    /// day. The feed's own sort (easiest first, fresh mix) takes over below
+    /// them. This is how a grown-up says "these first" without pulling anything
+    /// else: right now it's the Farm Writing Club, because tracing is what has
+    /// actually moved his writing and he asks for it.
+    static let featured: [String] = [
+        "TW-S1", "TW-S3", "TW-S4", "TW-L1", "TW-W3", "TW-N1",
+        "TW-S2", "TW-S5", "TW-L2", "TW-W1", "TW-S6", "TW-L6"
+    ]
+
     /// A short, kid-friendly lesson shown on a teaching card BEFORE each game,
     /// so every game teaches the idea first instead of just testing it. Falls
     /// back to the skill's `activity` line for anything not listed here.
