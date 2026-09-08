@@ -414,14 +414,14 @@ extension Curriculum {
               lesson: .numberGen(.count, rounds: 4)),
 
         Skill(id: "WU-M5", grade: -2, subject: .math,
-              title: "Animal Add",
+              title: "Animal Add-Up!",
               standard: "Warm-Up · CCSS K.OA",
               activity: "More animals come! Put them together and count them all.",
               parentTip: "Act it out with his toy animals: a few here, a few more, count them all.",
               lesson: .numberGen(.add, rounds: 4)),
 
         Skill(id: "WU-M6", grade: -2, subject: .math,
-              title: "Animal Take-Away",
+              title: "Ducks Swim Away!",
               standard: "Warm-Up · CCSS K.OA",
               activity: "Some animals leave! Count the ones that are LEFT.",
               parentTip: "Line up his animals, walk a few away, count who stays.",
@@ -699,7 +699,7 @@ extension Curriculum {
 
         // ---- Add within 20 (crossing the ten) ----
         Skill(id: "BR-M7", grade: 1, subject: .math,
-              title: "Add Within 20",
+              title: "Big Barn Add-Up",
               standard: "Bridge · CCSS 1.OA.6",
               activity: "Bigger groups that cross ten. Put them together and count all!",
               parentTip: "Same as Add to 10, just past ten now. He can make a ten first, or just count them all.",
@@ -707,7 +707,7 @@ extension Curriculum {
 
         // ---- Subtract within 20 ----
         Skill(id: "BR-M8", grade: 1, subject: .math,
-              title: "Take Away to 20",
+              title: "Big Take-Away",
               standard: "Bridge · CCSS 1.OA.6",
               activity: "Bigger numbers now. Some go away — count what's left!",
               parentTip: "Start at the big number and count back, or count up from the small one. Either way works.",
@@ -737,14 +737,14 @@ extension Curriculum {
 
         // ============ MATH (number entry + concrete counting) ============
         Skill(id: "FR-M1", grade: 1, subject: .math,
-              title: "Count by 10s",
+              title: "Count by Tens",
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Count by tens: 10, 20, 30… Type the next number!",
               parentTip: "Counting by tens is the fast way to count big groups. Only the tens digit changes.",
               lesson: .numberGen(.skipTens, rounds: 4)),
 
         Skill(id: "FR-M2", grade: 1, subject: .math,
-              title: "Count by 5s",
+              title: "Count by Fives",
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Count by fives: 5, 10, 15… Type the next number!",
               parentTip: "Counting by fives is like counting hands. Great for telling time later.",
@@ -765,7 +765,7 @@ extension Curriculum {
               lesson: .numberGen(.doublesPlusOne, rounds: 4)),
 
         Skill(id: "FR-M5", grade: 1, subject: .math,
-              title: "Tens and Some More",
+              title: "Tens and Ones",
               standard: "Readiness · CCSS 1.NBT.2",
               activity: "A whole ten (or two!) and some more. Type how many in all.",
               parentTip: "20 and 3 more is 23. See the tens first, then count on the extra ones.",
@@ -779,7 +779,7 @@ extension Curriculum {
               lesson: .numberGen(.howManyMore, rounds: 4)),
 
         Skill(id: "FR-M7", grade: 1, subject: .math,
-              title: "Barn Story Problems",
+              title: "Barn Story",
               standard: "Readiness · CCSS 1.OA.1",
               activity: "A little story on the farm. Read it, then type the answer!",
               parentTip: "Some come, some go. Act it out with his toy animals if he likes.",
@@ -803,7 +803,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-M9", grade: 1, subject: .math,
-              title: "Make a Ten to Add",
+              title: "Make a Ten!",
               standard: "Readiness · CCSS 1.OA.6",
               activity: "Fill up to ten first, then add the rest. Type the total!",
               parentTip: "9 + 3: give 1 to the 9 to make 10, then 2 more is 12. A big first-grade trick.",
@@ -873,14 +873,14 @@ extension Curriculum {
               lesson: .numberGen(.addThree, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M17", grade: 1, subject: .math,
-              title: "Add Tens and Ones",
+              title: "Tens and Ones Add-Up",
               standard: "Readiness · CCSS 1.NBT.4",
               activity: "Bigger numbers, easy way. Add the ones, or jump by tens.",
               parentTip: "23 + 5 only changes the ones. 40 + 30 only changes the tens. The other part stays exactly where it was.",
               lesson: .numberGen(.addTensOnes, rounds: 4)),
 
         Skill(id: "FR-M18", grade: 1, subject: .math,
-              title: "Think Adding to Subtract",
+              title: "Think Adding!",
               standard: "Readiness · CCSS 1.OA.4",
               activity: "Taking away? Think adding instead. Same puzzle, easier way.",
               parentTip: "10 - 8 is really eight and how many more make ten. Turning subtraction into addition lets him use facts he already owns instead of counting backward.",
@@ -975,7 +975,7 @@ extension Curriculum {
 
         // ============ SCIENCE & WORLD (animal interest, winnable) ============
         Skill(id: "FR-S1", grade: 1, subject: .science,
-              title: "Living or Not?",
+              title: "Alive or Not?",
               standard: "Readiness · CA NGSS 1-LS",
               activity: "Living things grow and eat. Tap the one that is ALIVE!",
               parentTip: "Living things need food, water, and air and can grow. Rocks and toys do not.",
@@ -987,7 +987,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-S2", grade: 1, subject: .science,
-              title: "Animal Groups",
+              title: "Animal Teams",
               standard: "Readiness · CA NGSS 1-LS1",
               activity: "Animals come in groups. Tap the group it belongs to!",
               parentTip: "Mammals have fur, birds have feathers, fish have fins, bugs have six legs.",
@@ -999,7 +999,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-S3", grade: 1, subject: .science,
-              title: "What Do They Eat?",
+              title: "Who Eats What?",
               standard: "Readiness · CA NGSS K-LS1",
               activity: "Every animal has a favorite food. Tap what it eats!",
               parentTip: "Rabbits love carrots, cows eat grass, bees drink from flowers. Talk about your farm animals.",
