@@ -62,7 +62,7 @@ extension Curriculum {
               lesson: .story(id: "position-words")),
 
         Skill(id: "K-MATH12", grade: 0, subject: .math,
-              title: "How Many Legs?",
+              title: "Count the Legs!",
               standard: "CA CCSS K.CC.4",
               activity: "Count the animal's legs and tap the number! A bird has 2, a dog has 4.",
               parentTip: "Counting to tell how many. Count the legs on your real animals together.",
@@ -470,7 +470,7 @@ extension Curriculum {
         // and succeeding — writing is one of his harder skills, so lean in with
         // numbers, the rest of the alphabet, and his family's names). -----
         Skill(id: "K-W4", grade: 0, subject: .writing,
-              title: "Write Numbers 1-5",
+              title: "Write 1 to 5!",
               standard: "CA CCSS K.CC.3",
               activity: "Write the numbers! Trace each one with your finger.",
               parentTip: "He's great with numbers — now he writes them. Say the number as he traces it.",
@@ -478,7 +478,7 @@ extension Curriculum {
                              items: ["1", "2", "3", "4", "5"])),
 
         Skill(id: "K-W5", grade: 0, subject: .writing,
-              title: "Write Numbers 6-10",
+              title: "Write 6 to 10!",
               standard: "CA CCSS K.CC.3",
               activity: "Write the bigger numbers! Trace each one with your finger.",
               parentTip: "Writing numbers cements what he already counts. Zero is a nice round loop.",
@@ -486,7 +486,7 @@ extension Curriculum {
                              items: ["6", "7", "8", "9", "0"])),
 
         Skill(id: "K-W6", grade: 0, subject: .writing,
-              title: "Trace Letters G-L",
+              title: "Letters G to L",
               standard: "CA CCSS L.K.1a",
               activity: "More capital letters! Trace each one with your finger.",
               parentTip: "A few letters at a time. Trace slowly; neatness comes with practice.",
@@ -494,7 +494,7 @@ extension Curriculum {
                              items: ["G", "H", "I", "J", "K", "L"])),
 
         Skill(id: "K-W7", grade: 0, subject: .writing,
-              title: "Trace Letters M-R",
+              title: "Letters M to R",
               standard: "CA CCSS L.K.1a",
               activity: "Keep going through the alphabet! Trace each letter.",
               parentTip: "He's building the whole alphabet now. Cheer each finished letter.",
@@ -502,7 +502,7 @@ extension Curriculum {
                              items: ["M", "N", "O", "P", "Q", "R"])),
 
         Skill(id: "K-W8", grade: 0, subject: .writing,
-              title: "Trace Letters S-Z",
+              title: "Letters S to Z",
               standard: "CA CCSS L.K.1a",
               activity: "The last letters of the alphabet! Trace each one.",
               parentTip: "Finishing the alphabet is a big deal — make it a celebration.",
@@ -581,7 +581,7 @@ extension Curriculum {
                              items: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])),
 
         Skill(id: "K-M5", grade: 0, subject: .math,
-              title: "More or Less",
+              title: "Who Has More?",
               standard: "CA CCSS K.CC.4-6",
               activity: "What comes next when we count? Which number is more or less? Tap it!",
               parentTip: "Connect to snacks: 'who has more?' and count up together.",
@@ -680,7 +680,7 @@ extension Curriculum {
               lesson: .story(id: "push-pull")),
 
         Skill(id: "K-S4", grade: 0, subject: .science,
-              title: "Weather Detective",
+              title: "Weather Watch",
               standard: "CA NGSS K-ESS2-1",
               activity: "Look at the weather and name it: sunny, rainy, cloudy, snowy, windy, or stormy. Find it by name or by what it does!",
               parentTip: "Observing and describing weather. Look out the window together and name today's weather.",
@@ -702,7 +702,7 @@ extension Curriculum {
               lesson: .story(id: "community-helpers")),
 
         Skill(id: "K-SS3", grade: 0, subject: .life,
-              title: "Holidays",
+              title: "Party on the Farm!",
               standard: "CA HSS K.1",
               activity: "What does Thanksgiving celebrate? What about MLK Day? Match each holiday to what it means!",
               parentTip: "Knowing what major holidays celebrate. Connect each to your own family traditions.",
@@ -733,7 +733,7 @@ extension Curriculum {
                                      "Thursday", "Friday", "Saturday"])),
 
         Skill(id: "K-L3", grade: 0, subject: .life,
-              title: "Be a Helper",
+              title: "Farm Helpers",
               standard: "CA SEL / Self-help",
               activity: "Good helpers make the farm run. Tap the helpful choice!",
               parentTip: "Talk about real jobs he could pick afterward, his choice.",

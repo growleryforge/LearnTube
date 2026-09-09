@@ -298,21 +298,21 @@ extension Curriculum {
 extension Curriculum {
     static let stretch: [Skill] = [
         Skill(id: "ST-M1", grade: 0, subject: .math,
-              title: "Add to 10",
+              title: "Big Apple Add-Up",
               standard: "Stretch · CCSS K.OA / 1.OA",
               activity: "Bigger groups now! Put them together and count them all.",
               parentTip: "Same idea as Add to 5, just larger. Counting on from the bigger group is the next step.",
               lesson: .numberGen(.add, rounds: 4, boost: 1)),
 
         Skill(id: "ST-M2", grade: 0, subject: .math,
-              title: "Take Away from 10",
+              title: "Ten Fish, Some Swim Off",
               standard: "Stretch · CCSS K.OA / 1.OA",
               activity: "Bigger numbers. Some go away — count what's left!",
               parentTip: "Start from 10 and count back. Fingers help: put some down, count what's up.",
               lesson: .numberGen(.takeAway, rounds: 4, boost: 1)),
 
         Skill(id: "ST-M3", grade: 0, subject: .math,
-              title: "What's Missing?",
+              title: "Which Number Hid?",
               standard: "Stretch · CCSS K.CC",
               activity: "Numbers go in order. Tap the one that's missing!",
               parentTip: "Count out loud together to hear which number was skipped.",
@@ -324,28 +324,28 @@ extension Curriculum {
               ])),
 
         Skill(id: "ST-M4", grade: 0, subject: .math,
-              title: "Doubles",
+              title: "Twin Bunnies",
               standard: "Stretch · CCSS 1.OA",
               activity: "Two groups the SAME size. Count them all!",
               parentTip: "Doubles are easy to remember and make bigger adding faster: 4 and 4 is 8.",
               lesson: .numberGen(.doubles, rounds: 4)),
 
         Skill(id: "ST-M5", grade: 0, subject: .math,
-              title: "Make 10",
+              title: "Fill the Nest",
               standard: "Stretch · CCSS K.OA / 1.OA",
               activity: "The nest holds 10 eggs. Count the EMPTY spots to fill it!",
               parentTip: "Ten spots, some have a chick. He counts the empty boxes — the amount needed to make ten. Concrete counting, no mental math.",
               lesson: .numberGen(.makeTen, rounds: 4)),
 
         Skill(id: "ST-M6", grade: 0, subject: .math,
-              title: "Add Three Groups",
+              title: "Three Little Groups",
               standard: "Stretch · CCSS 1.OA",
               activity: "Three little groups. Put them together and count all!",
               parentTip: "Adding three numbers is a first-grade step. Count every object, group by group.",
               lesson: .numberGen(.addThree, rounds: 4)),
 
         Skill(id: "ST-R1", grade: 0, subject: .reading,
-              title: "Read a Sentence",
+              title: "Read Along with Leo",
               standard: "Stretch · CCSS RF.1 / RL.1",
               activity: "Read the little sentence, then answer about it!",
               parentTip: "He reads one short sentence and answers who or what. That's real comprehension.",
@@ -357,7 +357,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "ST-R2", grade: 0, subject: .reading,
-              title: "Finish the Sentence",
+              title: "Finish the Story",
               standard: "Stretch · CCSS RF.1",
               activity: "Pick the word that makes the sentence make sense!",
               parentTip: "Read the whole sentence with each choice and hear which one sounds right.",
@@ -488,7 +488,7 @@ extension Curriculum {
               lesson: .count(target: 5, symbol: "⭐️", prompt: "Tap all 5 stars!")),
 
         Skill(id: "TK-M3", grade: -1, subject: .math,
-              title: "How Many?",
+              title: "How Many Chicks?",
               standard: "CA PLF Math",
               activity: "Count the animals, then tap the number that says how many.",
               parentTip: "The LAST number he counts is the answer — that's cardinality.",
@@ -652,14 +652,14 @@ extension Curriculum {
 
         // ---- Confidence rung: one more / one less ----
         Skill(id: "BR-M1", grade: 1, subject: .math,
-              title: "One More",
+              title: "One More Hops In",
               standard: "Bridge · CCSS K.CC / 1.OA",
               activity: "One more hops in! Count them all and type how many.",
               parentTip: "One more is just the next counting number. 6, then one more is 7. Count up by one.",
               lesson: .numberGen(.oneMore, rounds: 5, boost: 1)),
 
         Skill(id: "BR-M2", grade: 1, subject: .math,
-              title: "One Less",
+              title: "One Hops Away",
               standard: "Bridge · CCSS K.CC / 1.OA",
               activity: "One goes away. Count what's LEFT and type it.",
               parentTip: "One less is the number right before it. 7, one less is 6. Count back by one.",
@@ -667,7 +667,7 @@ extension Curriculum {
 
         // ---- Doubles to 20 (builds on Stretch Doubles) ----
         Skill(id: "BR-M3", grade: 1, subject: .math,
-              title: "Doubles to 20",
+              title: "Double the Herd",
               standard: "Bridge · CCSS 1.OA.6",
               activity: "Two groups the SAME size. Count them all!",
               parentTip: "Doubles are the easiest facts to memorize and they make bigger adding fast: 7 and 7 is 14.",
@@ -683,7 +683,7 @@ extension Curriculum {
 
         // ---- Counting on (a real first-grade strategy) ----
         Skill(id: "BR-M5", grade: 1, subject: .math,
-              title: "Count On",
+              title: "Count On, Cowboy!",
               standard: "Bridge · CCSS 1.OA.5",
               activity: "Start big, then count up a few more. Where do you land?",
               parentTip: "Instead of counting from one, start at the big number and count on: start at 12, count 13, 14, 15. Faster and first-grade smart.",
@@ -751,7 +751,7 @@ extension Curriculum {
               lesson: .numberGen(.skipFives, rounds: 4, boost: 1)),
 
         Skill(id: "FR-M3", grade: 1, subject: .math,
-              title: "Count by 2s",
+              title: "Count by Twos",
               standard: "Readiness · CCSS 1.NBT.1",
               activity: "Count by twos: 2, 4, 6… Type the next number!",
               parentTip: "Counting by twos skips every other number. Count socks or shoes in twos.",
@@ -791,7 +791,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-M8", grade: 1, subject: .math,
-              title: "Pond Story Problems",
+              title: "Pond Story",
               standard: "Readiness · CCSS 1.OA.1",
               activity: "More animal stories! Read it, then type how many.",
               parentTip: "Pull out the numbers and decide: are we adding more, or taking some away?",
@@ -836,7 +836,7 @@ extension Curriculum {
               lesson: .numberGen(.pennies, rounds: 4)),
 
         Skill(id: "FR-M13", grade: 1, subject: .math,
-              title: "More or Less",
+              title: "Which Is More?",
               standard: "Readiness · CCSS 1.NBT.3",
               activity: "Which number is bigger (or smaller)? Tap it!",
               parentTip: "Bigger numbers are farther along when you count. 14 comes after 9, so it's more.",
@@ -852,7 +852,7 @@ extension Curriculum {
         // into arithmetic he can already do, rather than adding new difficulty.
 
         Skill(id: "FR-M14", grade: 1, subject: .math,
-              title: "Turn-Around Facts",
+              title: "Turn-Around Trick",
               standard: "Readiness · CCSS 1.OA.3",
               activity: "8 + 3 or 3 + 8? Same answer! Flip it and see.",
               parentTip: "Adding in either order gives the same total. Every fact he knows is secretly two facts, so this halves what there is to learn.",
@@ -926,7 +926,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-R4", grade: 1, subject: .reading,
-              title: "Beginning Blends",
+              title: "Blends",
               standard: "Readiness · CCSS RF.1.2",
               activity: "Two letters slide together at the start. Tap the picture!",
               parentTip: "In a blend you hear both letters fast: st in star, fr in frog, sn in snake.",
@@ -962,7 +962,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-R7", grade: 1, subject: .reading,
-              title: "Read and Answer",
+              title: "Yes or No?",
               standard: "Readiness · CCSS RF.1.4",
               activity: "Read the little sentence, then answer yes or no!",
               parentTip: "He reads for meaning and answers yes or no — no word to copy, so he has to understand it.",
@@ -1023,7 +1023,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "FR-S5", grade: 1, subject: .life,
-              title: "Push or Pull?",
+              title: "Push or Pull? 2",
               standard: "Readiness · CA NGSS K-PS2",
               activity: "We move things by pushing or pulling. Tap which one!",
               parentTip: "A push moves something away, a pull brings it closer. Point them out around the house.",
