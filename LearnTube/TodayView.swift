@@ -9,7 +9,7 @@ struct HomeFeedView: View {
     // Fit as many thumbnails as the screen allows at a consistent size:
     // ~2 across on iPhone, more on a wide Mac, each roughly the same width.
     private var cols: [GridItem] {
-        [GridItem(.adaptive(minimum: 170, maximum: 220), spacing: 14)]
+        [GridItem(.adaptive(minimum: 250, maximum: 360), spacing: 18)]
     }
 
     /// Games he can still pick: mastered games drop off so he moves on to new
@@ -271,14 +271,14 @@ struct StopTile: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack {
-                LessonThumb(skill: skill).frame(maxWidth: .infinity).frame(height: 116).clipped()
+                LessonThumb(skill: skill)
                 // YouTube-style dark gradient + centered play button
                 LinearGradient(colors: [.clear, .clear, .black.opacity(0.35)],
                                startPoint: .top, endPoint: .bottom)
                 if !done {
                     ZStack {
-                        Circle().fill(.black.opacity(0.32)).frame(width: 54, height: 54)
-                        Image(systemName: "play.fill").font(.system(size: 22)).foregroundStyle(.white)
+                        Circle().fill(.black.opacity(0.28)).frame(width: 44, height: 44)
+                        Image(systemName: "play.fill").font(.system(size: 18)).foregroundStyle(.white)
                     }
                 }
                 // duration pill (bottom-right) like a YouTube thumbnail
@@ -305,7 +305,7 @@ struct StopTile: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 116)
+            .aspectRatio(16.0 / 9.0, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
 
             VStack(alignment: .leading, spacing: 5) {
@@ -329,7 +329,6 @@ struct StopTile: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 196)
         .background(Theme.surface)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 16).stroke(done ? Theme.green.opacity(0.5) : .clear, lineWidth: 2))
@@ -350,12 +349,12 @@ struct LessonThumb: View {
         // Assets.xcassets wins over the drawn preview whenever one exists, so
         // art can land game by game without touching this code.
         if UIImage(named: "thumb-\(skill.id)") != nil {
+            // Shown whole, at its 16:9 shape: the art carries the title, so
+            // nothing gets cropped off the sides.
             Image("thumb-\(skill.id)")
                 .resizable()
-                .scaledToFill()
+                .aspectRatio(16.0 / 9.0, contentMode: .fit)
                 .frame(maxWidth: .infinity)
-                .frame(height: 116)
-                .clipped()
         } else {
             drawn
         }
@@ -367,7 +366,7 @@ struct LessonThumb: View {
             content
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 116)
+        .aspectRatio(16.0 / 9.0, contentMode: .fit)
         .clipped()
     }
 

@@ -174,8 +174,10 @@ enum Curriculum {
     /// else: right now it's the Farm Writing Club, because tracing is what has
     /// actually moved his writing and he asks for it.
     static let featured: [String] = [
-        "TW-S1", "TW-S3", "TW-S4", "TW-L1", "TW-W3", "TW-N1",
-        "TW-S2", "TW-S5", "TW-L2", "TW-W1", "TW-S6", "TW-L6"
+        // Letters and whole words first: he already writes, so the pinned row
+        // opens with writing. The stroke warm-up games stay in the feed below.
+        "TW-W1", "TW-L1", "TW-N1", "TW-W3", "TW-L2", "TW-L6",
+        "TW-W2", "TW-L3", "TW-N2", "TW-W5", "TW-L4", "TW-W4"
     ]
 
     /// A short, kid-friendly lesson shown on a teaching card BEFORE each game,

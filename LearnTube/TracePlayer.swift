@@ -64,13 +64,14 @@ struct TracePlayer: View {
                             )
                             .onAppear { setup(geo.size) }
                             .onChange(of: index) { _ in setup(geo.size) }
+                            .onChange(of: geo.size) { sz in if targets.isEmpty { setup(sz) } }
                     }
                     .padding(10)
                 }
                 .frame(height: 320)
                 .padding(.horizontal, 6)
                 // The word the letter starts, tied to the animal: "d" ... duck.
-                if !step.word.isEmpty {
+                if !step.word.isEmpty, label != step.word {
                     HStack(spacing: 10) {
                         if !step.from.isEmpty { EmojiView(emoji: step.from, size: 30, tint: .white) }
                         Text(step.word)
@@ -93,29 +94,32 @@ struct TracePlayer: View {
     // MARK: Drawing
 
     private func draw(_ ctx: GraphicsContext) {
-        // Faint thick guide + crisp outline of the shape.
-        ctx.stroke(guidePath, with: .color(Color(white: 0.82)),
-                   style: StrokeStyle(lineWidth: 22, lineCap: .round, lineJoin: .round))
-        ctx.stroke(guidePath, with: .color(Color(white: 0.65)), lineWidth: 1.5)
+        // A pale band to trace inside, plus a dotted outline like a tracing
+        // worksheet, so the shape is obvious the second the screen opens.
+        ctx.stroke(guidePath, with: .color(accent.opacity(0.18)),
+                   style: StrokeStyle(lineWidth: 26, lineCap: .round, lineJoin: .round))
+        ctx.stroke(guidePath, with: .color(Color(white: 0.45)),
+                   style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round, dash: [6, 6]))
         // Dots along the path: grey until traced, green once hit.
         for (i, t) in targets.enumerated() {
-            let r: CGFloat = 4.5
+            let r: CGFloat = 6
             let rect = CGRect(x: t.x - r, y: t.y - r, width: r * 2, height: r * 2)
             ctx.fill(Path(ellipseIn: rect),
-                     with: .color(hit.contains(i) ? Theme.green : Color(white: 0.7)))
-        }
-        // Where to start: a green ring on the first dot, so the stroke begins
-        // where a written letter begins (top, or the left).
-        if let first = targets.first, hit.isEmpty {
-            let r: CGFloat = 13
-            ctx.stroke(Path(ellipseIn: CGRect(x: first.x - r, y: first.y - r, width: r * 2, height: r * 2)),
-                       with: .color(Theme.green), lineWidth: 3)
+                     with: .color(hit.contains(i) ? Theme.green : Color(white: 0.55)))
         }
         // The child's ink.
         if ink.count > 1 {
             var p = Path(); p.addLines(ink)
             ctx.stroke(p, with: .color(accent),
                        style: StrokeStyle(lineWidth: 13, lineCap: .round, lineJoin: .round))
+        }
+        // Where to start: a big green ring on the first dot and a pointing
+        // finger, until the first dot is hit.
+        if let first = targets.first, hit.isEmpty {
+            let r: CGFloat = 16
+            ctx.stroke(Path(ellipseIn: CGRect(x: first.x - r, y: first.y - r, width: r * 2, height: r * 2)),
+                       with: .color(Theme.green), lineWidth: 4)
+            ctx.draw(Text("👆").font(.system(size: 30)), at: CGPoint(x: first.x + 2, y: min(first.y + 34, canvasSize.height - 20)))
         }
         // The animal at the start and the place it's going at the end, sitting
         // just off the stroke so they never cover the dots.
@@ -175,7 +179,8 @@ struct TracePlayer: View {
         ink = []; hit = []
         guard size.width > 1, steps.indices.contains(index) else { guidePath = Path(); targets = []; return }
         // Leave room around the shape for the animal and the destination.
-        let margin: CGFloat = (step.from.isEmpty && step.to.isEmpty) ? 0.72 : 0.62
+        let isWide: Bool = { if case .glyph(let g) = step.stroke { return g.count > 1 } else { return false } }()
+        let margin: CGFloat = isWide ? 0.9 : ((step.from.isEmpty && step.to.isEmpty) ? 0.72 : 0.62)
         let cg: CGPath
         let flip: Bool
         switch step.stroke {
@@ -188,7 +193,8 @@ struct TracePlayer: View {
         let box = cg.boundingBoxOfPath
         guard box.width > 0 || box.height > 0 else { guidePath = Path(); targets = []; return }
         let target = min(size.width, size.height) * margin
-        let scale = target / max(box.width, box.height, 0.001)
+        var scale = target / max(box.width, box.height, 0.001)
+        if isWide { scale = min((size.width - 40) / max(box.width, 1), (size.height - 60) / max(box.height, 1)) }
         let drawW = box.width * scale, drawH = box.height * scale
         let offX = (size.width - drawW) / 2
         let offY = (size.height - drawH) / 2
@@ -205,7 +211,8 @@ struct TracePlayer: View {
         let tp = cg.copy(using: &t) ?? cg
         guidePath = Path(tp)
         let raw = Self.polyline(cg).map { $0.applying(t) }
-        targets = Self.resample(raw, spacing: 20, cap: 34)
+        let isWord: Bool = { if case .glyph(let g) = step.stroke { return g.count > 1 } else { return false } }()
+        targets = Self.resample(raw, spacing: isWord ? 16 : 20, cap: isWord ? 90 : 34)
     }
 
     // MARK: Pre-writing strokes (unit square, y down, drawn in writing order)
@@ -284,12 +291,26 @@ struct TracePlayer: View {
     static func glyphPath(_ s: String) -> CGPath? {
         let name = UIFont(name: "ArialRoundedMTBold", size: 100) != nil ? "ArialRoundedMTBold" : "Helvetica-Bold"
         let font = CTFontCreateWithName(name as CFString, 100, nil)
-        var chars = Array(s.utf16)
-        var glyphs = [CGGlyph](repeating: 0, count: chars.count)
-        guard CTFontGetGlyphsForCharacters(font, &chars, &glyphs, chars.count),
-              let g = glyphs.first, g != 0,
-              let path = CTFontCreatePathForGlyph(font, g, nil) else { return nil }
-        return path
+        // One glyph or a whole word: lay the string out as a line so "cow" is
+        // traced as one shape, letter after letter, the way a word is written.
+        let attr = NSAttributedString(string: s, attributes: [kCTFontAttributeName as NSAttributedString.Key: font])
+        let line = CTLineCreateWithAttributedString(attr)
+        let out = CGMutablePath()
+        for run in (CTLineGetGlyphRuns(line) as! [CTRun]) {
+            let n = CTRunGetGlyphCount(run)
+            guard n > 0 else { continue }
+            var glyphs = [CGGlyph](repeating: 0, count: n)
+            var pos = [CGPoint](repeating: .zero, count: n)
+            CTRunGetGlyphs(run, CFRangeMake(0, n), &glyphs)
+            CTRunGetPositions(run, CFRangeMake(0, n), &pos)
+            let attrs = CTRunGetAttributes(run) as! [NSAttributedString.Key: Any]
+            let rf = (attrs[kCTFontAttributeName as NSAttributedString.Key] as! CTFont)
+            for i in 0..<n {
+                guard glyphs[i] != 0, let g = CTFontCreatePathForGlyph(rf, glyphs[i], nil) else { continue }
+                out.addPath(g, transform: CGAffineTransform(translationX: pos[i].x, y: pos[i].y))
+            }
+        }
+        return out.isEmpty ? nil : out
     }
 
     /// Flatten a CGPath into a dense polyline (curves subdivided).

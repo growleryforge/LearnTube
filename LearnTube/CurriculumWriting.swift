@@ -7,9 +7,9 @@ import SwiftUI
 // every tracing game in the app, and then wrote on the whiteboard. So this is a
 // full ladder of it, every rung an animal:
 //
-//   1. pre-writing strokes  (top-to-bottom, left-to-right, circle, cross,
-//      diagonals, then waves, zigzags, loops, spirals for fluency: the motor
-//      patterns every letter is built from, in the order OTs teach them)
+//   1. stroke families: one warm-up stroke (top-to-bottom, circle, wave...),
+//      then the letters built from it, then a whole animal word. He is past
+//      bare lines (he writes on the whiteboard), so every game ends in writing.
 //   2. lowercase letters by stroke family, each starting an animal's name
 //   3. capital letters that start animals he cares about
 //   4. whole animal names, letter by letter
@@ -28,10 +28,11 @@ extension Curriculum {
               activity: "Slide your finger down the giraffe's neck to the leaf. Top to bottom!",
               parentTip: "The top-to-bottom line is the first handwriting stroke. Starting at the top matters more than being straight.",
               lesson: .traceScene(prompt: "Top to bottom!", steps: [
-                TraceStep("Slide down the giraffe's neck to the leaf!", .down, from: "🦒", to: "🍃"),
-                TraceStep("The monkey drops down to the banana!", .down, from: "🐒", to: "🍌"),
-                TraceStep("The spider lowers down to her web!", .down, from: "🕷️", to: "🕸️"),
-                TraceStep("The squirrel climbs down to the acorn!", .down, from: "🐿️", to: "🌰")
+                TraceStep("Warm up: slide down the giraffe's neck to the leaf!", .down, from: "🦒", to: "🍃"),
+                TraceStep("l is a tall line down, like the giraffe's neck!", .glyph("l"), from: "🦒", word: "lion"),
+                TraceStep("i is a short line down, then a dot on top!", .glyph("i"), from: "🦎", word: "iguana"),
+                TraceStep("t is a tall line down, then cross it!", .glyph("t"), from: "🐢", word: "turtle"),
+                TraceStep("Now write the whole word: lion!", .glyph("lion"), from: "🦁", word: "lion")
               ])),
 
         Skill(id: "TW-S2", grade: 0, subject: .writing,
@@ -40,10 +41,11 @@ extension Curriculum {
               activity: "Walk the worm across to the apple. Left to right, like reading!",
               parentTip: "Left-to-right lines are the second stroke, and the direction we read and write in.",
               lesson: .traceScene(prompt: "Left to right!", steps: [
-                TraceStep("Walk the worm to the apple!", .across, from: "🐛", to: "🍎"),
-                TraceStep("The turtle plods over to the lettuce!", .across, from: "🐢", to: "🥬"),
-                TraceStep("March the ant to the cookie!", .across, from: "🐜", to: "🍪"),
-                TraceStep("The snail slides to the strawberry!", .across, from: "🐌", to: "🍓")
+                TraceStep("Warm up: walk the worm across to the apple!", .across, from: "🐛", to: "🍎"),
+                TraceStep("e starts with a line across, then curls round!", .glyph("e"), from: "🐘", word: "elephant"),
+                TraceStep("f is a hook, a line down, then across!", .glyph("f"), from: "🦊", word: "fox"),
+                TraceStep("t is a line down, then across!", .glyph("t"), from: "🐢", word: "turtle"),
+                TraceStep("Now write the whole word: hen!", .glyph("hen"), from: "🐔", word: "hen")
               ])),
 
         Skill(id: "TW-S3", grade: 0, subject: .writing,
@@ -52,10 +54,11 @@ extension Curriculum {
               activity: "Walk the hen all the way around her nest. Start at the top and go left!",
               parentTip: "Starting a circle at the top and going left (counter-clockwise) is exactly how c, o, a, d and g begin.",
               lesson: .traceScene(prompt: "Round and round!", steps: [
-                TraceStep("Walk the hen around her nest to the egg!", .circle, from: "🐔", to: "🥚"),
-                TraceStep("The bee circles the flower!", .circle, from: "🐝", to: "🌻"),
-                TraceStep("The puppy chases his tail all the way round!", .circle, from: "🐶", to: "🦴"),
-                TraceStep("The kitten rolls the yarn in a circle!", .circle, from: "🐱", to: "🧶")
+                TraceStep("Warm up: walk the hen around her nest to the egg!", .circle, from: "🐔", to: "🥚"),
+                TraceStep("c curls left from the top, like the hen!", .glyph("c"), from: "🐱", word: "cat"),
+                TraceStep("o curls all the way round!", .glyph("o"), from: "🦉", word: "owl"),
+                TraceStep("a curls round, then a short line down!", .glyph("a"), from: "🐜", word: "ant"),
+                TraceStep("Now write the whole word: cat!", .glyph("cat"), from: "🐱", word: "cat")
               ])),
 
         Skill(id: "TW-S4", grade: 0, subject: .writing,
@@ -64,10 +67,11 @@ extension Curriculum {
               activity: "Help the duck swim the waves across the pond!",
               parentTip: "Smooth up-and-down curves are the motion inside m, n, u and w. Slow and wavy beats fast and wobbly.",
               lesson: .traceScene(prompt: "Ride the waves!", steps: [
-                TraceStep("Help the duck swim the waves to the lily pad!", .wave, from: "🦆", to: "🪷"),
-                TraceStep("The fish wiggles over to the coral!", .wave, from: "🐟", to: "🪸"),
-                TraceStep("The frog bobs across to the log!", .wave, from: "🐸", to: "🪵"),
-                TraceStep("The dolphin surfs to the island!", .wave, from: "🐬", to: "🏝️")
+                TraceStep("Warm up: help the duck swim the waves to the lily pad!", .wave, from: "🦆", to: "🪷"),
+                TraceStep("u is a wave: down, curve, and up!", .glyph("u"), from: "🦄", word: "unicorn"),
+                TraceStep("m is down, then two humps!", .glyph("m"), from: "🐵", word: "monkey"),
+                TraceStep("n is down, then one hump!", .glyph("n"), from: "🦎", word: "newt"),
+                TraceStep("Now write the whole word: emu!", .glyph("emu"), from: "🐦", word: "emu")
               ])),
 
         Skill(id: "TW-S5", grade: 0, subject: .writing,
@@ -76,10 +80,11 @@ extension Curriculum {
               activity: "The goat hops over every fence post to reach the hay!",
               parentTip: "Sharp up-and-down diagonals build v, w, z and the sides of A and M. Points, not curves.",
               lesson: .traceScene(prompt: "Hop the fence!", steps: [
-                TraceStep("The goat hops the fence posts to the hay!", .zigzag, from: "🐐", to: "🌾"),
-                TraceStep("The bunny zigzags to the carrot!", .zigzag, from: "🐰", to: "🥕"),
-                TraceStep("The kangaroo bounds over to the cactus!", .zigzag, from: "🦘", to: "🌵"),
-                TraceStep("The horse jumps the fences to the finish!", .zigzag, from: "🐎", to: "🏁")
+                TraceStep("Warm up: the goat hops the fence posts to the hay!", .zigzag, from: "🐐", to: "🌾"),
+                TraceStep("v is slant down, slant up!", .glyph("v"), from: "🦅", word: "vulture"),
+                TraceStep("w is down, up, down, up!", .glyph("w"), from: "🐋", word: "whale"),
+                TraceStep("z is across, slant down, across!", .glyph("z"), from: "🦓", word: "zebra"),
+                TraceStep("Now write the whole word: wolf!", .glyph("wolf"), from: "🐺", word: "wolf")
               ])),
 
         Skill(id: "TW-S6", grade: 0, subject: .writing,
@@ -88,10 +93,11 @@ extension Curriculum {
               activity: "The bird flies up and over the barn in one big hump!",
               parentTip: "One smooth hump, left to right, is the top of h, m, n and r.",
               lesson: .traceScene(prompt: "Up and over!", steps: [
-                TraceStep("The chick flies up and over to the tree!", .arc, from: "🐤", to: "🌳"),
-                TraceStep("The eagle soars over to the mountain!", .arc, from: "🦅", to: "⛰️"),
-                TraceStep("The butterfly floats over to the tulip!", .arc, from: "🦋", to: "🌷"),
-                TraceStep("The bee hums over to the honey!", .arc, from: "🐝", to: "🍯")
+                TraceStep("Warm up: the bluebird flies up and over the barn to the tree!", .arc, from: "🐦", to: "🌳"),
+                TraceStep("h is a tall line, then a hump over!", .glyph("h"), from: "🐴", word: "horse"),
+                TraceStep("r is a line down, then a little hook over!", .glyph("r"), from: "🐰", word: "rabbit"),
+                TraceStep("b is a tall line, then a belly!", .glyph("b"), from: "🐻", word: "bear"),
+                TraceStep("Now write the whole word: bear!", .glyph("bear"), from: "🐻", word: "bear")
               ])),
 
         Skill(id: "TW-S7", grade: 0, subject: .writing,
@@ -100,10 +106,11 @@ extension Curriculum {
               activity: "The bee loops and loops on her way to the flower!",
               parentTip: "Loops are the hardest pre-writing shape and the start of e and l. It's fine if they overlap.",
               lesson: .traceScene(prompt: "Loop-de-loop!", steps: [
-                TraceStep("The bee loops her way to the flower!", .loops, from: "🐝", to: "🌸"),
-                TraceStep("The butterfly loops to the daisy!", .loops, from: "🦋", to: "🌼"),
-                TraceStep("The ladybug loops to the clover!", .loops, from: "🐞", to: "🍀"),
-                TraceStep("The dove loops up to the cloud!", .loops, from: "🕊️", to: "☁️")
+                TraceStep("Warm up: the bee loops her way to the flower!", .loops, from: "🐝", to: "🌸"),
+                TraceStep("e is a little loop: across, then curl round!", .glyph("e"), from: "🐘", word: "elephant"),
+                TraceStep("l loops up tall and back down!", .glyph("l"), from: "🦁", word: "lion"),
+                TraceStep("b loops up, then round into a belly!", .glyph("b"), from: "🐝", word: "bee"),
+                TraceStep("Now write the whole word: bee!", .glyph("bee"), from: "🐝", word: "bee")
               ])),
 
         Skill(id: "TW-S8", grade: 0, subject: .writing,
@@ -112,10 +119,11 @@ extension Curriculum {
               activity: "Follow the snail round and round into the middle of his shell!",
               parentTip: "A spiral is a circle that keeps going. It builds the wrist control for small round letters.",
               lesson: .traceScene(prompt: "Round and in!", steps: [
-                TraceStep("Follow the snail into the middle of his shell!", .spiral, from: "🐌", to: "💤"),
-                TraceStep("The hedgehog curls up into a ball!", .spiral, from: "🦔", to: "🍄"),
-                TraceStep("The snake coils round and round!", .spiral, from: "🐍", to: "🪨"),
-                TraceStep("The puppy turns round and round for a nap!", .spiral, from: "🐶", to: "🛏️")
+                TraceStep("Warm up: follow the snail into the middle of his shell!", .spiral, from: "🐌", to: "💤"),
+                TraceStep("g curls round, then a tail under!", .glyph("g"), from: "🐐", word: "goat"),
+                TraceStep("s curves one way, then the other!", .glyph("s"), from: "🐍", word: "snake"),
+                TraceStep("j is a line down, a hook, and a dot!", .glyph("j"), from: "🪼", word: "jellyfish"),
+                TraceStep("Now write the whole word: goose!", .glyph("goose"), from: "🪿", word: "goose")
               ])),
 
         Skill(id: "TW-S9", grade: 0, subject: .writing,
@@ -124,10 +132,11 @@ extension Curriculum {
               activity: "Why did the chicken cross the road? To trace a plus sign!",
               parentTip: "The cross (down, then across) and the two diagonals are the strokes behind t, x, k and the capitals.",
               lesson: .traceScene(prompt: "Cross it!", steps: [
-                TraceStep("The chicken crosses the road: down, then across!", .cross, from: "🐔", to: "🐣"),
-                TraceStep("The squirrel slides down the branch to the acorn!", .diagonalDown, from: "🐿️", to: "🌰"),
-                TraceStep("The goat climbs up the hill to the top!", .diagonalUp, from: "🐐", to: "⛰️"),
-                TraceStep("The fox and the rooster cross paths!", .xMark, from: "🦊", to: "🐓")
+                TraceStep("Warm up: the chicken crosses the road: down, then across!", .cross, from: "🐔", to: "🐣"),
+                TraceStep("t is down, then a cross!", .glyph("t"), from: "🐢", word: "turtle"),
+                TraceStep("x is two slants that cross!", .glyph("x"), from: "🐂", word: "ox"),
+                TraceStep("k is a tall line, then a kick!", .glyph("k"), from: "🦘", word: "kangaroo"),
+                TraceStep("Now write the whole word: fox!", .glyph("fox"), from: "🦊", word: "fox")
               ])),
 
         Skill(id: "TW-S10", grade: 0, subject: .writing,
@@ -136,10 +145,11 @@ extension Curriculum {
               activity: "Build the pig a pen, a shark a fin, and the sheep a moon. Trace the shapes!",
               parentTip: "Square and triangle are the last pre-writing shapes. Corners take a stop-and-turn; cheer the corners.",
               lesson: .traceScene(prompt: "Trace the shape!", steps: [
-                TraceStep("Build the pig a square pen!", .square, from: "🐷", to: "🌽"),
+                TraceStep("Warm up: build the pig a square pen!", .square, from: "🐷", to: "🌽"),
                 TraceStep("Trace the shark's pointy fin!", .triangle, from: "🦈", to: "🌊"),
-                TraceStep("The sheep walks a circle round the moon!", .circle, from: "🐑", to: "🌙"),
-                TraceStep("Zig the zebra over to the grass!", .zigzag, from: "🦓", to: "🌿")
+                TraceStep("o is a circle, like the moon!", .glyph("o"), from: "🐑", word: "owl"),
+                TraceStep("p is a line down under, then a belly!", .glyph("p"), from: "🐷", word: "pig"),
+                TraceStep("Now write the whole word: pig!", .glyph("pig"), from: "🐷", word: "pig")
               ])),
 
         // ================= 2. Lowercase letters by stroke family =================
@@ -153,7 +163,8 @@ extension Curriculum {
                 TraceStep("o is for owl! Curl all the way round.", .glyph("o"), from: "🦉", word: "owl"),
                 TraceStep("a is for ant! Curl round, then a short line down.", .glyph("a"), from: "🐜", word: "ant"),
                 TraceStep("d is for dog! Curl round, then a tall line down.", .glyph("d"), from: "🐶", word: "dog"),
-                TraceStep("g is for goat! Curl round, then a tail under.", .glyph("g"), from: "🐐", word: "goat")
+                TraceStep("g is for goat! Curl round, then a tail under.", .glyph("g"), from: "🐐", word: "goat"),
+                TraceStep("Now write the whole word: dog!", .glyph("dog"), from: "🐶", word: "dog")
               ])),
 
         Skill(id: "TW-L2", grade: 0, subject: .writing,
@@ -167,7 +178,8 @@ extension Curriculum {
                 TraceStep("t is for turtle! A tall line, then cross it.", .glyph("t"), from: "🐢", word: "turtle"),
                 TraceStep("b is for bear! Tall line down, then a belly.", .glyph("b"), from: "🐻", word: "bear"),
                 TraceStep("h is for horse! Tall line down, then a hump.", .glyph("h"), from: "🐴", word: "horse"),
-                TraceStep("k is for kangaroo! Tall line, then a kick.", .glyph("k"), from: "🦘", word: "kangaroo")
+                TraceStep("k is for kangaroo! Tall line, then a kick.", .glyph("k"), from: "🦘", word: "kangaroo"),
+                TraceStep("Now write the whole word: lion!", .glyph("lion"), from: "🦁", word: "lion")
               ])),
 
         Skill(id: "TW-L3", grade: 0, subject: .writing,
@@ -180,7 +192,8 @@ extension Curriculum {
                 TraceStep("n is for newt! Down, then one hump.", .glyph("n"), from: "🦎", word: "newt"),
                 TraceStep("r is for rabbit! Down, then a little hook.", .glyph("r"), from: "🐰", word: "rabbit"),
                 TraceStep("p is for pig! Down under the line, then a belly.", .glyph("p"), from: "🐷", word: "pig"),
-                TraceStep("u is for unicorn! Down, curve, and up.", .glyph("u"), from: "🦄", word: "unicorn")
+                TraceStep("u is for unicorn! Down, curve, and up.", .glyph("u"), from: "🦄", word: "unicorn"),
+                TraceStep("Now write the whole word: pig!", .glyph("pig"), from: "🐷", word: "pig")
               ])),
 
         Skill(id: "TW-L4", grade: 0, subject: .writing,
@@ -193,7 +206,8 @@ extension Curriculum {
                 TraceStep("v is for vulture! Slant down, slant up.", .glyph("v"), from: "🦅", word: "vulture"),
                 TraceStep("w is for whale! Down, up, down, up.", .glyph("w"), from: "🐋", word: "whale"),
                 TraceStep("y is for yak! Slant down, then a long slant under.", .glyph("y"), from: "🐃", word: "yak"),
-                TraceStep("x is for ox! Two slants that cross.", .glyph("x"), from: "🐂", word: "ox")
+                TraceStep("x is for ox! Two slants that cross.", .glyph("x"), from: "🐂", word: "ox"),
+                TraceStep("Now write the whole word: yak!", .glyph("yak"), from: "🐃", word: "yak")
               ])),
 
         Skill(id: "TW-L5", grade: 0, subject: .writing,
@@ -205,7 +219,8 @@ extension Curriculum {
                 TraceStep("s is for snake! Curve one way, then the other.", .glyph("s"), from: "🐍", word: "snake"),
                 TraceStep("e is for elephant! Across, then curl round.", .glyph("e"), from: "🐘", word: "elephant"),
                 TraceStep("f is for fox! Hook at the top, line down, cross.", .glyph("f"), from: "🦊", word: "fox"),
-                TraceStep("j is for jellyfish! Line down, hook, and a dot.", .glyph("j"), from: "🪼", word: "jellyfish")
+                TraceStep("j is for jellyfish! Line down, hook, and a dot.", .glyph("j"), from: "🪼", word: "jellyfish"),
+                TraceStep("Now write the whole word: fox!", .glyph("fox"), from: "🦊", word: "fox")
               ])),
 
         // ================= 3. Capitals for animals he loves =================
@@ -220,7 +235,8 @@ extension Curriculum {
                 TraceStep("D is for Duck!", .glyph("D"), from: "🦆", word: "Duck"),
                 TraceStep("G is for Goat!", .glyph("G"), from: "🐐", word: "Goat"),
                 TraceStep("H is for Hen!", .glyph("H"), from: "🐔", word: "Hen"),
-                TraceStep("C is for Cow!", .glyph("C"), from: "🐮", word: "Cow")
+                TraceStep("C is for Cow!", .glyph("C"), from: "🐮", word: "Cow"),
+                TraceStep("Now write the whole word: Cow!", .glyph("Cow"), from: "🐮", word: "Cow")
               ])),
 
         // ================= 4. Whole animal names =================
@@ -233,9 +249,11 @@ extension Curriculum {
                 TraceStep("c-o-w. Trace the c!", .glyph("c"), from: "🐮", word: "cow"),
                 TraceStep("Now the o!", .glyph("o"), from: "🐮", word: "cow"),
                 TraceStep("And the w. That spells cow!", .glyph("w"), from: "🐮", word: "cow"),
+                TraceStep("Now write the whole word: cow!", .glyph("cow"), from: "🐮", word: "cow"),
                 TraceStep("p-i-g. Trace the p!", .glyph("p"), from: "🐷", word: "pig"),
                 TraceStep("Now the i!", .glyph("i"), from: "🐷", word: "pig"),
-                TraceStep("And the g. That spells pig!", .glyph("g"), from: "🐷", word: "pig")
+                TraceStep("And the g. That spells pig!", .glyph("g"), from: "🐷", word: "pig"),
+                TraceStep("Now write the whole word: pig!", .glyph("pig"), from: "🐷", word: "pig")
               ])),
 
         Skill(id: "TW-W2", grade: 0, subject: .writing,
@@ -248,9 +266,11 @@ extension Curriculum {
                 TraceStep("Now the u!", .glyph("u"), from: "🦆", word: "duck"),
                 TraceStep("Now the c!", .glyph("c"), from: "🦆", word: "duck"),
                 TraceStep("And the k. That spells duck!", .glyph("k"), from: "🦆", word: "duck"),
+                TraceStep("Now write the whole word: duck!", .glyph("duck"), from: "🦆", word: "duck"),
                 TraceStep("h-e-n. Trace the h!", .glyph("h"), from: "🐔", word: "hen"),
                 TraceStep("Now the e!", .glyph("e"), from: "🐔", word: "hen"),
-                TraceStep("And the n. That spells hen!", .glyph("n"), from: "🐔", word: "hen")
+                TraceStep("And the n. That spells hen!", .glyph("n"), from: "🐔", word: "hen"),
+                TraceStep("Now write the whole word: hen!", .glyph("hen"), from: "🐔", word: "hen")
               ])),
 
         Skill(id: "TW-W3", grade: 0, subject: .writing,
@@ -263,9 +283,11 @@ extension Curriculum {
                 TraceStep("Now the i!", .glyph("i"), from: "🦁", word: "lion"),
                 TraceStep("Now the o!", .glyph("o"), from: "🦁", word: "lion"),
                 TraceStep("And the n. That spells lion!", .glyph("n"), from: "🦁", word: "lion"),
+                TraceStep("Now write the whole word: lion!", .glyph("lion"), from: "🦁", word: "lion"),
                 TraceStep("c-u-b. Trace the c!", .glyph("c"), from: "🦁", word: "cub"),
                 TraceStep("Now the u!", .glyph("u"), from: "🦁", word: "cub"),
-                TraceStep("And the b. Lion cub!", .glyph("b"), from: "🦁", word: "cub")
+                TraceStep("And the b. Lion cub!", .glyph("b"), from: "🦁", word: "cub"),
+                TraceStep("Now write the whole word: cub!", .glyph("cub"), from: "🦁", word: "cub")
               ])),
 
         Skill(id: "TW-W4", grade: 0, subject: .writing,
@@ -279,7 +301,8 @@ extension Curriculum {
                 TraceStep("Now an r!", .glyph("r"), from: "🦜", word: "parrot"),
                 TraceStep("And another r!", .glyph("r"), from: "🦜", word: "parrot"),
                 TraceStep("Now the o!", .glyph("o"), from: "🦜", word: "parrot"),
-                TraceStep("And the t. That spells parrot!", .glyph("t"), from: "🦜", word: "parrot")
+                TraceStep("And the t. That spells parrot!", .glyph("t"), from: "🦜", word: "parrot"),
+                TraceStep("Now write the whole word: parrot!", .glyph("parrot"), from: "🦜", word: "parrot")
               ])),
 
         Skill(id: "TW-W5", grade: 0, subject: .writing,
@@ -292,9 +315,11 @@ extension Curriculum {
                 TraceStep("Now the o!", .glyph("o"), from: "🐐", word: "goat"),
                 TraceStep("Now the a!", .glyph("a"), from: "🐐", word: "goat"),
                 TraceStep("And the t. That spells goat!", .glyph("t"), from: "🐐", word: "goat"),
+                TraceStep("Now write the whole word: goat!", .glyph("goat"), from: "🐐", word: "goat"),
                 TraceStep("d-o-g. Trace the d!", .glyph("d"), from: "🐶", word: "dog"),
                 TraceStep("Now the o!", .glyph("o"), from: "🐶", word: "dog"),
-                TraceStep("And the g. That spells dog!", .glyph("g"), from: "🐶", word: "dog")
+                TraceStep("And the g. That spells dog!", .glyph("g"), from: "🐶", word: "dog"),
+                TraceStep("Now write the whole word: dog!", .glyph("dog"), from: "🐶", word: "dog")
               ])),
 
         // ================= 5. Numbers that count animals =================
@@ -321,8 +346,7 @@ extension Curriculum {
                 TraceStep("7 fish! Write the 7.", .glyph("7"), from: "🐟", word: "7 fish"),
                 TraceStep("8 sheep! Write the 8.", .glyph("8"), from: "🐑", word: "8 sheep"),
                 TraceStep("9 cows! Write the 9.", .glyph("9"), from: "🐮", word: "9 cows"),
-                TraceStep("10 hens! Write the 1...", .glyph("1"), from: "🐔", word: "10 hens"),
-                TraceStep("...and the 0. Ten!", .glyph("0"), from: "🐔", word: "10 hens")
+                TraceStep("10 hens! Write the 10.", .glyph("10"), from: "🐔", word: "10 hens")
               ]))
     ]
 }
