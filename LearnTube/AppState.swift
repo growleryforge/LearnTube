@@ -728,15 +728,12 @@ final class AppState: ObservableObject {
         if case .numberGen = s.lesson { return s.id } else { return nil }
     })
 
-    /// Adding and taking away are taught concrete-first: three act-it-out
-    /// stages (ActOutPlayer) come BEFORE the number pad. These games have a
-    /// 6-rung ladder: stages 1-3, then number pad levels 1-3.
+    /// Every generated number game is taught concrete-first: three act-it-out
+    /// stages (ActOutPlayer: drag the animals, count them, predict) come BEFORE
+    /// the number pad. These games have a 6-rung ladder: stages 1-3, then
+    /// number pad levels 1-3.
     static let concreteStages = 3
-    static let concreteSkills: Set<String> = Set(Curriculum.allSeededSkills.compactMap { s -> String? in
-        if case .numberGen(let g, _, _) = s.lesson,
-           g == .takeAway || g == .add || g == .oneMore || g == .oneLess { return s.id }
-        return nil
-    })
+    static let concreteSkills: Set<String> = levelableSkills
 
     /// The rung a skill is on (1-based), from how many times it has been
     /// mastered across the family. For most games this is the same as the

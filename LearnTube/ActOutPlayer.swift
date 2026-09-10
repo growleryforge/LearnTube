@@ -1,29 +1,30 @@
 import SwiftUI
 
-// MARK: - Subtraction and addition, taught concrete-first
+// MARK: - Math taught concrete-first: act it out, count, predict, then numbers
 //
-// Before a number pad ever appears, the operation is something Gabriel DOES
-// to animals on the screen, in three stages that climb with mastery:
+// Every generated number game climbs the same ladder. Before a number pad ever
+// appears, the math is something Gabriel DOES to animals on the screen:
 //
-//   1. He acts it out.   "5 ducks. 2 swim away. YOU send them!" He taps the
-//                        two that leave, then touches each one that's left to
-//                        count it. Only then does the sentence appear:
-//                        "5 ducks, 2 swam away, 3 are left.  5 - 2 = 3"
-//                        Nothing to get wrong, nothing to type.
-//   2. He counts.        The animals leave on their own; he counts what's
-//                        left by touching, then picks the number from three.
-//   3. He predicts.      "5 ducks. 2 are going to swim away. How many will be
-//                        left?" He picks, THEN the ducks act it out and he
-//                        sees the answer. No buzzer: the ducks are the check.
-//   4. Number pad        (the existing NumberPadPlayer, with the visual).
+//   Stage 1  He acts it out.  "5 ducks on the pond. 2 go away. Drag them off!"
+//            He DRAGS the two that leave to the path (or drags newcomers in
+//            from the fence), then touches each animal left to count it.
+//            Only then does the sentence appear, words first, symbols under:
+//            "5 ducks, 2 went away, 3 are left.     5 - 2 = 3"
+//            Nothing to type, nothing to get wrong.
+//   Stage 2  He counts.  The animals move on their own; he counts what's
+//            there by touching, then picks the number from three.
+//   Stage 3  He predicts.  "5 ducks. 2 are going to go away. How many will be
+//            left?" He picks, THEN the animals act it out and he sees it.
+//            No buzzer: the animals are the check.
+//   Stage 4+ The number pad (NumberPadPlayer), levels 1-3.
 //
-// Adding is the mirror: "3 ducks. 2 more come. Bring them over!", count them
-// all, "3 ducks and 2 more. 5 ducks in all.  3 + 2 = 5".
+// Big numbers use crates of ten (a basket with a "10" on it) next to loose
+// animals, so 23 is two crates and three chicks, and touching a crate counts
+// "10, 20" before the ones count "21, 22, 23".
 //
 // One script everywhere: start with, some go away / more come, how many are
-// left / how many in all. Never "minus", never "subtract", never "plus" in the
-// words (the symbol sits under the words so it gets familiar by sight).
-// The stage is chosen by `GameDifficulty.rung` (see AppState.currentRung).
+// left / how many in all. The symbol line sits under the words so it gets
+// familiar by sight. The stage comes from `GameDifficulty.rung`.
 
 struct ActOutPlayer: View {
     let game: NumberGame
@@ -32,70 +33,79 @@ struct ActOutPlayer: View {
     let accent: Color
     let onComplete: () -> Void
 
-    private var takeAway: Bool { game == .takeAway || game == .oneLess }
+    // MARK: One round
 
-    // One round's story.
-    private struct Round {
-        let emoji: String
-        let name: String       // "ducks"
-        let place: String      // "on the pond"
-        let start: Int         // animals at the beginning
-        let change: Int        // how many leave / arrive
-        var answer: Int
-    }
-    private struct Critter: Identifiable {
+    /// A thing on the scene: an animal (value 1), a crate of ten, or a group
+    /// for skip counting (value 2 or 5).
+    struct Token: Identifiable {
         let id: Int
-        var gone = false       // left the scene (take-away)
-        var arrived = true     // on the scene (adding: newcomers start false)
-        var number: Int? = nil // the count he gave it
+        var value: Int = 1
+        var emoji: String
+        var place: Place = .scene
+        var number: Int? = nil        // the running count he gave it
+        var countable = true          // takes part in the count phase
+        var tag: String? = nil        // small label ("10", or a position number)
+        var row = 0                   // compare games line up two rows
+        enum Place { case waiting, scene, gone }
+    }
+
+    struct Round {
+        var emoji = "🦆"
+        var name = "ducks"
+        var place = "on the pond"
+        var tokens: [Token] = []
+        var leaving = 0                // how many to drag off (take-away)
+        var arriving = 0               // how many to drag in (adding)
+        var countFrom = 0              // count-on games start the count here
+        var answer = 0
+        var actLine = ""               // Stage 1 instruction
+        var predictLine = ""           // Stage 3 question
+        var countLine = "How many now? Touch each one to count! 👆"
+        var words = ""                 // the sentence in words
+        var equation: [(String, Color)] = []
+        var compare = false            // two rows, count the extras
+        var pick = false               // "touch the right one" (number before)
+        var leaveValue = 1             // what leaves in a take-away: a loose animal, or a crate (10)
     }
 
     private enum Phase { case act, watch, count, choose, sentence }
 
     @State private var roundIndex = 0
-    @State private var round = Round(emoji: "🦆", name: "ducks", place: "on the pond", start: 5, change: 2, answer: 3)
-    @State private var critters: [Critter] = []
+    @State private var round = Round()
     @State private var phase: Phase = .act
-    @State private var moved = 0            // sent away / brought over so far
-    @State private var counted = 0          // numbered so far
-    @State private var guess: Int? = nil    // stage 3's prediction
+    @State private var moved = 0
+    @State private var counted = 0
+    @State private var total = 0
+    @State private var guess: Int? = nil
     @State private var choices: [Int] = []
     @State private var mood: MascotMood = .idle
     @State private var confetti = false
     @State private var seeded = false
+    @State private var wiggleID: Int? = nil
+    // Dragging
+    @State private var dragID: Int? = nil
+    @State private var dragOffset: CGSize = .zero
+    @State private var zoneFrames: [String: CGRect] = [:]
 
-    // MARK: Words
+    private var hasAct: Bool { round.leaving > 0 || round.arriving > 0 }
 
     private var bubble: String {
-        let n = round.name, e = round.emoji, s = round.start, c = round.change
         switch phase {
-        case .act:
-            return takeAway
-                ? "\(s) \(n) \(round.place). \(c) go away. Tap the \(c) that leave! \(e)"
-                : "\(s) \(n) \(round.place). \(c) more come! Tap each one to bring it over. \(e)"
-        case .watch:
-            return takeAway ? "Watch... \(c) \(n) go away!" : "Here they come! \(c) more \(n)!"
-        case .count:
-            return takeAway ? "How many are left? Touch each one to count! 👆"
-                            : "How many in all now? Touch each one to count! 👆"
-        case .choose:
-            if stage == 3 {
-                return takeAway
-                    ? "\(s) \(n). \(c) are going to go away. How many will be left?"
-                    : "\(s) \(n). \(c) more are coming. How many will there be in all?"
-            }
-            return takeAway ? "So how many are left? Tap the number!" : "So how many in all? Tap the number!"
+        case .act:      return round.actLine
+        case .watch:    return round.leaving > 0 ? "Watch... \(round.leaving) go away!" : "Here they come! \(round.arriving) more!"
+        case .count:    return round.countLine
+        case .choose:   return stage == 3 ? round.predictLine : "So what's the number? Tap it!"
         case .sentence:
             if stage == 3, let g = guess {
-                return g == round.answer ? "You said \(g), and \(g) it is! 🎉" : "You said \(g). Let's see... \(round.answer)!"
+                return g == round.answer ? "You said \(g), and \(g) it is! 🎉" : "You said \(g). Let's see... it's \(round.answer)!"
             }
-            return takeAway ? "\(round.answer) are left!" : "\(round.answer) in all!"
+            return "\(round.answer)! 🎉"
         }
     }
 
     var body: some View {
         GameStage(mood: mood, prompt: bubble, confetti: confetti) {
-            VStack(spacing: 14) {
+            VStack(spacing: 12) {
                 ProgressDots(total: max(rounds, 1), done: roundIndex, accent: accent)
                 scene
                 if phase == .sentence { sentence.transition(.scale.combined(with: .opacity)) }
@@ -114,45 +124,126 @@ struct ActOutPlayer: View {
         }
     }
 
-    // MARK: The scene
+    // MARK: The scene: pond, the path away, the fence where newcomers wait
 
     private var scene: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
-                                     startPoint: .top, endPoint: .bottom))
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 84, maximum: 96), spacing: 6)], spacing: 8) {
-                ForEach(critters) { c in
-                    critterView(c)
+        VStack(spacing: 8) {
+            HStack(spacing: 8) {
+                pond
+                    .zIndex(dragID != nil ? 5 : 0)
+                if round.leaving > 0 {
+                    zone("away", label: "🛤️", caption: "away")
                 }
             }
-            .padding(14)
+            if round.arriving > 0 {
+                fence
+            }
         }
-        .frame(minHeight: 250)
+        .coordinateSpace(name: "scene")
+        .onPreferenceChange(ZoneKey.self) { zoneFrames = $0 }
         .padding(.horizontal, 6)
     }
 
-    private func critterView(_ c: Critter) -> some View {
-        let tappable = (phase == .act && !c.gone && c.arrived == takeAway) || (phase == .count && c.number == nil && !c.gone && c.arrived)
+    private var pond: some View {
+        ZStack(alignment: .topTrailing) {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
+                                     startPoint: .top, endPoint: .bottom))
+            Group {
+                if round.compare {
+                    VStack(alignment: .leading, spacing: 10) {
+                        row(0); row(1)
+                    }
+                } else {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80, maximum: 92), spacing: 6)], spacing: 8) {
+                        ForEach(round.tokens.filter { $0.place != .waiting }) { t in tokenView(t) }
+                    }
+                }
+            }
+            .padding(12)
+            // Running count, big, while he's counting.
+            if phase == .count || phase == .sentence {
+                Text("\(total)")
+                    .font(.system(size: 40, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 16).padding(.vertical, 4)
+                    .background(Capsule().fill(Theme.green))
+                    .padding(10)
+                    .transition(.scale)
+            }
+        }
+        .frame(minHeight: 240)
+        .background(GeometryReader { g in Color.clear.preference(key: ZoneKey.self, value: ["pond": g.frame(in: .named("scene"))]) })
+    }
+
+    private func row(_ r: Int) -> some View {
+        HStack(spacing: 6) {
+            ForEach(round.tokens.filter { $0.row == r && $0.place != .waiting }) { t in tokenView(t) }
+            Spacer(minLength: 0)
+        }
+    }
+
+    private func zone(_ key: String, label: String, caption: String) -> some View {
+        VStack(spacing: 4) {
+            Text(label).font(.system(size: 44))
+            Text(caption).font(.system(size: 13, weight: .heavy, design: .rounded)).foregroundStyle(.white.opacity(0.9))
+        }
+        .frame(width: 92)
+        .frame(maxHeight: .infinity)
+        .background(RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(Color(red: 0.62, green: 0.45, blue: 0.28).opacity(dragID != nil ? 1 : 0.75)))
+        .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(.white.opacity(dragID != nil ? 0.9 : 0), lineWidth: 3))
+        .background(GeometryReader { g in Color.clear.preference(key: ZoneKey.self, value: [key: g.frame(in: .named("scene"))]) })
+    }
+
+    private var fence: some View {
+        HStack(spacing: 6) {
+            Text("🌾").font(.system(size: 30))
+            ForEach(round.tokens.filter { $0.place == .waiting }) { t in tokenView(t) }
+            Spacer(minLength: 0)
+            Text("drag them in ↑").font(.system(size: 13, weight: .heavy, design: .rounded)).foregroundStyle(.white.opacity(0.85))
+        }
+        .padding(10)
+        .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(red: 0.45, green: 0.68, blue: 0.30)))
+    }
+
+    // MARK: A token
+
+    private func tokenView(_ t: Token) -> some View {
+        let canDrag = phase == .act && ((round.leaving > 0 && t.place == .scene && t.value == round.leaveValue)
+                                        || (round.arriving > 0 && t.place == .waiting))
+        let canCount = phase == .count && t.countable && t.place == .scene && t.number == nil
+        let crate = t.value > 1
         return ZStack(alignment: .topTrailing) {
-            // Where a newcomer will land, before it arrives (adding).
-            Circle().strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [7, 6]))
-                .foregroundStyle(.white.opacity(c.arrived ? 0 : 0.8))
-                .frame(width: 84, height: 84)
-            Text(round.emoji)
-                .font(.system(size: 60))
-                .frame(width: 84, height: 84)
-                .background(
-                    Circle().fill(.white.opacity(c.number != nil ? 0.55 : 0.22))
-                )
-                .scaleEffect(c.arrived ? 1 : 0.2)
-                .opacity(c.gone || !c.arrived ? 0 : 1)
-                .offset(x: c.gone ? 260 : 0, y: c.gone ? -40 : 0)
-                .animation(.spring(response: 0.7, dampingFraction: 0.7), value: c.gone)
-                .animation(.spring(response: 0.6, dampingFraction: 0.7), value: c.arrived)
-            if let n = c.number {
+            ZStack {
+                if crate {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color(red: 0.85, green: 0.62, blue: 0.32))
+                        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(.white.opacity(0.7), lineWidth: 2))
+                    VStack(spacing: 0) {
+                        Text(t.emoji).font(.system(size: 30))
+                        Text("\(t.value)").font(.system(size: 18, weight: .black, design: .rounded)).foregroundStyle(.white)
+                    }
+                } else {
+                    Circle().fill(.white.opacity(t.number != nil ? 0.6 : 0.25))
+                    Text(t.emoji).font(.system(size: 54))
+                }
+                if let tag = t.tag, !crate {
+                    Text(tag).font(.system(size: 14, weight: .black, design: .rounded))
+                        .foregroundStyle(.white).padding(.horizontal, 6).padding(.vertical, 2)
+                        .background(Capsule().fill(.black.opacity(0.45)))
+                        .offset(y: 30)
+                }
+            }
+            .frame(width: 78, height: 78)
+            .opacity(t.place == .gone ? 0 : 1)
+            .scaleEffect(t.place == .gone ? 0.3 : (canDrag ? 1.04 : 1))
+            .shadow(color: .black.opacity(canDrag ? 0.25 : 0), radius: 6, y: 3)
+            .offset(x: t.place == .gone ? 220 : 0)
+            .animation(.spring(response: 0.6, dampingFraction: 0.75), value: t.place)
+            if let n = t.number {
                 Text("\(n)")
-                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .font(.system(size: 20, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                     .frame(width: 36, height: 36)
                     .background(Circle().fill(Theme.green))
@@ -160,33 +251,44 @@ struct ActOutPlayer: View {
                     .transition(.scale)
             }
         }
+        .offset(dragID == t.id ? dragOffset : .zero)
+        .zIndex(dragID == t.id ? 10 : 0)
+        .wiggle(wiggleID == t.id)
         .contentShape(Rectangle())
-        .onTapGesture { tapped(c) }
-        .scaleEffect(tappable ? 1.0 : 0.96)
+        .onTapGesture { if canCount { count(t) } else if phase == .count { nudge(t) } }
+        .gesture(
+            DragGesture(minimumDistance: 6, coordinateSpace: .named("scene"))
+                .onChanged { v in
+                    guard canDrag else { return }
+                    dragID = t.id; dragOffset = v.translation
+                }
+                .onEnded { v in
+                    guard dragID == t.id else { return }
+                    let ok: Bool
+                    if t.place == .waiting {
+                        ok = (zoneFrames["pond"]?.contains(v.location) ?? false) || v.translation.height < -70
+                    } else {
+                        ok = (zoneFrames["away"]?.contains(v.location) ?? false) || v.translation.width > 110
+                    }
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) { dragID = nil; dragOffset = .zero }
+                    if ok { move(t) }
+                }
+        )
     }
 
     private var sentence: some View {
-        let s = round.start, c = round.change, a = round.answer, n = round.name
-        let words = takeAway ? "\(s) \(n), \(c) went away, \(a) are left."
-                             : "\(s) \(n) and \(c) more. \(a) \(n) in all."
-        return VStack(spacing: 6) {
-            Text(words)
+        VStack(spacing: 6) {
+            Text(round.words)
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .foregroundStyle(.white)
                 .multilineTextAlignment(.center)
-            HStack(spacing: 14) {
-                big("\(s)", Color(red: 0.40, green: 0.70, blue: 1.0))
-                big(takeAway ? "−" : "+", .white.opacity(0.8))
-                big("\(c)", Color(red: 1.0, green: 0.62, blue: 0.25))
-                big("=", .white.opacity(0.8))
-                big("\(a)", Theme.green)
+            HStack(spacing: 12) {
+                ForEach(Array(round.equation.enumerated()), id: \.offset) { _, part in
+                    Text(part.0).font(.system(size: part.0.count > 2 ? 30 : 44, weight: .black, design: .rounded)).foregroundStyle(part.1)
+                }
             }
         }
-        .padding(.vertical, 8)
-    }
-
-    private func big(_ t: String, _ color: Color) -> some View {
-        Text(t).font(.system(size: 44, weight: .black, design: .rounded)).foregroundStyle(color)
+        .padding(.vertical, 6)
     }
 
     private var choiceRow: some View {
@@ -206,64 +308,68 @@ struct ActOutPlayer: View {
     // MARK: Flow
 
     private func newRound() {
-        round = Self.makeRound(takeAway: takeAway, one: game == .oneMore || game == .oneLess)
-        moved = 0; counted = 0; guess = nil; confetti = false; mood = .idle
-        let total = takeAway ? round.start : round.start + round.change
-        critters = (0..<total).map { i in
-            Critter(id: i, gone: false, arrived: takeAway ? true : i < round.start, number: nil)
-        }
+        round = ActScripts.round(for: game)
+        moved = 0; counted = 0; total = round.countFrom; guess = nil; confetti = false; mood = .idle
         choices = Self.choices(for: round.answer)
         switch stage {
-        case 1: phase = .act
-        case 2: phase = .watch; DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { autoMove() }
-        default: phase = .choose
+        case 1:
+            phase = hasAct ? .act : .count
+        case 2:
+            if hasAct { phase = .watch; DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { autoMove() } }
+            else { phase = .count }
+        default:
+            phase = .choose
         }
     }
 
-    private func tapped(_ c: Critter) {
-        guard let i = critters.firstIndex(where: { $0.id == c.id }) else { return }
-        switch phase {
-        case .act:
-            if takeAway {
-                guard !critters[i].gone, moved < round.change else { return }
-                critters[i].gone = true
-            } else {
-                guard !critters[i].arrived, moved < round.change else { return }
-                critters[i].arrived = true
-            }
-            moved += 1
-            SFX.tap()
-            if moved >= round.change {
-                mood = .happy
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { phase = .count }
-            }
-        case .count:
-            guard critters[i].number == nil, !critters[i].gone, critters[i].arrived else { return }
-            counted += 1
-            withAnimation(.spring()) { critters[i].number = counted }
-            SFX.tap()
-            if counted >= round.answer {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    if stage == 2 { phase = .choose } else { land() }
-                }
-            }
-        default: break
+    /// Stage 1: a dragged animal leaves the pond, or a newcomer lands on it.
+    private func move(_ t: Token) {
+        guard let i = round.tokens.firstIndex(where: { $0.id == t.id }) else { return }
+        if t.place == .waiting { round.tokens[i].place = .scene } else { round.tokens[i].place = .gone }
+        moved += 1
+        SFX.tap()
+        let need = round.leaving > 0 ? round.leaving : round.arriving
+        if moved >= need {
+            mood = .happy
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { phase = .count }
         }
     }
 
-    /// Stage 2 and 3: the animals move on their own, one at a time.
+    private func count(_ t: Token) {
+        guard let i = round.tokens.firstIndex(where: { $0.id == t.id }) else { return }
+        counted += 1
+        total += t.value
+        withAnimation(.spring()) { round.tokens[i].number = total }
+        SFX.tap()
+        let need = round.tokens.filter { $0.countable && $0.place == .scene }.count
+        if counted >= need {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                if stage == 2 { phase = .choose } else { land() }
+            }
+        }
+    }
+
+    /// Touched something that isn't part of this count (a "pick the right one"
+    /// game): a wiggle, and past stage 1 it counts as a miss.
+    private func nudge(_ t: Token) {
+        wiggleID = t.id
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { wiggleID = nil }
+        if stage > 1 { SFX.wrong() } else { SFX.tap() }
+    }
+
+    /// Stages 2 and 3: the animals move on their own, one at a time.
     private func autoMove() {
-        var delay = 0.0
-        for k in 0..<round.change {
-            delay += 0.65
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if takeAway {
-                    if let i = critters.lastIndex(where: { !$0.gone }) { critters[i].gone = true }
+        let need = round.leaving > 0 ? round.leaving : round.arriving
+        for k in 0..<need {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.65 * Double(k + 1)) {
+                if round.leaving > 0 {
+                    let v = round.leaveValue
+                    if let i = round.tokens.lastIndex(where: { $0.place == .scene && $0.value == v }) { round.tokens[i].place = .gone }
                 } else {
-                    if let i = critters.firstIndex(where: { !$0.arrived }) { critters[i].arrived = true }
+                    if let i = round.tokens.firstIndex(where: { $0.place == .waiting }) { round.tokens[i].place = .scene }
                 }
                 SFX.tap()
-                if k == round.change - 1 {
+                if k == need - 1 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                         if stage == 3 { autoCount() } else { phase = .count }
                     }
@@ -272,14 +378,16 @@ struct ActOutPlayer: View {
         }
     }
 
-    /// Stage 3: after the prediction, the count runs itself so he can check.
+    /// Stage 3: after the prediction the count runs itself so he can check.
     private func autoCount() {
         phase = .count
-        let ids = critters.filter { !$0.gone && $0.arrived }.map(\.id)
+        let ids = round.tokens.filter { $0.countable && $0.place == .scene }.map(\.id)
+        guard !ids.isEmpty else { land(); return }
         for (k, id) in ids.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45 * Double(k + 1)) {
-                if let i = critters.firstIndex(where: { $0.id == id }) {
-                    withAnimation(.spring()) { critters[i].number = k + 1 }
+                if let i = round.tokens.firstIndex(where: { $0.id == id }) {
+                    total += round.tokens[i].value
+                    withAnimation(.spring()) { round.tokens[i].number = total }
                     SFX.tap()
                 }
                 if k == ids.count - 1 { DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { land() } }
@@ -293,8 +401,8 @@ struct ActOutPlayer: View {
             // No buzzer: the animals show him. A miss is still recorded so the
             // dashboard can see where he's guessing.
             if n != round.answer { GameStats.markWrong() }
-            phase = .watch
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { autoMove() }
+            if hasAct { phase = .watch; DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { autoMove() } }
+            else { autoCount() }
         } else {
             if n == round.answer { land() }
             else { SFX.wrong(); mood = .oops; DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { mood = .idle } }
@@ -302,6 +410,7 @@ struct ActOutPlayer: View {
     }
 
     private func land() {
+        total = round.answer
         withAnimation(.spring()) { phase = .sentence }
         let right = guess == nil || guess == round.answer
         mood = right ? .cheer : .happy
@@ -310,15 +419,40 @@ struct ActOutPlayer: View {
     }
 
     private func nextRound() {
-        if roundIndex + 1 < rounds {
-            roundIndex += 1
-            newRound()
-        } else {
-            SFX.win(); onComplete()
-        }
+        if roundIndex + 1 < rounds { roundIndex += 1; newRound() }
+        else { SFX.win(); onComplete() }
     }
 
-    // MARK: Problems
+    private static func choices(for a: Int) -> [Int] {
+        var set: Set<Int> = [a]
+        var tries = 0
+        while set.count < 3 && tries < 30 {
+            tries += 1
+            let d = [-2, -1, 1, 2, 10, -10].randomElement()!
+            if a + d >= 0 && (abs(d) < 10 || a >= 20) { set.insert(a + d) }
+        }
+        while set.count < 3 { set.insert(a + set.count) }
+        return Array(set).shuffled()
+    }
+}
+
+private struct ZoneKey: PreferenceKey {
+    static var defaultValue: [String: CGRect] = [:]
+    static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
+        value.merge(nextValue()) { $1 }
+    }
+}
+
+// MARK: - What each game acts out
+
+enum ActScripts {
+    typealias Round = ActOutPlayer.Round
+    typealias Token = ActOutPlayer.Token
+
+    static let blue = Color(red: 0.40, green: 0.70, blue: 1.0)
+    static let orange = Color(red: 1.0, green: 0.62, blue: 0.25)
+    static let green = Theme.green
+    static let white = Color.white.opacity(0.85)
 
     private static let scenes: [(String, String, String)] = [
         ("🦆", "ducks", "on the pond"), ("🐔", "hens", "in the yard"), ("🐷", "pigs", "in the mud"),
@@ -328,32 +462,180 @@ struct ActOutPlayer: View {
     ]
     private static var lastAnswer = -1
 
-    private static func makeRound(takeAway: Bool, one: Bool) -> Round {
-        let (e, n, p) = scenes.randomElement()!
-        // Small on purpose: this is where the idea lands, not where it stretches.
-        for _ in 0..<20 {
-            var start: Int, change: Int
-            if takeAway {
-                start = Int.random(in: 3...7)
-                change = one ? 1 : Int.random(in: 1...(start - 1))
-            } else {
-                start = Int.random(in: 1...5)
-                change = one ? 1 : Int.random(in: 1...4)
-            }
-            let ans = takeAway ? start - change : start + change
-            if ans != lastAnswer { lastAnswer = ans; return Round(emoji: e, name: n, place: p, start: start, change: change, answer: ans) }
-        }
-        return Round(emoji: e, name: n, place: p, start: 5, change: 2, answer: takeAway ? 3 : 7)
+    private static func tokens(_ n: Int, _ emoji: String, value: Int = 1, place: Token.Place = .scene,
+                               startID: Int = 0, countable: Bool = true, row: Int = 0) -> [Token] {
+        (0..<max(0, n)).map { Token(id: startID + $0, value: value, emoji: emoji, place: place, countable: countable,
+                                    tag: value > 1 ? "\(value)" : nil, row: row) }
     }
 
-    private static func choices(for a: Int) -> [Int] {
-        var set: Set<Int> = [a]
-        var tries = 0
-        while set.count < 3 && tries < 30 {
-            tries += 1
-            let d = [-2, -1, 1, 2].randomElement()!
-            if a + d >= 0 { set.insert(a + d) }
+    static func round(for game: NumberGame) -> Round {
+        for _ in 0..<12 {
+            let r = make(game)
+            if r.answer != lastAnswer { lastAnswer = r.answer; return r }
         }
-        return Array(set).shuffled()
+        return make(game)
+    }
+
+    private static func make(_ game: NumberGame) -> Round {
+        let (e, n, p) = scenes.randomElement()!
+        var r = Round(); r.emoji = e; r.name = n; r.place = p
+
+        func takeAway(start: Int, gone: Int) {
+            r.tokens = tokens(start, e)
+            r.leaving = gone; r.answer = start - gone
+            r.actLine = "\(start) \(n) \(p). \(gone) go away. Drag the \(gone) that leave to the path! \(e)"
+            r.predictLine = "\(start) \(n). \(gone) are going to go away. How many will be left?"
+            r.countLine = "How many are left? Touch each one to count! 👆"
+            r.words = "\(start) \(n), \(gone) went away, \(start - gone) are left."
+            r.equation = [("\(start)", blue), ("−", white), ("\(gone)", orange), ("=", white), ("\(start - gone)", green)]
+        }
+        func add(start: Int, more: Int, countOn: Bool = false) {
+            r.tokens = tokens(start, e, countable: !countOn) + tokens(more, e, place: .waiting, startID: start)
+            if countOn { r.tokens[start - 1].tag = "\(start)"; r.countFrom = start }
+            r.arriving = more; r.answer = start + more
+            r.actLine = "\(start) \(n) \(p). \(more) more come! Drag each one in from the fence. \(e)"
+            r.predictLine = "\(start) \(n). \(more) more are coming. How many will there be in all?"
+            r.countLine = countOn ? "We already have \(start). Count ON from \(start): touch each new one! 👆"
+                                  : "How many in all now? Touch each one to count! 👆"
+            r.words = "\(start) \(n) and \(more) more. \(start + more) \(n) in all."
+            r.equation = [("\(start)", blue), ("+", white), ("\(more)", orange), ("=", white), ("\(start + more)", green)]
+        }
+        func fillTo(start: Int, target: Int, subtractionSentence: Bool = false) {
+            let more = target - start
+            r.tokens = tokens(start, e, countable: false) + tokens(more, e, place: .waiting, startID: start)
+            r.arriving = more; r.answer = more
+            r.actLine = "\(start) \(n) \(p). More come until there are \(target)! Drag them in. \(e)"
+            r.predictLine = "\(start) \(n). More are coming until there are \(target). How many will come?"
+            r.countLine = "How many came? Touch each new one to count! 👆"
+            if subtractionSentence {
+                r.words = "\(target) take away \(start) is \(more), because \(start) and \(more) make \(target)."
+                r.equation = [("\(target)", blue), ("−", white), ("\(start)", orange), ("=", white), ("\(more)", green)]
+            } else {
+                r.words = "\(start) \(n) and \(more) more make \(target)."
+                r.equation = [("\(start)", blue), ("+", white), ("\(more)", green), ("=", white), ("\(target)", blue)]
+            }
+        }
+        func countAll(_ toks: [Token], answer: Int, words: String, equation: [(String, Color)]) {
+            r.tokens = toks; r.answer = answer
+            r.predictLine = "How many \(n) do you think are here? Take a guess!"
+            r.countLine = "Touch each one to count! 👆"
+            r.words = words; r.equation = equation
+        }
+
+        switch game {
+        case .count:
+            let c = Int.random(in: 3...10)
+            countAll(tokens(c, e), answer: c, words: "\(c) \(n) \(p)!", equation: [("\(c)", green)])
+        case .add:
+            add(start: Int.random(in: 1...5), more: Int.random(in: 1...4))
+        case .oneMore:
+            add(start: Int.random(in: 2...8), more: 1)
+        case .doubles:
+            let a = Int.random(in: 1...5); add(start: a, more: a)
+            r.words = "\(a) \(n) and \(a) more. Double \(a) is \(2 * a)!"
+        case .doublesPlusOne:
+            let a = Int.random(in: 1...4); add(start: a, more: a + 1)
+        case .countOn:
+            add(start: Int.random(in: 5...9), more: Int.random(in: 1...4), countOn: true)
+        case .teen:
+            let ones = Int.random(in: 1...9)
+            r.tokens = tokens(1, "🧺", value: 10) + tokens(ones, e, place: .waiting, startID: 1)
+            r.arriving = ones; r.answer = 10 + ones
+            r.actLine = "A crate of 10 \(n), and \(ones) more come! Drag them in. \(e)"
+            r.predictLine = "A crate of 10 and \(ones) more. How many in all?"
+            r.countLine = "Touch the crate first (that's 10!), then count on. 👆"
+            r.words = "10 and \(ones) more is \(10 + ones)."
+            r.equation = [("10", blue), ("+", white), ("\(ones)", orange), ("=", white), ("\(10 + ones)", green)]
+        case .turnAround:
+            let a = Int.random(in: 1...5), b = Int.random(in: 1...5); add(start: a, more: b)
+            r.words = "\(a) and \(b) is \(a + b). Turn it around: \(b) and \(a) is \(a + b) too!"
+            r.equation = [("\(a)+\(b)", blue), ("=", white), ("\(b)+\(a)", orange), ("=", white), ("\(a + b)", green)]
+        case .addThree:
+            let a = Int.random(in: 1...3), b = Int.random(in: 1...3), c = Int.random(in: 1...3)
+            add(start: a, more: b + c)
+            r.actLine = "\(a) \(n) \(p). \(b) come, then \(c) more! Drag them all in. \(e)"
+            r.words = "\(a) and \(b) and \(c) more. \(a + b + c) in all."
+            r.equation = [("\(a)", blue), ("+", white), ("\(b)", orange), ("+", white), ("\(c)", orange), ("=", white), ("\(a + b + c)", green)]
+        case .takeAway:
+            let s = Int.random(in: 3...7); takeAway(start: s, gone: Int.random(in: 1...(s - 1)))
+        case .oneLess:
+            takeAway(start: Int.random(in: 2...8), gone: 1)
+        case .makeTen:
+            fillTo(start: Int.random(in: 3...9), target: 10)
+            r.words = "\(10 - r.answer) and \(r.answer) make 10!"
+        case .missingAddend:
+            let a = Int.random(in: 2...6); fillTo(start: a, target: a + Int.random(in: 1...4))
+        case .thinkAddition:
+            let a = Int.random(in: 5...9); fillTo(start: a, target: a + Int.random(in: 1...4), subtractionSentence: true)
+        case .howManyMore:
+            let top = Int.random(in: 3...7), bottom = Int.random(in: 1...(top - 1))
+            let (e2, n2, _) = scenes.filter { $0.0 != e }.randomElement()!
+            var toks = tokens(top, e, row: 0) + tokens(bottom, e2, startID: top, countable: false, row: 1)
+            for i in 0..<bottom { toks[i].countable = false }      // the matched ones
+            r.tokens = toks; r.compare = true; r.answer = top - bottom
+            r.predictLine = "\(top) \(n) and \(bottom) \(n2). How many more \(n) than \(n2)?"
+            r.countLine = "Every \(n2) has a \(n) partner above it. Touch the \(n) with NO partner! 👆"
+            r.words = "\(top) \(n), \(bottom) \(n2). \(top - bottom) more \(n)."
+            r.equation = [("\(top)", blue), ("−", white), ("\(bottom)", orange), ("=", white), ("\(top - bottom)", green)]
+        case .skipTwos, .skipFives, .skipTens:
+            let k = game == .skipTwos ? 2 : (game == .skipFives ? 5 : 10)
+            let g = Int.random(in: 2...(k == 2 ? 6 : 5))
+            let icon = k == 10 ? "🧺" : (k == 5 ? "🖐️" : "👟")
+            let seq = (1...g).map { "\($0 * k)" }.joined(separator: ", ")
+            countAll(tokens(g, icon, value: k), answer: g * k, words: "Count by \(k)s: \(seq)!",
+                     equation: [("\(g)", blue), ("×", white), ("\(k)", orange), ("=", white), ("\(g * k)", green)])
+            r.name = k == 10 ? "crates" : (k == 5 ? "hands" : "pairs")
+            r.countLine = "Each one is \(k). Touch them and count by \(k)s! 👆"
+            r.predictLine = "\(g) groups of \(k). How many is that?"
+        case .pennies:
+            let c = Int.random(in: 3...10)
+            countAll(tokens(c, "🪙"), answer: c, words: "\(c) pennies is \(c) cents!", equation: [("\(c)¢", green)])
+            r.name = "pennies"
+        case .tensAndOnes:
+            let t = Int.random(in: 1...4), o = Int.random(in: 1...9)
+            countAll(tokens(t, "🧺", value: 10) + tokens(o, e, startID: t), answer: t * 10 + o,
+                     words: "\(t) crates of 10 and \(o) more \(n). \(t * 10 + o)!",
+                     equation: [("\(t * 10)", blue), ("+", white), ("\(o)", orange), ("=", white), ("\(t * 10 + o)", green)])
+            r.countLine = "Crates first: 10, 20... then the loose ones. Touch each! 👆"
+        case .addTensOnes:
+            let t = Int.random(in: 1...3), o = Int.random(in: 1...4), b = Int.random(in: 1...4)
+            let start = t * 10 + o
+            r.tokens = tokens(t, "🧺", value: 10) + tokens(o, e, startID: t) + tokens(b, e, place: .waiting, startID: t + o)
+            r.arriving = b; r.answer = start + b
+            r.actLine = "\(start) \(n): \(t) crates and \(o) loose. \(b) more come! Drag them in. \(e)"
+            r.predictLine = "\(start) \(n) and \(b) more. How many in all?"
+            r.countLine = "Crates first: 10, 20... then every loose one. Touch each! 👆"
+            r.words = "\(start) and \(b) more is \(start + b)."
+            r.equation = [("\(start)", blue), ("+", white), ("\(b)", orange), ("=", white), ("\(start + b)", green)]
+        case .tenMoreLess:
+            let t = Int.random(in: 1...3), o = Int.random(in: 1...6), start = t * 10 + o
+            if Bool.random() {
+                r.tokens = tokens(t, "🧺", value: 10) + tokens(o, e, startID: t) + tokens(1, "🧺", value: 10, place: .waiting, startID: t + o)
+                r.arriving = 1; r.answer = start + 10
+                r.actLine = "\(start) \(n). A whole crate of 10 more comes! Drag it in. 🧺"
+                r.predictLine = "\(start) \(n) and 10 more. How many?"
+                r.words = "\(start) and 10 more is \(start + 10)."
+                r.equation = [("\(start)", blue), ("+", white), ("10", orange), ("=", white), ("\(start + 10)", green)]
+            } else {
+                r.tokens = tokens(t, "🧺", value: 10) + tokens(o, e, startID: t)
+                r.leaving = 1; r.leaveValue = 10; r.answer = start - 10
+                r.actLine = "\(start) \(n). A whole crate of 10 goes away! Drag a crate to the path. 🧺"
+                r.predictLine = "\(start) \(n), and 10 go away. How many are left?"
+                r.words = "\(start) take away 10 is \(start - 10)."
+                r.equation = [("\(start)", blue), ("−", white), ("10", orange), ("=", white), ("\(start - 10)", green)]
+            }
+            r.countLine = "Crates first: 10, 20... then the loose ones. Touch each! 👆"
+        case .numberBefore:
+            let top = Int.random(in: 5...10), target = Int.random(in: 2...top)
+            var toks = tokens(top, e, countable: false)
+            for i in 0..<top { toks[i].tag = "\(i + 1)" }
+            toks[target - 2].countable = true; toks[target - 2].value = target - 1
+            r.tokens = toks; r.pick = true; r.answer = target - 1
+            r.predictLine = "The \(n) are in a line, 1 to \(top). What number comes just before \(target)?"
+            r.countLine = "Find number \(target). Touch the one just BEFORE it! 👆"
+            r.words = "\(target - 1) comes just before \(target)."
+            r.equation = [("\(target - 1)", green), ("then", white), ("\(target)", blue)]
+        }
+        return r
     }
 }

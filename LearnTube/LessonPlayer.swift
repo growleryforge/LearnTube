@@ -86,10 +86,9 @@ struct LessonRunner: View {
             case .numberPad(let problems):
                 NumberPadPlayer(problems: problems, accent: accent, onComplete: onComplete)
             case .numberGen(let game, let rounds, let boost):
-                // Adding and taking away are acted out with animals for the
-                // first three rungs of the ladder; the number pad comes after.
-                if (game == .takeAway || game == .add || game == .oneMore || game == .oneLess),
-                   GameDifficulty.rung <= AppState.concreteStages {
+                // Every number game is acted out with animals for the first
+                // three rungs of its ladder; the number pad comes after.
+                if GameDifficulty.rung <= AppState.concreteStages {
                     ActOutPlayer(game: game, stage: GameDifficulty.rung, rounds: rounds, accent: accent, onComplete: onComplete)
                 } else {
                     // Fresh problems every play, at the difficulty the home tile set.
