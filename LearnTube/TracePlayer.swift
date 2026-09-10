@@ -46,9 +46,11 @@ struct TracePlayer: View {
     @State private var hint = ""                      // "Start at the green dot"
     @State private var shake = 0                      // bumps to animate a reset
 
-    private let startRadius: CGFloat = 34   // how close the finger must land to the start dot
-    private let hitRadius: CGFloat = 26     // how close to count a dot
-    private let offPath: CGFloat = 44       // farther than this from the stroke = wandered off
+    // Ballpark, not precision: about two finger-widths. Order and direction
+    // are what make it writing; a shaky line is still a line.
+    private let startRadius: CGFloat = 52   // how close the finger must land to the start dot
+    private let hitRadius: CGFloat = 36     // how close to count a dot
+    private let offPath: CGFloat = 70       // farther than this from the stroke = wandered off
 
     private var step: TraceStep { steps[min(index, max(0, steps.count - 1))] }
     private var label: String {
@@ -210,13 +212,13 @@ struct TracePlayer: View {
         ink.append(p)
         // Nearest dot just ahead of where he is: dots must be hit in order.
         var advanced = false
-        for i in nextDot..<min(nextDot + 4, cur.count) {
+        for i in nextDot..<min(nextDot + 6, cur.count) {
             if hypot(p.x - cur[i].x, p.y - cur[i].y) <= hitRadius { nextDot = i + 1; advanced = true }
         }
         if !advanced {
             // Still allowed if he's near the part of the stroke he has done
             // (a wobble); wandering away from the whole stroke resets it.
-            let near = cur.prefix(max(nextDot + 6, 1)).contains { hypot(p.x - $0.x, p.y - $0.y) <= offPath }
+            let near = cur.prefix(max(nextDot + 8, 1)).contains { hypot(p.x - $0.x, p.y - $0.y) <= offPath }
             if !near { failStroke("Oops! Stay on the dots. Start at the green dot 👆"); return }
         }
         if nextDot >= cur.count { completeStroke() }
@@ -226,7 +228,7 @@ struct TracePlayer: View {
         guard tracing, !justFinished else { return }
         let cur = strokes[strokeIndex]
         // Reaching the last dot or two counts; lifting anywhere else resets.
-        if nextDot >= cur.count - 1 { completeStroke() }
+        if nextDot >= cur.count - 2 { completeStroke() }
         else { failStroke("Keep your finger down all the way to the end. Try again from the green dot 👆") }
     }
 
