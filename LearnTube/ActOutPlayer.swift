@@ -89,6 +89,19 @@ struct ActOutPlayer: View {
 
     private var hasAct: Bool { round.leaving > 0 || round.arriving > 0 }
 
+    /// The one-line instruction inside the pond.
+    private var caption: String {
+        switch phase {
+        case .act:
+            let left = (round.leaving > 0 ? round.leaving : round.arriving) - moved
+            return round.leaving > 0 ? "Drag \(left) to the path →" : "Drag \(left) in from the fence ↓"
+        case .watch:    return "Watch! 👀"
+        case .count:    return round.pick ? "Touch the right one 👆" : "Touch each one to count 👆"
+        case .choose:   return "Tap the number below 👇"
+        case .sentence: return "\(round.answer)!"
+        }
+    }
+
     private var bubble: String {
         switch phase {
         case .act:      return round.actLine
@@ -159,18 +172,32 @@ struct ActOutPlayer: View {
                     .fill(LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
                                          startPoint: .top, endPoint: .bottom))
             }
-            Group {
+            VStack(spacing: 8) {
+                Spacer(minLength: 0)
                 if round.compare {
                     VStack(alignment: .leading, spacing: 10) {
                         row(0); row(1)
                     }
                 } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80, maximum: 92), spacing: 6)], spacing: 8) {
-                        ForEach(round.tokens.filter { $0.place != .waiting }) { t in tokenView(t) }
+                    // A fixed column count so the animals cluster in the middle
+                    // of the pond instead of hugging the top-left corner.
+                    let onScene = round.tokens.filter { $0.place != .waiting }
+                    let cols = max(1, min(onScene.count, 5))
+                    LazyVGrid(columns: Array(repeating: GridItem(.fixed(84), spacing: 6), count: cols), spacing: 8) {
+                        ForEach(onScene) { t in tokenView(t) }
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
+                Spacer(minLength: 0)
+                // What to do, right where he's looking.
+                Text(caption)
+                    .font(.system(size: 17, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 14).padding(.vertical, 7)
+                    .background(Capsule().fill(.black.opacity(0.45)))
             }
             .padding(12)
+            .frame(maxWidth: .infinity, minHeight: 240)
             // Running count, big, while he's counting.
             if phase == .count || phase == .sentence {
                 Text("\(total)")
@@ -263,6 +290,11 @@ struct ActOutPlayer: View {
                         .offset(y: 30)
                 }
             }
+            .frame(width: 78, height: 78)
+            .overlay(
+                Circle().strokeBorder(Theme.gold, lineWidth: 4)
+                    .opacity(canDrag || canCount ? 1 : 0)
+            )
             .frame(width: 78, height: 78)
             .opacity(t.place == .gone ? 0 : 1)
             .scaleEffect(t.place == .gone ? 0.3 : (canDrag ? 1.04 : 1))
