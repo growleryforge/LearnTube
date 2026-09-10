@@ -1840,7 +1840,7 @@ enum HolidayGen {
 
     static func make() -> (target: HolidayKind, prompt: String, options: [HolidayKind]) {
         let t = nextTarget()
-        let prompt = Bool.random() ? "Which one is \(t.name)? \(clue[t.id] ?? "")" : t.describe
+        let prompt = Bool.random() ? "Which one is \(t.name)?" : t.describe
         return (t, prompt, ([t] + distractors(for: t)).shuffled())
     }
 }
