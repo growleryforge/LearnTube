@@ -5062,22 +5062,27 @@ struct TeenPlayer: View {
 
 struct BabyLevel: Identifiable, Hashable { let id = UUID(); let skill: String; let rounds: Int }
 
-struct BabyQ { let parent: String; let name: String; var options: [String]; let fact: String }
+struct BabyQ { let parent: String; let name: String; let baby: String; let babyName: String; var options: [String]; let fact: String }
 
 enum BabyGen {
-    static let species: [(emoji: String, name: String)] = [
-        ("🐔", "hen"), ("🐶", "dog"), ("🐱", "cat"), ("🐮", "cow"), ("🐷", "pig"),
-        ("🐑", "sheep"), ("🐰", "rabbit"), ("🐴", "horse"), ("🐸", "frog"), ("🐧", "penguin")
+    /// Grown-up on the left, baby on the right: a DIFFERENT picture and its
+    /// own name, so the game is really "which one is the baby", not "find the
+    /// same animal again".
+    static let species: [(emoji: String, name: String, baby: String, babyName: String)] = [
+        ("🐔", "hen", "🐣", "chick"), ("🐕", "dog", "🐶", "puppy"), ("🐈", "cat", "🐱", "kitten"),
+        ("🐄", "cow", "🐮", "calf"), ("🐖", "pig", "🐷", "piglet"), ("🐎", "horse", "🐴", "foal"),
+        ("🐇", "rabbit", "🐰", "bunny"), ("🦆", "duck", "🐥", "duckling")
     ]
+    static func babyName(_ emoji: String) -> String { species.first { $0.baby == emoji }?.babyName ?? "" }
     static var lastName: String?
     static func make() -> BabyQ {
         var p = species.randomElement()!
         if let l = lastName { while p.name == l { p = species.randomElement()! } }
         lastName = p.name
-        let others = species.filter { $0.emoji != p.emoji }.shuffled().prefix(2).map { $0.emoji }
-        return BabyQ(parent: p.emoji, name: p.name,
-                     options: ([p.emoji] + others).shuffled(),
-                     fact: "A baby \(p.name) looks just like its parent! 💛")
+        let others = species.filter { $0.baby != p.baby }.shuffled().prefix(2).map { $0.baby }
+        return BabyQ(parent: p.emoji, name: p.name, baby: p.baby, babyName: p.babyName,
+                     options: ([p.baby] + others).shuffled(),
+                     fact: "A baby \(p.name) is a \(p.babyName)! \(p.baby)")
     }
 }
 
@@ -5100,15 +5105,16 @@ struct BabyPlayer: View {
                 TeachScreen(title: "Baby animals look like\ntheir parents.",
                             subtitle: "Find the baby that matches each parent.") {
                     HStack(spacing: 16) {
-                        EmojiView(emoji: "🐶", size: 64, tint: .white)
+                        EmojiView(emoji: "🐕", size: 64, tint: .white)
                         Text("→").font(.system(size: 24, weight: .black, design: .rounded)).foregroundStyle(Theme.textSecondary)
                         EmojiView(emoji: "🐶", size: 38, tint: .white)
+                        Text("puppy").font(.system(size: 22, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                     }
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 16) {
                     if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
-                    Text("Which baby is the \(data.name)'s?")
+                    Text("The \(data.name)'s baby is a...")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
                     EmojiView(emoji: data.parent, size: 92, tint: .white)
@@ -5129,9 +5135,13 @@ struct BabyPlayer: View {
     private func tile(_ e: String) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(revealed && e == data.parent ? Theme.green
+                .fill(revealed && e == data.baby ? Theme.green
                       : (wrong == e ? Theme.red.opacity(0.5) : Theme.surfaceHi))
-            EmojiView(emoji: e, size: 84, tint: .white)
+            VStack(spacing: 4) {
+                EmojiView(emoji: e, size: 76, tint: .white)
+                Text(BabyGen.babyName(e))
+                    .font(.system(size: 20, weight: .heavy, design: .rounded)).foregroundStyle(.white)
+            }
         }
         .frame(maxWidth: .infinity).frame(height: 160)
     }
@@ -5140,7 +5150,7 @@ struct BabyPlayer: View {
 
     private func tap(_ e: String) {
         guard !cheer else { return }
-        if e == data.parent {
+        if e == data.baby {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
@@ -5152,8 +5162,8 @@ struct BabyPlayer: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if revealed { return }        // stop reshuffling — the answer stays put and green
-                let cur = data.options.firstIndex(of: data.parent) ?? -1
-                withAnimation { data.options = data.options.shuffledMoving(data.parent, from: cur) }
+                let cur = data.options.firstIndex(of: data.baby) ?? -1
+                withAnimation { data.options = data.options.shuffledMoving(data.baby, from: cur) }
             }
         }
     }

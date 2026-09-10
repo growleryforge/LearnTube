@@ -610,10 +610,10 @@ extension Curriculum {
               activity: "Baby animals have special names. Tap the right one!",
               parentTip: "A puppy, a kitten, a calf, a chick — name the babies on the farm.",
               lesson: .quiz([
-                Question("A baby dog is a...", correct: "puppy", wrong: ["kitten", "calf"]),
-                Question("A baby cat is a...", correct: "kitten", wrong: ["puppy", "chick"]),
-                Question("A baby cow is a...", correct: "calf", wrong: ["lamb", "puppy"]),
-                Question("A baby hen is a...", correct: "chick", wrong: ["kitten", "calf"])
+                Question("A baby dog 🐕 is a...", correct: "🐶 puppy", wrong: ["🐱 kitten", "🐮 calf"]),
+                Question("A baby cat 🐈 is a...", correct: "🐱 kitten", wrong: ["🐶 puppy", "🐣 chick"]),
+                Question("A baby cow 🐄 is a...", correct: "🐮 calf", wrong: ["🐰 bunny", "🐶 puppy"]),
+                Question("A baby hen 🐔 is a...", correct: "🐣 chick", wrong: ["🐱 kitten", "🐮 calf"])
               ])),
 
         // ---------- Life & feelings (kept light and picture-based) ----------
