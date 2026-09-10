@@ -757,7 +757,7 @@ struct SkillMissesView: View {
     private var playButton: some View {
         Button {
             GameStats.suppressed = true               // don't record a grown-up's test run
-            GameDifficulty.level = state.currentLevel(skill.id)
+            GameDifficulty.level = state.currentLevel(skill.id); GameDifficulty.rung = state.currentRung(skill.id)
             GameStats.begin(skill.id)
             playing = true
         } label: {

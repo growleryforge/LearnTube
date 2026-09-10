@@ -89,7 +89,7 @@ struct HomeFeedView: View {
                                              masteryGoal: state.saved.masteryThreshold,
                                              level: state.currentLevel(skill.id),
                                              isNew: !state.everStarted(skill.id))
-                                        .onTapGesture { if !maxed { GameDifficulty.level = state.currentLevel(skill.id); GameStats.begin(skill.id); watch = skill } }
+                                        .onTapGesture { if !maxed { GameDifficulty.level = state.currentLevel(skill.id); GameDifficulty.rung = state.currentRung(skill.id); GameStats.begin(skill.id); watch = skill } }
                                 }
                             }
                         }

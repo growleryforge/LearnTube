@@ -728,17 +728,40 @@ final class AppState: ObservableObject {
         if case .numberGen = s.lesson { return s.id } else { return nil }
     })
 
+    /// Adding and taking away are taught concrete-first: three act-it-out
+    /// stages (ActOutPlayer) come BEFORE the number pad. These games have a
+    /// 6-rung ladder: stages 1-3, then number pad levels 1-3.
+    static let concreteStages = 3
+    static let concreteSkills: Set<String> = Set(Curriculum.allSeededSkills.compactMap { s -> String? in
+        if case .numberGen(let g, _, _) = s.lesson,
+           g == .takeAway || g == .add || g == .oneMore || g == .oneLess { return s.id }
+        return nil
+    })
+
+    /// The rung a skill is on (1-based), from how many times it has been
+    /// mastered across the family. For most games this is the same as the
+    /// level; for concrete-first games rungs 1-3 are the act-it-out stages.
+    func currentRung(_ id: String) -> Int {
+        guard Self.levelableSkills.contains(id) else { return 1 }
+        let top = Self.concreteSkills.contains(id) ? Self.concreteStages + Self.maxLevel : Self.maxLevel
+        return min(top, 1 + mergedCount(id) / max(1, saved.masteryThreshold))
+    }
+
     /// Current difficulty level (1...maxLevel) for a skill, from how many times
-    /// it has been mastered across the family.
+    /// it has been mastered across the family. A concrete-first game is at
+    /// level 1 until it has climbed past its act-it-out stages.
     func currentLevel(_ id: String) -> Int {
         guard Self.levelableSkills.contains(id) else { return 1 }
-        return min(Self.maxLevel, 1 + mergedCount(id) / max(1, saved.masteryThreshold))
+        let rung = currentRung(id)
+        if Self.concreteSkills.contains(id) { return max(1, min(Self.maxLevel, rung - Self.concreteStages)) }
+        return min(Self.maxLevel, rung)
     }
 
     /// A game leaves the home feed only when fully done: mastered once for a
     /// plain skill, or mastered at every level for a levelable one.
     func isRetired(_ id: String) -> Bool {
-        let need = Self.levelableSkills.contains(id) ? saved.masteryThreshold * Self.maxLevel : saved.masteryThreshold
+        let rungs = Self.concreteSkills.contains(id) ? Self.concreteStages + Self.maxLevel : Self.maxLevel
+        let need = Self.levelableSkills.contains(id) ? saved.masteryThreshold * rungs : saved.masteryThreshold
         // Only retire a game once it's truly mastered — finished enough times AND
         // cleanly. A game he only guessed his way through stays in his feed so he
         // gets the chance to actually learn it.

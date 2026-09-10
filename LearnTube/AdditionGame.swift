@@ -5492,6 +5492,10 @@ struct Make5Player: View {
 // so counting climbs 6 -> 10 -> 15 and adding/subtracting climbs toward 20.
 enum GameDifficulty {
     static var level = 1
+    /// Where a concrete-first game sits on its ladder: rungs 1-3 are the
+    /// act-it-out stages (ActOutPlayer), 4+ are the number pad at level 1-3.
+    /// Set alongside `level` when a game opens (see AppState.currentRung).
+    static var rung = 1
     private static func pick(_ a: Int, _ b: Int, _ c: Int) -> Int { level >= 3 ? c : (level == 2 ? b : a) }
     static var countMax: Int { pick(6, 10, 15) }
     static var addendMax: Int { pick(4, 6, 8) }
