@@ -283,14 +283,25 @@ struct ActOutPlayer: View {
         .zIndex(dragID == t.id ? 10 : 0)
         .wiggle(wiggleID == t.id)
         .contentShape(Rectangle())
-        .onTapGesture { if canCount { count(t) } else if phase == .count { nudge(t) } }
-        .gesture(
-            DragGesture(minimumDistance: 6, coordinateSpace: .named("scene"))
+        // One gesture does both tap and drag, and it takes priority over the
+        // scroll view every game sits in (otherwise the scroll view eats the
+        // finger and the animal never moves).
+        .highPriorityGesture(
+            DragGesture(minimumDistance: 0, coordinateSpace: .named("scene"))
                 .onChanged { v in
                     guard canDrag else { return }
-                    dragID = t.id; dragOffset = v.translation
+                    if abs(v.translation.width) > 4 || abs(v.translation.height) > 4 {
+                        dragID = t.id; dragOffset = v.translation
+                    }
                 }
                 .onEnded { v in
+                    let moved = abs(v.translation.width) > 8 || abs(v.translation.height) > 8
+                    if !moved {
+                        // A tap.
+                        withAnimation(.spring(response: 0.3)) { dragID = nil; dragOffset = .zero }
+                        if canCount { count(t) } else if phase == .count { nudge(t) }
+                        return
+                    }
                     guard dragID == t.id else { return }
                     let ok: Bool
                     if t.place == .waiting {

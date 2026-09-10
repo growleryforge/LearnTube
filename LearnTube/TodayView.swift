@@ -9,7 +9,7 @@ struct HomeFeedView: View {
     // Fit as many thumbnails as the screen allows at a consistent size:
     // ~2 across on iPhone, more on a wide Mac, each roughly the same width.
     private var cols: [GridItem] {
-        [GridItem(.adaptive(minimum: 250, maximum: 360), spacing: 18)]
+        [GridItem(.adaptive(minimum: 230), spacing: 12)]
     }
 
     /// Games he can still pick: mastered games drop off so he moves on to new
@@ -129,7 +129,7 @@ struct HomeFeedView: View {
                             jumpBadges(proxy)
                             if !finishLineGames.isEmpty {
                                 finishLineHeader
-                                LazyVGrid(columns: cols, spacing: 14, pinnedViews: []) {
+                                LazyVGrid(columns: cols, spacing: 12, pinnedViews: []) {
                                     ForEach(finishLineGames) { skill in
                                         let maxed = !state.canPlay(skill.id)
                                         StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
@@ -144,7 +144,7 @@ struct HomeFeedView: View {
                                     .font(.system(size: 22, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                                     .frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
                             }
-                            LazyVGrid(columns: cols, spacing: 14, pinnedViews: []) {
+                            LazyVGrid(columns: cols, spacing: 12, pinnedViews: []) {
                                 ForEach(available) { skill in
                                     let maxed = !state.canPlay(skill.id)
                                     StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
