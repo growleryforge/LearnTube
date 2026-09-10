@@ -11,6 +11,7 @@ struct WatchView: View {
     @State private var newBuddy: Buddy?
     @State private var showWatch = false
     @State private var justMastered = false
+    @State private var playRun = 0        // bumps to restart the player for Again!
 
     private var isStory: Bool {
         if case .story = skill.lesson { return true } else { return false }
@@ -27,11 +28,11 @@ struct WatchView: View {
                         Color.clear.frame(height: 24)
                     }
                 } else if isStory {
-                    LessonPlayerView(skill: skill, onComplete: finish)
+                    LessonPlayerView(skill: skill, onComplete: finish).id(playRun)
                         .padding(.horizontal, 14).padding(.vertical, 6)
                 } else {
                     ScrollView {
-                        LessonPlayerView(skill: skill, onComplete: finish)
+                        LessonPlayerView(skill: skill, onComplete: finish).id(playRun)
                             .padding(.horizontal, 12).padding(.top, 6)
                         Color.clear.frame(height: 20)
                     }
@@ -146,6 +147,16 @@ struct WatchView: View {
             Text("Watch now, or save it and earn more.")
                 .font(.system(size: 14, design: .rounded)).foregroundStyle(Theme.textSecondary)
                 .multilineTextAlignment(.center)
+            // Again!: a good game rolls straight into its next finish, which is
+            // how a game gets to 3 of 3 instead of being played once and buried.
+            if state.canPlay(skill.id) && !state.isMastered(skill.id) {
+                Button {
+                    playAgain()
+                } label: {
+                    Label("Again!  \(min(state.mergedCount(skill.id), state.saved.masteryThreshold)) of \(state.saved.masteryThreshold) done", systemImage: "arrow.counterclockwise")
+                }
+                .buttonStyle(YTButtonStyle(background: AnyShapeStyle(Theme.green)))
+            }
             Button {
                 showWatch = true
             } label: {
@@ -167,6 +178,15 @@ struct WatchView: View {
         }
         .padding(14).frame(maxWidth: .infinity, alignment: .leading)
         .background(Theme.surface.opacity(0.6)).clipShape(RoundedRectangle(cornerRadius: 14))
+    }
+
+    private func playAgain() {
+        GameDifficulty.level = state.currentLevel(skill.id)
+        GameDifficulty.rung = state.currentRung(skill.id)
+        GameStats.begin(skill.id)
+        newBuddy = nil; justMastered = false
+        playRun += 1
+        withAnimation { completed = false }
     }
 
     private func finish() {

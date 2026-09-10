@@ -1241,14 +1241,17 @@ struct WeatherLevel: Identifiable, Hashable {
 }
 
 enum WeatherGen {
+    // Every prompt carries a picture clue (what you'd wear or do), so he can
+    // answer from the picture even before he can read "windy".
     static let kinds: [WeatherKind] = [
-        WeatherKind(id: "sun",   emoji: "☀️",  name: "sunny",  describe: "Which one is hot and bright?", fact: "Sunny! Wear a sun hat. ☀️"),
-        WeatherKind(id: "rain",  emoji: "🌧️", name: "rainy",  describe: "Which one has rain?",          fact: "Rainy! Grab an umbrella. ☔"),
-        WeatherKind(id: "cloud", emoji: "☁️",  name: "cloudy", describe: "Which one is gray and cloudy?", fact: "Cloudy! The sky is gray. ☁️"),
-        WeatherKind(id: "snow",  emoji: "❄️",  name: "snowy",  describe: "Which one is cold and white?",  fact: "Snowy! Wear mittens. ❄️"),
-        WeatherKind(id: "wind",  emoji: "💨",  name: "windy",  describe: "Which one is windy?",           fact: "Windy! Hold onto your hat. 💨"),
-        WeatherKind(id: "storm", emoji: "⛈️", name: "stormy", describe: "Which one has thunder?",        fact: "Stormy! Thunder and lightning. ⛈️")
+        WeatherKind(id: "sun",   emoji: "☀️",  name: "sunny",  describe: "Which one is hot and bright? 🕶️ Sun hat weather!",   fact: "Sunny! Wear a sun hat. ☀️"),
+        WeatherKind(id: "rain",  emoji: "🌧️", name: "rainy",  describe: "Which one has rain drops? ☔ Umbrella weather!",     fact: "Rainy! Grab an umbrella. ☔"),
+        WeatherKind(id: "cloud", emoji: "☁️",  name: "cloudy", describe: "Which one is just gray clouds, no rain? ☁️",        fact: "Cloudy! The sky is gray. ☁️"),
+        WeatherKind(id: "snow",  emoji: "❄️",  name: "snowy",  describe: "Which one is cold and white? 🧤 Mittens weather!",   fact: "Snowy! Wear mittens. ❄️"),
+        WeatherKind(id: "wind",  emoji: "💨",  name: "windy",  describe: "Which one blows things around? 🪁 Kite weather!",   fact: "Windy! Hold onto your hat. 💨"),
+        WeatherKind(id: "storm", emoji: "⛈️", name: "stormy", describe: "Which one has thunder and lightning? ⚡",            fact: "Stormy! Thunder and lightning. ⛈️")
     ]
+    static let clue: [String: String] = ["sun": "🕶️", "rain": "☔", "cloud": "☁️", "snow": "🧤", "wind": "🪁", "storm": "⚡"]
 
     static func distractors(for t: WeatherKind) -> [WeatherKind] {
         Array(kinds.filter { $0.id != t.id }.shuffled().prefix(2))
@@ -1266,7 +1269,7 @@ enum WeatherGen {
 
     static func make() -> (target: WeatherKind, prompt: String, options: [WeatherKind]) {
         let t = nextTarget()
-        let prompt = Bool.random() ? "Which one is \(t.name)?" : t.describe
+        let prompt = Bool.random() ? "Which one is \(t.name)? \(clue[t.id] ?? "")" : t.describe
         return (t, prompt, ([t] + distractors(for: t)).shuffled())
     }
 }
@@ -1837,7 +1840,7 @@ enum HolidayGen {
 
     static func make() -> (target: HolidayKind, prompt: String, options: [HolidayKind]) {
         let t = nextTarget()
-        let prompt = Bool.random() ? "Which one is \(t.name)?" : t.describe
+        let prompt = Bool.random() ? "Which one is \(t.name)? \(clue[t.id] ?? "")" : t.describe
         return (t, prompt, ([t] + distractors(for: t)).shuffled())
     }
 }

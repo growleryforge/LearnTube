@@ -522,9 +522,24 @@ final class AppState: ObservableObject {
 
     func completionCount(_ id: String) -> Int { saved.completionCounts[id] ?? 0 }
 
+    /// Mastered anywhere in the family: his iPads and phone add up.
     func isMastered(_ id: String) -> Bool {
-        completionCount(id) >= saved.masteryThreshold && !isGuessy(id)
+        mergedCount(id) >= saved.masteryThreshold && !isGuessy(id)
     }
+
+    // MARK: - Finish Line (close out TK and K before First Grade takes over)
+
+    /// The pre-First-Grade games (Warm-Ups, TK, K, Stretch; grade 0 and below,
+    /// not the Farm Writing Club) that are live in his feed.
+    var finishLinePool: [Skill] {
+        todaySkills.filter { $0.grade <= 0 && !$0.id.hasPrefix("TW-") }
+    }
+    /// Of those, the ones not yet mastered: one to three plays from done.
+    var finishLine: [Skill] { finishLinePool.filter { !isMastered($0.id) } }
+    var finishLineDone: Int { finishLinePool.count - finishLine.count }
+    /// While more than this many are left, First Grade holds off: nothing new
+    /// from grade 1 is woven into the feed, though it stays reachable below.
+    static let finishLineHoldsFirstGrade = 8
 
     func masteredCount(inGrade grade: Int) -> Int {
         Curriculum.skills(for: grade).filter { isMastered($0.id) }.count

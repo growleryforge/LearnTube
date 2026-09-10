@@ -50,6 +50,14 @@ struct HomeFeedView: View {
         let rest = sorted.filter { !calm.contains($0) }
         var seen = calm.filter { started[$0.id] ?? false }
         var fresh = calm.filter { !(started[$0.id] ?? false) }
+        // Finish Line: while TK and K still have games to close out, new First
+        // Grade games are not woven in. They stay at the bottom for scrolling.
+        let holdFirstGrade = state.finishLine.count > AppState.finishLineHoldsFirstGrade
+        var parked: [Skill] = []
+        if holdFirstGrade {
+            parked = fresh.filter { $0.grade > 0 }
+            fresh = fresh.filter { $0.grade <= 0 }
+        }
         var mix: [Skill] = []
         while !seen.isEmpty || !fresh.isEmpty {
             for _ in 0..<2 where !seen.isEmpty { mix.append(seen.removeFirst()) }
@@ -57,9 +65,47 @@ struct HomeFeedView: View {
         }
         // Featured games lead the feed in their own order until he has done
         // them today; everything else keeps the order worked out above.
-        let feed = mix + rest
+        let feed = mix + rest + parked
         let pinned = Curriculum.featured.compactMap { id in feed.first { $0.id == id && !state.isDoneToday(id) } }
-        return pinned + feed.filter { !pinned.contains($0) }
+        let lineIDs = Set(finishLineGames.map(\.id))
+        return pinned.filter { !lineIDs.contains($0.id) } + feed.filter { !pinned.contains($0) && !lineIDs.contains($0.id) }
+    }
+
+    /// The Finish Line row: TK and K games one to three plays from mastered,
+    /// closest to done first, calmest first, and still playable today.
+    private var finishLineGames: [Skill] {
+        state.finishLine
+            .filter { state.canPlay($0.id) }
+            .sorted { a, b in
+                let ca = state.mergedCount(a.id), cb = state.mergedCount(b.id)
+                if ca != cb { return ca > cb }
+                let sa = state.struggleScore(a.id), sb = state.struggleScore(b.id)
+                if sa != sb { return sa < sb }
+                return a.grade < b.grade
+            }
+    }
+
+    private var finishLineHeader: some View {
+        let done = state.finishLineDone, total = state.finishLinePool.count
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("🏁 Finish Line")
+                    .font(.system(size: 22, weight: .heavy, design: .rounded)).foregroundStyle(.white)
+                Spacer()
+                Text("\(done) of \(total) barns lit")
+                    .font(.system(size: 15, weight: .heavy, design: .rounded)).foregroundStyle(Theme.gold)
+            }
+            GeometryReader { g in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(Theme.surface)
+                    Capsule().fill(LinearGradient(colors: [Theme.gold, Theme.green], startPoint: .leading, endPoint: .trailing))
+                        .frame(width: total > 0 ? g.size.width * CGFloat(done) / CGFloat(total) : 0)
+                }
+            }
+            .frame(height: 14)
+            Text("Play each one \(state.saved.masteryThreshold) times to light its barn. Then First Grade opens up!")
+                .font(.system(size: 13, weight: .medium, design: .rounded)).foregroundStyle(Theme.textSecondary)
+        }
     }
 
     var body: some View {
@@ -81,11 +127,28 @@ struct HomeFeedView: View {
                             AllMasteredFeed()
                         } else {
                             jumpBadges(proxy)
+                            if !finishLineGames.isEmpty {
+                                finishLineHeader
+                                LazyVGrid(columns: cols, spacing: 14, pinnedViews: []) {
+                                    ForEach(finishLineGames) { skill in
+                                        let maxed = !state.canPlay(skill.id)
+                                        StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
+                                                 plays: state.mergedCount(skill.id),
+                                                 masteryGoal: state.saved.masteryThreshold,
+                                                 level: state.currentLevel(skill.id),
+                                                 isNew: !state.everStarted(skill.id))
+                                            .onTapGesture { if !maxed { GameDifficulty.level = state.currentLevel(skill.id); GameDifficulty.rung = state.currentRung(skill.id); GameStats.begin(skill.id); watch = skill } }
+                                    }
+                                }
+                                Text("More games")
+                                    .font(.system(size: 22, weight: .heavy, design: .rounded)).foregroundStyle(.white)
+                                    .frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                            }
                             LazyVGrid(columns: cols, spacing: 14, pinnedViews: []) {
                                 ForEach(available) { skill in
                                     let maxed = !state.canPlay(skill.id)
                                     StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
-                                             plays: state.completionCount(skill.id),
+                                             plays: state.mergedCount(skill.id),
                                              masteryGoal: state.saved.masteryThreshold,
                                              level: state.currentLevel(skill.id),
                                              isNew: !state.everStarted(skill.id))
