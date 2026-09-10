@@ -1,43 +1,54 @@
 import SwiftUI
 import UIKit
-import CoreText
 
-/// Real on-screen writing practice: the child traces each shape with a finger.
-/// Dots sit along the guide and light up as the finger passes near them.
-/// Forgiving by design (no "wrong stroke" scolding) — finishing ~80% of the
-/// dots counts as done.
+/// Real on-screen writing practice, done the way handwriting is taught:
+///
+///   * a letter is its STROKES, in order (stroke 1, then stroke 2...)
+///   * a stroke starts at the green dot and follows the dots in order
+///   * one stroke = one finger-down; lifting early resets that stroke
+///   * wandering off the path resets that stroke (no reward for scribbling)
+///
+/// Only the current stroke takes ink. The others are shown as faint guides
+/// so he can see the whole letter, and finished strokes stay drawn in colour.
+/// Words are the same thing letter after letter, so "cow" is c, then o,
+/// then w, in writing order.
 ///
 /// Two flavors share this player:
 ///   - `.trace(prompt:, items:)`: bare letters and digits, the original games
-///   - `.traceScene(prompt:, steps:)`: every stroke has an animal at the start
-///     and somewhere to get to at the end, and the stroke can be a pre-writing
-///     shape (line, circle, wave, zigzag, loop) or a letter in either case.
-///     That is the writing-mechanics ladder, and the animals are the reason
-///     he opens it.
+///   - `.traceScene(prompt:, steps:)`: an animal at the start, somewhere to get
+///     to, and the stroke can be a pre-writing shape or a letter or a word.
 struct TracePlayer: View {
     let prompt: String
     let steps: [TraceStep]
     let accent: Color
     let onComplete: () -> Void
 
-    /// The original letter games: uppercase glyphs, no story.
     init(prompt: String, items: [String], accent: Color, onComplete: @escaping () -> Void) {
         self.prompt = prompt
-        self.steps = items.map { TraceStep("", .glyph($0.uppercased()), from: "") }
+        self.steps = items.map { TraceStep("", .glyph($0), from: "") }
         self.accent = accent; self.onComplete = onComplete
     }
     init(prompt: String, steps: [TraceStep], accent: Color, onComplete: @escaping () -> Void) {
         self.prompt = prompt; self.steps = steps; self.accent = accent; self.onComplete = onComplete
     }
 
+    // Which step, which stroke of it, how far along that stroke.
     @State private var index = 0
-    @State private var guidePath = Path()
-    @State private var targets: [CGPoint] = []
-    @State private var hit: Set<Int> = []
-    @State private var ink: [CGPoint] = []
-    @State private var canvasSize: CGSize = .zero
+    @State private var strokes: [[CGPoint]] = []      // canvas coords, dots ~14pt apart
+    @State private var strokeIndex = 0
+    @State private var nextDot = 0
+    @State private var ink: [CGPoint] = []            // the finger, current stroke
+    @State private var done: [[CGPoint]] = []         // finished strokes' ink
+    @State private var tracing = false
+    @State private var laidOutFor: CGSize = .zero
     @State private var justFinished = false
     @State private var mood: MascotMood = .idle
+    @State private var hint = ""                      // "Start at the green dot"
+    @State private var shake = 0                      // bumps to animate a reset
+
+    private let startRadius: CGFloat = 34   // how close the finger must land to the start dot
+    private let hitRadius: CGFloat = 26     // how close to count a dot
+    private let offPath: CGFloat = 44       // farther than this from the stroke = wandered off
 
     private var step: TraceStep { steps[min(index, max(0, steps.count - 1))] }
     private var label: String {
@@ -45,8 +56,9 @@ struct TracePlayer: View {
         return ""
     }
     private var bubble: String {
+        if !hint.isEmpty { return hint }
         if !step.say.isEmpty { return step.say }
-        return label.isEmpty ? prompt : "Trace the \(label)  ✏️"
+        return label.isEmpty ? prompt : "Write \(label)  ✏️"
     }
 
     var body: some View {
@@ -55,31 +67,37 @@ struct TracePlayer: View {
                 ProgressDots(total: max(steps.count, 1), done: index, accent: accent)
                 ZStack {
                     RoundedRectangle(cornerRadius: 24, style: .continuous).fill(.white)
-                    GeometryReader { geo in
-                        Canvas { ctx, _ in draw(ctx) }
-                            .contentShape(Rectangle())
-                            .gesture(
-                                DragGesture(minimumDistance: 0)
-                                    .onChanged { v in addPoint(v.location) }
-                            )
-                            .onAppear { setup(geo.size) }
-                            .onChange(of: index) { _ in setup(geo.size) }
-                            .onChange(of: geo.size) { sz in if targets.isEmpty { setup(sz) } }
+                    Canvas { ctx, size in
+                        // Lay out from the size the canvas actually has, every
+                        // draw: on iOS 16 the first pass can come before any
+                        // size is known, and this is what keeps it from
+                        // opening blank.
+                        if size != laidOutFor && size.width > 1 {
+                            DispatchQueue.main.async { layout(size) }
+                        }
+                        draw(ctx, size)
                     }
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { v in touch(v.location) }
+                            .onEnded { _ in lift() }
+                    )
                     .padding(10)
                 }
-                .frame(height: 320)
+                .frame(height: 340)
                 .padding(.horizontal, 6)
+                .modifier(Shake(times: shake))
                 // The word the letter starts, tied to the animal: "d" ... duck.
                 if !step.word.isEmpty, label != step.word {
                     HStack(spacing: 10) {
-                        if !step.from.isEmpty { EmojiView(emoji: step.from, size: 30, tint: .white) }
+                        if !step.from.isEmpty { EmojiView(emoji: step.from, size: 34, tint: .white) }
                         Text(step.word)
-                            .font(.system(size: 26, weight: .black, design: .rounded))
+                            .font(.system(size: 28, weight: .black, design: .rounded))
                             .foregroundStyle(.white)
                     }
                 }
-                Button { setup(canvasSize) } label: {
+                Button { resetStep() } label: {
                     Label("Start over", systemImage: "arrow.counterclockwise")
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white)
@@ -89,79 +107,151 @@ struct TracePlayer: View {
                 }
             }
         }
+        .onChange(of: index) { _ in laidOutFor = .zero }
     }
 
     // MARK: Drawing
 
-    private func draw(_ ctx: GraphicsContext) {
-        // A pale band to trace inside, plus a dotted outline like a tracing
-        // worksheet, so the shape is obvious the second the screen opens.
-        ctx.stroke(guidePath, with: .color(accent.opacity(0.18)),
-                   style: StrokeStyle(lineWidth: 26, lineCap: .round, lineJoin: .round))
-        ctx.stroke(guidePath, with: .color(Color(white: 0.45)),
-                   style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round, dash: [6, 6]))
-        // Dots along the path: grey until traced, green once hit.
-        for (i, t) in targets.enumerated() {
-            let r: CGFloat = 6
-            let rect = CGRect(x: t.x - r, y: t.y - r, width: r * 2, height: r * 2)
-            ctx.fill(Path(ellipseIn: rect),
-                     with: .color(hit.contains(i) ? Theme.green : Color(white: 0.55)))
+    private func draw(_ ctx: GraphicsContext, _ size: CGSize) {
+        guard !strokes.isEmpty else { return }
+        // Every stroke of the letter, faint, so the whole shape is there.
+        for (si, s) in strokes.enumerated() where si != strokeIndex && si >= done.count {
+            var p = Path(); p.addLines(s)
+            ctx.stroke(p, with: .color(Color(white: 0.80)),
+                       style: StrokeStyle(lineWidth: 18, lineCap: .round, lineJoin: .round))
         }
-        // The child's ink.
+        // Strokes he already wrote: his own ink, solid.
+        for s in done where s.count > 1 {
+            var p = Path(); p.addLines(s)
+            ctx.stroke(p, with: .color(accent),
+                       style: StrokeStyle(lineWidth: 14, lineCap: .round, lineJoin: .round))
+        }
+        // The current stroke: a tinted band, then dots, grey ahead and green behind.
+        if strokeIndex < strokes.count {
+            let cur = strokes[strokeIndex]
+            var p = Path(); p.addLines(cur)
+            ctx.stroke(p, with: .color(accent.opacity(0.22)),
+                       style: StrokeStyle(lineWidth: 26, lineCap: .round, lineJoin: .round))
+            for (i, t) in cur.enumerated() {
+                let r: CGFloat = i < nextDot ? 6 : 5
+                ctx.fill(Path(ellipseIn: CGRect(x: t.x - r, y: t.y - r, width: r * 2, height: r * 2)),
+                         with: .color(i < nextDot ? Theme.green : Color(white: 0.55)))
+            }
+            // Direction: a little arrow a few dots in, until he's past it.
+            if cur.count > 3, nextDot <= 3 {
+                let a = cur[2], b = cur[3]
+                let ang = atan2(b.y - a.y, b.x - a.x)
+                var tri = Path()
+                let tip = CGPoint(x: b.x + cos(ang) * 10, y: b.y + sin(ang) * 10)
+                tri.move(to: tip)
+                tri.addLine(to: CGPoint(x: tip.x - cos(ang - 0.5) * 14, y: tip.y - sin(ang - 0.5) * 14))
+                tri.addLine(to: CGPoint(x: tip.x - cos(ang + 0.5) * 14, y: tip.y - sin(ang + 0.5) * 14))
+                tri.closeSubpath()
+                ctx.fill(tri, with: .color(accent.opacity(0.9)))
+            }
+            // The start: big green ring with the stroke number, and a finger
+            // until he's on his way.
+            if let first = cur.first, nextDot == 0 {
+                let r: CGFloat = 17
+                ctx.fill(Path(ellipseIn: CGRect(x: first.x - r, y: first.y - r, width: r * 2, height: r * 2)),
+                         with: .color(Theme.green))
+                ctx.draw(Text("\(strokeIndex + 1)").font(.system(size: 18, weight: .black, design: .rounded)).foregroundColor(.white),
+                         at: first)
+                ctx.draw(Text("👆").font(.system(size: 34)),
+                         at: CGPoint(x: min(first.x + 26, size.width - 24), y: min(first.y + 34, size.height - 22)))
+            }
+        }
+        // The finger's ink on the current stroke.
         if ink.count > 1 {
             var p = Path(); p.addLines(ink)
             ctx.stroke(p, with: .color(accent),
-                       style: StrokeStyle(lineWidth: 13, lineCap: .round, lineJoin: .round))
+                       style: StrokeStyle(lineWidth: 14, lineCap: .round, lineJoin: .round))
         }
-        // Where to start: a big green ring on the first dot and a pointing
-        // finger, until the first dot is hit.
-        if let first = targets.first, hit.isEmpty {
-            let r: CGFloat = 16
-            ctx.stroke(Path(ellipseIn: CGRect(x: first.x - r, y: first.y - r, width: r * 2, height: r * 2)),
-                       with: .color(Theme.green), lineWidth: 4)
-            ctx.draw(Text("👆").font(.system(size: 30)), at: CGPoint(x: first.x + 2, y: min(first.y + 34, canvasSize.height - 20)))
+        // The animal and where it's going: at the ends of a pre-writing
+        // stroke, or in the top corners for a letter or word.
+        let isGlyph: Bool = { if case .glyph = step.stroke { return true } else { return false } }()
+        if !step.from.isEmpty {
+            let at = isGlyph ? CGPoint(x: 34, y: 32) : offset(strokes[0].first, from: strokes[0].dropFirst().first, size)
+            ctx.draw(Text(step.from).font(.system(size: 44)), at: at)
         }
-        // The animal at the start and the place it's going at the end, sitting
-        // just off the stroke so they never cover the dots.
-        if let first = targets.first, !step.from.isEmpty {
-            ctx.draw(Text(step.from).font(.system(size: 40)), at: offset(first, from: targets.dropFirst().first))
-        }
-        if let last = targets.last, !step.to.isEmpty, targets.count > 1 {
-            ctx.draw(Text(step.to).font(.system(size: 40)), at: offset(last, from: targets.dropLast().last))
+        if !step.to.isEmpty, let last = strokes.last, last.count > 1 {
+            let at = isGlyph ? CGPoint(x: size.width - 34, y: 32) : offset(last.last, from: last.dropLast().last, size)
+            ctx.draw(Text(step.to).font(.system(size: 44)), at: at)
         }
     }
 
-    /// A point ~34pt away from `p`, on the side away from its neighbour along
-    /// the stroke, so the emoji sits beyond the stroke's end.
-    private func offset(_ p: CGPoint, from n: CGPoint?) -> CGPoint {
-        guard let n = n else { return CGPoint(x: p.x, y: p.y - 34) }
+    private func offset(_ p: CGPoint?, from n: CGPoint?, _ size: CGSize) -> CGPoint {
+        guard let p = p else { return CGPoint(x: 34, y: 32) }
+        guard let n = n else { return CGPoint(x: p.x, y: p.y - 38) }
         let dx = p.x - n.x, dy = p.y - n.y
         let len = max(1, hypot(dx, dy))
-        var q = CGPoint(x: p.x + dx / len * 34, y: p.y + dy / len * 34)
-        // Keep it on the canvas.
-        q.x = min(max(q.x, 22), canvasSize.width - 22)
-        q.y = min(max(q.y, 22), canvasSize.height - 22)
+        var q = CGPoint(x: p.x + dx / len * 38, y: p.y + dy / len * 38)
+        q.x = min(max(q.x, 26), size.width - 26)
+        q.y = min(max(q.y, 26), size.height - 26)
         return q
     }
 
     // MARK: Interaction
 
-    private func addPoint(_ p: CGPoint) {
-        guard !justFinished else { return }
-        ink.append(p)
-        for (i, t) in targets.enumerated() where !hit.contains(i) {
-            if hypot(p.x - t.x, p.y - t.y) < 26 { hit.insert(i) }
+    private func touch(_ p: CGPoint) {
+        guard !justFinished, strokeIndex < strokes.count else { return }
+        let cur = strokes[strokeIndex]
+        if !tracing {
+            // A stroke has to begin at its start dot. Anywhere else is ignored,
+            // with a nudge toward the green dot.
+            guard let first = cur.first else { return }
+            if hypot(p.x - first.x, p.y - first.y) > startRadius {
+                if hint.isEmpty { hint = "Start at the green dot 👆"; mood = .idle }
+                return
+            }
+            tracing = true; hint = ""; ink = [p]; nextDot = 0
+            SFX.tap()
         }
-        let enough = targets.isEmpty ? ink.count > 40
-                                     : Double(hit.count) / Double(targets.count) >= 0.8
-        if enough { finishStep() }
+        ink.append(p)
+        // Nearest dot just ahead of where he is: dots must be hit in order.
+        var advanced = false
+        for i in nextDot..<min(nextDot + 4, cur.count) {
+            if hypot(p.x - cur[i].x, p.y - cur[i].y) <= hitRadius { nextDot = i + 1; advanced = true }
+        }
+        if !advanced {
+            // Still allowed if he's near the part of the stroke he has done
+            // (a wobble); wandering away from the whole stroke resets it.
+            let near = cur.prefix(max(nextDot + 6, 1)).contains { hypot(p.x - $0.x, p.y - $0.y) <= offPath }
+            if !near { failStroke("Oops! Stay on the dots. Start at the green dot 👆"); return }
+        }
+        if nextDot >= cur.count { completeStroke() }
+    }
+
+    private func lift() {
+        guard tracing, !justFinished else { return }
+        let cur = strokes[strokeIndex]
+        // Reaching the last dot or two counts; lifting anywhere else resets.
+        if nextDot >= cur.count - 1 { completeStroke() }
+        else { failStroke("Keep your finger down all the way to the end. Try again from the green dot 👆") }
+    }
+
+    private func failStroke(_ msg: String) {
+        tracing = false; ink = []; nextDot = 0
+        hint = msg; mood = .oops
+        withAnimation(.easeInOut(duration: 0.35)) { shake += 1 }
+        SFX.wrong()
+    }
+
+    private func completeStroke() {
+        guard tracing else { return }
+        tracing = false
+        done.append(ink); ink = []; nextDot = 0
+        strokeIndex += 1
+        hint = ""
+        if strokeIndex >= strokes.count { finishStep() }
+        else { SFX.correct(); mood = .happy }
     }
 
     private func finishStep() {
         justFinished = true
         mood = .cheer
         SFX.correct()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             if index + 1 < steps.count {
                 index += 1
                 justFinished = false
@@ -172,192 +262,147 @@ struct TracePlayer: View {
         }
     }
 
-    // MARK: Geometry
-
-    private func setup(_ size: CGSize) {
-        canvasSize = size
-        ink = []; hit = []
-        guard size.width > 1, steps.indices.contains(index) else { guidePath = Path(); targets = []; return }
-        // Leave room around the shape for the animal and the destination.
-        let isWide: Bool = { if case .glyph(let g) = step.stroke { return g.count > 1 } else { return false } }()
-        let margin: CGFloat = isWide ? 0.9 : ((step.from.isEmpty && step.to.isEmpty) ? 0.72 : 0.62)
-        let cg: CGPath
-        let flip: Bool
-        switch step.stroke {
-        case .glyph(let s):
-            guard let g = Self.glyphPath(s) else { guidePath = Path(); targets = []; return }
-            cg = g; flip = true
-        default:
-            cg = Self.strokePath(step.stroke); flip = false
-        }
-        let box = cg.boundingBoxOfPath
-        guard box.width > 0 || box.height > 0 else { guidePath = Path(); targets = []; return }
-        let target = min(size.width, size.height) * margin
-        var scale = target / max(box.width, box.height, 0.001)
-        if isWide { scale = min((size.width - 40) / max(box.width, 1), (size.height - 60) / max(box.height, 1)) }
-        let drawW = box.width * scale, drawH = box.height * scale
-        let offX = (size.width - drawW) / 2
-        let offY = (size.height - drawH) / 2
-        var t: CGAffineTransform
-        if flip {
-            t = CGAffineTransform(translationX: offX, y: offY)
-                .scaledBy(x: scale, y: -scale)
-                .translatedBy(x: -box.minX, y: -box.maxY)
-        } else {
-            t = CGAffineTransform(translationX: offX, y: offY)
-                .scaledBy(x: scale, y: scale)
-                .translatedBy(x: -box.minX, y: -box.minY)
-        }
-        let tp = cg.copy(using: &t) ?? cg
-        guidePath = Path(tp)
-        let raw = Self.polyline(cg).map { $0.applying(t) }
-        let isWord: Bool = { if case .glyph(let g) = step.stroke { return g.count > 1 } else { return false } }()
-        targets = Self.resample(raw, spacing: isWord ? 16 : 20, cap: isWord ? 90 : 34)
+    private func resetStep() {
+        tracing = false; ink = []; done = []; nextDot = 0; strokeIndex = 0; hint = ""; mood = .idle
     }
 
-    // MARK: Pre-writing strokes (unit square, y down, drawn in writing order)
+    // MARK: Geometry
 
-    static func strokePath(_ s: TraceStroke) -> CGPath {
-        let p = CGMutablePath()
-        func line(_ pts: [(Double, Double)]) {
-            guard let f = pts.first else { return }
-            p.move(to: CGPoint(x: f.0, y: f.1))
-            for q in pts.dropFirst() { p.addLine(to: CGPoint(x: q.0, y: q.1)) }
+    /// Turn the step into canvas strokes: unit-box points scaled to fit.
+    private func layout(_ size: CGSize) {
+        laidOutFor = size
+        resetStep()
+        let unit: [[CGPoint]]
+        let box: CGRect
+        switch step.stroke {
+        case .glyph(let s):
+            (unit, box) = Self.wordStrokes(s)
+        default:
+            unit = Self.preWriting(step.stroke)
+            box = CGRect(x: 0, y: 0, width: 1, height: 1)
         }
-        /// Circle traced the way a letter c/o/a starts: from the top, going
-        /// counter-clockwise (left first).
-        func circle(cx: Double, cy: Double, r: Double, turns: Double = 1, startAngle: Double = -Double.pi / 2) {
-            let n = Int(48 * turns)
-            for i in 0...n {
-                let a = startAngle - Double(i) / 48 * 2 * Double.pi
-                let pt = CGPoint(x: cx + r * cos(a), y: cy + r * sin(a))
-                if i == 0 { p.move(to: pt) } else { p.addLine(to: pt) }
+        guard !unit.isEmpty, box.width > 0, box.height > 0 else { strokes = []; return }
+        let isGlyph: Bool = { if case .glyph = step.stroke { return true } else { return false } }()
+        // Room for the animal: letters keep the corners free; shapes leave a
+        // margin all round for the emoji at each end.
+        let inset: CGFloat = isGlyph ? 24 : 58
+        let availW = size.width - inset * 2, availH = size.height - inset * 2
+        let scale = min(availW / box.width, availH / box.height)
+        let w = box.width * scale, h = box.height * scale
+        let ox = (size.width - w) / 2 - box.minX * scale
+        let oy = (size.height - h) / 2 - box.minY * scale
+        strokes = unit.map { s in
+            Self.resample(s.map { CGPoint(x: $0.x * scale + ox, y: $0.y * scale + oy) }, spacing: 14)
+        }
+    }
+
+    /// Strokes for a letter, digit or whole word, laid out left to right in
+    /// unit units (each letter box is 1 tall), plus the bounds.
+    static func wordStrokes(_ s: String) -> ([[CGPoint]], CGRect) {
+        var out: [[CGPoint]] = []
+        var x: CGFloat = 0
+        for ch in s {
+            guard let f = LetterStrokes.form(for: ch) else { continue }
+            for st in f.strokes { out.append(st.map { CGPoint(x: $0.x + x, y: $0.y) }) }
+            x += f.advance
+        }
+        // Single characters use their own box; words use the writing lines
+        // (cap line to descender) so letters line up like on paper.
+        if s.count == 1 {
+            let pts = out.flatMap { $0 }
+            let minX = pts.map(\.x).min() ?? 0, maxX = pts.map(\.x).max() ?? 1
+            let minY = pts.map(\.y).min() ?? 0, maxY = pts.map(\.y).max() ?? 1
+            return (out, CGRect(x: minX - 0.04, y: minY - 0.04, width: maxX - minX + 0.08, height: maxY - minY + 0.08))
+        }
+        return (out, CGRect(x: -0.02, y: 0.02, width: x + 0.02, height: 1.0))
+    }
+
+    /// Pre-writing shapes in a unit box, y down, one polyline per stroke.
+    static func preWriting(_ s: TraceStroke) -> [[CGPoint]] {
+        func P(_ x: Double, _ y: Double) -> CGPoint { CGPoint(x: x, y: y) }
+        func line(_ pts: [(Double, Double)]) -> [CGPoint] { pts.map { P($0.0, $0.1) } }
+        func circle(cx: Double, cy: Double, r: Double, turns: Double = 1, start: Double = -90) -> [CGPoint] {
+            let n = Int(40 * turns)
+            return (0...n).map { i in
+                let a = (start - 360 * Double(i) / 40) * Double.pi / 180
+                return P(cx + r * cos(a), cy + r * sin(a))
+            }
+        }
+        func curve(_ p0: CGPoint, _ c: CGPoint, _ p1: CGPoint) -> [CGPoint] {
+            (0...10).map { i in
+                let t = CGFloat(i) / 10, m = 1 - t
+                return CGPoint(x: m*m*p0.x + 2*m*t*c.x + t*t*p1.x, y: m*m*p0.y + 2*m*t*c.y + t*t*p1.y)
             }
         }
         switch s {
-        case .down:       line([(0.5, 0.0), (0.5, 1.0)])
-        case .across:     line([(0.0, 0.5), (1.0, 0.5)])
-        case .circle:     circle(cx: 0.5, cy: 0.5, r: 0.45)
-        case .arc:
-            p.move(to: CGPoint(x: 0.05, y: 0.75))
-            p.addQuadCurve(to: CGPoint(x: 0.95, y: 0.75), control: CGPoint(x: 0.5, y: -0.35))
+        case .down:         return [line([(0.5, 0.0), (0.5, 1.0)])]
+        case .across:       return [line([(0.0, 0.5), (1.0, 0.5)])]
+        case .circle:       return [circle(cx: 0.5, cy: 0.5, r: 0.45)]
+        case .arc:          return [curve(P(0.05, 0.75), P(0.5, -0.35), P(0.95, 0.75))]
         case .wave:
-            p.move(to: CGPoint(x: 0.0, y: 0.5))
+            var pts: [CGPoint] = []
             for i in 0..<3 {
                 let x0 = Double(i) / 3, x1 = Double(i + 1) / 3
-                p.addQuadCurve(to: CGPoint(x: (x0 + x1) / 2, y: 0.5), control: CGPoint(x: x0 + (x1 - x0) / 4, y: 0.05))
-                p.addQuadCurve(to: CGPoint(x: x1, y: 0.5), control: CGPoint(x: x0 + 3 * (x1 - x0) / 4, y: 0.95))
+                pts += curve(P(x0, 0.5), P(x0 + (x1 - x0) / 4, 0.05), P((x0 + x1) / 2, 0.5)).dropLast()
+                pts += curve(P((x0 + x1) / 2, 0.5), P(x0 + 3 * (x1 - x0) / 4, 0.95), P(x1, 0.5))
             }
-        case .zigzag:     line([(0.0, 0.85), (0.2, 0.15), (0.4, 0.85), (0.6, 0.15), (0.8, 0.85), (1.0, 0.15)])
+            return [pts]
+        case .zigzag:       return [line([(0.0, 0.85), (0.2, 0.15), (0.4, 0.85), (0.6, 0.15), (0.8, 0.85), (1.0, 0.15)])]
         case .loops:
-            // Three cursive loops moving right: the "e" motion.
-            p.move(to: CGPoint(x: 0.0, y: 0.7))
+            var pts: [CGPoint] = [P(0.0, 0.7)]
             for i in 0..<3 {
                 let x = 0.18 + Double(i) * 0.32
-                p.addCurve(to: CGPoint(x: x + 0.14, y: 0.7),
-                           control1: CGPoint(x: x + 0.22, y: -0.2),
-                           control2: CGPoint(x: x - 0.22, y: -0.2))
+                // a loop: up and over to the left, back down to the right
+                pts += circle(cx: x, cy: 0.42, r: 0.24, turns: 1, start: 110)
+                pts.append(P(x + 0.14, 0.7))
             }
+            return [pts]
         case .spiral:
-            let n = 120
-            for i in 0...n {
-                let f = Double(i) / Double(n)
-                let a = f * 3 * 2 * Double.pi
-                let r = 0.48 * (1 - f * 0.9)
-                let pt = CGPoint(x: 0.5 + r * cos(a), y: 0.5 + r * sin(a))
-                if i == 0 { p.move(to: pt) } else { p.addLine(to: pt) }
-            }
-        case .cross:
-            line([(0.5, 0.0), (0.5, 1.0)])
-            line([(0.0, 0.5), (1.0, 0.5)])
-        case .square:     line([(0.05, 0.05), (0.05, 0.95), (0.95, 0.95), (0.95, 0.05), (0.05, 0.05)])
-        case .triangle:   line([(0.5, 0.05), (0.05, 0.95), (0.95, 0.95), (0.5, 0.05)])
-        case .diagonalDown: line([(0.05, 0.05), (0.95, 0.95)])
-        case .diagonalUp:   line([(0.05, 0.95), (0.95, 0.05)])
-        case .xMark:
-            line([(0.05, 0.05), (0.95, 0.95)])
-            line([(0.95, 0.05), (0.05, 0.95)])
-        case .points(let pts): line(pts.map { ($0.x, $0.y) })
-        case .glyph: break
+            return [(0...120).map { i in
+                let f = Double(i) / 120, a = f * 3 * 2 * Double.pi, r = 0.48 * (1 - f * 0.9)
+                return P(0.5 + r * cos(a), 0.5 + r * sin(a))
+            }]
+        case .cross:        return [line([(0.5, 0.0), (0.5, 1.0)]), line([(0.0, 0.5), (1.0, 0.5)])]
+        case .square:       return [line([(0.05, 0.05), (0.05, 0.95), (0.95, 0.95), (0.95, 0.05), (0.05, 0.05)])]
+        case .triangle:     return [line([(0.5, 0.05), (0.05, 0.95), (0.95, 0.95), (0.5, 0.05)])]
+        case .diagonalDown: return [line([(0.05, 0.05), (0.95, 0.95)])]
+        case .diagonalUp:   return [line([(0.05, 0.95), (0.95, 0.05)])]
+        case .xMark:        return [line([(0.05, 0.05), (0.95, 0.95)]), line([(0.95, 0.05), (0.05, 0.95)])]
+        case .points(let pts): return [pts.map { P($0.x, $0.y) }]
+        case .glyph:        return []
         }
-        return p
     }
 
-    // MARK: CoreText helpers
-
-    /// The outline of a single character in a rounded, kid-friendly font,
-    /// in whatever case it was given (lowercase letters are how most words are
-    /// written, so "d for duck" traces a lowercase d).
-    static func glyphPath(_ s: String) -> CGPath? {
-        let name = UIFont(name: "ArialRoundedMTBold", size: 100) != nil ? "ArialRoundedMTBold" : "Helvetica-Bold"
-        let font = CTFontCreateWithName(name as CFString, 100, nil)
-        // One glyph or a whole word: lay the string out as a line so "cow" is
-        // traced as one shape, letter after letter, the way a word is written.
-        let attr = NSAttributedString(string: s, attributes: [kCTFontAttributeName as NSAttributedString.Key: font])
-        let line = CTLineCreateWithAttributedString(attr)
-        let out = CGMutablePath()
-        for run in (CTLineGetGlyphRuns(line) as! [CTRun]) {
-            let n = CTRunGetGlyphCount(run)
-            guard n > 0 else { continue }
-            var glyphs = [CGGlyph](repeating: 0, count: n)
-            var pos = [CGPoint](repeating: .zero, count: n)
-            CTRunGetGlyphs(run, CFRangeMake(0, n), &glyphs)
-            CTRunGetPositions(run, CFRangeMake(0, n), &pos)
-            let attrs = CTRunGetAttributes(run) as! [NSAttributedString.Key: Any]
-            let rf = (attrs[kCTFontAttributeName as NSAttributedString.Key] as! CTFont)
-            for i in 0..<n {
-                guard glyphs[i] != 0, let g = CTFontCreatePathForGlyph(rf, glyphs[i], nil) else { continue }
-                out.addPath(g, transform: CGAffineTransform(translationX: pos[i].x, y: pos[i].y))
-            }
-        }
-        return out.isEmpty ? nil : out
-    }
-
-    /// Flatten a CGPath into a dense polyline (curves subdivided).
-    static func polyline(_ path: CGPath) -> [CGPoint] {
-        var pts: [CGPoint] = []
-        var cur = CGPoint.zero
-        func cubic(_ p0: CGPoint, _ c1: CGPoint, _ c2: CGPoint, _ p1: CGPoint) {
-            let n = 12
-            for i in 1...n {
-                let t = CGFloat(i) / CGFloat(n), m = 1 - t
-                let x = m*m*m*p0.x + 3*m*m*t*c1.x + 3*m*t*t*c2.x + t*t*t*p1.x
-                let y = m*m*m*p0.y + 3*m*m*t*c1.y + 3*m*t*t*c2.y + t*t*t*p1.y
-                pts.append(CGPoint(x: x, y: y))
-            }
-        }
-        func quad(_ p0: CGPoint, _ c: CGPoint, _ p1: CGPoint) {
-            let n = 9
-            for i in 1...n {
-                let t = CGFloat(i) / CGFloat(n), m = 1 - t
-                pts.append(CGPoint(x: m*m*p0.x + 2*m*t*c.x + t*t*p1.x,
-                                   y: m*m*p0.y + 2*m*t*c.y + t*t*p1.y))
-            }
-        }
-        path.applyWithBlock { elPtr in
-            let e = elPtr.pointee
-            switch e.type {
-            case .moveToPoint: cur = e.points[0]; pts.append(cur)
-            case .addLineToPoint: cur = e.points[0]; pts.append(cur)
-            case .addQuadCurveToPoint: quad(cur, e.points[0], e.points[1]); cur = e.points[1]
-            case .addCurveToPoint: cubic(cur, e.points[0], e.points[1], e.points[2]); cur = e.points[2]
-            case .closeSubpath: break
-            @unknown default: break
-            }
-        }
-        return pts
-    }
-
-    /// Space points out roughly every `spacing` points; cap the total count.
-    static func resample(_ pts: [CGPoint], spacing: CGFloat, cap: Int) -> [CGPoint] {
+    /// Dots every `spacing` points along a polyline (interpolated, so long
+    /// straight segments get dots too), always keeping the last point.
+    static func resample(_ pts: [CGPoint], spacing: CGFloat) -> [CGPoint] {
         guard let first = pts.first else { return [] }
         var out = [first]
-        var last = first
-        for p in pts.dropFirst() {
-            if hypot(p.x - last.x, p.y - last.y) >= spacing { out.append(p); last = p }
+        var carry: CGFloat = 0
+        for i in 1..<max(pts.count, 1) {
+            let a = pts[i - 1], b = pts[i]
+            let seg = hypot(b.x - a.x, b.y - a.y)
+            guard seg > 0 else { continue }
+            var d = spacing - carry
+            while d <= seg {
+                let t = d / seg
+                out.append(CGPoint(x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t))
+                d += spacing
+            }
+            carry = seg - (d - spacing)
         }
-        if out.count <= cap { return out }
-        let step = Double(out.count) / Double(cap)
-        return (0..<cap).map { out[Int(Double($0) * step)] }
+        if let last = pts.last, let end = out.last, hypot(last.x - end.x, last.y - end.y) > 4 { out.append(last) }
+        return out
+    }
+}
+
+/// A quick sideways wobble when a stroke resets.
+private struct Shake: GeometryEffect {
+    var times: Int
+    private var phase: CGFloat
+    init(times: Int) { self.times = times; self.phase = CGFloat(times) }
+    var animatableData: CGFloat { get { phase } set { phase = newValue } }
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX: sin(phase * .pi * 6) * 6, y: 0))
     }
 }
