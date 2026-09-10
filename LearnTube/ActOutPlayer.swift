@@ -144,11 +144,21 @@ struct ActOutPlayer: View {
         .padding(.horizontal, 6)
     }
 
+    /// Canva art for the scene pieces (see tools/thumbs/scene.json). Each one
+    /// is optional: the drawn version stands in until the image lands.
+    private static func art(_ name: String) -> Image? { UIImage(named: name) != nil ? Image(name) : nil }
+
     private var pond: some View {
         ZStack(alignment: .topTrailing) {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
-                                     startPoint: .top, endPoint: .bottom))
+            if let img = Self.art("act-pond") {
+                img.resizable().scaledToFill()
+                    .frame(minHeight: 240).clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(.white.opacity(0.35), lineWidth: 2))
+            } else {
+                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    .fill(LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
+                                         startPoint: .top, endPoint: .bottom))
+            }
             Group {
                 if round.compare {
                     VStack(alignment: .leading, spacing: 10) {
@@ -185,10 +195,14 @@ struct ActOutPlayer: View {
 
     private func zone(_ key: String, label: String, caption: String) -> some View {
         VStack(spacing: 4) {
-            Text(label).font(.system(size: 44))
+            if let img = Self.art("act-gate") {
+                img.resizable().scaledToFit().frame(width: 84)
+            } else {
+                Text(label).font(.system(size: 44))
+            }
             Text(caption).font(.system(size: 13, weight: .heavy, design: .rounded)).foregroundStyle(.white.opacity(0.9))
         }
-        .frame(width: 92)
+        .frame(width: 96)
         .frame(maxHeight: .infinity)
         .background(RoundedRectangle(cornerRadius: 20, style: .continuous)
             .fill(Color(red: 0.62, green: 0.45, blue: 0.28).opacity(dragID != nil ? 1 : 0.75)))
@@ -204,7 +218,14 @@ struct ActOutPlayer: View {
             Text("drag them in ↑").font(.system(size: 13, weight: .heavy, design: .rounded)).foregroundStyle(.white.opacity(0.85))
         }
         .padding(10)
-        .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(red: 0.45, green: 0.68, blue: 0.30)))
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(red: 0.45, green: 0.68, blue: 0.30))
+                if let img = Self.art("act-fence") {
+                    img.resizable().scaledToFill().clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                }
+            }
+        )
     }
 
     // MARK: A token
@@ -217,16 +238,23 @@ struct ActOutPlayer: View {
         return ZStack(alignment: .topTrailing) {
             ZStack {
                 if crate {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color(red: 0.85, green: 0.62, blue: 0.32))
-                        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(.white.opacity(0.7), lineWidth: 2))
-                    VStack(spacing: 0) {
-                        Text(t.emoji).font(.system(size: 30))
-                        Text("\(t.value)").font(.system(size: 18, weight: .black, design: .rounded)).foregroundStyle(.white)
+                    if t.value == 10, let img = Self.art("act-crate") {
+                        img.resizable().scaledToFit()
+                        Text("10").font(.system(size: 22, weight: .black, design: .rounded)).foregroundStyle(.white)
+                            .shadow(color: .black.opacity(0.6), radius: 2)
+                            .offset(y: 18)
+                    } else {
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(Color(red: 0.85, green: 0.62, blue: 0.32))
+                            .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(.white.opacity(0.7), lineWidth: 2))
+                        VStack(spacing: 0) {
+                            Text(t.emoji).font(.system(size: 30))
+                            Text("\(t.value)").font(.system(size: 18, weight: .black, design: .rounded)).foregroundStyle(.white)
+                        }
                     }
                 } else {
                     Circle().fill(.white.opacity(t.number != nil ? 0.6 : 0.25))
-                    Text(t.emoji).font(.system(size: 54))
+                    Text(t.emoji).font(.system(size: 58))
                 }
                 if let tag = t.tag, !crate {
                     Text(tag).font(.system(size: 14, weight: .black, design: .rounded))

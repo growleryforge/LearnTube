@@ -1,0 +1,29 @@
+{
+  "note": "Scene art for ActOutPlayer. Each becomes Assets.xcassets/<asset>.imageset. Generate the missing ones with mcp__Canva__generate-design (youtube_thumbnail), create-design-from-candidate, then export PNG and fetch via a Finder-launched .command; sprites (gate, crate) get their white background removed by tools/install_scene.py.",
+  "assets": [
+    {
+      "asset": "act-pond",
+      "design": "DAHUxFQW3nU",
+      "kind": "fill",
+      "prompt": "top-down sunny farm pond, lily pads, grassy banks, no animals, no text"
+    },
+    {
+      "asset": "act-gate",
+      "design": null,
+      "kind": "sprite",
+      "prompt": "single open wooden farm gate with a dirt path leading to a small red barn, centered on plain white, no animals, no text"
+    },
+    {
+      "asset": "act-fence",
+      "design": null,
+      "kind": "fill",
+      "prompt": "wide banner strip of a wooden farm fence with hay bales and grass, cartoon, no animals, no text"
+    },
+    {
+      "asset": "act-crate",
+      "design": null,
+      "kind": "sprite",
+      "prompt": "one wooden crate/basket of ten eggs, cartoon, centered on plain white, no text"
+    }
+  ]
+}
