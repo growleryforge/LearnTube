@@ -257,12 +257,23 @@ struct QuizPlayer: View {
         let isWord = c.label.contains { $0.isLetter || $0.isNumber }
         let showGlyph = isShape(c.label)
         let showEmoji = !isWord && !showGlyph
-        let hasArt = showGlyph || showEmoji
+        // "🏊 swim": a picture cue over the word. He still has to read the
+        // sentence to know which picture fits, but the word is anchored to
+        // something he can see instead of being a bare string of letters.
+        let first = c.label.first.map(String.init) ?? ""
+        let cue = (isWord && first.unicodeScalars.first.map { $0.properties.isEmoji && $0.value > 0x2100 } == true) ? first : ""
+        let word = cue.isEmpty ? c.label : String(c.label.dropFirst()).trimmingCharacters(in: .whitespaces)
+        let hasArt = showGlyph || showEmoji || !cue.isEmpty
         VStack(spacing: 6) {
             if showGlyph {
                 ShapeGlyph(name: c.label, color: .white).frame(width: 64, height: 64).padding(.vertical, 8)
             } else if showEmoji {
                 EmojiView(emoji: c.label, size: 48, tint: .white).frame(height: 52).padding(.vertical, 6)
+            } else if !cue.isEmpty {
+                EmojiView(emoji: cue, size: 48, tint: .white).frame(height: 52)
+                Text(word)
+                    .font(.system(size: 26, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white)
             } else {
                 Text(c.label)
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
@@ -280,6 +291,7 @@ struct QuizPlayer: View {
 
     private func load() {
         options = questions[index].options.shuffled()
+        Leo.say(questions[index].prompt)
         ready = false; locked = false; hint = ""
         disabled = []; revealed = false; missCount = 0
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { ready = true }
@@ -289,6 +301,7 @@ struct QuizPlayer: View {
         // Ignore taps on the initial read-pause, mid-animation, or on a tile
         // that's already been ruled out.
         guard ready, !locked, correctId == nil, !disabled.contains(c.id) else { return }
+        if c.label.contains(where: { $0.isLetter }) { Leo.say(c.label) }   // read the word he chose
         if c.isCorrect {
             correctId = c.id; mood = .cheer; SFX.correct()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {

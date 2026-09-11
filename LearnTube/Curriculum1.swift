@@ -362,10 +362,10 @@ extension Curriculum {
               activity: "Pick the word that makes the sentence make sense!",
               parentTip: "Read the whole sentence with each choice and hear which one sounds right.",
               lesson: .quiz([
-                Question("I ___ the dog.", correct: "see", wrong: ["sun", "sit"]),
-                Question("We ___ to the park.", correct: "go", wrong: ["got", "gum"]),
-                Question("The bird can ___.", correct: "fly", wrong: ["fix", "fun"]),
-                Question("I ___ a big cake.", correct: "like", wrong: ["lake", "lip"])
+                Question("I ___ the dog.", correct: "👀 see", wrong: ["☀️ sun", "🪑 sit"]),
+                Question("We ___ to the park.", correct: "🚶 go", wrong: ["🎁 got", "🍬 gum"]),
+                Question("The bird can ___.", correct: "🕊️ fly", wrong: ["🔧 fix", "🎉 fun"]),
+                Question("I ___ a big cake.", correct: "👍 like", wrong: ["🏞️ lake", "👄 lip"])
               ]))
     ]
 }
@@ -955,10 +955,10 @@ extension Curriculum {
               activity: "Pick the word that makes the sentence make sense!",
               parentTip: "Read the whole sentence with each choice and hear which one sounds right.",
               lesson: .quiz([
-                Question("The 🐟 can ___.", correct: "swim", wrong: ["jump"]),
-                Question("The 🐦 can ___.", correct: "fly", wrong: ["sit"]),
-                Question("I ___ my mom.", correct: "love", wrong: ["run"]),
-                Question("We ___ to the barn.", correct: "go", wrong: ["sun"])
+                Question("The 🐟 can ___.", correct: "🏊 swim", wrong: ["🦘 jump"]),
+                Question("The 🐦 can ___.", correct: "🕊️ fly", wrong: ["🪑 sit"]),
+                Question("I ___ my mom.", correct: "❤️ love", wrong: ["🏃 run"]),
+                Question("We ___ to the barn.", correct: "🚶 go", wrong: ["☀️ sun"])
               ])),
 
         Skill(id: "FR-R7", grade: 1, subject: .reading,

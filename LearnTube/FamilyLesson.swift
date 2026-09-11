@@ -547,34 +547,9 @@ extension Stories {
 
     static let syllablesLesson = StoryContent(
         id: "syllables", title: "Syllable Safari", author: "LearnTube",
-        covers: "Breaking words into syllables by clapping the beats — an early reading skill (CA CCSS RF.K.2).",
+        covers: "Breaking words into syllables: tap each beat, clap it, then count the claps (CA CCSS RF.K.2).",
         darkPages: true, pages: [],
-        games: [StoryGame(skill: "Syllable Safari", activity: .quiz([
-            sqv(["🐱"], "Clap the name: CAT. Just one clap! 👏",
-                ["How many claps in 🐱 CAT?", "Clap 🐱 CAT — how many beats?"],
-                [sc("1️⃣","1 clap", true), sc("2️⃣","2 claps"), sc("3️⃣","3 claps")]),
-            sqv(["🐶"], "DOG — one clap! 👏",
-                ["How many claps in 🐶 DOG?", "Clap 🐶 DOG — how many beats?"],
-                [sc("1️⃣","1 clap", true), sc("2️⃣","2 claps"), sc("3️⃣","3 claps")]),
-            sqv(["🐰"], "RAB · BIT — two claps! 👏👏",
-                ["How many claps in 🐰 RABBIT?", "Clap 🐰 RAB-BIT — how many beats?"],
-                [sc("2️⃣","2 claps", true), sc("1️⃣","1 clap"), sc("3️⃣","3 claps")]),
-            sqv(["🦒"], "GI · RAFFE — two claps! 👏👏",
-                ["How many claps in 🦒 GIRAFFE?", "Clap 🦒 GI-RAFFE — how many beats?"],
-                [sc("2️⃣","2 claps", true), sc("1️⃣","1 clap"), sc("3️⃣","3 claps")]),
-            sqv(["🐧"], "PEN · GUIN — two claps! 👏👏",
-                ["How many claps in 🐧 PENGUIN?", "Clap 🐧 PEN-GUIN — how many beats?"],
-                [sc("2️⃣","2 claps", true), sc("1️⃣","1 clap"), sc("3️⃣","3 claps")]),
-            sqv(["🐘"], "EL · E · PHANT — three claps! 👏👏👏",
-                ["How many claps in 🐘 ELEPHANT?", "Clap 🐘 EL-E-PHANT — how many beats?"],
-                [sc("3️⃣","3 claps", true), sc("1️⃣","1 clap"), sc("2️⃣","2 claps")]),
-            sqv(["🦋"], "BUT · TER · FLY — three claps! 👏👏👏",
-                ["How many claps in 🦋 BUTTERFLY?", "Clap 🦋 BUT-TER-FLY — how many beats?"],
-                [sc("3️⃣","3 claps", true), sc("1️⃣","1 clap"), sc("2️⃣","2 claps")]),
-            sqv(["🐊"], "CROC · O · DILE — three claps! 👏👏👏",
-                ["How many claps in 🐊 CROCODILE?", "Clap 🐊 CROC-O-DILE — how many beats?"],
-                [sc("3️⃣","3 claps", true), sc("2️⃣","2 claps"), sc("1️⃣","1 clap")])
-        ]))]
+        games: [StoryGame(skill: "Syllable Safari", activity: .syllables(SyllableLevel(skill: "Syllable Safari", rounds: 6)))]
     )
 
     static let animalGroupsLesson = StoryContent(

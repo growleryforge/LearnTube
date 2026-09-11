@@ -1192,6 +1192,7 @@ struct LetterDetectivePlayer: View {
     private func newRound() {
         q = LetterGen.make(); options = q.options; wrongId = nil; cheer = false
         missed = 0; revealed = false
+        Leo.say("\(q.target.word). Which letter does \(q.target.word) start with?")
     }
 
     private func tap(_ letter: LetterInfo) {
@@ -1205,6 +1206,8 @@ struct LetterDetectivePlayer: View {
         } else {
             missed += 1
             wrongId = letter.id; SFX.wrong()
+            GameStats.recordMiss(prompt: "Which letter does \(q.target.emoji) \(q.target.word) start with?",
+                                 tapped: letter.upper, correct: q.target.upper)
             if missed >= 2 { withAnimation { revealed = true } }   // teach: show and hold the answer
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
@@ -2454,10 +2457,12 @@ struct RhymePlayer: View {
         let made = RhymeGen.make()
         target = made.target; correct = made.correct; options = made.options
         wrongId = nil; cheer = false; missed = 0; revealed = false
+        Leo.say("Which one rhymes with \(target.word)?")
     }
 
     private func tap(_ item: RhymeItem) {
         guard !cheer else { return }
+        Leo.say(item.id == correct.id ? "\(target.word), \(item.word). They rhyme!" : "\(target.word), \(item.word).")
         if item.id == correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
@@ -3842,6 +3847,7 @@ struct PushPullPlayer: View {
     @State private var pushLeft = true
     @State private var wrong: String?
     @State private var cheer = false
+    @State private var slid = false
     @State private var phase: LessonPhase = .teach
 
     var body: some View {
@@ -3867,9 +3873,34 @@ struct PushPullPlayer: View {
                     if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
                     Text("Push or pull?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(.white)
-                    EmojiView(emoji: item.emoji, size: 116, tint: .white)
-                        .frame(maxWidth: .infinity).frame(height: 170)
-                        .background(Theme.surface).clipShape(RoundedRectangle(cornerRadius: 22))
+                    // Watch first: the hand pushes the thing away, or pulls it close.
+                    // The motion loops the whole round so the answer is something he
+                    // saw, not something he has to guess.
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Theme.surface)
+                        HStack(spacing: 0) {
+                            Text(item.isPush ? "👋" : "✊").font(.system(size: 84))
+                                .frame(width: 120)
+                            ZStack(alignment: .leading) {
+                                Text(item.isPush ? "➡️" : "⬅️").font(.system(size: 44))
+                                    .frame(maxWidth: .infinity)
+                                    .opacity(0.9)
+                                EmojiView(emoji: item.emoji, size: 100, tint: .white)
+                                    .offset(x: item.isPush ? (slid ? 150 : 0) : (slid ? 0 : 150))
+                                    .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: slid)
+                            }
+                            .frame(width: 260, alignment: .leading)
+                        }
+                        Text(item.isPush ? "away" : "close")
+                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .foregroundStyle(Theme.textSecondary)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                            .padding(12)
+                    }
+                    .frame(maxWidth: .infinity).frame(height: 190)
+                    .clipShape(RoundedRectangle(cornerRadius: 22))
+                    .id("ppscene\(round)")
+                    .onAppear { slid = false; DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { slid = true } }
                     HStack(spacing: 14) {
                         ForEach(pushLeft ? ["push", "pull"] : ["pull", "push"], id: \.self) { kind in
                             Button { tap(kind) } label: { tile(kind) }.wiggle(wrong == kind)
@@ -3903,6 +3934,7 @@ struct PushPullPlayer: View {
             }
         } else {
             wrong = kind; SFX.wrong()
+            GameStats.recordMiss(prompt: "Push or pull? \(item.emoji)", tapped: kind, correct: item.isPush ? "push" : "pull")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) { wrong = nil }
         }
     }

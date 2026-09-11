@@ -64,6 +64,7 @@ enum StoryActivity {
     case familyAdd(FamilyAddLevel)                   // "how many in all?" - add two groups, tap the total
     case wordProblem(WordProblemLevel)               // visual add/subtract story problems within 20
     case pushPull(PushPullLevel)                     // push or pull (forces)
+    case syllables(SyllableLevel)                    // tap the beats, count the claps
     case needs(NeedsLevel)                           // what living things need
     case position(PosLevel)                          // position words: on top / under / next to
     case sight(SightLevel)                           // high-frequency sight words

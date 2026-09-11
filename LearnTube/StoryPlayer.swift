@@ -133,6 +133,8 @@ struct StoryPlayer: View {
                     WordProblemPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
                 case .pushPull(let level):
                     PushPullPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
+                case .syllables(let level):
+                    SyllablePlayer(level: level, accent: accent, onComplete: nextGame).id(game)
                 case .needs(let level):
                     NeedsPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
                 case .position(let level):
@@ -282,6 +284,7 @@ struct StoryQuizView: View {
     private func load() {
         choices = q.choices.shuffled()
         chosenPrompt = q.prompts.randomElement() ?? q.prompts.first ?? ""
+        Leo.say(chosenPrompt)
         ready = false; locked = false; hint = ""
         missed = 0; revealed = false
         // Pop the question to draw his eye.

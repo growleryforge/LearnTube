@@ -216,6 +216,7 @@ struct GrownUpSettings: View {
                     .font(.footnote).foregroundStyle(.secondary)
                 Button("Save Link") { state.setYouTubeURL(youTube.isEmpty ? "youtube://" : youTube) }
             }
+            LeoVoiceSection()
             Section("Reading Together") {
                 Text("Lessons open straight into the activity now, with no \"who's reading with you?\" step to slow Gabriel down. He can play on his own anytime. When you'd like to read along, Mommy or Maddy can simply sit with him and read each page aloud together.")
                     .font(.footnote).foregroundStyle(.secondary)

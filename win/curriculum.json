@@ -1,6 +1,33 @@
 {
  "generatedFrom": "LearnTube Swift sources",
  "liveStops": [
+  "WU-M1",
+  "WU-M4",
+  "WU-M5",
+  "WU-M6",
+  "WU-M2",
+  "WU-M3",
+  "WU-R1",
+  "WU-R2",
+  "WU-R3",
+  "TK-M1",
+  "TK-M2",
+  "TK-M3",
+  "TK-M4",
+  "TK-M6",
+  "TK-C1",
+  "TK-R1",
+  "TK-R2",
+  "TK-R3",
+  "TK-S1",
+  "TK-S2",
+  "TK-S3",
+  "TK-L1",
+  "count what you see",
+  "K-NUM1",
+  "K-NUM2",
+  "K-NUM3",
+  "K-NUM4",
   "K-S18",
   "K-S19",
   "K-S21",
@@ -23,28 +50,6 @@
   "K-S15",
   "K-S16",
   "K-S17",
-  "K-MATH1",
-  "K-MATH2",
-  "K-MATH3",
-  "K-MATH14",
-  "K-MATH16",
-  "K-MATH17",
-  "K-MATH18",
-  "K-MATH15",
-  "K-MATH13",
-  "K-MATH20",
-  "K-MATH19",
-  "K-M4",
-  "K-MATH21",
-  "K-MATH22",
-  "K-MATH7",
-  "K-MATH9",
-  "K-MATH4",
-  "K-MATH5",
-  "K-MATH10",
-  "K-MATH8",
-  "K-MATH6",
-  "K-MATH11",
   "K-R14",
   "K-R15",
   "K-R9",
@@ -57,44 +62,92 @@
   "K-R13",
   "K-R7",
   "K-R8",
-  "K-STORY1",
   "K-W1",
+  "K-W4",
   "K-W2",
+  "K-W6",
+  "K-W5",
+  "K-W7",
+  "K-W8",
   "K-W3",
+  "K-W9",
+  "TW-S1",
+  "TW-S2",
+  "TW-S3",
+  "TW-S4",
+  "TW-S5",
+  "TW-S6",
+  "TW-S7",
+  "TW-S8",
+  "TW-S9",
+  "TW-S10",
+  "TW-L1",
+  "TW-L2",
+  "TW-L3",
+  "TW-L4",
+  "TW-L5",
+  "TW-L6",
+  "TW-W1",
+  "TW-W2",
+  "TW-W3",
+  "TW-W4",
+  "TW-W5",
+  "TW-N1",
+  "TW-N2",
+  "Happy or Sad?",
   "K-SS1",
   "K-SS2",
   "K-SS3",
   "K-SS4",
-  "K-L1",
-  "K-L2",
   "K-L3",
   "K-M5",
-  "G1-R1",
-  "G1-R2",
-  "G1-R7",
-  "G1-R3",
-  "G1-R4",
-  "G1-R6",
-  "G1-R5",
-  "G1-M1",
-  "G1-M2",
-  "G1-M3",
-  "G1-M4",
-  "G1-M5",
-  "G1-M6",
-  "G1-M9",
-  "G1-M10",
-  "G1-M7",
-  "G1-M8",
-  "G1-W1",
-  "G1-W3",
-  "G1-W2",
-  "G1-S1",
-  "G1-S2",
-  "G1-S3",
-  "G1-L1",
-  "G1-L2",
-  "G1-L3"
+  "ST-M1",
+  "ST-M2",
+  "ST-M4",
+  "ST-M5",
+  "ST-M6",
+  "ST-M3",
+  "ST-R1",
+  "ST-R2",
+  "BR-M1",
+  "BR-M2",
+  "BR-M3",
+  "BR-M4",
+  "BR-M5",
+  "BR-M6",
+  "BR-M7",
+  "BR-M8",
+  "BR-M9",
+  "FR-M1",
+  "FR-R1",
+  "FR-M7",
+  "FR-S1",
+  "FR-M2",
+  "FR-R3",
+  "FR-M4",
+  "FR-S2",
+  "FR-M9",
+  "FR-R6",
+  "FR-M5",
+  "FR-S3",
+  "FR-M8",
+  "FR-R2",
+  "FR-M3",
+  "FR-S4",
+  "FR-M10",
+  "FR-R4",
+  "FR-M12",
+  "FR-R7",
+  "FR-M6",
+  "FR-R5",
+  "FR-M11",
+  "FR-S5",
+  "FR-M13",
+  "FR-M14",
+  "FR-M15",
+  "FR-M16",
+  "FR-M17",
+  "FR-M18"
  ],
  "skills": [
   {
@@ -110,7 +163,7 @@
     "storyId": "sun-slept-in"
    },
    "teach": "Read a farm story, then play games about it. Stars Bodhi and Kona the dogs!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH1",
@@ -125,7 +178,7 @@
     "storyId": "counting-critters"
    },
    "teach": "Count, compare, and find out how many with the Counting Critters!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH2",
@@ -140,7 +193,7 @@
     "storyId": "family-add"
    },
    "teach": "Add and take away with Gabriel's 7 cats, 2 dogs, and 1 Gabriel!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH3",
@@ -155,7 +208,7 @@
     "storyId": "farm-sort"
    },
    "teach": "Sort the chickens, sheep, cats, and dogs into their groups, then count how many are in each!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH4",
@@ -170,7 +223,7 @@
     "storyId": "shapes"
    },
    "teach": "Find the circle, square, triangle, rectangle, and hexagon by name or by how many sides!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH5",
@@ -185,7 +238,7 @@
     "storyId": "shape-spot"
    },
    "teach": "Find every triangle, even the small or turned ones! Spot each shape no matter its size or which way it faces.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH10",
@@ -200,7 +253,7 @@
     "storyId": "build-shape"
    },
    "teach": "Put shapes together to make a picture! A triangle and a square make a house. Tap the missing shape to finish each one.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH11",
@@ -215,13 +268,13 @@
     "storyId": "position-words"
    },
    "teach": "On top, under, or next to? Tap the picture that matches the words!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH12",
    "grade": 0,
    "subject": "math",
-   "title": "How Many Legs?",
+   "title": "Count the Legs!",
    "standard": "CA CCSS K.CC.4",
    "activity": "Count the animal's legs and tap the number! A bird has 2, a dog has 4.",
    "parentTip": "Counting to tell how many. Count the legs on your real animals together.",
@@ -245,7 +298,7 @@
     "storyId": "make-10"
    },
    "teach": "Some animals are here. Tap how many MORE make 10!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH17",
@@ -260,7 +313,7 @@
     "storyId": "take-away"
    },
    "teach": "Some animals hop away. Count how many are LEFT!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH18",
@@ -275,7 +328,7 @@
     "storyId": "doubles"
    },
    "teach": "Double it! 2 and 2 more makes 4. Tap the total!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH19",
@@ -290,7 +343,7 @@
     "storyId": "ordinals"
    },
    "teach": "Who is first, second, third? Count from the front and tap it!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-R11",
@@ -335,7 +388,7 @@
     "storyId": "count-tens"
    },
    "teach": "Ten, twenty, thirty... tap what comes next when you count by tens!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-S15",
@@ -463,7 +516,7 @@
    "subject": "reading",
    "title": "Syllable Safari",
    "standard": "CA CCSS RF.K.2",
-   "activity": "Clap out each animal's name and count the beats. Tap how many claps!",
+   "activity": "Tap each beat of the animal's name and clap it. Then count the claps!",
    "parentTip": "Breaking words into syllables. Clap names together — RAB-BIT, EL-E-PHANT.",
    "lesson": {
     "type": "story",
@@ -545,7 +598,7 @@
     "storyId": "count-5s"
    },
    "teach": "Counting by 5s is like counting hands: 5, 10, 15, 20. It's a quick way to count.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH22",
@@ -560,7 +613,7 @@
     "storyId": "count-2s"
    },
    "teach": "Counting by 2s skips every other number: 2, 4, 6, 8. It's faster than counting by ones!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-R15",
@@ -620,7 +673,7 @@
     "storyId": "teen-numbers"
    },
    "teach": "A teen number is ten and some more! Count the ten plus the extras and tap the number.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-S9",
@@ -680,7 +733,7 @@
     "storyId": "make-5"
    },
    "teach": "Some animals are here! Tap how many more make 5.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH15",
@@ -695,7 +748,7 @@
     "storyId": "which-more"
    },
    "teach": "Two groups of animals! Tap the group with more, or with fewer.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-S12",
@@ -740,7 +793,7 @@
     "storyId": "bigger-smaller"
    },
    "teach": "Compare two things! Which is bigger, taller, or heavier? Which is smaller, shorter, or lighter?",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH7",
@@ -755,7 +808,7 @@
     "storyId": "patterns"
    },
    "teach": "Look at the color pattern and tap what comes next! Red, blue, red, blue...",
-   "live": true
+   "live": false
   },
   {
    "id": "K-MATH8",
@@ -770,7 +823,7 @@
     "storyId": "flat-or-solid"
    },
    "teach": "Some shapes are flat like a circle, some are solid like a ball. Tell which is which!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-S5",
@@ -815,7 +868,7 @@
     "storyId": "number-detective"
    },
    "teach": "Count the dots and find the number, or read the number and find the group that shows it!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-R1",
@@ -983,26 +1036,26 @@
     "questions": [
      {
       "prompt": "Blend it:  c - a - t",
-      "correct": "cat",
+      "correct": "🐱",
       "wrong": [
-       "cot",
-       "can"
+       "🐶",
+       "🐟"
       ]
      },
      {
       "prompt": "Blend it:  d - o - g",
-      "correct": "dog",
+      "correct": "🐶",
       "wrong": [
-       "dig",
-       "dot"
+       "🐱",
+       "🐷"
       ]
      },
      {
       "prompt": "Blend it:  p - i - g",
-      "correct": "pig",
+      "correct": "🐷",
       "wrong": [
-       "peg",
-       "pin"
+       "🐔",
+       "🐝"
       ]
      }
     ]
@@ -1016,13 +1069,56 @@
    "subject": "reading",
    "title": "Star Words",
    "standard": "CA CCSS RF.K.3c",
-   "activity": "These words pop up everywhere. Find the matching word!",
-   "parentTip": "Sight words are memorized by shape. Quick and snappy is best.",
+   "activity": "Read the little sentence and pick the star word that fits!",
+   "parentTip": "Star words (see, go, is, like, and…) show up in every sentence. He reads the whole sentence and picks the word that makes sense — reading, not just matching. Read it aloud together with each choice if he's stuck.",
    "lesson": {
-    "type": "story",
-    "storyId": "sight-words"
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "I ___ the 🐶.",
+      "correct": "see",
+      "wrong": [
+       "go"
+      ]
+     },
+     {
+      "prompt": "We ___ to the 🚜.",
+      "correct": "go",
+      "wrong": [
+       "is"
+      ]
+     },
+     {
+      "prompt": "The 🐔 ___ here.",
+      "correct": "is",
+      "wrong": [
+       "and"
+      ]
+     },
+     {
+      "prompt": "I ___ my 🐰.",
+      "correct": "like",
+      "wrong": [
+       "to"
+      ]
+     },
+     {
+      "prompt": "The 🐷 ___ the 🐮 play.",
+      "correct": "and",
+      "wrong": [
+       "is"
+      ]
+     },
+     {
+      "prompt": "This snack is ___ me.",
+      "correct": "for",
+      "wrong": [
+       "up"
+      ]
+     }
+    ]
    },
-   "teach": "Star words are ones we see a lot, like 'the' and 'is'. We just remember them by sight.",
+   "teach": "Star words like see, go, is, like, and 'and' pop up in every sentence. Read the whole sentence and pick the word that makes it make sense.",
    "live": true
   },
   {
@@ -1171,6 +1267,215 @@
    "live": true
   },
   {
+   "id": "K-W4",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Write 1 to 5!",
+   "standard": "CA CCSS K.CC.3",
+   "activity": "Write the numbers! Trace each one with your finger.",
+   "parentTip": "He's great with numbers — now he writes them. Say the number as he traces it.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the number!",
+    "items": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ]
+   },
+   "teach": "Write the numbers! Trace each one with your finger.",
+   "live": true
+  },
+  {
+   "id": "K-W5",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Write 6 to 10!",
+   "standard": "CA CCSS K.CC.3",
+   "activity": "Write the bigger numbers! Trace each one with your finger.",
+   "parentTip": "Writing numbers cements what he already counts. Zero is a nice round loop.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the number!",
+    "items": [
+     "6",
+     "7",
+     "8",
+     "9",
+     "0"
+    ]
+   },
+   "teach": "Write the bigger numbers! Trace each one with your finger.",
+   "live": true
+  },
+  {
+   "id": "K-W6",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Letters G to L",
+   "standard": "CA CCSS L.K.1a",
+   "activity": "More capital letters! Trace each one with your finger.",
+   "parentTip": "A few letters at a time. Trace slowly; neatness comes with practice.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the letter!",
+    "items": [
+     "G",
+     "H",
+     "I",
+     "J",
+     "K",
+     "L"
+    ]
+   },
+   "teach": "More capital letters! Trace each one with your finger.",
+   "live": true
+  },
+  {
+   "id": "K-W7",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Letters M to R",
+   "standard": "CA CCSS L.K.1a",
+   "activity": "Keep going through the alphabet! Trace each letter.",
+   "parentTip": "He's building the whole alphabet now. Cheer each finished letter.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the letter!",
+    "items": [
+     "M",
+     "N",
+     "O",
+     "P",
+     "Q",
+     "R"
+    ]
+   },
+   "teach": "Keep going through the alphabet! Trace each letter.",
+   "live": true
+  },
+  {
+   "id": "K-W8",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Letters S to Z",
+   "standard": "CA CCSS L.K.1a",
+   "activity": "The last letters of the alphabet! Trace each one.",
+   "parentTip": "Finishing the alphabet is a big deal — make it a celebration.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the letter!",
+    "items": [
+     "S",
+     "T",
+     "U",
+     "V",
+     "W",
+     "X",
+     "Y",
+     "Z"
+    ]
+   },
+   "teach": "The last letters of the alphabet! Trace each one.",
+   "live": true
+  },
+  {
+   "id": "K-W9",
+   "grade": 0,
+   "subject": "writing",
+   "title": "Write Mama's Name",
+   "standard": "CA CCSS L.K.1a",
+   "activity": "Write a name you love! Trace each letter of PAIGE.",
+   "parentTip": "Writing a family name is meaningful practice. Say each letter with him: P-A-I-G-E.",
+   "lesson": {
+    "type": "trace",
+    "prompt": "Trace the letter!",
+    "items": [
+     "P",
+     "A",
+     "I",
+     "G",
+     "E"
+    ]
+   },
+   "teach": "Write a name you love! Trace each letter of PAIGE.",
+   "live": true
+  },
+  {
+   "id": "K-NUM1",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count the Critters",
+   "standard": "CA CCSS K.CC.4",
+   "activity": "Count the animals, then type how many!",
+   "parentTip": "He has to actually count and type the number — no guessing from choices.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "count",
+    "rounds": 5,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Counting means saying one number for each thing. Point to each animal: 1, 2, 3... The last number is how many!",
+   "live": true
+  },
+  {
+   "id": "K-NUM2",
+   "grade": 0,
+   "subject": "math",
+   "title": "How Many in All?",
+   "standard": "CA CCSS K.OA.1",
+   "activity": "Put both groups together, count them ALL, and type it!",
+   "parentTip": "Adding as 'put together and count all,' then producing the number.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "add",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "To add, put both groups together and count them ALL. 2 chicks and 2 more chicks — count all of them: 4!",
+   "live": true
+  },
+  {
+   "id": "K-NUM3",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count by 2s",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Count the pairs 2 at a time, then type how many!",
+   "parentTip": "Real pairs make the 'skip' visible; typing the total can't be guessed.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "skipTwos",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Things come in pairs — 2 at a time, like shoes. Count the pairs: 2, 4, 6. That's counting by 2s!",
+   "live": true
+  },
+  {
+   "id": "K-NUM4",
+   "grade": 0,
+   "subject": "math",
+   "title": "Count by 5s",
+   "standard": "CA CCSS K.CC.1",
+   "activity": "Each hand is 5 fingers. Count by 5s and type it!",
+   "parentTip": "Hands give him a built-in group of 5; he skip-counts and types the total.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "skipFives",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "One hand has 5 fingers. Count hands by 5s: 5, 10, 15. Each new hand adds 5 more!",
+   "live": true
+  },
+  {
    "id": "K-M1",
    "grade": 0,
    "subject": "math",
@@ -1257,13 +1562,13 @@
     ]
    },
    "teach": "Numbers have an order too. Line them up from 0 to 10!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-M5",
    "grade": 0,
    "subject": "math",
-   "title": "More or Less",
+   "title": "Who Has More?",
    "standard": "CA CCSS K.CC.4-6",
    "activity": "What comes next when we count? Which number is more or less? Tap it!",
    "parentTip": "Connect to snacks: 'who has more?' and count up together.",
@@ -1564,7 +1869,7 @@
    "id": "K-S4",
    "grade": 0,
    "subject": "science",
-   "title": "Weather Detective",
+   "title": "Weather Watch",
    "standard": "CA NGSS K-ESS2-1",
    "activity": "Look at the weather and name it: sunny, rainy, cloudy, snowy, windy, or stormy. Find it by name or by what it does!",
    "parentTip": "Observing and describing weather. Look out the window together and name today's weather.",
@@ -1609,7 +1914,7 @@
    "id": "K-SS3",
    "grade": 0,
    "subject": "life",
-   "title": "Holidays",
+   "title": "Party on the Farm!",
    "standard": "CA HSS K.1",
    "activity": "What does Thanksgiving celebrate? What about MLK Day? Match each holiday to what it means!",
    "parentTip": "Knowing what major holidays celebrate. Connect each to your own family traditions.",
@@ -1647,7 +1952,7 @@
     "type": "faceMatch"
    },
    "teach": "Drag each face to the feeling it shows. A new mix of feelings every time!",
-   "live": true
+   "live": false
   },
   {
    "id": "K-L2",
@@ -1671,13 +1976,13 @@
     ]
    },
    "teach": "The week has 7 days in order: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday.",
-   "live": true
+   "live": false
   },
   {
    "id": "K-L3",
    "grade": 0,
    "subject": "life",
-   "title": "Be a Helper",
+   "title": "Farm Helpers",
    "standard": "CA SEL / Self-help",
    "activity": "Good helpers make the farm run. Tap the helpful choice!",
    "parentTip": "Talk about real jobs he could pick afterward, his choice.",
@@ -1687,26 +1992,17 @@
      {
       "prompt": "A good helper job is...",
       "correct": "Feeding the animals",
-      "wrong": [
-       "Breaking toys",
-       "Hiding shoes"
-      ]
+      "wrong": []
      },
      {
       "prompt": "If you spill something, you...",
       "correct": "Help clean it up",
-      "wrong": [
-       "Run away",
-       "Blame the dog"
-      ]
+      "wrong": []
      },
      {
       "prompt": "A kind helper word is...",
       "correct": "Please",
-      "wrong": [
-       "No way",
-       "Mine"
-      ]
+      "wrong": []
      }
     ]
    },
@@ -1751,7 +2047,7 @@
     ]
    },
    "teach": "Long vowels say their own name, like the A in CAKE. Short vowels are quick, like the a in CAT. Listen for the name!",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-R2",
@@ -1791,7 +2087,7 @@
     ]
    },
    "teach": "Some letters team up to make ONE sound: SH says shhh, CH says choo-choo, TH says this. Two letters, one sound.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-R3",
@@ -1805,7 +2101,7 @@
     "type": "quiz",
     "questions": [
      {
-      "prompt": "Which spells  SAID?",
+      "prompt": "She ___ hello to me.",
       "correct": "said",
       "wrong": [
        "sed",
@@ -1813,25 +2109,25 @@
       ]
      },
      {
-      "prompt": "Which spells  THEY?",
-      "correct": "they",
+      "prompt": "___ are my good friends.",
+      "correct": "They",
       "wrong": [
-       "thay",
-       "tey"
+       "Thay",
+       "Tey"
       ]
      },
      {
-      "prompt": "Which spells  WHAT?",
-      "correct": "what",
+      "prompt": "___ is your name?",
+      "correct": "What",
       "wrong": [
-       "wut",
-       "whut"
+       "Wut",
+       "Whut"
       ]
      }
     ]
    },
    "teach": "Some words we just KNOW by sight, like 'said' and 'the'. You don't sound them out, you just remember them.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-R4",
@@ -1846,32 +2142,31 @@
     "questions": [
      {
       "prompt": "'The hen is red.'  What color is the hen?",
-      "correct": "Red",
+      "correct": "🔴",
       "wrong": [
-       "Blue",
-       "Green"
+       "🔵",
+       "🟢"
       ]
      },
      {
-      "prompt": "'A pig can run.'  What can the pig do?",
-      "correct": "Run",
+      "prompt": "'A pig can run.'  Can the pig run?",
+      "correct": "Yes",
       "wrong": [
-       "Fly",
-       "Swim"
+       "No"
       ]
      },
      {
       "prompt": "'I see two cows.'  How many cows?",
-      "correct": "Two",
+      "correct": "2",
       "wrong": [
-       "One",
-       "Ten"
+       "1",
+       "10"
       ]
      }
     ]
    },
    "teach": "Good readers stop and think. Read the sentence, then answer what happened in it.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-R5",
@@ -1904,7 +2199,7 @@
     ]
    },
    "teach": "Asking words: WHO is a person, WHERE is a place, WHEN is a time, WHY is a reason.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-R6",
@@ -1936,7 +2231,7 @@
     ]
    },
    "teach": "The main idea is what the story is MOSTLY about. Ask yourself: what's the big thing here?",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-R7",
@@ -1976,7 +2271,7 @@
     ]
    },
    "teach": "In a blend you hear each letter, but they slide together fast, like S+T in STOP or B+L in BLUE.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-W1",
@@ -1997,7 +2292,7 @@
     ]
    },
    "teach": "A sentence has a naming part (who) and an action part (does what). It starts with a capital and ends with a period.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-W2",
@@ -2037,7 +2332,7 @@
     ]
    },
    "teach": "A FACT is true for everyone. An OPINION is what someone feels, like 'I think ice cream is best'.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-W3",
@@ -2058,7 +2353,7 @@
     ]
    },
    "teach": "Stories go in order: first, next, then, last. Put the parts in the order they happened.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M1",
@@ -2098,7 +2393,7 @@
     ]
    },
    "teach": "Numbers keep going past 100! After 119 comes 120. Keep counting up and don't stop at 100.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M2",
@@ -2126,7 +2421,7 @@
     ]
    },
    "teach": "Adding puts groups together to get MORE. 8 + 5 means start at 8 and count up 5 more.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M3",
@@ -2148,13 +2443,13 @@
       "answer": 9
      },
      {
-      "prompt": "20 - 10 = ?",
-      "answer": 10
+      "prompt": "18 - 6 = ?",
+      "answer": 12
      }
     ]
    },
    "teach": "Subtracting means taking AWAY. 14 − 6 means start at 14 and count back 6.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M4",
@@ -2169,7 +2464,7 @@
     "storyId": "word-problems"
    },
    "teach": "Word problems tell a little story with numbers. Read it, find the numbers, then decide to add or take away.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M5",
@@ -2197,7 +2492,7 @@
     ]
    },
    "teach": "A two-digit number has tens and ones. In 34, the 3 means 3 tens (30) and the 4 means 4 ones.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M6",
@@ -2234,7 +2529,7 @@
     ]
    },
    "teach": "The > sign is like a hungry mouth that eats the BIGGER number. 54 > 45.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M7",
@@ -2248,12 +2543,12 @@
     "type": "numberPad",
     "problems": [
      {
-      "prompt": "A pencil is 5 paperclips long. How many clips?",
+      "prompt": "How long is the pencil? Count the clips!",
       "answer": 5
      },
      {
-      "prompt": "A carrot is 4 clips, a worm is 2 clips. How many longer is the carrot?",
-      "answer": 2
+      "prompt": "A carrot is 4 clips, a worm is 1 clip. How many longer is the carrot?",
+      "answer": 3
      },
      {
       "prompt": "3 clips + 3 clips of length = ? clips",
@@ -2262,7 +2557,7 @@
     ]
    },
    "teach": "To measure length, line up units end to end, like paperclips, and count how many fit.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M8",
@@ -2302,7 +2597,7 @@
     ]
    },
    "teach": "On a clock the SHORT hand shows the hour, the LONG hand shows minutes. Long hand on 12 means o'clock!",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M9",
@@ -2330,7 +2625,7 @@
     ]
    },
    "teach": "Tally marks count by ones: one line for each thing. The 5th mark crosses the group so you can count by 5s.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-M10",
@@ -2369,7 +2664,7 @@
     ]
    },
    "teach": "Halves are 2 EQUAL parts. Fourths are 4 EQUAL parts. Equal means all the same size.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-S1",
@@ -2409,7 +2704,7 @@
     ]
    },
    "teach": "We need LIGHT to see. SOUND happens when something shakes, or vibrates, like a drum or a guitar string.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-S2",
@@ -2442,7 +2737,7 @@
     ]
    },
    "teach": "Every part has a job! Roots drink water, leaves catch sunlight, wings help birds fly, ears help us hear.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-S3",
@@ -2482,7 +2777,7 @@
     ]
    },
    "teach": "The sun rises in the morning and sets at night. The moon and stars come out at night. It repeats every day.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-L1",
@@ -2502,7 +2797,7 @@
     ]
    },
    "teach": "A date has a day, a month, and a year. A calendar helps us find what day today is.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-L2",
@@ -2535,7 +2830,7 @@
     ]
    },
    "teach": "A penny is 1¢, a nickel is 5¢, a dime is 10¢, a quarter is 25¢. Coins are worth different amounts.",
-   "live": true
+   "live": false
   },
   {
    "id": "G1-L3",
@@ -2575,6 +2870,3203 @@
     ]
    },
    "teach": "When big feelings come, we can pause and breathe slow. Breathe in like smelling a flower, out like blowing a candle.",
+   "live": false
+  },
+  {
+   "id": "ST-M1",
+   "grade": 1,
+   "subject": "math",
+   "title": "Big Apple Add-Up",
+   "standard": "Stretch · CCSS K.OA / 1.OA",
+   "activity": "Bigger groups now! Put them together and count them all.",
+   "parentTip": "Same idea as Add to 5, just larger. Counting on from the bigger group is the next step.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "add",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Bigger groups now! Put them together and count them all.",
+   "live": true
+  },
+  {
+   "id": "ST-M2",
+   "grade": 1,
+   "subject": "math",
+   "title": "Ten Fish, Some Swim Off",
+   "standard": "Stretch · CCSS K.OA / 1.OA",
+   "activity": "Bigger numbers. Some go away — count what's left!",
+   "parentTip": "Start from 10 and count back. Fingers help: put some down, count what's up.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "takeAway",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Bigger numbers. Some go away — count what's left!",
+   "live": true
+  },
+  {
+   "id": "ST-M3",
+   "grade": 1,
+   "subject": "math",
+   "title": "Which Number Hid?",
+   "standard": "Stretch · CCSS K.CC",
+   "activity": "Numbers go in order. Tap the one that's missing!",
+   "parentTip": "Count out loud together to hear which number was skipped.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "7, 8, __, 10",
+      "correct": "9",
+      "wrong": [
+       "6",
+       "11"
+      ]
+     },
+     {
+      "prompt": "3, 4, 5, __",
+      "correct": "6",
+      "wrong": [
+       "7",
+       "2"
+      ]
+     },
+     {
+      "prompt": "12, 13, __, 15",
+      "correct": "14",
+      "wrong": [
+       "11",
+       "16"
+      ]
+     },
+     {
+      "prompt": "17, 18, __, 20",
+      "correct": "19",
+      "wrong": [
+       "16",
+       "21"
+      ]
+     }
+    ]
+   },
+   "teach": "Numbers go in order. Tap the one that's missing!",
+   "live": true
+  },
+  {
+   "id": "ST-M4",
+   "grade": 1,
+   "subject": "math",
+   "title": "Twin Bunnies",
+   "standard": "Stretch · CCSS 1.OA",
+   "activity": "Two groups the SAME size. Count them all!",
+   "parentTip": "Doubles are easy to remember and make bigger adding faster: 4 and 4 is 8.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "doubles",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Two groups the SAME size. Count them all!",
+   "live": true
+  },
+  {
+   "id": "ST-M5",
+   "grade": 1,
+   "subject": "math",
+   "title": "Fill the Nest",
+   "standard": "Stretch · CCSS K.OA / 1.OA",
+   "activity": "The nest holds 10 eggs. Count the EMPTY spots to fill it!",
+   "parentTip": "Ten spots, some have a chick. He counts the empty boxes — the amount needed to make ten. Concrete counting, no mental math.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "makeTen",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "The nest holds 10 eggs. Count the EMPTY spots to fill it!",
+   "live": true
+  },
+  {
+   "id": "ST-M6",
+   "grade": 1,
+   "subject": "math",
+   "title": "Three Little Groups",
+   "standard": "Stretch · CCSS 1.OA",
+   "activity": "Three little groups. Put them together and count all!",
+   "parentTip": "Adding three numbers is a first-grade step. Count every object, group by group.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "addThree",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Three little groups. Put them together and count all!",
+   "live": true
+  },
+  {
+   "id": "ST-R1",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Read Along with Leo",
+   "standard": "Stretch · CCSS RF.1 / RL.1",
+   "activity": "Read the little sentence, then answer about it!",
+   "parentTip": "He reads one short sentence and answers who or what. That's real comprehension.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "The cat is big. Who is big?",
+      "correct": "🐱",
+      "wrong": [
+       "🐶",
+       "☀️"
+      ]
+     },
+     {
+      "prompt": "A dog can run. What can run?",
+      "correct": "🐶",
+      "wrong": [
+       "🐱",
+       "🐦"
+      ]
+     },
+     {
+      "prompt": "The sun is hot. What is hot?",
+      "correct": "☀️",
+      "wrong": [
+       "❄️",
+       "🐶"
+      ]
+     },
+     {
+      "prompt": "I see a red bug. What color is it?",
+      "correct": "🔴",
+      "wrong": [
+       "🔵",
+       "🟢"
+      ]
+     }
+    ]
+   },
+   "teach": "Read the little sentence, then answer about it!",
+   "live": true
+  },
+  {
+   "id": "ST-R2",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Finish the Story",
+   "standard": "Stretch · CCSS RF.1",
+   "activity": "Pick the word that makes the sentence make sense!",
+   "parentTip": "Read the whole sentence with each choice and hear which one sounds right.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "I ___ the dog.",
+      "correct": "👀 see",
+      "wrong": [
+       "☀️ sun",
+       "🪑 sit"
+      ]
+     },
+     {
+      "prompt": "We ___ to the park.",
+      "correct": "🚶 go",
+      "wrong": [
+       "🎁 got",
+       "🍬 gum"
+      ]
+     },
+     {
+      "prompt": "The bird can ___.",
+      "correct": "🕊️ fly",
+      "wrong": [
+       "🔧 fix",
+       "🎉 fun"
+      ]
+     },
+     {
+      "prompt": "I ___ a big cake.",
+      "correct": "👍 like",
+      "wrong": [
+       "🏞️ lake",
+       "👄 lip"
+      ]
+     }
+    ]
+   },
+   "teach": "Pick the word that makes the sentence make sense!",
+   "live": true
+  },
+  {
+   "id": "WU-M1",
+   "grade": 1,
+   "subject": "math",
+   "title": "Add to 5",
+   "standard": "Warm-Up · CCSS K.OA",
+   "activity": "Put the two groups together and count them ALL!",
+   "parentTip": "Point to every object and count from one — that's what adding is.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "add",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Put the two groups together and count them ALL!",
+   "live": true
+  },
+  {
+   "id": "WU-M2",
+   "grade": 1,
+   "subject": "math",
+   "title": "Take Away to 5",
+   "standard": "Warm-Up · CCSS K.OA",
+   "activity": "Some go away. Count the ones that are LEFT!",
+   "parentTip": "Use snacks: start with a few, eat one, count what's left. That's subtracting.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "takeAway",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Some go away. Count the ones that are LEFT!",
+   "live": true
+  },
+  {
+   "id": "WU-M3",
+   "grade": 1,
+   "subject": "math",
+   "title": "Teen Numbers",
+   "standard": "Warm-Up · CCSS K.NBT",
+   "activity": "A teen number is 10 and some more. Count them all!",
+   "parentTip": "Ten and 3 more is 13. Seeing the ten first makes the big numbers easy.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "teen",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "A teen number is 10 and some more. Count them all!",
+   "live": true
+  },
+  {
+   "id": "WU-M4",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count to 10",
+   "standard": "Warm-Up · CCSS K.CC",
+   "activity": "Point to each one and count. How many in all?",
+   "parentTip": "Touch one object per number word, all the way to ten.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "count",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Point to each one and count. How many in all?",
+   "live": true
+  },
+  {
+   "id": "WU-M5",
+   "grade": 1,
+   "subject": "math",
+   "title": "Animal Add-Up!",
+   "standard": "Warm-Up · CCSS K.OA",
+   "activity": "More animals come! Put them together and count them all.",
+   "parentTip": "Act it out with his toy animals: a few here, a few more, count them all.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "add",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "More animals come! Put them together and count them all.",
+   "live": true
+  },
+  {
+   "id": "WU-M6",
+   "grade": 1,
+   "subject": "math",
+   "title": "Ducks Swim Away!",
+   "standard": "Warm-Up · CCSS K.OA",
+   "activity": "Some animals leave! Count the ones that are LEFT.",
+   "parentTip": "Line up his animals, walk a few away, count who stays.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "takeAway",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Some animals leave! Count the ones that are LEFT.",
+   "live": true
+  },
+  {
+   "id": "WU-R1",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Blend It",
+   "standard": "Warm-Up · CCSS RF.K.2",
+   "activity": "Say each sound, then push them together into a word!",
+   "parentTip": "Stretch it slow — c...a...t — then fast: cat! That's blending.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Blend it:  c - a - t",
+      "correct": "🐱",
+      "wrong": [
+       "🐶",
+       "🐟"
+      ]
+     },
+     {
+      "prompt": "Blend it:  d - o - g",
+      "correct": "🐶",
+      "wrong": [
+       "🐱",
+       "🐷"
+      ]
+     },
+     {
+      "prompt": "Blend it:  p - i - g",
+      "correct": "🐷",
+      "wrong": [
+       "🐔",
+       "🐝"
+      ]
+     },
+     {
+      "prompt": "Blend it:  s - u - n",
+      "correct": "☀️",
+      "wrong": [
+       "🌙",
+       "⭐️"
+      ]
+     }
+    ]
+   },
+   "teach": "Say each sound, then push them together into a word!",
+   "live": true
+  },
+  {
+   "id": "WU-R2",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Beginning Sounds",
+   "standard": "Warm-Up · CCSS RF.K.3",
+   "activity": "Every word starts with a sound. Tap the letter it starts with!",
+   "parentTip": "Say the word slowly and stretch the first sound: mmmoon starts with m.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "🐶 Dog starts with...",
+      "correct": "d",
+      "wrong": [
+       "b",
+       "m"
+      ]
+     },
+     {
+      "prompt": "🐱 Cat starts with...",
+      "correct": "c",
+      "wrong": [
+       "s",
+       "t"
+      ]
+     },
+     {
+      "prompt": "🌙 Moon starts with...",
+      "correct": "m",
+      "wrong": [
+       "n",
+       "w"
+      ]
+     },
+     {
+      "prompt": "🐷 Pig starts with...",
+      "correct": "p",
+      "wrong": [
+       "b",
+       "d"
+      ]
+     }
+    ]
+   },
+   "teach": "Every word starts with a sound. Tap the letter it starts with!",
+   "live": true
+  },
+  {
+   "id": "WU-R3",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Rhyme Time",
+   "standard": "Warm-Up · CCSS RF.K.2",
+   "activity": "Rhyming words end the same. Tap the one that rhymes!",
+   "parentTip": "Cat, hat, bat all end in -at. Make silly rhymes together.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which word rhymes with CAT?  (…at)",
+      "correct": "hat",
+      "wrong": [
+       "dog"
+      ]
+     },
+     {
+      "prompt": "Which word rhymes with DOG?  (…og)",
+      "correct": "log",
+      "wrong": [
+       "cat"
+      ]
+     },
+     {
+      "prompt": "Which word rhymes with SUN?  (…un)",
+      "correct": "bun",
+      "wrong": [
+       "dog"
+      ]
+     },
+     {
+      "prompt": "Which word rhymes with PIG?  (…ig)",
+      "correct": "wig",
+      "wrong": [
+       "cup"
+      ]
+     }
+    ]
+   },
+   "teach": "Rhyming words end the same. Tap the one that rhymes!",
+   "live": true
+  },
+  {
+   "id": "TK-M1",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tap and Count to 3",
+   "standard": "CA PLF Math",
+   "activity": "Point and count each one: 1, 2, 3. Tap all 3 chicks!",
+   "parentTip": "Touch one object per number word — that one-to-one touch is the whole skill.",
+   "lesson": {
+    "type": "count",
+    "target": 3,
+    "symbol": "🐤",
+    "prompt": "Tap all 3 chicks!"
+   },
+   "teach": "Point and count each one: 1, 2, 3. Tap all 3 chicks!",
+   "live": true
+  },
+  {
+   "id": "TK-M2",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tap and Count to 5",
+   "standard": "CA PLF Math",
+   "activity": "Count each star as you tap it: 1, 2, 3, 4, 5!",
+   "parentTip": "Counting on fingers or real toys makes this stick.",
+   "lesson": {
+    "type": "count",
+    "target": 5,
+    "symbol": "⭐️",
+    "prompt": "Tap all 5 stars!"
+   },
+   "teach": "Count each star as you tap it: 1, 2, 3, 4, 5!",
+   "live": true
+  },
+  {
+   "id": "TK-M3",
+   "grade": 1,
+   "subject": "math",
+   "title": "How Many Chicks?",
+   "standard": "CA PLF Math",
+   "activity": "Count the animals, then tap the number that says how many.",
+   "parentTip": "The LAST number he counts is the answer — that's cardinality.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "count",
+    "rounds": 5,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Count the animals, then tap the number that says how many.",
+   "live": true
+  },
+  {
+   "id": "TK-M4",
+   "grade": 1,
+   "subject": "math",
+   "title": "Bigger or Smaller",
+   "standard": "CA PLF Math",
+   "activity": "One is big, one is little. Tap the BIGGER one!",
+   "parentTip": "Compare real things around the house — the bigger cup, the smaller spoon.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which animal is BIGGER?",
+      "correct": "🐘",
+      "wrong": [
+       "🐭"
+      ]
+     },
+     {
+      "prompt": "Which one is BIGGER?",
+      "correct": "🐋",
+      "wrong": [
+       "🐟"
+      ]
+     },
+     {
+      "prompt": "Which one is BIGGER?",
+      "correct": "🐻",
+      "wrong": [
+       "🐿️"
+      ]
+     },
+     {
+      "prompt": "Which one is SMALLER?",
+      "correct": "🐜",
+      "wrong": [
+       "🐴"
+      ]
+     }
+    ]
+   },
+   "teach": "One is big, one is little. Tap the BIGGER one!",
+   "live": true
+  },
+  {
+   "id": "TK-M5",
+   "grade": 1,
+   "subject": "math",
+   "title": "What Comes Next?",
+   "standard": "CA PLF Math",
+   "activity": "Patterns repeat! See the pattern, then tap what comes next.",
+   "parentTip": "Make patterns with blocks or snacks: red, blue, red, blue...",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "🔴 🔵 🔴 🔵 ... what's next?",
+      "correct": "🔴",
+      "wrong": [
+       "🔵"
+      ]
+     },
+     {
+      "prompt": "⭐️ 🌙 ⭐️ 🌙 ... what's next?",
+      "correct": "⭐️",
+      "wrong": [
+       "🌙"
+      ]
+     },
+     {
+      "prompt": "🐶 🐱 🐶 🐱 ... what's next?",
+      "correct": "🐶",
+      "wrong": [
+       "🐱"
+      ]
+     },
+     {
+      "prompt": "🍎 🍌 🍎 🍌 ... what's next?",
+      "correct": "🍎",
+      "wrong": [
+       "🍌"
+      ]
+     }
+    ]
+   },
+   "teach": "Patterns repeat! See the pattern, then tap what comes next.",
+   "live": false
+  },
+  {
+   "id": "TK-M6",
+   "grade": 1,
+   "subject": "math",
+   "title": "Find the Shape",
+   "standard": "CA PLF Math",
+   "activity": "Shapes have names. Tap the one that matches!",
+   "parentTip": "Hunt for circles and squares around the house together.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which one is a circle?",
+      "correct": "🔵",
+      "wrong": [
+       "🟦",
+       "🔺"
+      ]
+     },
+     {
+      "prompt": "Which one is a square?",
+      "correct": "🟦",
+      "wrong": [
+       "🔵",
+       "🔺"
+      ]
+     },
+     {
+      "prompt": "Which one is a triangle?",
+      "correct": "🔺",
+      "wrong": [
+       "🔵",
+       "🟦"
+      ]
+     }
+    ]
+   },
+   "teach": "Shapes have names. Tap the one that matches!",
+   "live": true
+  },
+  {
+   "id": "TK-C1",
+   "grade": 1,
+   "subject": "math",
+   "title": "Colors",
+   "standard": "CA PLF Math",
+   "activity": "Each color has a name. Tap the right color!",
+   "parentTip": "Name colors of his toys and clothes through the day.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which one is RED?",
+      "correct": "🔴",
+      "wrong": [
+       "🔵",
+       "🟢"
+      ]
+     },
+     {
+      "prompt": "Which one is BLUE?",
+      "correct": "🔵",
+      "wrong": [
+       "🔴",
+       "🟡"
+      ]
+     },
+     {
+      "prompt": "Which one is GREEN?",
+      "correct": "🟢",
+      "wrong": [
+       "🔴",
+       "🔵"
+      ]
+     },
+     {
+      "prompt": "Which one is YELLOW?",
+      "correct": "🟡",
+      "wrong": [
+       "🟢",
+       "🔴"
+      ]
+     }
+    ]
+   },
+   "teach": "Each color has a name. Tap the right color!",
+   "live": true
+  },
+  {
+   "id": "TK-R1",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Big and Little Letters",
+   "standard": "CA PLF Language",
+   "activity": "Every BIG letter has a little partner. Match them up!",
+   "parentTip": "B and b are partners, A and a are partners. Spot pairs on signs together.",
+   "lesson": {
+    "type": "match",
+    "prompt": "Match the big letter to its little partner.",
+    "pairs": [
+     {
+      "left": "B",
+      "right": "b"
+     },
+     {
+      "left": "A",
+      "right": "a"
+     },
+     {
+      "left": "S",
+      "right": "s"
+     },
+     {
+      "left": "M",
+      "right": "m"
+     }
+    ]
+   },
+   "teach": "Every BIG letter has a little partner. Match them up!",
+   "live": true
+  },
+  {
+   "id": "TK-R2",
+   "grade": 1,
+   "subject": "reading",
+   "title": "First Sounds",
+   "standard": "CA PLF Language",
+   "activity": "Every word starts with a sound. Tap the first letter!",
+   "parentTip": "Say the word slowly and stretch the first sound: mmmoon.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "🐶 Dog starts with...",
+      "correct": "D",
+      "wrong": [
+       "B",
+       "M"
+      ]
+     },
+     {
+      "prompt": "🐱 Cat starts with...",
+      "correct": "C",
+      "wrong": [
+       "T",
+       "S"
+      ]
+     },
+     {
+      "prompt": "🐻 Bear starts with...",
+      "correct": "B",
+      "wrong": [
+       "D",
+       "P"
+      ]
+     },
+     {
+      "prompt": "🐷 Pig starts with...",
+      "correct": "P",
+      "wrong": [
+       "B",
+       "G"
+      ]
+     }
+    ]
+   },
+   "teach": "Every word starts with a sound. Tap the first letter!",
+   "live": true
+  },
+  {
+   "id": "TK-R3",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Rhyme Time",
+   "standard": "CA PLF Language",
+   "activity": "Rhyming words sound the same at the end. Tap the one that rhymes!",
+   "parentTip": "Sing rhyming songs — the ear for rhyme comes before reading.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which word rhymes with CAT?  (…at)",
+      "correct": "hat",
+      "wrong": [
+       "dog"
+      ]
+     },
+     {
+      "prompt": "Which word rhymes with DOG?  (…og)",
+      "correct": "log",
+      "wrong": [
+       "fish"
+      ]
+     },
+     {
+      "prompt": "Which word rhymes with BALL?  (…all)",
+      "correct": "wall",
+      "wrong": [
+       "pig"
+      ]
+     },
+     {
+      "prompt": "Which word rhymes with BEE?  (…ee)",
+      "correct": "tree",
+      "wrong": [
+       "cup"
+      ]
+     }
+    ]
+   },
+   "teach": "Rhyming words sound the same at the end. Tap the one that rhymes!",
+   "live": true
+  },
+  {
+   "id": "TK-S1",
+   "grade": 1,
+   "subject": "science",
+   "title": "Which Animal?",
+   "standard": "CA PLF Science",
+   "activity": "You know your animals! Tap the one it asks for.",
+   "parentTip": "Let him be the expert — he can name more than you'd think.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which one is a dog?",
+      "correct": "🐶",
+      "wrong": [
+       "🐱",
+       "🐰"
+      ]
+     },
+     {
+      "prompt": "Which one is a fish?",
+      "correct": "🐟",
+      "wrong": [
+       "🐦",
+       "🐸"
+      ]
+     },
+     {
+      "prompt": "Which one is a cow?",
+      "correct": "🐮",
+      "wrong": [
+       "🐷",
+       "🐔"
+      ]
+     },
+     {
+      "prompt": "Which one is a bird?",
+      "correct": "🐦",
+      "wrong": [
+       "🐝",
+       "🐢"
+      ]
+     }
+    ]
+   },
+   "teach": "You know your animals! Tap the one it asks for.",
+   "live": true
+  },
+  {
+   "id": "TK-S2",
+   "grade": 1,
+   "subject": "science",
+   "title": "Where Do They Live?",
+   "standard": "CA PLF Science",
+   "activity": "Every animal has a home. Match each animal to where it lives!",
+   "parentTip": "Talk about where your farm animals sleep and live.",
+   "lesson": {
+    "type": "match",
+    "prompt": "Match the animal to its home.",
+    "pairs": [
+     {
+      "left": "🐦",
+      "right": "🪺 nest"
+     },
+     {
+      "left": "🐟",
+      "right": "🌊 water"
+     },
+     {
+      "left": "🐝",
+      "right": "🍯 hive"
+     },
+     {
+      "left": "🐶",
+      "right": "🏠 house"
+     }
+    ]
+   },
+   "teach": "Every animal has a home. Match each animal to where it lives!",
+   "live": true
+  },
+  {
+   "id": "TK-S3",
+   "grade": 1,
+   "subject": "science",
+   "title": "Baby Animals",
+   "standard": "CA PLF Science",
+   "activity": "Baby animals have special names. Tap the right one!",
+   "parentTip": "A puppy, a kitten, a calf, a chick — name the babies on the farm.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A baby dog 🐕 is a...",
+      "correct": "🐶 puppy",
+      "wrong": [
+       "🐱 kitten",
+       "🐮 calf"
+      ]
+     },
+     {
+      "prompt": "A baby cat 🐈 is a...",
+      "correct": "🐱 kitten",
+      "wrong": [
+       "🐶 puppy",
+       "🐣 chick"
+      ]
+     },
+     {
+      "prompt": "A baby cow 🐄 is a...",
+      "correct": "🐮 calf",
+      "wrong": [
+       "🐰 bunny",
+       "🐶 puppy"
+      ]
+     },
+     {
+      "prompt": "A baby hen 🐔 is a...",
+      "correct": "🐣 chick",
+      "wrong": [
+       "🐱 kitten",
+       "🐮 calf"
+      ]
+     }
+    ]
+   },
+   "teach": "Baby animals have special names. Tap the right one!",
+   "live": true
+  },
+  {
+   "id": "TK-L1",
+   "grade": 1,
+   "subject": "life",
+   "title": "Happy or Sad?",
+   "standard": "CA PLF Social-Emotional",
+   "activity": "Faces show feelings. Just two faces — tap the feeling!",
+   "parentTip": "Reading faces is hard for him, so this keeps it to two very different faces and one clear feeling. Make the face yourself as you name it: big smile for happy, frown for sad.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which face is happy?",
+      "correct": "😀",
+      "wrong": [
+       "😢"
+      ]
+     },
+     {
+      "prompt": "Which face is sad?",
+      "correct": "😢",
+      "wrong": [
+       "😀"
+      ]
+     },
+     {
+      "prompt": "Which face is happy?",
+      "correct": "😀",
+      "wrong": [
+       "😠"
+      ]
+     },
+     {
+      "prompt": "Which face is mad?",
+      "correct": "😠",
+      "wrong": [
+       "😀"
+      ]
+     },
+     {
+      "prompt": "Which face is sad?",
+      "correct": "😢",
+      "wrong": [
+       "😀"
+      ]
+     }
+    ]
+   },
+   "teach": "Faces show feelings. Just two faces — tap the feeling!",
+   "live": true
+  },
+  {
+   "id": "BR-M1",
+   "grade": 1,
+   "subject": "math",
+   "title": "One More Hops In",
+   "standard": "Bridge · CCSS K.CC / 1.OA",
+   "activity": "One more hops in! Count them all and type how many.",
+   "parentTip": "One more is just the next counting number. 6, then one more is 7. Count up by one.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "oneMore",
+    "rounds": 5,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "One MORE means the very next number. 6 and one more is 7. Count them all and type how many.",
+   "live": true
+  },
+  {
+   "id": "BR-M2",
+   "grade": 1,
+   "subject": "math",
+   "title": "One Hops Away",
+   "standard": "Bridge · CCSS K.CC / 1.OA",
+   "activity": "One goes away. Count what's LEFT and type it.",
+   "parentTip": "One less is the number right before it. 7, one less is 6. Count back by one.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "oneLess",
+    "rounds": 5,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "One LESS means the number right before. 7 and one goes away leaves 6. Count what's left.",
+   "live": true
+  },
+  {
+   "id": "BR-M3",
+   "grade": 1,
+   "subject": "math",
+   "title": "Double the Herd",
+   "standard": "Bridge · CCSS 1.OA.6",
+   "activity": "Two groups the SAME size. Count them all!",
+   "parentTip": "Doubles are the easiest facts to memorize and they make bigger adding fast: 7 and 7 is 14.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "doubles",
+    "rounds": 5,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Doubles are two groups the SAME size. 7 and 7 is 14. Learn these and big adding gets easy!",
+   "live": true
+  },
+  {
+   "id": "BR-M4",
+   "grade": 1,
+   "subject": "math",
+   "title": "Ten and Some More",
+   "standard": "Bridge · CCSS 1.NBT.2",
+   "activity": "A teen number is a full ten and some more. Count them all!",
+   "parentTip": "See the ten first, then count on the extras: ten and 4 more is 14. This is how teen numbers work.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "teen",
+    "rounds": 5,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "A teen number is a full ten and some more. See the ten, then count on the extras: ten and 4 is 14.",
+   "live": true
+  },
+  {
+   "id": "BR-M5",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count On, Cowboy!",
+   "standard": "Bridge · CCSS 1.OA.5",
+   "activity": "Start big, then count up a few more. Where do you land?",
+   "parentTip": "Instead of counting from one, start at the big number and count on: start at 12, count 13, 14, 15. Faster and first-grade smart.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "countOn",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Counting on is a smart shortcut: start at the BIG number and count up the little one. Start at 12, count 13, 14, 15.",
+   "live": true
+  },
+  {
+   "id": "BR-M6",
+   "grade": 1,
+   "subject": "math",
+   "title": "Fill the Ten",
+   "standard": "Bridge · CCSS 1.OA.6",
+   "activity": "The tank holds 10 fish. Count the empty ⬜ spots to fill it!",
+   "parentTip": "Ten spots, some already have a fish. He counts the empty boxes — that's how many MORE make ten. Concrete, no mental math.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "makeTen",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "To make ten, fill every spot. Count the EMPTY boxes — that's how many more you need to reach ten.",
+   "live": true
+  },
+  {
+   "id": "BR-M7",
+   "grade": 1,
+   "subject": "math",
+   "title": "Big Barn Add-Up",
+   "standard": "Bridge · CCSS 1.OA.6",
+   "activity": "Bigger groups that cross ten. Put them together and count all!",
+   "parentTip": "Same as Add to 10, just past ten now. He can make a ten first, or just count them all.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "add",
+    "rounds": 5,
+    "boost": 2,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Adding past ten works the same way: put both groups together and count them all, right across ten.",
+   "live": true
+  },
+  {
+   "id": "BR-M8",
+   "grade": 1,
+   "subject": "math",
+   "title": "Big Take-Away",
+   "standard": "Bridge · CCSS 1.OA.6",
+   "activity": "Bigger numbers now. Some go away — count what's left!",
+   "parentTip": "Start at the big number and count back, or count up from the small one. Either way works.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "takeAway",
+    "rounds": 5,
+    "boost": 2,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Taking away from a bigger number: start at the number and count back, or count up from the smaller one.",
+   "live": true
+  },
+  {
+   "id": "BR-M9",
+   "grade": 1,
+   "subject": "math",
+   "title": "Ten More, Ten Less",
+   "standard": "Bridge · CCSS 1.NBT.5",
+   "activity": "Ten more or ten less just changes the tens. Type the new number!",
+   "parentTip": "Ten more than 25 is 35 — only the tens digit goes up by one. Ten less goes down by one ten.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "tenMoreLess",
+    "rounds": 5,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Ten more or ten less only changes the TENS. Ten more than 25 is 35. Ten less than 30 is 20.",
+   "live": true
+  },
+  {
+   "id": "FR-M1",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count by Tens",
+   "standard": "Readiness · CCSS 1.NBT.1",
+   "activity": "Count by tens: 10, 20, 30… Type the next number!",
+   "parentTip": "Counting by tens is the fast way to count big groups. Only the tens digit changes.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "skipTens",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Counting by tens jumps ten each time: 10, 20, 30, 40. Only the first digit changes.",
+   "live": true
+  },
+  {
+   "id": "FR-M2",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count by Fives",
+   "standard": "Readiness · CCSS 1.NBT.1",
+   "activity": "Count by fives: 5, 10, 15… Type the next number!",
+   "parentTip": "Counting by fives is like counting hands. Great for telling time later.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "skipFives",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Counting by fives goes 5, 10, 15, 20 — like counting fingers on each hand.",
+   "live": true
+  },
+  {
+   "id": "FR-M3",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count by Twos",
+   "standard": "Readiness · CCSS 1.NBT.1",
+   "activity": "Count by twos: 2, 4, 6… Type the next number!",
+   "parentTip": "Counting by twos skips every other number. Count socks or shoes in twos.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "skipTwos",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Counting by twos skips every other number: 2, 4, 6, 8. Count in pairs.",
+   "live": true
+  },
+  {
+   "id": "FR-M4",
+   "grade": 1,
+   "subject": "math",
+   "title": "Doubles Plus One",
+   "standard": "Readiness · CCSS 1.OA.6",
+   "activity": "Almost a double! Do the double, then add one more.",
+   "parentTip": "6 + 7 is just 6 + 6 and one more. Knowing doubles makes these easy.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "doublesPlusOne",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "A near-double is a double plus one. 6 + 7 is 6 + 6 (that's 12) and one more makes 13.",
+   "live": true
+  },
+  {
+   "id": "FR-M5",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tens and Ones",
+   "standard": "Readiness · CCSS 1.NBT.2",
+   "activity": "A whole ten (or two!) and some more. Type how many in all.",
+   "parentTip": "20 and 3 more is 23. See the tens first, then count on the extra ones.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "tensAndOnes",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "See the tens first, then add the ones. 20 and 3 more is 23. Two tens and three.",
+   "live": true
+  },
+  {
+   "id": "FR-M6",
+   "grade": 1,
+   "subject": "math",
+   "title": "How Many More?",
+   "standard": "Readiness · CCSS 1.OA.1",
+   "activity": "Two groups. Count how many MORE the bigger group has!",
+   "parentTip": "Line them up and see the extra. Comparing is a kind of subtracting.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "howManyMore",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "To find how many MORE, match them up and count the extras the bigger group has.",
+   "live": true
+  },
+  {
+   "id": "FR-M7",
+   "grade": 1,
+   "subject": "math",
+   "title": "Barn Story",
+   "standard": "Readiness · CCSS 1.OA.1",
+   "activity": "A little story on the farm. Read it, then type the answer!",
+   "parentTip": "Some come, some go. Act it out with his toy animals if he likes.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "6 🐮 in the barn. 3 more come in. How many now?",
+      "answer": 9
+     },
+     {
+      "prompt": "10 🐔 pecking. 4 go outside. How many left?",
+      "answer": 6
+     },
+     {
+      "prompt": "5 🐑 here and 7 🐑 there. How many sheep?",
+      "answer": 12
+     },
+     {
+      "prompt": "8 🐷 by the trough. 2 run to the mud. How many left?",
+      "answer": 6
+     }
+    ]
+   },
+   "teach": "A story problem hides numbers in words. Find the numbers, then add if more come or take away if some go.",
+   "live": true
+  },
+  {
+   "id": "FR-M8",
+   "grade": 1,
+   "subject": "math",
+   "title": "Pond Story",
+   "standard": "Readiness · CCSS 1.OA.1",
+   "activity": "More animal stories! Read it, then type how many.",
+   "parentTip": "Pull out the numbers and decide: are we adding more, or taking some away?",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "9 🦆 on the pond. 5 fly away. How many left?",
+      "answer": 4
+     },
+     {
+      "prompt": "7 🐴 in the field and 6 more come. How many?",
+      "answer": 13
+     },
+     {
+      "prompt": "12 🐝 at the hive. 4 fly off. How many left?",
+      "answer": 8
+     },
+     {
+      "prompt": "3 🐰, then 4 🐰, then 2 🐰. How many rabbits?",
+      "answer": 9
+     }
+    ]
+   },
+   "teach": "Read the animal story, find the two numbers, and decide: are we putting together or taking away?",
+   "live": true
+  },
+  {
+   "id": "FR-M9",
+   "grade": 1,
+   "subject": "math",
+   "title": "Make a Ten!",
+   "standard": "Readiness · CCSS 1.OA.6",
+   "activity": "Fill up to ten first, then add the rest. Type the total!",
+   "parentTip": "9 + 3: give 1 to the 9 to make 10, then 2 more is 12. A big first-grade trick.",
+   "lesson": {
+    "type": "numberPad",
+    "problems": [
+     {
+      "prompt": "9 + 3  (make 10 first!)",
+      "answer": 12
+     },
+     {
+      "prompt": "8 + 4  (make 10 first!)",
+      "answer": 12
+     },
+     {
+      "prompt": "9 + 5  (make 10 first!)",
+      "answer": 14
+     },
+     {
+      "prompt": "8 + 5  (make 10 first!)",
+      "answer": 13
+     }
+    ]
+   },
+   "teach": "Make a ten first! For 9 + 3, move 1 over to make 10, then 2 more is 12. Tens are easy to add on.",
+   "live": true
+  },
+  {
+   "id": "FR-M10",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count On Past Ten",
+   "standard": "Readiness · CCSS 1.OA.5",
+   "activity": "Start at the big number and count up a few more!",
+   "parentTip": "Don't start from one. Start at 16 and count 17, 18, 19.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "countOn",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Start at the big number and count on the small one: 16, then 17, 18, 19. No need to start at one.",
+   "live": true
+  },
+  {
+   "id": "FR-M11",
+   "grade": 1,
+   "subject": "math",
+   "title": "The Number Before",
+   "standard": "Readiness · CCSS 1.NBT.1",
+   "activity": "Which number comes right BEFORE? Type it!",
+   "parentTip": "The number before is one less. Before 13 is 12. Count backward one step.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "numberBefore",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "The number before is one less — the one you say just before it when counting. Before 13 is 12.",
+   "live": true
+  },
+  {
+   "id": "FR-M12",
+   "grade": 1,
+   "subject": "math",
+   "title": "Count the Pennies",
+   "standard": "Readiness · CCSS 1.MD / Money",
+   "activity": "Each penny is 1 cent. Count them and type the cents!",
+   "parentTip": "A penny is worth 1¢, so counting pennies is just counting. Real coins make it click.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "pennies",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "A penny is worth 1 cent, so the number of pennies IS the number of cents. Count them up!",
+   "live": true
+  },
+  {
+   "id": "FR-M13",
+   "grade": 1,
+   "subject": "math",
+   "title": "Which Is More?",
+   "standard": "Readiness · CCSS 1.NBT.3",
+   "activity": "Which number is bigger (or smaller)? Tap it!",
+   "parentTip": "Bigger numbers are farther along when you count. 14 comes after 9, so it's more.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which is MORE?",
+      "correct": "14",
+      "wrong": [
+       "9"
+      ]
+     },
+     {
+      "prompt": "Which is LESS?",
+      "correct": "8",
+      "wrong": [
+       "12"
+      ]
+     },
+     {
+      "prompt": "Which is MORE?",
+      "correct": "17",
+      "wrong": [
+       "11"
+      ]
+     },
+     {
+      "prompt": "Which is LESS?",
+      "correct": "6",
+      "wrong": [
+       "10"
+      ]
+     }
+    ]
+   },
+   "teach": "The bigger number is the one you reach later when counting. 14 is more than 9.",
+   "live": true
+  },
+  {
+   "id": "FR-M14",
+   "grade": 1,
+   "subject": "math",
+   "title": "Turn-Around Trick",
+   "standard": "Readiness · CCSS 1.OA.3",
+   "activity": "8 + 3 or 3 + 8? Same answer! Flip it and see.",
+   "parentTip": "Adding in either order gives the same total. Every fact he knows is secretly two facts, so this halves what there is to learn.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "turnAround",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Adding in either order gives the same answer. If you know 8 + 3, you already know 3 + 8.",
+   "live": true
+  },
+  {
+   "id": "FR-M15",
+   "grade": 1,
+   "subject": "math",
+   "title": "Find the Missing Number",
+   "standard": "Readiness · CCSS 1.OA.8",
+   "activity": "A number is hiding! Which one finishes it?",
+   "parentTip": "Ask how many more to get there. Counting up from the smaller number is the easiest way in, and it is the same move as make-a-ten.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "missingAddend",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Something is missing! Count up from the number you have to the number you want, and that jump is the answer.",
+   "live": true
+  },
+  {
+   "id": "FR-M16",
+   "grade": 1,
+   "subject": "math",
+   "title": "Add Three Numbers",
+   "standard": "Readiness · CCSS 1.OA.2",
+   "activity": "Three numbers at once! Add two, then the last one.",
+   "parentTip": "Look for a pair that makes ten first. 4 + 6 + 3 is much easier as 10 + 3, and spotting the pair is the real skill.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "addThree",
+    "rounds": 4,
+    "boost": 1,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Three numbers: look for two that make ten first, add those, then add what is left.",
+   "live": true
+  },
+  {
+   "id": "FR-M17",
+   "grade": 1,
+   "subject": "math",
+   "title": "Tens and Ones Add-Up",
+   "standard": "Readiness · CCSS 1.NBT.4",
+   "activity": "Bigger numbers, easy way. Add the ones, or jump by tens.",
+   "parentTip": "23 + 5 only changes the ones. 40 + 30 only changes the tens. The other part stays exactly where it was.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "addTensOnes",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Adding ones only changes the ones. Adding tens only changes the tens. The other part stays the same.",
+   "live": true
+  },
+  {
+   "id": "FR-M18",
+   "grade": 1,
+   "subject": "math",
+   "title": "Think Adding!",
+   "standard": "Readiness · CCSS 1.OA.4",
+   "activity": "Taking away? Think adding instead. Same puzzle, easier way.",
+   "parentTip": "10 - 8 is really eight and how many more make ten. Turning subtraction into addition lets him use facts he already owns instead of counting backward.",
+   "lesson": {
+    "type": "numberGen",
+    "game": "thinkAddition",
+    "rounds": 4,
+    "boost": 0,
+    "stages": "act-out 1-3 then number pad 1-3"
+   },
+   "teach": "Instead of counting backward, ask what plus this makes the big number. 12 - 9 is 9 and 3 more.",
+   "live": true
+  },
+  {
+   "id": "FR-R1",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Read the Word",
+   "standard": "Readiness · CCSS RF.1.3",
+   "activity": "Read the word, then tap the picture it means!",
+   "parentTip": "Sound it out slowly, then tap what it means. Picture answers, so he truly reads the word.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Read it:  cat",
+      "correct": "🐱",
+      "wrong": [
+       "🐶"
+      ]
+     },
+     {
+      "prompt": "Read it:  dog",
+      "correct": "🐶",
+      "wrong": [
+       "🐷"
+      ]
+     },
+     {
+      "prompt": "Read it:  pig",
+      "correct": "🐷",
+      "wrong": [
+       "🐔"
+      ]
+     },
+     {
+      "prompt": "Read it:  sun",
+      "correct": "☀️",
+      "wrong": [
+       "🌙"
+      ]
+     },
+     {
+      "prompt": "Read it:  bug",
+      "correct": "🐛",
+      "wrong": [
+       "🐟"
+      ]
+     }
+    ]
+   },
+   "teach": "Read the word by blending its sounds, then pick the picture it means. c-a-t is cat! 🐱",
+   "live": true
+  },
+  {
+   "id": "FR-R2",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Read the Word 2",
+   "standard": "Readiness · CCSS RF.1.3",
+   "activity": "More words to read! Tap the picture it means.",
+   "parentTip": "Three-sound words like hen and fox. Stretch the sounds, then blend.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Read it:  hen",
+      "correct": "🐔",
+      "wrong": [
+       "🐮"
+      ]
+     },
+     {
+      "prompt": "Read it:  fox",
+      "correct": "🦊",
+      "wrong": [
+       "🐭"
+      ]
+     },
+     {
+      "prompt": "Read it:  bee",
+      "correct": "🐝",
+      "wrong": [
+       "🐛"
+      ]
+     },
+     {
+      "prompt": "Read it:  cow",
+      "correct": "🐮",
+      "wrong": [
+       "🐷"
+      ]
+     },
+     {
+      "prompt": "Read it:  fish",
+      "correct": "🐟",
+      "wrong": [
+       "🐤"
+      ]
+     }
+    ]
+   },
+   "teach": "Stretch each sound and blend: h-e-n is hen. Then tap the picture that matches.",
+   "live": true
+  },
+  {
+   "id": "FR-R3",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Word Families",
+   "standard": "Readiness · CCSS RF.1.3",
+   "activity": "Words in a family end the same. Tap the one that fits!",
+   "parentTip": "The -ig family: pig, wig, dig. Same ending, just a new first sound.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which word is in the  -ig  family?",
+      "correct": "wig",
+      "wrong": [
+       "cup"
+      ]
+     },
+     {
+      "prompt": "Which word is in the  -op  family?",
+      "correct": "mop",
+      "wrong": [
+       "cat"
+      ]
+     },
+     {
+      "prompt": "Which word is in the  -ed  family?",
+      "correct": "bed",
+      "wrong": [
+       "dog"
+      ]
+     },
+     {
+      "prompt": "Which word is in the  -un  family?",
+      "correct": "bun",
+      "wrong": [
+       "pig"
+      ]
+     }
+    ]
+   },
+   "teach": "Words in a family share an ending, like -ig: pig, wig, dig. Find the one that ends the same.",
+   "live": true
+  },
+  {
+   "id": "FR-R4",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Blends",
+   "standard": "Readiness · CCSS RF.1.2",
+   "activity": "Two letters slide together at the start. Tap the picture!",
+   "parentTip": "In a blend you hear both letters fast: st in star, fr in frog, sn in snake.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Starts with  st  (like star)",
+      "correct": "⭐️",
+      "wrong": [
+       "🐟"
+      ]
+     },
+     {
+      "prompt": "Starts with  fr  (like frog)",
+      "correct": "🐸",
+      "wrong": [
+       "🐶"
+      ]
+     },
+     {
+      "prompt": "Starts with  sn  (like snake)",
+      "correct": "🐍",
+      "wrong": [
+       "🐰"
+      ]
+     },
+     {
+      "prompt": "Starts with  tr  (like tree)",
+      "correct": "🌳",
+      "wrong": [
+       "🐝"
+      ]
+     }
+    ]
+   },
+   "teach": "A blend slides two sounds together: st in star, fr in frog. You hear both letters, fast.",
+   "live": true
+  },
+  {
+   "id": "FR-R5",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Team Sounds",
+   "standard": "Readiness · CCSS RF.1.3",
+   "activity": "Two letters make ONE sound. Tap the picture!",
+   "parentTip": "sh, ch, and th each make one sound from two letters: ship, chick, thumb.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Starts with  sh  (like ship)",
+      "correct": "🚢",
+      "wrong": [
+       "🐟"
+      ]
+     },
+     {
+      "prompt": "Starts with  ch  (like chick)",
+      "correct": "🐤",
+      "wrong": [
+       "🐛"
+      ]
+     },
+     {
+      "prompt": "Starts with  sh  (like sheep)",
+      "correct": "🐑",
+      "wrong": [
+       "🐮"
+      ]
+     },
+     {
+      "prompt": "Starts with  th  (like thumb)",
+      "correct": "👍",
+      "wrong": [
+       "🐶"
+      ]
+     }
+    ]
+   },
+   "teach": "Team sounds make ONE sound from two letters: sh in ship, ch in chick, th in thumb.",
+   "live": true
+  },
+  {
+   "id": "FR-R6",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Finish the Sentence",
+   "standard": "Readiness · CCSS RF.1.4",
+   "activity": "Pick the word that makes the sentence make sense!",
+   "parentTip": "Read the whole sentence with each choice and hear which one sounds right.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "The 🐟 can ___.",
+      "correct": "🏊 swim",
+      "wrong": [
+       "🦘 jump"
+      ]
+     },
+     {
+      "prompt": "The 🐦 can ___.",
+      "correct": "🕊️ fly",
+      "wrong": [
+       "🪑 sit"
+      ]
+     },
+     {
+      "prompt": "I ___ my mom.",
+      "correct": "❤️ love",
+      "wrong": [
+       "🏃 run"
+      ]
+     },
+     {
+      "prompt": "We ___ to the barn.",
+      "correct": "🚶 go",
+      "wrong": [
+       "☀️ sun"
+      ]
+     }
+    ]
+   },
+   "teach": "Read the whole sentence and pick the word that makes sense. A fish can swim, not jump.",
+   "live": true
+  },
+  {
+   "id": "FR-R7",
+   "grade": 1,
+   "subject": "reading",
+   "title": "Yes or No?",
+   "standard": "Readiness · CCSS RF.1.4",
+   "activity": "Read the little sentence, then answer yes or no!",
+   "parentTip": "He reads for meaning and answers yes or no — no word to copy, so he has to understand it.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "The 🐶 runs fast.  Can the dog run?",
+      "correct": "Yes",
+      "wrong": [
+       "No"
+      ]
+     },
+     {
+      "prompt": "The 🐱 is asleep.  Is the cat awake?",
+      "correct": "No",
+      "wrong": [
+       "Yes"
+      ]
+     },
+     {
+      "prompt": "The 🐮 eats grass.  Does the cow eat grass?",
+      "correct": "Yes",
+      "wrong": [
+       "No"
+      ]
+     },
+     {
+      "prompt": "The 🐟 can swim.  Can the fish fly?",
+      "correct": "No",
+      "wrong": [
+       "Yes"
+      ]
+     }
+    ]
+   },
+   "teach": "Read the little sentence carefully, then decide yes or no. You have to understand it, not just match a word.",
+   "live": true
+  },
+  {
+   "id": "FR-S1",
+   "grade": 1,
+   "subject": "science",
+   "title": "Alive or Not?",
+   "standard": "Readiness · CA NGSS 1-LS",
+   "activity": "Living things grow and eat. Tap the one that is ALIVE!",
+   "parentTip": "Living things need food, water, and air and can grow. Rocks and toys do not.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "Which one is ALIVE?",
+      "correct": "🐶",
+      "wrong": [
+       "🪨"
+      ]
+     },
+     {
+      "prompt": "Which one is ALIVE?",
+      "correct": "🌷",
+      "wrong": [
+       "🚗"
+      ]
+     },
+     {
+      "prompt": "Which one is ALIVE?",
+      "correct": "🐟",
+      "wrong": [
+       "⚽️"
+      ]
+     },
+     {
+      "prompt": "Which one is ALIVE?",
+      "correct": "🐝",
+      "wrong": [
+       "🧱"
+      ]
+     }
+    ]
+   },
+   "teach": "Living things eat, grow, and need water and air — like animals and plants. Rocks and toys do not.",
+   "live": true
+  },
+  {
+   "id": "FR-S2",
+   "grade": 1,
+   "subject": "science",
+   "title": "Animal Teams",
+   "standard": "Readiness · CA NGSS 1-LS1",
+   "activity": "Animals come in groups. Tap the group it belongs to!",
+   "parentTip": "Mammals have fur, birds have feathers, fish have fins, bugs have six legs.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A 🐶 dog is a...",
+      "correct": "mammal",
+      "wrong": [
+       "fish"
+      ]
+     },
+     {
+      "prompt": "A 🐟 that swims with fins is a...",
+      "correct": "fish",
+      "wrong": [
+       "bird"
+      ]
+     },
+     {
+      "prompt": "A 🐦 robin is a...",
+      "correct": "bird",
+      "wrong": [
+       "bug"
+      ]
+     },
+     {
+      "prompt": "A 🐝 bee is a...",
+      "correct": "bug",
+      "wrong": [
+       "fish"
+      ]
+     }
+    ]
+   },
+   "teach": "Animals come in groups: mammals have fur, birds have feathers, fish have fins, bugs have six legs.",
+   "live": true
+  },
+  {
+   "id": "FR-S3",
+   "grade": 1,
+   "subject": "science",
+   "title": "Who Eats What?",
+   "standard": "Readiness · CA NGSS K-LS1",
+   "activity": "Every animal has a favorite food. Tap what it eats!",
+   "parentTip": "Rabbits love carrots, cows eat grass, bees drink from flowers. Talk about your farm animals.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A 🐰 rabbit loves to eat...",
+      "correct": "🥕",
+      "wrong": [
+       "🦴"
+      ]
+     },
+     {
+      "prompt": "A 🐮 cow eats...",
+      "correct": "🌾",
+      "wrong": [
+       "🐟"
+      ]
+     },
+     {
+      "prompt": "A 🐝 bee drinks from...",
+      "correct": "🌷",
+      "wrong": [
+       "🪨"
+      ]
+     },
+     {
+      "prompt": "A 🐶 dog chews a...",
+      "correct": "🦴",
+      "wrong": [
+       "🌷"
+      ]
+     }
+    ]
+   },
+   "teach": "Different animals eat different foods. Rabbits love carrots, cows eat grass, bees sip from flowers.",
+   "live": true
+  },
+  {
+   "id": "FR-S4",
+   "grade": 1,
+   "subject": "science",
+   "title": "Float or Sink?",
+   "standard": "Readiness · CA NGSS Physical Science",
+   "activity": "Some things float, some sink. Tap what happens!",
+   "parentTip": "Try it in the bathtub! Heavy dense things sink, light things float.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "A heavy 🪨 rock will...",
+      "correct": "sink",
+      "wrong": [
+       "float"
+      ]
+     },
+     {
+      "prompt": "A 🦆 duck will...",
+      "correct": "float",
+      "wrong": [
+       "sink"
+      ]
+     },
+     {
+      "prompt": "A 🍃 leaf will...",
+      "correct": "float",
+      "wrong": [
+       "sink"
+      ]
+     },
+     {
+      "prompt": "A metal 🔩 will...",
+      "correct": "sink",
+      "wrong": [
+       "float"
+      ]
+     }
+    ]
+   },
+   "teach": "Heavy, dense things sink; light things float. A rock sinks, a leaf floats. Try it in the tub!",
+   "live": true
+  },
+  {
+   "id": "FR-S5",
+   "grade": 1,
+   "subject": "life",
+   "title": "Push or Pull? 2",
+   "standard": "Readiness · CA NGSS K-PS2",
+   "activity": "We move things by pushing or pulling. Tap which one!",
+   "parentTip": "A push moves something away, a pull brings it closer. Point them out around the house.",
+   "lesson": {
+    "type": "quiz",
+    "questions": [
+     {
+      "prompt": "To open a heavy door, you...",
+      "correct": "push",
+      "wrong": [
+       "eat"
+      ]
+     },
+     {
+      "prompt": "A wagon behind you, you...",
+      "correct": "pull",
+      "wrong": [
+       "sing"
+      ]
+     },
+     {
+      "prompt": "To ring a doorbell, you...",
+      "correct": "push",
+      "wrong": [
+       "read"
+      ]
+     },
+     {
+      "prompt": "A dog on a leash, you...",
+      "correct": "pull",
+      "wrong": [
+       "sleep"
+      ]
+     }
+    ]
+   },
+   "teach": "A push moves something away from you; a pull brings it toward you. Doors, wagons, swings — push or pull.",
+   "live": true
+  },
+  {
+   "id": "TW-S1",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Giraffe Neck Slide",
+   "standard": "Pre-writing · vertical stroke (CA PLF)",
+   "activity": "Slide your finger down the giraffe's neck to the leaf. Top to bottom!",
+   "parentTip": "The top-to-bottom line is the first handwriting stroke. Starting at the top matters more than being straight.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Top to bottom!",
+    "steps": [
+     {
+      "say": "Warm up: slide down the giraffe's neck to the leaf!",
+      "stroke": "down",
+      "glyph": ""
+     },
+     {
+      "say": "l is a tall line down, like the giraffe's neck!",
+      "stroke": "glyph",
+      "glyph": "l"
+     },
+     {
+      "say": "i is a short line down, then a dot on top!",
+      "stroke": "glyph",
+      "glyph": "i"
+     },
+     {
+      "say": "t is a tall line down, then cross it!",
+      "stroke": "glyph",
+      "glyph": "t"
+     },
+     {
+      "say": "Now write the whole word: lion!",
+      "stroke": "glyph",
+      "glyph": "lion"
+     }
+    ]
+   },
+   "teach": "Slide your finger down the giraffe's neck to the leaf. Top to bottom!",
+   "live": true
+  },
+  {
+   "id": "TW-S2",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Worm Walk",
+   "standard": "Pre-writing · horizontal stroke (CA PLF)",
+   "activity": "Walk the worm across to the apple. Left to right, like reading!",
+   "parentTip": "Left-to-right lines are the second stroke, and the direction we read and write in.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Left to right!",
+    "steps": [
+     {
+      "say": "Warm up: walk the worm across to the apple!",
+      "stroke": "across",
+      "glyph": ""
+     },
+     {
+      "say": "e starts with a line across, then curls round!",
+      "stroke": "glyph",
+      "glyph": "e"
+     },
+     {
+      "say": "f is a hook, a line down, then across!",
+      "stroke": "glyph",
+      "glyph": "f"
+     },
+     {
+      "say": "t is a line down, then across!",
+      "stroke": "glyph",
+      "glyph": "t"
+     },
+     {
+      "say": "Now write the whole word: hen!",
+      "stroke": "glyph",
+      "glyph": "hen"
+     }
+    ]
+   },
+   "teach": "Walk the worm across to the apple. Left to right, like reading!",
+   "live": true
+  },
+  {
+   "id": "TW-S3",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Round the Nest",
+   "standard": "Pre-writing · circle (CA PLF)",
+   "activity": "Walk the hen all the way around her nest. Start at the top and go left!",
+   "parentTip": "Starting a circle at the top and going left (counter-clockwise) is exactly how c, o, a, d and g begin.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Round and round!",
+    "steps": [
+     {
+      "say": "Warm up: walk the hen around her nest to the egg!",
+      "stroke": "circle",
+      "glyph": ""
+     },
+     {
+      "say": "c curls left from the top, like the hen!",
+      "stroke": "glyph",
+      "glyph": "c"
+     },
+     {
+      "say": "o curls all the way round!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "a curls round, then a short line down!",
+      "stroke": "glyph",
+      "glyph": "a"
+     },
+     {
+      "say": "Now write the whole word: cat!",
+      "stroke": "glyph",
+      "glyph": "cat"
+     }
+    ]
+   },
+   "teach": "Walk the hen all the way around her nest. Start at the top and go left!",
+   "live": true
+  },
+  {
+   "id": "TW-S4",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Duck Pond Wave",
+   "standard": "Pre-writing · curves (CA PLF)",
+   "activity": "Help the duck swim the waves across the pond!",
+   "parentTip": "Smooth up-and-down curves are the motion inside m, n, u and w. Slow and wavy beats fast and wobbly.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Ride the waves!",
+    "steps": [
+     {
+      "say": "Warm up: help the duck swim the waves to the lily pad!",
+      "stroke": "wave",
+      "glyph": ""
+     },
+     {
+      "say": "u is a wave: down, curve, and up!",
+      "stroke": "glyph",
+      "glyph": "u"
+     },
+     {
+      "say": "m is down, then two humps!",
+      "stroke": "glyph",
+      "glyph": "m"
+     },
+     {
+      "say": "n is down, then one hump!",
+      "stroke": "glyph",
+      "glyph": "n"
+     },
+     {
+      "say": "Now write the whole word: emu!",
+      "stroke": "glyph",
+      "glyph": "emu"
+     }
+    ]
+   },
+   "teach": "Help the duck swim the waves across the pond!",
+   "live": true
+  },
+  {
+   "id": "TW-S5",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Fence Hop",
+   "standard": "Pre-writing · diagonals (CA PLF)",
+   "activity": "The goat hops over every fence post to reach the hay!",
+   "parentTip": "Sharp up-and-down diagonals build v, w, z and the sides of A and M. Points, not curves.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Hop the fence!",
+    "steps": [
+     {
+      "say": "Warm up: the goat hops the fence posts to the hay!",
+      "stroke": "zigzag",
+      "glyph": ""
+     },
+     {
+      "say": "v is slant down, slant up!",
+      "stroke": "glyph",
+      "glyph": "v"
+     },
+     {
+      "say": "w is down, up, down, up!",
+      "stroke": "glyph",
+      "glyph": "w"
+     },
+     {
+      "say": "z is across, slant down, across!",
+      "stroke": "glyph",
+      "glyph": "z"
+     },
+     {
+      "say": "Now write the whole word: wolf!",
+      "stroke": "glyph",
+      "glyph": "wolf"
+     }
+    ]
+   },
+   "teach": "The goat hops over every fence post to reach the hay!",
+   "live": true
+  },
+  {
+   "id": "TW-S6",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Over the Barn",
+   "standard": "Pre-writing · arc (CA PLF)",
+   "activity": "The bird flies up and over the barn in one big hump!",
+   "parentTip": "One smooth hump, left to right, is the top of h, m, n and r.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Up and over!",
+    "steps": [
+     {
+      "say": "Warm up: the bluebird flies up and over the barn to the tree!",
+      "stroke": "arc",
+      "glyph": ""
+     },
+     {
+      "say": "h is a tall line, then a hump over!",
+      "stroke": "glyph",
+      "glyph": "h"
+     },
+     {
+      "say": "r is a line down, then a little hook over!",
+      "stroke": "glyph",
+      "glyph": "r"
+     },
+     {
+      "say": "b is a tall line, then a belly!",
+      "stroke": "glyph",
+      "glyph": "b"
+     },
+     {
+      "say": "Now write the whole word: bear!",
+      "stroke": "glyph",
+      "glyph": "bear"
+     }
+    ]
+   },
+   "teach": "The bird flies up and over the barn in one big hump!",
+   "live": true
+  },
+  {
+   "id": "TW-S7",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Bee Loops",
+   "standard": "Pre-writing · loops (CA PLF)",
+   "activity": "The bee loops and loops on her way to the flower!",
+   "parentTip": "Loops are the hardest pre-writing shape and the start of e and l. It's fine if they overlap.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Loop-de-loop!",
+    "steps": [
+     {
+      "say": "Warm up: the bee loops her way to the flower!",
+      "stroke": "loops",
+      "glyph": ""
+     },
+     {
+      "say": "e is a little loop: across, then curl round!",
+      "stroke": "glyph",
+      "glyph": "e"
+     },
+     {
+      "say": "l loops up tall and back down!",
+      "stroke": "glyph",
+      "glyph": "l"
+     },
+     {
+      "say": "b loops up, then round into a belly!",
+      "stroke": "glyph",
+      "glyph": "b"
+     },
+     {
+      "say": "Now write the whole word: bee!",
+      "stroke": "glyph",
+      "glyph": "bee"
+     }
+    ]
+   },
+   "teach": "The bee loops and loops on her way to the flower!",
+   "live": true
+  },
+  {
+   "id": "TW-S8",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Snail Spiral",
+   "standard": "Pre-writing · spiral (CA PLF)",
+   "activity": "Follow the snail round and round into the middle of his shell!",
+   "parentTip": "A spiral is a circle that keeps going. It builds the wrist control for small round letters.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Round and in!",
+    "steps": [
+     {
+      "say": "Warm up: follow the snail into the middle of his shell!",
+      "stroke": "spiral",
+      "glyph": ""
+     },
+     {
+      "say": "g curls round, then a tail under!",
+      "stroke": "glyph",
+      "glyph": "g"
+     },
+     {
+      "say": "s curves one way, then the other!",
+      "stroke": "glyph",
+      "glyph": "s"
+     },
+     {
+      "say": "j is a line down, a hook, and a dot!",
+      "stroke": "glyph",
+      "glyph": "j"
+     },
+     {
+      "say": "Now write the whole word: goose!",
+      "stroke": "glyph",
+      "glyph": "goose"
+     }
+    ]
+   },
+   "teach": "Follow the snail round and round into the middle of his shell!",
+   "live": true
+  },
+  {
+   "id": "TW-S9",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Chicken Crossing",
+   "standard": "Pre-writing · cross and diagonals (CA PLF)",
+   "activity": "Why did the chicken cross the road? To trace a plus sign!",
+   "parentTip": "The cross (down, then across) and the two diagonals are the strokes behind t, x, k and the capitals.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Cross it!",
+    "steps": [
+     {
+      "say": "Warm up: the chicken crosses the road: down, then across!",
+      "stroke": "cross",
+      "glyph": ""
+     },
+     {
+      "say": "t is down, then a cross!",
+      "stroke": "glyph",
+      "glyph": "t"
+     },
+     {
+      "say": "x is two slants that cross!",
+      "stroke": "glyph",
+      "glyph": "x"
+     },
+     {
+      "say": "k is a tall line, then a kick!",
+      "stroke": "glyph",
+      "glyph": "k"
+     },
+     {
+      "say": "Now write the whole word: fox!",
+      "stroke": "glyph",
+      "glyph": "fox"
+     }
+    ]
+   },
+   "teach": "Why did the chicken cross the road? To trace a plus sign!",
+   "live": true
+  },
+  {
+   "id": "TW-S10",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Pig Pen Shapes",
+   "standard": "Pre-writing · square, triangle, circle (CA PLF)",
+   "activity": "Build the pig a pen, a shark a fin, and the sheep a moon. Trace the shapes!",
+   "parentTip": "Square and triangle are the last pre-writing shapes. Corners take a stop-and-turn; cheer the corners.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Trace the shape!",
+    "steps": [
+     {
+      "say": "Warm up: build the pig a square pen!",
+      "stroke": "square",
+      "glyph": ""
+     },
+     {
+      "say": "Trace the shark's pointy fin!",
+      "stroke": "triangle",
+      "glyph": ""
+     },
+     {
+      "say": "o is a circle, like the moon!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "p is a line down under, then a belly!",
+      "stroke": "glyph",
+      "glyph": "p"
+     },
+     {
+      "say": "Now write the whole word: pig!",
+      "stroke": "glyph",
+      "glyph": "pig"
+     }
+    ]
+   },
+   "teach": "Build the pig a pen, a shark a fin, and the sheep a moon. Trace the shapes!",
+   "live": true
+  },
+  {
+   "id": "TW-L1",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Cat Curls",
+   "standard": "CA CCSS L.K.1a · lowercase c o a d g",
+   "activity": "The round letters all start like a c. Trace the first letter of each animal!",
+   "parentTip": "c, o, a, d and g all begin with the same counter-clockwise curl from the top. That's why they're grouped.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Curl like a c!",
+    "steps": [
+     {
+      "say": "c is for cat! Start at the top and curl left.",
+      "stroke": "glyph",
+      "glyph": "c"
+     },
+     {
+      "say": "o is for owl! Curl all the way round.",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "a is for ant! Curl round, then a short line down.",
+      "stroke": "glyph",
+      "glyph": "a"
+     },
+     {
+      "say": "d is for dog! Curl round, then a tall line down.",
+      "stroke": "glyph",
+      "glyph": "d"
+     },
+     {
+      "say": "g is for goat! Curl round, then a tail under.",
+      "stroke": "glyph",
+      "glyph": "g"
+     },
+     {
+      "say": "Now write the whole word: dog!",
+      "stroke": "glyph",
+      "glyph": "dog"
+     }
+    ]
+   },
+   "teach": "The round letters all start like a c. Trace the first letter of each animal!",
+   "live": true
+  },
+  {
+   "id": "TW-L2",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Lion Lines",
+   "standard": "CA CCSS L.K.1a · lowercase l i t k b h",
+   "activity": "Tall straight letters, top to bottom. Trace the first letter of each animal!",
+   "parentTip": "These all start with the top-to-bottom line from Giraffe Neck Slide. Line first, then the extra bit.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Tall and straight!",
+    "steps": [
+     {
+      "say": "l is for lion! One tall line down.",
+      "stroke": "glyph",
+      "glyph": "l"
+     },
+     {
+      "say": "i is for iguana! A short line and a dot.",
+      "stroke": "glyph",
+      "glyph": "i"
+     },
+     {
+      "say": "t is for turtle! A tall line, then cross it.",
+      "stroke": "glyph",
+      "glyph": "t"
+     },
+     {
+      "say": "b is for bear! Tall line down, then a belly.",
+      "stroke": "glyph",
+      "glyph": "b"
+     },
+     {
+      "say": "h is for horse! Tall line down, then a hump.",
+      "stroke": "glyph",
+      "glyph": "h"
+     },
+     {
+      "say": "k is for kangaroo! Tall line, then a kick.",
+      "stroke": "glyph",
+      "glyph": "k"
+     },
+     {
+      "say": "Now write the whole word: lion!",
+      "stroke": "glyph",
+      "glyph": "lion"
+     }
+    ]
+   },
+   "teach": "Tall straight letters, top to bottom. Trace the first letter of each animal!",
+   "live": true
+  },
+  {
+   "id": "TW-L3",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Monkey Humps",
+   "standard": "CA CCSS L.K.1a · lowercase m n r p u",
+   "activity": "Hump letters! Down, then up and over. Trace the first letter of each animal!",
+   "parentTip": "m, n and r are the Over the Barn hump with a line first. u is the hump upside down.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Up and over!",
+    "steps": [
+     {
+      "say": "m is for monkey! Down, hump, hump.",
+      "stroke": "glyph",
+      "glyph": "m"
+     },
+     {
+      "say": "n is for newt! Down, then one hump.",
+      "stroke": "glyph",
+      "glyph": "n"
+     },
+     {
+      "say": "r is for rabbit! Down, then a little hook.",
+      "stroke": "glyph",
+      "glyph": "r"
+     },
+     {
+      "say": "p is for pig! Down under the line, then a belly.",
+      "stroke": "glyph",
+      "glyph": "p"
+     },
+     {
+      "say": "u is for unicorn! Down, curve, and up.",
+      "stroke": "glyph",
+      "glyph": "u"
+     },
+     {
+      "say": "Now write the whole word: pig!",
+      "stroke": "glyph",
+      "glyph": "pig"
+     }
+    ]
+   },
+   "teach": "Hump letters! Down, then up and over. Trace the first letter of each animal!",
+   "live": true
+  },
+  {
+   "id": "TW-L4",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Zebra Zigzags",
+   "standard": "CA CCSS L.K.1a · lowercase v w x y z",
+   "activity": "Pointy letters made of slants! Trace the first letter of each animal!",
+   "parentTip": "These are Fence Hop diagonals. Points at the bottom, not curves.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Pointy!",
+    "steps": [
+     {
+      "say": "z is for zebra! Across, slant down, across.",
+      "stroke": "glyph",
+      "glyph": "z"
+     },
+     {
+      "say": "v is for vulture! Slant down, slant up.",
+      "stroke": "glyph",
+      "glyph": "v"
+     },
+     {
+      "say": "w is for whale! Down, up, down, up.",
+      "stroke": "glyph",
+      "glyph": "w"
+     },
+     {
+      "say": "y is for yak! Slant down, then a long slant under.",
+      "stroke": "glyph",
+      "glyph": "y"
+     },
+     {
+      "say": "x is for ox! Two slants that cross.",
+      "stroke": "glyph",
+      "glyph": "x"
+     },
+     {
+      "say": "Now write the whole word: yak!",
+      "stroke": "glyph",
+      "glyph": "yak"
+     }
+    ]
+   },
+   "teach": "Pointy letters made of slants! Trace the first letter of each animal!",
+   "live": true
+  },
+  {
+   "id": "TW-L5",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Snake Curves",
+   "standard": "CA CCSS L.K.1a · lowercase s e f j",
+   "activity": "Curvy letters that slither! Trace the first letter of each animal!",
+   "parentTip": "The wiggly ones. s is a Duck Pond Wave standing up; e is one Bee Loop.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Slither!",
+    "steps": [
+     {
+      "say": "s is for snake! Curve one way, then the other.",
+      "stroke": "glyph",
+      "glyph": "s"
+     },
+     {
+      "say": "e is for elephant! Across, then curl round.",
+      "stroke": "glyph",
+      "glyph": "e"
+     },
+     {
+      "say": "f is for fox! Hook at the top, line down, cross.",
+      "stroke": "glyph",
+      "glyph": "f"
+     },
+     {
+      "say": "j is for jellyfish! Line down, hook, and a dot.",
+      "stroke": "glyph",
+      "glyph": "j"
+     },
+     {
+      "say": "Now write the whole word: fox!",
+      "stroke": "glyph",
+      "glyph": "fox"
+     }
+    ]
+   },
+   "teach": "Curvy letters that slither! Trace the first letter of each animal!",
+   "live": true
+  },
+  {
+   "id": "TW-L6",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Big Animal Letters",
+   "standard": "CA CCSS L.K.1a · capitals",
+   "activity": "BIG letters for big animals! Trace the capital that starts each one.",
+   "parentTip": "Capitals are all top-to-bottom lines, circles and slants: the pre-writing strokes, assembled.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Big letters!",
+    "steps": [
+     {
+      "say": "L is for Lion!",
+      "stroke": "glyph",
+      "glyph": "L"
+     },
+     {
+      "say": "P is for Parrot!",
+      "stroke": "glyph",
+      "glyph": "P"
+     },
+     {
+      "say": "D is for Duck!",
+      "stroke": "glyph",
+      "glyph": "D"
+     },
+     {
+      "say": "G is for Goat!",
+      "stroke": "glyph",
+      "glyph": "G"
+     },
+     {
+      "say": "H is for Hen!",
+      "stroke": "glyph",
+      "glyph": "H"
+     },
+     {
+      "say": "C is for Cow!",
+      "stroke": "glyph",
+      "glyph": "C"
+     },
+     {
+      "say": "Now write the whole word: Cow!",
+      "stroke": "glyph",
+      "glyph": "Cow"
+     }
+    ]
+   },
+   "teach": "BIG letters for big animals! Trace the capital that starts each one.",
+   "live": true
+  },
+  {
+   "id": "TW-W1",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Write cow and pig",
+   "standard": "CA CCSS L.K.1a / W.K.2",
+   "activity": "Write two whole farm words, one letter at a time!",
+   "parentTip": "A whole word is a big step from single letters. Say each letter with him, then read the word back together.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write the word!",
+    "steps": [
+     {
+      "say": "c-o-w. Trace the c!",
+      "stroke": "glyph",
+      "glyph": "c"
+     },
+     {
+      "say": "Now the o!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "And the w. That spells cow!",
+      "stroke": "glyph",
+      "glyph": "w"
+     },
+     {
+      "say": "Now write the whole word: cow!",
+      "stroke": "glyph",
+      "glyph": "cow"
+     },
+     {
+      "say": "p-i-g. Trace the p!",
+      "stroke": "glyph",
+      "glyph": "p"
+     },
+     {
+      "say": "Now the i!",
+      "stroke": "glyph",
+      "glyph": "i"
+     },
+     {
+      "say": "And the g. That spells pig!",
+      "stroke": "glyph",
+      "glyph": "g"
+     },
+     {
+      "say": "Now write the whole word: pig!",
+      "stroke": "glyph",
+      "glyph": "pig"
+     }
+    ]
+   },
+   "teach": "Write two whole farm words, one letter at a time!",
+   "live": true
+  },
+  {
+   "id": "TW-W2",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Write duck and hen",
+   "standard": "CA CCSS L.K.1a / W.K.2",
+   "activity": "Two more farm words to write, letter by letter!",
+   "parentTip": "duck has the tricky ck ending. Two letters, one sound.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write the word!",
+    "steps": [
+     {
+      "say": "d-u-c-k. Trace the d!",
+      "stroke": "glyph",
+      "glyph": "d"
+     },
+     {
+      "say": "Now the u!",
+      "stroke": "glyph",
+      "glyph": "u"
+     },
+     {
+      "say": "Now the c!",
+      "stroke": "glyph",
+      "glyph": "c"
+     },
+     {
+      "say": "And the k. That spells duck!",
+      "stroke": "glyph",
+      "glyph": "k"
+     },
+     {
+      "say": "Now write the whole word: duck!",
+      "stroke": "glyph",
+      "glyph": "duck"
+     },
+     {
+      "say": "h-e-n. Trace the h!",
+      "stroke": "glyph",
+      "glyph": "h"
+     },
+     {
+      "say": "Now the e!",
+      "stroke": "glyph",
+      "glyph": "e"
+     },
+     {
+      "say": "And the n. That spells hen!",
+      "stroke": "glyph",
+      "glyph": "n"
+     },
+     {
+      "say": "Now write the whole word: hen!",
+      "stroke": "glyph",
+      "glyph": "hen"
+     }
+    ]
+   },
+   "teach": "Two more farm words to write, letter by letter!",
+   "live": true
+  },
+  {
+   "id": "TW-W3",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Write lion cub",
+   "standard": "CA CCSS L.K.1a / W.K.2",
+   "activity": "Write the two words that mean YOU: lion cub!",
+   "parentTip": "He calls himself a lion cub. Writing his own name for himself is the most motivating word there is.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write lion cub!",
+    "steps": [
+     {
+      "say": "l-i-o-n. Trace the l!",
+      "stroke": "glyph",
+      "glyph": "l"
+     },
+     {
+      "say": "Now the i!",
+      "stroke": "glyph",
+      "glyph": "i"
+     },
+     {
+      "say": "Now the o!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "And the n. That spells lion!",
+      "stroke": "glyph",
+      "glyph": "n"
+     },
+     {
+      "say": "Now write the whole word: lion!",
+      "stroke": "glyph",
+      "glyph": "lion"
+     },
+     {
+      "say": "c-u-b. Trace the c!",
+      "stroke": "glyph",
+      "glyph": "c"
+     },
+     {
+      "say": "Now the u!",
+      "stroke": "glyph",
+      "glyph": "u"
+     },
+     {
+      "say": "And the b. Lion cub!",
+      "stroke": "glyph",
+      "glyph": "b"
+     },
+     {
+      "say": "Now write the whole word: cub!",
+      "stroke": "glyph",
+      "glyph": "cub"
+     }
+    ]
+   },
+   "teach": "Write the two words that mean YOU: lion cub!",
+   "live": true
+  },
+  {
+   "id": "TW-W4",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Write parrot",
+   "standard": "CA CCSS L.K.1a / W.K.2",
+   "activity": "A long word for a talking bird. Write parrot, letter by letter!",
+   "parentTip": "Six letters is a real word. Notice the double r together.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write parrot!",
+    "steps": [
+     {
+      "say": "p-a-r-r-o-t. Trace the p!",
+      "stroke": "glyph",
+      "glyph": "p"
+     },
+     {
+      "say": "Now the a!",
+      "stroke": "glyph",
+      "glyph": "a"
+     },
+     {
+      "say": "Now an r!",
+      "stroke": "glyph",
+      "glyph": "r"
+     },
+     {
+      "say": "And another r!",
+      "stroke": "glyph",
+      "glyph": "r"
+     },
+     {
+      "say": "Now the o!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "And the t. That spells parrot!",
+      "stroke": "glyph",
+      "glyph": "t"
+     },
+     {
+      "say": "Now write the whole word: parrot!",
+      "stroke": "glyph",
+      "glyph": "parrot"
+     }
+    ]
+   },
+   "teach": "A long word for a talking bird. Write parrot, letter by letter!",
+   "live": true
+  },
+  {
+   "id": "TW-W5",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Write goat and dog",
+   "standard": "CA CCSS L.K.1a / W.K.2",
+   "activity": "Two more animals to write!",
+   "parentTip": "goat has a vowel team (oa). Just trace it; the reading comes later.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write the word!",
+    "steps": [
+     {
+      "say": "g-o-a-t. Trace the g!",
+      "stroke": "glyph",
+      "glyph": "g"
+     },
+     {
+      "say": "Now the o!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "Now the a!",
+      "stroke": "glyph",
+      "glyph": "a"
+     },
+     {
+      "say": "And the t. That spells goat!",
+      "stroke": "glyph",
+      "glyph": "t"
+     },
+     {
+      "say": "Now write the whole word: goat!",
+      "stroke": "glyph",
+      "glyph": "goat"
+     },
+     {
+      "say": "d-o-g. Trace the d!",
+      "stroke": "glyph",
+      "glyph": "d"
+     },
+     {
+      "say": "Now the o!",
+      "stroke": "glyph",
+      "glyph": "o"
+     },
+     {
+      "say": "And the g. That spells dog!",
+      "stroke": "glyph",
+      "glyph": "g"
+     },
+     {
+      "say": "Now write the whole word: dog!",
+      "stroke": "glyph",
+      "glyph": "dog"
+     }
+    ]
+   },
+   "teach": "Two more animals to write!",
+   "live": true
+  },
+  {
+   "id": "TW-N1",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Count and Write 1-5",
+   "standard": "CA CCSS K.CC.3",
+   "activity": "Count the animals, then write the number!",
+   "parentTip": "Writing the numeral right after counting ties the symbol to the amount.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write the number!",
+    "steps": [
+     {
+      "say": "1 lion! Write the 1.",
+      "stroke": "glyph",
+      "glyph": "1"
+     },
+     {
+      "say": "2 ducks! Write the 2.",
+      "stroke": "glyph",
+      "glyph": "2"
+     },
+     {
+      "say": "3 chicks! Write the 3.",
+      "stroke": "glyph",
+      "glyph": "3"
+     },
+     {
+      "say": "4 goats! Write the 4.",
+      "stroke": "glyph",
+      "glyph": "4"
+     },
+     {
+      "say": "5 pigs! Write the 5.",
+      "stroke": "glyph",
+      "glyph": "5"
+     }
+    ]
+   },
+   "teach": "Count the animals, then write the number!",
+   "live": true
+  },
+  {
+   "id": "TW-N2",
+   "grade": -1,
+   "subject": "writing",
+   "title": "Count and Write 6-10",
+   "standard": "CA CCSS K.CC.3",
+   "activity": "Bigger herds, bigger numbers. Write each one!",
+   "parentTip": "10 is two glyphs; he traces the 1 and then the 0.",
+   "lesson": {
+    "type": "traceScene",
+    "prompt": "Write the number!",
+    "steps": [
+     {
+      "say": "6 bees! Write the 6.",
+      "stroke": "glyph",
+      "glyph": "6"
+     },
+     {
+      "say": "7 fish! Write the 7.",
+      "stroke": "glyph",
+      "glyph": "7"
+     },
+     {
+      "say": "8 sheep! Write the 8.",
+      "stroke": "glyph",
+      "glyph": "8"
+     },
+     {
+      "say": "9 cows! Write the 9.",
+      "stroke": "glyph",
+      "glyph": "9"
+     },
+     {
+      "say": "10 hens! Write the 10.",
+      "stroke": "glyph",
+      "glyph": "10"
+     }
+    ]
+   },
+   "teach": "Bigger herds, bigger numbers. Write each one!",
    "live": true
   }
  ],
@@ -2920,226 +6412,9 @@
   "syllables": {
    "id": "syllables",
    "title": "Syllable Safari",
-   "covers": "Breaking words into syllables by clapping the beats — an early reading skill (CA CCSS RF.K.2).",
+   "covers": "Breaking words into syllables: tap each beat, clap it, then count the claps (CA CCSS RF.K.2).",
    "pages": [],
-   "questions": [
-    {
-     "visuals": [
-      "🐱"
-     ],
-     "teach": "Clap the name: CAT. Just one clap! 👏",
-     "prompts": [
-      "How many claps in 🐱 CAT?",
-      "Clap 🐱 CAT — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": true
-      },
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": false
-      },
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🐶"
-     ],
-     "teach": "DOG — one clap! 👏",
-     "prompts": [
-      "How many claps in 🐶 DOG?",
-      "Clap 🐶 DOG — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": true
-      },
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": false
-      },
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🐰"
-     ],
-     "teach": "RAB · BIT — two claps! 👏👏",
-     "prompts": [
-      "How many claps in 🐰 RABBIT?",
-      "Clap 🐰 RAB-BIT — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": true
-      },
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": false
-      },
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🦒"
-     ],
-     "teach": "GI · RAFFE — two claps! 👏👏",
-     "prompts": [
-      "How many claps in 🦒 GIRAFFE?",
-      "Clap 🦒 GI-RAFFE — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": true
-      },
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": false
-      },
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🐧"
-     ],
-     "teach": "PEN · GUIN — two claps! 👏👏",
-     "prompts": [
-      "How many claps in 🐧 PENGUIN?",
-      "Clap 🐧 PEN-GUIN — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": true
-      },
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": false
-      },
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🐘"
-     ],
-     "teach": "EL · E · PHANT — three claps! 👏👏👏",
-     "prompts": [
-      "How many claps in 🐘 ELEPHANT?",
-      "Clap 🐘 EL-E-PHANT — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": true
-      },
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": false
-      },
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🦋"
-     ],
-     "teach": "BUT · TER · FLY — three claps! 👏👏👏",
-     "prompts": [
-      "How many claps in 🦋 BUTTERFLY?",
-      "Clap 🦋 BUT-TER-FLY — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": true
-      },
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": false
-      },
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": false
-      }
-     ]
-    },
-    {
-     "visuals": [
-      "🐊"
-     ],
-     "teach": "CROC · O · DILE — three claps! 👏👏👏",
-     "prompts": [
-      "How many claps in 🐊 CROCODILE?",
-      "Clap 🐊 CROC-O-DILE — how many beats?"
-     ],
-     "choices": [
-      {
-       "emoji": "3️⃣",
-       "label": "3 claps",
-       "correct": true
-      },
-      {
-       "emoji": "2️⃣",
-       "label": "2 claps",
-       "correct": false
-      },
-      {
-       "emoji": "1️⃣",
-       "label": "1 clap",
-       "correct": false
-      }
-     ]
-    }
-   ]
+   "questions": []
   },
   "animal-groups": {
    "id": "animal-groups",
@@ -5044,6 +8319,617 @@
       {
        "emoji": "🥵",
        "label": "Hot",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "count-critters": {
+   "id": "count-critters",
+   "title": "Count the Critters",
+   "covers": "Counting how many by counting each object once, up to 10 (CA CCSS K.CC.4-5).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🐱",
+      "🐱"
+     ],
+     "teach": "Two kittens. Point to each one: 1, 2.",
+     "prompts": [
+      "How many kittens? Count them!",
+      "Count the kittens!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "2",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "1",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐶",
+      "🐶",
+      "🐶"
+     ],
+     "teach": "Point to each puppy: 1, 2, 3.",
+     "prompts": [
+      "How many puppies?",
+      "Count the puppies!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "2",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐤",
+      "🐤",
+      "🐤",
+      "🐤"
+     ],
+     "teach": "Count each chick: 1, 2, 3, 4.",
+     "prompts": [
+      "How many chicks?",
+      "Count them!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐟",
+      "🐟",
+      "🐟",
+      "🐟",
+      "🐟"
+     ],
+     "teach": "Count the fish, one by one, up to 5.",
+     "prompts": [
+      "How many fish?",
+      "Count the fish!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐝",
+      "🐝",
+      "🐝",
+      "🐝",
+      "🐝",
+      "🐝"
+     ],
+     "teach": "Count each bee: 1 all the way to 6.",
+     "prompts": [
+      "How many bees?",
+      "Count the bees!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "7",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐮",
+      "🐮",
+      "🐮",
+      "🐮",
+      "🐮",
+      "🐮",
+      "🐮"
+     ],
+     "teach": "Count the cows, one by one, to 7.",
+     "prompts": [
+      "How many cows?",
+      "Count them all!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "7",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "8",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "add-all": {
+   "id": "add-all",
+   "title": "How Many in All?",
+   "covers": "Adding by putting two groups together and counting them all, within 10 (CA CCSS K.OA.1-2).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🐤",
+      "🐤",
+      "➕",
+      "🐤",
+      "🐤"
+     ],
+     "teach": "Put them together and count them ALL: 2 and 2 makes 4.",
+     "prompts": [
+      "How many chicks in all?",
+      "Count them all together!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🐶",
+      "➕",
+      "🐶",
+      "🐶"
+     ],
+     "teach": "1 dog and 2 more dogs. Count all 3.",
+     "prompts": [
+      "How many dogs in all?",
+      "Count them!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "2",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🍎",
+      "🍎",
+      "🍎",
+      "➕",
+      "🍎",
+      "🍎"
+     ],
+     "teach": "3 apples and 2 more. Count them all to 5.",
+     "prompts": [
+      "How many apples in all?",
+      "Count them all!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "⭐",
+      "⭐",
+      "⭐",
+      "⭐",
+      "➕",
+      "⭐"
+     ],
+     "teach": "4 stars and 1 more makes 5.",
+     "prompts": [
+      "How many stars in all?",
+      "Count them!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🌸",
+      "🌸",
+      "🌸",
+      "➕",
+      "🌸",
+      "🌸",
+      "🌸"
+     ],
+     "teach": "3 and 3 more. Count them all to 6.",
+     "prompts": [
+      "How many flowers in all?",
+      "Count them all!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "7",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "count-2-shoes": {
+   "id": "count-2-shoes",
+   "title": "Count by 2s",
+   "covers": "Skip-counting by 2s using real pairs you can see and count (CA CCSS K.CC.1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "👟",
+      "👟"
+     ],
+     "teach": "One pair is 2 shoes. Count: 2.",
+     "prompts": [
+      "How many shoes?",
+      "Count them: 2!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "2",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "1",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👟",
+      "👟",
+      "👟",
+      "👟"
+     ],
+     "teach": "Two pairs. Count by 2s: 2, then 4.",
+     "prompts": [
+      "How many shoes? 2, 4...",
+      "Count the shoes!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "3",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🧦",
+      "🧦",
+      "🧦",
+      "🧦",
+      "🧦",
+      "🧦"
+     ],
+     "teach": "Three pairs of socks. Count 2, 4, 6.",
+     "prompts": [
+      "How many socks? 2, 4, 6...",
+      "Count them all!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "7",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "👟",
+      "👟",
+      "👟",
+      "👟",
+      "👟",
+      "👟",
+      "👟",
+      "👟"
+     ],
+     "teach": "Four pairs. Count 2, 4, 6, 8.",
+     "prompts": [
+      "How many shoes? 2, 4, 6, 8...",
+      "Count by 2s!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "8",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "7",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "10",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  "count-5-hands": {
+   "id": "count-5-hands",
+   "title": "Count by 5s",
+   "covers": "Skip-counting by 5s using hands — each hand is 5 fingers (CA CCSS K.CC.1).",
+   "pages": [],
+   "questions": [
+    {
+     "visuals": [
+      "🖐️"
+     ],
+     "teach": "One hand has 5 fingers. Count: 5.",
+     "prompts": [
+      "How many fingers on 1 hand?",
+      "Count: 5!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "5",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "4",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "10",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "Two hands. Count by 5s: 5, then 10.",
+     "prompts": [
+      "How many fingers? 5, 10...",
+      "How many on 2 hands?"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "10",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "6",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "15",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "Three hands. Count 5, 10, 15.",
+     "prompts": [
+      "5, 10, 15... how many?",
+      "How many fingers on 3 hands?"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "15",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "11",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "20",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "visuals": [
+      "🖐️",
+      "🖐️",
+      "🖐️",
+      "🖐️"
+     ],
+     "teach": "Four hands. Count 5, 10, 15, 20.",
+     "prompts": [
+      "How many fingers on 4 hands?",
+      "5, 10, 15, 20!"
+     ],
+     "choices": [
+      {
+       "emoji": "🔢",
+       "label": "20",
+       "correct": true
+      },
+      {
+       "emoji": "🔢",
+       "label": "16",
+       "correct": false
+      },
+      {
+       "emoji": "🔢",
+       "label": "25",
        "correct": false
       }
      ]

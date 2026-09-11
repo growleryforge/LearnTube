@@ -236,6 +236,10 @@ struct TracePlayer: View {
         tracing = false; ink = []; nextDot = 0
         hint = msg; mood = .oops
         withAnimation(.easeInOut(duration: 0.35)) { shake += 1 }
+        // Log which glyph and which stroke reset, so the grown-up view shows
+        // "L stroke 2" rather than a bare miss count.
+        let what = label.isEmpty ? "shape" : label
+        GameStats.recordMiss(prompt: "Write \(what) (stroke \(strokeIndex + 1))", tapped: msg, correct: what)
         SFX.wrong()
     }
 

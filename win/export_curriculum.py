@@ -67,7 +67,7 @@ def parse_lesson(chunk):
                 "pairs": [{"left": a, "right": b} for a, b in pairs]}
 
     if kind == "numberPad":
-        probs = re.findall(r'NumberProblem\(\s*"([^"]*)"\s*,\s*(-?\d+)\s*\)', body)
+        probs = re.findall(r'NumberProblem\(\s*"([^"]*)"\s*,\s*(-?\d+)\s*[,)]', body)
         return {"type": "numberPad",
                 "problems": [{"prompt": p, "answer": int(a)} for p, a in probs]}
 
@@ -79,6 +79,26 @@ def parse_lesson(chunk):
             qs.append({"prompt": qm.group(1), "correct": qm.group(2),
                        "wrong": re.findall(r'"((?:[^"\\]|\\.)*)"', qm.group(3))})
         return {"type": "quiz", "questions": qs}
+
+    if kind == "numberGen":
+        game = re.search(r'^\s*\(\s*\.([a-zA-Z]+)', body)
+        rounds = re.search(r'rounds:\s*(\d+)', body)
+        boost = re.search(r'boost:\s*(\d+)', body)
+        return {"type": "numberGen",
+                "game": game.group(1) if game else "",
+                "rounds": int(rounds.group(1)) if rounds else 0,
+                "boost": int(boost.group(1)) if boost else 0,
+                "stages": "act-out 1-3 then number pad 1-3"}
+
+    if kind == "traceScene":
+        prompt = re.search(r'prompt:\s*"([^"]*)"', body)
+        steps = []
+        for sm in re.finditer(r'TraceStep\(\s*"((?:[^"\\]|\\.)*)"\s*,\s*\.([a-zA-Z]+)(?:\(\s*"([^"]*)"\s*\))?', body):
+            steps.append({"say": sm.group(1), "stroke": sm.group(2),
+                          "glyph": sm.group(3) or ""})
+        return {"type": "traceScene",
+                "prompt": prompt.group(1) if prompt else "",
+                "steps": steps}
 
     if kind == "count":
         t = re.search(r'target:\s*(\d+)', body)
@@ -151,6 +171,8 @@ def main():
 
     skills = parse_skills(read("CurriculumK.swift"), 0)
     skills += parse_skills(read("Curriculum1.swift"), 1)
+    # Farm Writing Club tracing games (grade -1 / TK) live in their own file.
+    skills += parse_skills(read("CurriculumWriting.swift"), -1)
 
     # Scan EVERY Swift file for story content — it lives in several files
     # (FamilyLesson, MathLesson, Story...), so don't hard-code the list.
@@ -184,8 +206,8 @@ def main():
     print(f"lesson types    : {dict(Counter(s['lesson']['type'] for s in skills))}")
     print(f"teach notes     : {len(teach)}")
     print(f"stories         : {len(stories)}  ({sum(len(v['questions']) for v in stories.values())} questions)")
-    empty = [s['id'] for s in skills if s['lesson']['type'] in ('quiz','trace','order','match','numberPad')
-             and not any(s['lesson'].get(k) for k in ('questions','items','pairs','problems'))]
+    empty = [s['id'] for s in skills if s['lesson']['type'] in ('quiz','trace','order','match','numberPad','traceScene')
+             and not any(s['lesson'].get(k) for k in ('questions','items','pairs','problems','steps'))]
     print(f"empty payloads  : {len(empty)} {empty[:8]}")
     # Every .story skill must resolve to real content, or it's an unplayable tile.
     missing = [s['id'] for s in skills if s['lesson']['type'] == 'story'

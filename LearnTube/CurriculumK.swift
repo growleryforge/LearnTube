@@ -176,7 +176,7 @@ extension Curriculum {
         Skill(id: "K-R14", grade: 0, subject: .reading,
               title: "Syllable Safari",
               standard: "CA CCSS RF.K.2",
-              activity: "Clap out each animal's name and count the beats. Tap how many claps!",
+              activity: "Tap each beat of the animal's name and clap it. Then count the claps!",
               parentTip: "Breaking words into syllables. Clap names together — RAB-BIT, EL-E-PHANT.",
               lesson: .story(id: "syllables")),
 
