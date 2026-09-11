@@ -124,6 +124,9 @@ struct WatchView: View {
 
     private var masteryText: String {
         let c = state.completionCount(skill.id), t = state.saved.masteryThreshold
+        if let l = state.ladder(skill.id) {
+            return state.isLearned(skill.id) ? "Mastered 🏆" : "Step \(l.rung) of \(l.top) · \(l.onRung)/\(t)"
+        }
         return state.isMastered(skill.id) ? "Mastered 🏆" : "Mastery \(min(c,t))/\(t)"
     }
 
@@ -149,11 +152,12 @@ struct WatchView: View {
                 .multilineTextAlignment(.center)
             // Again!: a good game rolls straight into its next finish, which is
             // how a game gets to 3 of 3 instead of being played once and buried.
-            if state.canPlay(skill.id) && !state.isMastered(skill.id) {
+            if state.canPlay(skill.id) && !state.isLearned(skill.id) {
                 Button {
                     playAgain()
                 } label: {
-                    Label("Again!  \(min(state.mergedCount(skill.id), state.saved.masteryThreshold)) of \(state.saved.masteryThreshold) done", systemImage: "arrow.counterclockwise")
+                    let onRung = state.ladder(skill.id)?.onRung ?? min(state.mergedCount(skill.id), state.saved.masteryThreshold)
+                    Label("Again!  \(onRung) of \(state.saved.masteryThreshold) done", systemImage: "arrow.counterclockwise")
                 }
                 .buttonStyle(YTButtonStyle(background: AnyShapeStyle(Theme.green)))
             }

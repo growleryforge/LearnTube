@@ -535,7 +535,26 @@ final class AppState: ObservableObject {
         todaySkills.filter { $0.grade <= 0 && !$0.id.hasPrefix("TW-") }
     }
     /// Of those, the ones not yet mastered: one to three plays from done.
-    var finishLine: [Skill] { finishLinePool.filter { !isMastered($0.id) } }
+    var finishLine: [Skill] { finishLinePool.filter { !isLearned($0.id) } }
+
+    /// Done with this game for good: a plain game after `masteryThreshold`
+    /// clean finishes; a ladder game (generated math) only once every rung is
+    /// mastered. Ladder games are served one rung at a time (see
+    /// `currentRung`), so the feed always shows the portion he is on, and the
+    /// game stays until the whole ladder is climbed.
+    func isLearned(_ id: String) -> Bool {
+        Self.levelableSkills.contains(id) ? isRetired(id) : isMastered(id)
+    }
+
+    /// (rung, top, finishes on this rung) for a ladder game; nil otherwise.
+    func ladder(_ id: String) -> (rung: Int, top: Int, onRung: Int)? {
+        guard Self.levelableSkills.contains(id) else { return nil }
+        let top = Self.concreteSkills.contains(id) ? Self.concreteStages + Self.maxLevel : Self.maxLevel
+        let t = max(1, saved.masteryThreshold)
+        let rung = currentRung(id)
+        let onRung = rung >= top ? min(t, mergedCount(id) - (top - 1) * t) : mergedCount(id) % t
+        return (rung, top, max(0, onRung))
+    }
     var finishLineDone: Int { finishLinePool.count - finishLine.count }
     /// While more than this many are left, First Grade holds off: nothing new
     /// from grade 1 is woven into the feed, though it stays reachable below.

@@ -19,7 +19,7 @@ struct HomeFeedView: View {
         // Mastered games leave the feed entirely (Doosy, Sept 11: "I don't want
         // to serve him anything mastered"). He can still find them under
         // Mastered in the grown-up area; the kid feed is only what's left to learn.
-        let live = state.todaySkills.filter { !state.isMastered($0.id) && !state.isRetired($0.id) }
+        let live = state.todaySkills.filter { !state.isLearned($0.id) }
         // Serve the easiest games first so he opens on a win, never on a fight:
         // games he's struggled with lately sink toward the bottom of the WHOLE
         // feed, not just their grade band. (Sorting grade-first meant the two
@@ -139,7 +139,8 @@ struct HomeFeedView: View {
                                                  plays: state.mergedCount(skill.id),
                                                  masteryGoal: state.saved.masteryThreshold,
                                                  level: state.currentLevel(skill.id),
-                                                 isNew: !state.everStarted(skill.id))
+                                                 isNew: !state.everStarted(skill.id),
+                                                 ladder: state.ladder(skill.id))
                                             .onTapGesture { if !maxed { GameDifficulty.level = state.currentLevel(skill.id); GameDifficulty.rung = state.currentRung(skill.id); GameStats.begin(skill.id); watch = skill } }
                                     }
                                 }
@@ -154,7 +155,8 @@ struct HomeFeedView: View {
                                              plays: state.mergedCount(skill.id),
                                              masteryGoal: state.saved.masteryThreshold,
                                              level: state.currentLevel(skill.id),
-                                             isNew: !state.everStarted(skill.id))
+                                             isNew: !state.everStarted(skill.id),
+                                             ladder: state.ladder(skill.id))
                                         .onTapGesture { if !maxed { GameDifficulty.level = state.currentLevel(skill.id); GameDifficulty.rung = state.currentRung(skill.id); GameStats.begin(skill.id); watch = skill } }
                                 }
                             }
@@ -331,8 +333,14 @@ struct StopTile: View {
     var masteryGoal: Int = 3    // completions needed to count as mastered
     var level: Int = 1          // current difficulty level (shown when > 1)
     var isNew: Bool = false     // never opened on any device: gets a NEW badge
+    var ladder: (rung: Int, top: Int, onRung: Int)? = nil   // ladder games: which step he is on
     private var buddy: Buddy { Buddies.forSkill(skill) }
-    private var mastered: Bool { plays >= masteryGoal }
+    private var mastered: Bool { ladder == nil && plays >= masteryGoal }
+    private var masteryLabel: String {
+        if maxed { return "All done today!" }
+        if let l = ladder { return "Step \(l.rung) of \(l.top) · \(l.onRung)/\(masteryGoal)" }
+        return mastered ? "Mastered 🏆 · \(plays) plays" : "Mastery \(plays)/\(masteryGoal)"
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -386,7 +394,7 @@ struct StopTile: View {
                 HStack(spacing: 5) {
                     Image(systemName: mastered ? "star.fill" : "star")
                         .font(.system(size: 12)).foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
-                    Text(maxed ? "All done today!" : (mastered ? "Mastered 🏆 · \(plays) plays" : "Mastery \(plays)/\(masteryGoal)"))
+                    Text(masteryLabel)
                         .font(.system(size: 12, weight: .heavy, design: .rounded))
                         .foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
                 }
