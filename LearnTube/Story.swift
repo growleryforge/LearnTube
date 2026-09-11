@@ -65,6 +65,8 @@ enum StoryActivity {
     case wordProblem(WordProblemLevel)               // visual add/subtract story problems within 20
     case pushPull(PushPullLevel)                     // push or pull (forces)
     case syllables(SyllableLevel)                    // tap the beats, count the claps
+    case letterSounds(LetterSoundLevel)              // hear the sound, tap the letter
+    case spell(SpellLevel)                           // build a word letter by letter
     case needs(NeedsLevel)                           // what living things need
     case position(PosLevel)                          // position words: on top / under / next to
     case sight(SightLevel)                           // high-frequency sight words
@@ -150,6 +152,8 @@ enum Stories {
         case needsLesson.id: return needsLesson
         case positionLesson.id: return positionLesson
         case sightLesson.id: return sightLesson
+        case letterSoundsLesson.id: return letterSoundsLesson
+        case wordBuilderLesson.id: return wordBuilderLesson
         case numberOrderLesson.id: return numberOrderLesson
         case animalHomesLesson.id: return animalHomesLesson
         case legsLesson.id: return legsLesson

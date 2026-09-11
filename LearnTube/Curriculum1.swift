@@ -72,6 +72,13 @@ extension Curriculum {
                          correct: "How plants grow", wrong: ["Going to the moon", "Baking a cake"])
               ])),
 
+        Skill(id: "G1-R8", grade: 1, subject: .reading,
+              title: "Word Builder",
+              standard: "CA CCSS RF.K.3 / L.1.2",
+              activity: "Build farm words like pig and hen one letter at a time. Leo reads each one back!",
+              parentTip: "Say each sound as he taps it, then blend them: p, i, g, pig.",
+              lesson: .story(id: "word-builder")),
+
         Skill(id: "G1-R7", grade: 1, subject: .reading,
               title: "Blends",
               standard: "CA CCSS RF.1.2b",

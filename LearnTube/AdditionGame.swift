@@ -1095,13 +1095,18 @@ enum LetterGen {
         LetterInfo(id: "F", lower: "f", sound: "/f/", word: "fish",    emoji: "🐟"),
         LetterInfo(id: "G", lower: "g", sound: "/g/", word: "goat",    emoji: "🐐"),
         LetterInfo(id: "H", lower: "h", sound: "/h/", word: "hat",     emoji: "🎩"),
+        LetterInfo(id: "I", lower: "i", sound: "/i/", word: "iguana",  emoji: "🦎"),
+        LetterInfo(id: "J", lower: "j", sound: "/j/", word: "juice",   emoji: "🧃"),
+        LetterInfo(id: "K", lower: "k", sound: "/k/", word: "kangaroo", emoji: "🦘"),
         LetterInfo(id: "L", lower: "l", sound: "/l/", word: "lion",    emoji: "🦁"),
         LetterInfo(id: "M", lower: "m", sound: "/m/", word: "moon",    emoji: "🌙"),
+        LetterInfo(id: "N", lower: "n", sound: "/n/", word: "nest",    emoji: "🪺"),
         LetterInfo(id: "O", lower: "o", sound: "/o/", word: "octopus", emoji: "🐙"),
         LetterInfo(id: "P", lower: "p", sound: "/p/", word: "pig",     emoji: "🐷"),
         LetterInfo(id: "R", lower: "r", sound: "/r/", word: "rabbit",  emoji: "🐰"),
         LetterInfo(id: "S", lower: "s", sound: "/s/", word: "sun",     emoji: "☀️"),
         LetterInfo(id: "T", lower: "t", sound: "/t/", word: "tree",    emoji: "🌳"),
+        LetterInfo(id: "U", lower: "u", sound: "/u/", word: "umbrella", emoji: "☔"),
         LetterInfo(id: "W", lower: "w", sound: "/w/", word: "whale",   emoji: "🐳"),
         LetterInfo(id: "Z", lower: "z", sound: "/z/", word: "zebra",   emoji: "🦓")
     ]

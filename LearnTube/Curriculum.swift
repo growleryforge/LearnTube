@@ -127,7 +127,7 @@ enum Curriculum {
         // pulled — it was mostly losses. His math is the concrete count-and-add
         // games above and in Warm-Ups/Stretch. K math stays in the app for later.
         // Reading & letters (the long story K-STORY1 pulled — too much at once)
-        "K-R14", "K-R15", "K-R9", "K-R3", "K-R10", "K-R11", "K-R5", "K-R6", "K-R12", "K-R13", "K-R7", "K-R8",
+        "K-R16", "K-R14", "K-R15", "K-R9", "K-R3", "K-R10", "K-R11", "K-R5", "K-R6", "K-R12", "K-R13", "K-R7", "K-R8",
         // Writing — trace letters and numbers with a finger. He's choosing to
         // write on screen and succeeding, so there's a full set now: his name,
         // the whole alphabet, the numbers he's so good at, and Mama's name.
@@ -160,7 +160,9 @@ enum Curriculum {
         "FR-M10", "FR-R4", "FR-M12", "FR-R7", "FR-M6", "FR-R5", "FR-M11", "FR-S5", "FR-M13",
         // Gap-fillers, added last so they land as fresh work once the
         // bank above is worked through. New standards, familiar style.
-        "FR-M14", "FR-M15", "FR-M16", "FR-M17", "FR-M18"
+        "FR-M14", "FR-M15", "FR-M16", "FR-M17", "FR-M18",
+        // Reading, First Grade: build words from letters (the drag-the-animals idea for reading).
+        "G1-R8"
         // The rest of First grade is still NOT in his daily feed yet — he's still
         // working through TK and Kindergarten, and serving First Grade games
         // (add/subtract within 20, long stories) just piled up losses. When he's
@@ -212,6 +214,8 @@ enum Curriculum {
         "G1-L3": "When big feelings come, we can pause and breathe slow. Breathe in like smelling a flower, out like blowing a candle.",
         "G1-M4": "Word problems tell a little story with numbers. Read it, find the numbers, then decide to add or take away.",
         // ----- Newer kindergarten games -----
+        "K-R16": "Every letter makes a sound. Hear the sound, find the letter: /g/ is G, like goat!",
+        "G1-R8": "Words are made of letter sounds in a row. Say each one, then blend them: p, i, g, pig!",
         "K-R14": "Syllables are the beats in a word. Clap as you say it: el-e-phant has 3 claps!",
         "K-R15": "Baby animals have special names. A baby dog is a puppy, a baby cat is a kitten, a baby cow is a calf.",
         "K-S18": "Animals come in groups: mammals have fur, birds have feathers, fish have fins, insects have 6 legs.",

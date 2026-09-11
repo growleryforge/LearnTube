@@ -144,6 +144,7 @@ struct GameStage<Content: View>: View {
                     Mascot(mood: mood, size: 92).padding(.top, 16)
                     // Leo cheers out loud the moment he gets one right.
                     SpeechBubble(text: mood == .cheer ? "🎉 Great job!" : prompt)
+                    if mood != .cheer { LeoSpeakButton(text: prompt) }
                     content
                     Spacer(minLength: 18)
                 }

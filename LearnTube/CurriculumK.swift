@@ -173,6 +173,13 @@ extension Curriculum {
               parentTip: "What animals need to live. Talk about what you feed your animals each day.",
               lesson: .story(id: "animal-eats")),
 
+        Skill(id: "K-R16", grade: 0, subject: .reading,
+              title: "Letter Sounds",
+              standard: "CA CCSS RF.K.3a",
+              activity: "Leo says a sound and a farm word. Tap the letter that makes that sound!",
+              parentTip: "Sound first, letter second. Say the sound with him: /g/, /g/, goat.",
+              lesson: .story(id: "letter-sounds")),
+
         Skill(id: "K-R14", grade: 0, subject: .reading,
               title: "Syllable Safari",
               standard: "CA CCSS RF.K.2",

@@ -135,6 +135,10 @@ struct StoryPlayer: View {
                     PushPullPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
                 case .syllables(let level):
                     SyllablePlayer(level: level, accent: accent, onComplete: nextGame).id(game)
+                case .letterSounds(let level):
+                    LetterSoundPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
+                case .spell(let level):
+                    SpellPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
                 case .needs(let level):
                     NeedsPlayer(level: level, accent: accent, onComplete: nextGame).id(game)
                 case .position(let level):
@@ -247,6 +251,7 @@ struct StoryQuizView: View {
                 .padding(.horizontal, 8)
                 .scaleEffect(pulse ? 1 : 0.8)
                 .animation(.spring(response: 0.45, dampingFraction: 0.55), value: pulse)
+            LeoSpeakButton(text: chosenPrompt)
             // A gentle nudge while the answers are still held back / after a miss.
             Text(hint.isEmpty ? (ready ? " " : "👀 Read the question…") : hint)
                 .font(.system(size: 15, weight: .heavy, design: .rounded))

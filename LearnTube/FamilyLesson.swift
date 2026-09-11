@@ -545,6 +545,20 @@ extension Stories {
 
 extension Stories {
 
+    static let letterSoundsLesson = StoryContent(
+        id: "letter-sounds", title: "Letter Sounds", author: "LearnTube",
+        covers: "Hear a letter sound and its farm word, then tap the letter that makes it (CA CCSS RF.K.3a). Half the rounds are G through L.",
+        darkPages: true, pages: [],
+        games: [StoryGame(skill: "Letter Sounds", activity: .letterSounds(LetterSoundLevel(skill: "Letter Sounds", rounds: 6)))]
+    )
+
+    static let wordBuilderLesson = StoryContent(
+        id: "word-builder", title: "Word Builder", author: "LearnTube",
+        covers: "Build a farm word one letter at a time, then hear Leo read it back (CA CCSS RF.K.3, L.1.2).",
+        darkPages: true, pages: [],
+        games: [StoryGame(skill: "Word Builder", activity: .spell(SpellLevel(skill: "Word Builder", rounds: 5)))]
+    )
+
     static let syllablesLesson = StoryContent(
         id: "syllables", title: "Syllable Safari", author: "LearnTube",
         covers: "Breaking words into syllables: tap each beat, clap it, then count the claps (CA CCSS RF.K.2).",
