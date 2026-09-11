@@ -9,6 +9,10 @@ struct SavedState: Codable {
     var menuSize: Int = 5
     var masteryThreshold: Int = 3
     var youTubeURL: String = "https://www.youtube.com"
+    /// Calm day: serve only games he already knows and has not struggled with
+    /// lately. For days when new material is not going to land. Local to this
+    /// device (flip it in the grown-up area on his iPad).
+    var calmMode: Bool = false
     var enabledGrades: [Int] = [-2, -1, 0]
     var completionCounts: [String: Int] = [:]
     var todayKey: String = ""
@@ -845,6 +849,58 @@ final class AppState: ObservableObject {
     func checkPIN(_ p: String) -> Bool { p == saved.parentPIN }
 
     func setMinutesPerConcept(_ n: Int) { saved.minutesPerConcept = max(5, min(n, 120)); family.writeSettings(currentSettings()) }
+    func setCalmMode(_ on: Bool) { saved.calmMode = on }
+
+    /// A week-at-a-glance card for grown-ups: what he finished, what he
+    /// mastered, where he is stuck and the exact things he missed.
+    func weeklyReport(days: Int = 7) -> String {
+        let df = DateFormatter(); df.dateStyle = .medium
+        let all = Curriculum.allSeededSkills
+        let played = all.filter { recentDone($0.id, days: days) > 0 }
+        let finishes = played.reduce(0) { $0 + recentDone($1.id, days: days) }
+        let newlyMastered = played.filter { isMastered($0.id) }
+        let stuck = all.filter { recentWrong($0.id, days: days) >= 3 || recentAbandoned($0.id, days: days) >= 2 }
+            .sorted { struggleScore($0.id, days: days) > struggleScore($1.id, days: days) }
+        let cutoff = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+        let misses = mergedMisses.filter { $0.date >= cutoff }
+        var lines: [String] = []
+        lines.append("Gabriel this week (\(df.string(from: cutoff)) to \(df.string(from: Date())))")
+        lines.append("")
+        lines.append("Finished \(finishes) games across \(played.count) skills.")
+        if !newlyMastered.isEmpty {
+            lines.append("Mastered: " + newlyMastered.map(\.title).sorted().joined(separator: ", "))
+        }
+        lines.append("")
+        if stuck.isEmpty {
+            lines.append("Nothing he is stuck on. 🎉")
+        } else {
+            lines.append("Where he is stuck:")
+            for s in stuck.prefix(6) {
+                let w = recentWrong(s.id, days: days), q = recentAbandoned(s.id, days: days)
+                var detail = "\(w) misses"
+                if q > 0 { detail += ", quit \(q)x" }
+                lines.append("  • \(s.title) (\(detail))")
+                // The three most common wrong taps, so the grown-up knows exactly what to practice.
+                var tally: [String: Int] = [:]
+                for m in misses where m.skill == s.id { tally["\(m.correct) ← tapped \(m.tapped)", default: 0] += 1 }
+                for (k, n) in tally.sorted(by: { $0.value > $1.value }).prefix(3) {
+                    lines.append("      \(k)\(n > 1 ? " ×\(n)" : "")")
+                }
+            }
+        }
+        // Letters: every letter or stroke he missed this week, tallied.
+        var letters: [String: Int] = [:]
+        for m in misses where m.correct.count == 1 && m.correct.first?.isLetter == true {
+            letters[m.correct.uppercased(), default: 0] += 1
+        }
+        if !letters.isEmpty {
+            lines.append("")
+            lines.append("Letters to practice: " + letters.sorted { $0.value > $1.value }
+                .map { "\($0.key) (\($0.value))" }.joined(separator: ", "))
+        }
+        return lines.joined(separator: "\n")
+    }
+
     func setMasteryThreshold(_ n: Int) { saved.masteryThreshold = max(1, min(n, 5)); family.writeSettings(currentSettings()) }
     func setYouTubeURL(_ s: String) { saved.youTubeURL = s; family.writeSettings(currentSettings()) }
     func resetEarnedTime() { family.setMinutes(0) }

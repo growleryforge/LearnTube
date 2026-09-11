@@ -4178,7 +4178,13 @@ struct PositionPlayer: View {
 // (the/then/they, see/sea/set). Builds whole-word recognition. No-repeat bag,
 // reshuffle on wrong.
 
-struct SightLevel: Identifiable, Hashable { let id = UUID(); let skill: String; let rounds: Int }
+struct SightLevel: Identifiable, Hashable {
+    let id = UUID(); let skill: String; let rounds: Int
+    /// 0 = Kindergarten list shown as text to match; 1 = First Grade list,
+    /// heard from Leo and read (the word is hidden until a miss).
+    var grade: Int = 0
+    var hear: Bool { grade >= 1 }
+}
 
 struct SightQ { let word: String; var options: [String]; let fact: String }
 
@@ -4191,20 +4197,40 @@ enum SightGen {
         "he": ["she", "be"], "and": ["any", "end"], "like": ["lake", "line"], "you": ["your", "yum"],
         "to": ["too", "top"], "is": ["it", "in"], "up": ["us", "pup"], "me": ["my", "we"]
     ]
+    /// First Grade (Dolch) words: heard from Leo, then read.
+    static let words1 = ["after", "again", "any", "ask", "could", "every", "fly", "from", "give", "going",
+                         "had", "has", "her", "him", "his", "how", "just", "know", "let", "live",
+                         "may", "of", "old", "once", "open", "over", "put", "some", "stop", "take",
+                         "thank", "them", "then", "think", "walk", "were", "when"]
     static var bag: [Int] = []
     static var last: Int?
-    static func next() -> String {
+    static var bag1: [Int] = []
+    static var last1: Int?
+    static func next(grade: Int = 0) -> String {
+        if grade >= 1 {
+            if bag1.isEmpty {
+                bag1 = Array(words1.indices).shuffled()
+                if let l = last1, bag1.count > 1, bag1[0] == l { bag1.swapAt(0, bag1.count - 1) }
+            }
+            let i = bag1.removeFirst(); last1 = i; return words1[i]
+        }
         if bag.isEmpty {
             bag = Array(words.indices).shuffled()
             if let l = last, bag.count > 1, bag[0] == l { bag.swapAt(0, bag.count - 1) }
         }
         let i = bag.removeFirst(); last = i; return words[i]
     }
-    static func make() -> SightQ {
-        let w = next()
+    static func make(grade: Int = 0) -> SightQ {
+        let w = next(grade: grade)
+        let list = grade >= 1 ? words1 : words
         var distract = Array((confuse[w] ?? []).shuffled().prefix(2))
         if distract.count < 2 {
-            let others = words.filter { $0 != w && !distract.contains($0) }.shuffled()
+            // Same first letter first (so he reads past the first letter), then anything.
+            let same = list.filter { $0 != w && !distract.contains($0) && $0.first == w.first }.shuffled()
+            distract += Array(same.prefix(2 - distract.count))
+        }
+        if distract.count < 2 {
+            let others = list.filter { $0 != w && !distract.contains($0) }.shuffled()
             distract += Array(others.prefix(2 - distract.count))
         }
         return SightQ(word: w, options: ([w] + distract).shuffled(), fact: "You found \"\(w)\"! ⭐")
@@ -4227,12 +4253,28 @@ struct SightWordsPlayer: View {
         ZStack {
             VStack(spacing: 20) {
                 if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
-                Text("Find this word:")
+                Text(level.hear ? "Listen, then find the word:" : "Find this word:")
                     .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(Theme.textSecondary)
-                Text(data.word)
-                    .font(.system(size: 60, weight: .black, design: .rounded)).foregroundStyle(.white)
-                    .frame(maxWidth: .infinity).frame(height: 120)
-                    .background(Theme.surface).clipShape(RoundedRectangle(cornerRadius: 22))
+                    .multilineTextAlignment(.center)
+                if level.hear {
+                    // Hear it, read it: the word stays hidden until a miss.
+                    Button { Leo.say("Find the word: \(data.word). \(data.word).", slow: true, force: true) } label: {
+                        HStack(spacing: 16) {
+                            Text("🔊").font(.system(size: 64))
+                            Text(missed > 0 ? data.word : "Tap to hear it")
+                                .font(.system(size: missed > 0 ? 56 : 22, weight: .black, design: .rounded))
+                                .foregroundStyle(missed > 0 ? .white : Theme.textSecondary)
+                        }
+                        .frame(maxWidth: .infinity).frame(height: 120)
+                        .background(Theme.surface).clipShape(RoundedRectangle(cornerRadius: 22))
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    Text(data.word)
+                        .font(.system(size: 60, weight: .black, design: .rounded)).foregroundStyle(.white)
+                        .frame(maxWidth: .infinity).frame(height: 120)
+                        .background(Theme.surface).clipShape(RoundedRectangle(cornerRadius: 22))
+                }
                 VStack(spacing: 12) {
                     ForEach(data.options, id: \.self) { w in
                         Button { tap(w) } label: { tile(w) }.wiggle(wrong == w)
@@ -4252,10 +4294,15 @@ struct SightWordsPlayer: View {
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 
-    private func newRound() { data = SightGen.make(); wrong = nil; cheer = false; missed = 0; revealed = false }
+    private func newRound() {
+        data = SightGen.make(grade: level.grade); wrong = nil; cheer = false; missed = 0; revealed = false
+        if level.hear { DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { Leo.say("Find the word: \(data.word). \(data.word).", slow: true) } }
+    }
 
     private func tap(_ w: String) {
         guard !cheer else { return }
+        if level.hear { Leo.say(w == data.word ? "\(w)! Yes!" : "That says \(w). Find \(data.word).", slow: true) }
+        if w != data.word { GameStats.recordMiss(prompt: "Find the word \(data.word)", tapped: w, correct: data.word) }
         if w == data.word {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {

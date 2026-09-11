@@ -153,6 +153,7 @@ enum Stories {
         case positionLesson.id: return positionLesson
         case sightLesson.id: return sightLesson
         case letterSoundsLesson.id: return letterSoundsLesson
+        case sightLesson1.id: return sightLesson1
         case wordBuilderLesson.id: return wordBuilderLesson
         case numberOrderLesson.id: return numberOrderLesson
         case animalHomesLesson.id: return animalHomesLesson

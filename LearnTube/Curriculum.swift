@@ -162,7 +162,7 @@ enum Curriculum {
         // bank above is worked through. New standards, familiar style.
         "FR-M14", "FR-M15", "FR-M16", "FR-M17", "FR-M18",
         // Reading, First Grade: build words from letters (the drag-the-animals idea for reading).
-        "G1-R8"
+        "G1-R8", "G1-R9"
         // The rest of First grade is still NOT in his daily feed yet — he's still
         // working through TK and Kindergarten, and serving First Grade games
         // (add/subtract within 20, long stories) just piled up losses. When he's
@@ -214,6 +214,7 @@ enum Curriculum {
         "G1-L3": "When big feelings come, we can pause and breathe slow. Breathe in like smelling a flower, out like blowing a candle.",
         "G1-M4": "Word problems tell a little story with numbers. Read it, find the numbers, then decide to add or take away.",
         // ----- Newer kindergarten games -----
+        "G1-R9": "Some words you just know by sight. Hear it, then spot it: \"when\" is not \"then\".",
         "K-R16": "Every letter makes a sound. Hear the sound, find the letter: /g/ is G, like goat!",
         "G1-R8": "Words are made of letter sounds in a row. Say each one, then blend them: p, i, g, pig!",
         "K-R14": "Syllables are the beats in a word. Clap as you say it: el-e-phant has 3 claps!",

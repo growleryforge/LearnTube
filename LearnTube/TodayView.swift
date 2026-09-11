@@ -19,7 +19,13 @@ struct HomeFeedView: View {
         // Mastered games leave the feed entirely (Doosy, Sept 11: "I don't want
         // to serve him anything mastered"). He can still find them under
         // Mastered in the grown-up area; the kid feed is only what's left to learn.
-        let live = state.todaySkills.filter { !state.isLearned($0.id) }
+        var live = state.todaySkills.filter { !state.isLearned($0.id) }
+        // Calm day: only games he has already played and not fought with lately.
+        // Falls back to the normal feed if that leaves nothing to play.
+        if state.saved.calmMode {
+            let calmOnly = live.filter { state.everStarted($0.id) && state.struggleScore($0.id) == 0 }
+            if !calmOnly.isEmpty { live = calmOnly }
+        }
         // Serve the easiest games first so he opens on a win, never on a fight:
         // games he's struggled with lately sink toward the bottom of the WHOLE
         // feed, not just their grade band. (Sorting grade-first meant the two

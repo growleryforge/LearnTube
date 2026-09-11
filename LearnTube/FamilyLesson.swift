@@ -545,6 +545,13 @@ extension Stories {
 
 extension Stories {
 
+    static let sightLesson1 = StoryContent(
+        id: "sight-words-1", title: "Hear It, Read It", author: "LearnTube",
+        covers: "First Grade sight words: Leo says the word, he finds it among look-alikes (CA CCSS RF.1.3g).",
+        darkPages: true, pages: [],
+        games: [StoryGame(skill: "Hear It, Read It", activity: .sight(SightLevel(skill: "Hear It, Read It", rounds: 6, grade: 1)))]
+    )
+
     static let letterSoundsLesson = StoryContent(
         id: "letter-sounds", title: "Letter Sounds", author: "LearnTube",
         covers: "Hear a letter sound and its farm word, then tap the letter that makes it (CA CCSS RF.K.3a). Half the rounds are G through L.",

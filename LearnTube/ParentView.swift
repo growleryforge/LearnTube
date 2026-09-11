@@ -216,6 +216,23 @@ struct GrownUpSettings: View {
                     .font(.footnote).foregroundStyle(.secondary)
                 Button("Save Link") { state.setYouTubeURL(youTube.isEmpty ? "youtube://" : youTube) }
             }
+            Section {
+                Toggle("Calm day", isOn: Binding(get: { state.saved.calmMode }, set: { state.setCalmMode($0) }))
+            } header: {
+                Text("Hard Day Mode")
+            } footer: {
+                Text("On: his feed shows only games he already knows and has not struggled with lately. No new material, no fights. Turn it off when he is ready for new things again. This switch is just for this iPad.")
+            }
+            Section {
+                ShareLink("Share this week's card", item: state.weeklyReport())
+                Text(state.weeklyReport())
+                    .font(.system(.footnote, design: .monospaced))
+                    .textSelection(.enabled)
+            } header: {
+                Text("This Week")
+            } footer: {
+                Text("What he finished, what he mastered, where he is stuck, and the exact letters and answers he missed in the last 7 days.")
+            }
             LeoVoiceSection()
             Section("Reading Together") {
                 Text("Lessons open straight into the activity now, with no \"who's reading with you?\" step to slow Gabriel down. He can play on his own anytime. When you'd like to read along, Mommy or Maddy can simply sit with him and read each page aloud together.")

@@ -72,6 +72,13 @@ extension Curriculum {
                          correct: "How plants grow", wrong: ["Going to the moon", "Baking a cake"])
               ])),
 
+        Skill(id: "G1-R9", grade: 1, subject: .reading,
+              title: "Hear It, Read It",
+              standard: "CA CCSS RF.1.3g",
+              activity: "Leo says a First Grade word. Find it among the look-alikes!",
+              parentTip: "Sight words by ear and eye. Read the three choices with him and ask which one Leo said.",
+              lesson: .story(id: "sight-words-1")),
+
         Skill(id: "G1-R8", grade: 1, subject: .reading,
               title: "Word Builder",
               standard: "CA CCSS RF.K.3 / L.1.2",
