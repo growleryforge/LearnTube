@@ -539,7 +539,9 @@ final class AppState: ObservableObject {
     var finishLineDone: Int { finishLinePool.count - finishLine.count }
     /// While more than this many are left, First Grade holds off: nothing new
     /// from grade 1 is woven into the feed, though it stays reachable below.
-    static let finishLineHoldsFirstGrade = 8
+    /// Set past any real count so First Grade is never held back: new content
+    /// weaves in as soon as he has mastered what he is on.
+    static let finishLineHoldsFirstGrade = Int.max
 
     func masteredCount(inGrade grade: Int) -> Int {
         Curriculum.skills(for: grade).filter { isMastered($0.id) }.count

@@ -16,7 +16,10 @@ struct HomeFeedView: View {
     /// ones. Uses the merged family count so mastering across his phone + iPad
     /// removes it everywhere.
     private var available: [Skill] {
-        let live = state.todaySkills.filter { !state.isRetired($0.id) }
+        // Mastered games leave the feed entirely (Doosy, Sept 11: "I don't want
+        // to serve him anything mastered"). He can still find them under
+        // Mastered in the grown-up area; the kid feed is only what's left to learn.
+        let live = state.todaySkills.filter { !state.isMastered($0.id) && !state.isRetired($0.id) }
         // Serve the easiest games first so he opens on a win, never on a fight:
         // games he's struggled with lately sink toward the bottom of the WHOLE
         // feed, not just their grade band. (Sorting grade-first meant the two
@@ -103,7 +106,7 @@ struct HomeFeedView: View {
                 }
             }
             .frame(height: 14)
-            Text("Play each one \(state.saved.masteryThreshold) times to light its barn. Then First Grade opens up!")
+            Text("Play each one \(state.saved.masteryThreshold) times to light its barn. Lit barns move off your list!")
                 .font(.system(size: 13, weight: .medium, design: .rounded)).foregroundStyle(Theme.textSecondary)
         }
     }
