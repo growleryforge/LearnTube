@@ -383,7 +383,7 @@ struct StopTile: View {
                 HStack(spacing: 5) {
                     Image(systemName: mastered ? "star.fill" : "star")
                         .font(.system(size: 12)).foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
-                    Text(maxed ? "All done today!" : "Mastery \(plays)/\(masteryGoal)")
+                    Text(maxed ? "All done today!" : (mastered ? "Mastered 🏆 · \(plays) plays" : "Mastery \(plays)/\(masteryGoal)"))
                         .font(.system(size: 12, weight: .heavy, design: .rounded))
                         .foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
                 }
