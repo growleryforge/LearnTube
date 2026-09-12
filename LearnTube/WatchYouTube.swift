@@ -76,9 +76,12 @@ struct YouTubeWebView: UIViewRepresentable {
 struct WatchYouTubeView: View {
     @EnvironmentObject var state: AppState
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     /// Where to open. Defaults to YouTube; his Scratch favorites pass their own.
     var startURL: URL? = nil
+
+    @State private var lastTick = Date()
 
     @State private var remaining = 0
     @State private var endDate: Date?
@@ -126,6 +129,7 @@ struct WatchYouTubeView: View {
             if state.availableMinutes <= 0 || state.dailyCapReached { showEarnMore = true; return }
             let mins = state.availableMinutes
             openedAt = Date()
+            lastTick = openedAt
             active = true
             endDate = Date().addingTimeInterval(Double(mins) * 60)
             remaining = mins * 60
@@ -137,10 +141,23 @@ struct WatchYouTubeView: View {
         }
         .onReceive(ticker) { _ in
             guard active else { return }
+            // If the iPad slept or the app was in the background with this screen
+            // open, the timer stopped and we are waking up minutes or hours later.
+            // Do NOT back-charge that gap (Sept 11: "360m watched" from an iPad
+            // asleep on the video screen). End the session and go back to the
+            // games; he can reopen YouTube with whatever time he has left.
+            let now = Date()
+            let gap = now.timeIntervalSince(lastTick)
+            lastTick = now
+            if gap > 5 {
+                active = false
+                dismiss()
+                return
+            }
             // One minute per minute of real watching, counting the CURRENT
             // minute up front (minute 1 was already charged on open). Even if an
             // extra timer fires, spending can't run past real time.
-            let minutesEntered = Int(Date().timeIntervalSince(openedAt)) / 60 + 1
+            let minutesEntered = Int(now.timeIntervalSince(openedAt)) / 60 + 1
             while spentMinutes < minutesEntered {
                 state.recordWatchedMinute()
                 spentMinutes += 1
@@ -155,6 +172,11 @@ struct WatchYouTubeView: View {
                 active = false
                 showEarnMore = true    // gentle "earn more" screen instead of an abrupt close
             }
+        }
+        .onChange(of: scenePhase) { phase in
+            // Screen off or app switched away: the session is over. No charging
+            // while nobody is watching.
+            if phase != .active && active { active = false; dismiss() }
         }
         .onDisappear {
             active = false
