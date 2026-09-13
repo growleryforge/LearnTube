@@ -48,9 +48,29 @@ XLOG="$REPO/build/xcodebuild.log"
 log() { echo "$*" | tee -a "$RUNLOG"; }
 die() { log "!! $*"; log "   (details: build/xcodebuild.log)"; exit 1; }
 
-STAMP=$(date +%y%m%d%H%M)
+# Version: bump the PATCH on every build so the number on screen is short and
+# comparable (2.1.4 is obviously newer than 2.1.3). Bump MAJOR.MINOR by hand in
+# the Xcode project when a real feature wave ships.
+PBX="$REPO/LearnTube.xcodeproj/project.pbxproj"
+bump_version() {
+    local cur major minor patch
+    cur=$(grep -m1 'MARKETING_VERSION = ' "$PBX" | sed 's/.*MARKETING_VERSION = //; s/;//')
+    major=$(echo "$cur" | cut -d. -f1)
+    minor=$(echo "$cur" | cut -d. -f2)
+    patch=$(echo "$cur" | cut -d. -f3)
+    [ -z "$major" ] && major=2
+    [ -z "$minor" ] && minor=1
+    [ -z "$patch" ] && patch=0
+    VERSION="$major.$minor.$((patch + 1))"
+    sed -i '' "s/MARKETING_VERSION = .*;/MARKETING_VERSION = $VERSION;/g" "$PBX"
+    BUILDNO=$(grep -m1 'CURRENT_PROJECT_VERSION = ' "$PBX" | sed 's/.*CURRENT_PROJECT_VERSION = //; s/;//')
+    BUILDNO=$((BUILDNO + 1))
+    sed -i '' "s/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = $BUILDNO;/g" "$PBX"
+}
+bump_version
+STAMP="$VERSION"
 MODE="${1:-default}"; TARGET="${2:-}"
-log "LearnTube build $STAMP  ·  mode: $MODE  ·  $(date '+%a %b %d %H:%M')"
+log "LearnTube $VERSION (build $BUILDNO)  ·  mode: $MODE  ·  $(date '+%a %b %d %H:%M')"
 log "repo: $REPO"
 
 # ---- builds ------------------------------------------------------------------
@@ -71,7 +91,7 @@ build() {
     echo "===== $label  $(date '+%H:%M:%S') =====" >> "$XLOG"
     if xcodebuild -project LearnTube.xcodeproj -scheme LearnTube \
          -destination "$dest" -derivedDataPath "$dd" -allowProvisioningUpdates \
-         CURRENT_PROJECT_VERSION="$STAMP" "$@" build >> "$XLOG" 2>&1; then
+         CURRENT_PROJECT_VERSION="$BUILDNO" MARKETING_VERSION="$VERSION" "$@" build >> "$XLOG" 2>&1; then
         log "    built."
     else
         log "!! $label FAILED. First errors:"
@@ -166,7 +186,7 @@ install_mac() {
     ditto "$MAC_APP" "/Applications/LearnTubeAdmin.app"
     xattr -dr com.apple.quarantine "/Applications/LearnTubeAdmin.app" 2>/dev/null || true
     open "/Applications/LearnTubeAdmin.app" || true
-    log "==> Grown-up app installed to /Applications and opened (build $STAMP)."
+    log "==> Grown-up app installed to /Applications and opened (LearnTube $VERSION)."
 }
 
 # ---- dist/ for the other Macs ------------------------------------------------
@@ -222,7 +242,7 @@ deploy_phones() {
         if is_admin_device "$n"; then install_to "$ADMIN_APP" "$id" "$n" && ok=$((ok+1))
         else install_to "$KID_APP" "$id" "$n" && ok=$((ok+1)); fi
     done
-    log "==> $ok device(s) updated to build $STAMP."
+    log "==> $ok device(s) updated to LearnTube $VERSION."
     ipad_note
 }
 

@@ -61,7 +61,7 @@ struct LessonIntroCard: View {
                 .padding(.horizontal, 18).padding(.bottom, 22)
             }
         }
-        .frame(minHeight: 540)
+        .frame(minHeight: 470)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 }
@@ -140,27 +140,33 @@ struct GameStage<Content: View>: View {
     var mood: MascotMood
     var prompt: String
     var confetti: Bool = false
+    /// Drag games fill the screen instead of scrolling, so they must not be
+    /// forced to a 540pt floor and they want a smaller mascot on a phone.
+    var compact: Bool = false
     @ViewBuilder var content: Content
 
     var body: some View {
         ZStack(alignment: .top) {
             PlayScene {
-                VStack(spacing: 14) {
+                VStack(spacing: compact ? 8 : 11) {
                     // The clean-run bonus, live and visible WHILE he plays, so
                     // carefulness pays where he can still choose it.
-                    CleanRunChip().padding(.top, 12)
-                    Mascot(mood: mood, size: 92)
+                    CleanRunChip().padding(.top, compact ? 6 : 8)
+                    // Leo was 92pt of decoration above every game. On an iPad in
+                    // landscape that was the difference between the answers being
+                    // on screen and being below the fold.
+                    Mascot(mood: mood, size: compact ? 56 : 66)
                     // Leo cheers out loud the moment he gets one right.
                     SpeechBubble(text: mood == .cheer ? "🎉 Great job!" : prompt)
                     if mood != .cheer { LeoSpeakButton(text: prompt) }
                     content
-                    Spacer(minLength: 18)
+                    if !compact { Spacer(minLength: 18) }
                 }
                 .padding(.horizontal, 14)
             }
             if confetti { Confetti() }
         }
-        .frame(minHeight: 540)
+        .frame(minHeight: compact ? 0 : 470, maxHeight: compact ? .infinity : nil)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 }

@@ -49,14 +49,14 @@ struct SentencePlayer: View {
     }
 
     var body: some View {
-        GameStage(mood: mood, prompt: prompt, confetti: filled != nil && pos + 1 >= order.count) {
-            VStack(spacing: 16) {
+        GameStage(mood: mood, prompt: prompt,
+                  confetti: filled != nil && pos + 1 >= order.count, compact: true) {
+            VStack(spacing: 12) {
                 ProgressDots(total: lines.count + redoSeen.count, done: answered, accent: accent)
                 if !line.picture.isEmpty {
-                    EmojiView(emoji: line.picture, size: 74, tint: .white).frame(height: 80)
+                    EmojiView(emoji: line.picture, size: 56, tint: .white).frame(height: 60)
                 }
                 sentence
-                Spacer(minLength: 4)
                 wordTiles
             }
             .padding(.bottom, 8)

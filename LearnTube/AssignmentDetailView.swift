@@ -26,6 +26,17 @@ struct WatchView: View {
         if case .story = skill.lesson { return true } else { return false }
     }
 
+    /// Games he plays by DRAGGING must fit on one screen. Inside a scroll view
+    /// he has to scroll to see the pens and the thing in his hand at the same
+    /// time, which makes them unplayable on a phone. These fill the screen
+    /// instead, like a story does.
+    private var fillsScreen: Bool {
+        switch skill.lesson {
+        case .story, .sort, .buildSentence: return true
+        default: return false
+        }
+    }
+
     var body: some View {
         ZStack {
             Theme.bg.ignoresSafeArea()
@@ -36,7 +47,7 @@ struct WatchView: View {
                         completionPanel.padding(.horizontal, 14).padding(.top, 8)
                         Color.clear.frame(height: 24)
                     }
-                } else if isStory {
+                } else if fillsScreen {
                     LessonPlayerView(skill: skill, onComplete: finish).id(playRun)
                         .padding(.horizontal, 14).padding(.vertical, 6)
                 } else {

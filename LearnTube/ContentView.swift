@@ -56,10 +56,12 @@ struct ContentView: View {
 struct TopBar: View {
     @EnvironmentObject var state: AppState
 
+    /// Just the version. It used to read "v2.0 · 2609131039", a ten-digit
+    /// timestamp nobody could compare at a glance. The patch now bumps on every
+    /// build (tools/run.sh), so 2.1.4 is plainly newer than 2.1.3.
     private var appVersion: String {
-        let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let b = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
-        return "v\(v) · \(b)"
+        let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.1.0"
+        return "v\(v)"
     }
 
     var body: some View {

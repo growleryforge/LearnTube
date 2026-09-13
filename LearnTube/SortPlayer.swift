@@ -45,15 +45,19 @@ struct SortPlayer: View {
     // enough to place an item, and the game walked itself to the finish.
     @State private var moved = false
     @State private var landing = false
+    /// Phone or iPad. On a phone four pens in one row are unhittable, so they
+    /// wrap to two columns and everything shrinks to fit one screen.
+    @Environment(\.horizontalSizeClass) private var hSize
+    private var narrow: Bool { hSize == .compact }
 
     private var current: SortThing? { deck.first }
 
     var body: some View {
-        GameStage(mood: mood, prompt: prompt, confetti: justLanded != nil && deck.isEmpty) {
-            VStack(spacing: 14) {
+        GameStage(mood: mood, prompt: prompt,
+                  confetti: justLanded != nil && deck.isEmpty, compact: true) {
+            VStack(spacing: narrow ? 10 : 14) {
                 ProgressDots(total: max(1, placed + deck.count), done: placed, accent: accent)
                 binRow
-                Spacer(minLength: 6)
                 carryRow
             }
             .padding(.bottom, 8)
@@ -66,14 +70,17 @@ struct SortPlayer: View {
     // MARK: The pens
 
     private var binRow: some View {
-        HStack(alignment: .top, spacing: 10) {
+        let cols = (narrow && bins.count > 2) ? 2 : bins.count
+        return LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: cols),
+                         spacing: 8) {
             ForEach(bins, id: \.key) { bin in
                 let glow = taughtBin == bin.key
                 let landed = justLanded == bin.key
-                VStack(spacing: 6) {
-                    EmojiView(emoji: bin.emoji, size: 40, tint: .white).frame(height: 44)
+                VStack(spacing: 4) {
+                    EmojiView(emoji: bin.emoji, size: narrow ? 30 : 40, tint: .white)
+                        .frame(height: narrow ? 34 : 44)
                     Text(bin.label)
-                        .font(.system(size: 16, weight: .black, design: .rounded))
+                        .font(.system(size: narrow ? 14 : 16, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
                         .multilineTextAlignment(.center)
                         .lineLimit(2).minimumScaleFactor(0.7)
@@ -81,13 +88,13 @@ struct SortPlayer: View {
                     // to something he can see rather than vanishing.
                     HStack(spacing: 2) {
                         ForEach(Array((placedIn[bin.key] ?? []).suffix(5).enumerated()), id: \.offset) { _, it in
-                            Text(it.emoji).font(.system(size: 18))
+                            Text(it.emoji).font(.system(size: narrow ? 15 : 18))
                         }
                     }
-                    .frame(height: 22)
+                    .frame(height: narrow ? 18 : 22)
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 12).padding(.horizontal, 6)
+                .padding(.vertical, narrow ? 8 : 12).padding(.horizontal, 6)
                 .background(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .fill(Color.white.opacity(landed ? 0.30 : 0.13))
@@ -112,12 +119,13 @@ struct SortPlayer: View {
 
     @ViewBuilder private var carryRow: some View {
         if let it = current {
-            VStack(spacing: 8) {
+            let dot: CGFloat = narrow ? 84 : 104
+            VStack(spacing: narrow ? 4 : 8) {
                 ZStack {
-                    Circle().fill(.white.opacity(0.22)).frame(width: 104, height: 104)
-                    EmojiView(emoji: it.emoji, size: 64, tint: .white)
+                    Circle().fill(.white.opacity(0.22)).frame(width: dot, height: dot)
+                    EmojiView(emoji: it.emoji, size: narrow ? 50 : 64, tint: .white)
                 }
-                .overlay(Circle().strokeBorder(Theme.gold, lineWidth: 4).frame(width: 104, height: 104))
+                .overlay(Circle().strokeBorder(Theme.gold, lineWidth: 4).frame(width: dot, height: dot))
                 .offset(dragOffset)
                 .scaleEffect(dragging ? 1.12 : 1)
                 .shadow(color: .black.opacity(dragging ? 0.3 : 0), radius: 8, y: 4)
@@ -137,10 +145,10 @@ struct SortPlayer: View {
                         .onEnded { v in drop(it, at: v.location) }
                 )
                 Text(it.name)
-                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .font(.system(size: narrow ? 19 : 22, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                 Text(deck.count > 1 ? "\(deck.count - 1) more to sort" : "last one!")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
+                    .font(.system(size: 12, weight: .heavy, design: .rounded))
                     .foregroundStyle(Theme.textSecondary)
             }
             .animation(.spring(response: 0.4, dampingFraction: 0.75), value: dragging)

@@ -165,7 +165,7 @@ struct ActOutPlayer: View {
         ZStack(alignment: .topTrailing) {
             if let img = Self.art("act-pond") {
                 img.resizable().scaledToFill()
-                    .frame(minHeight: 240).clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    .frame(minHeight: 200).clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(.white.opacity(0.35), lineWidth: 2))
             } else {
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -197,7 +197,7 @@ struct ActOutPlayer: View {
                     .background(Capsule().fill(.black.opacity(0.45)))
             }
             .padding(12)
-            .frame(maxWidth: .infinity, minHeight: 240)
+            .frame(maxWidth: .infinity, minHeight: 200)
             // Running count, big, while he's counting.
             if phase == .count || phase == .sentence {
                 Text("\(total)")
@@ -209,7 +209,7 @@ struct ActOutPlayer: View {
                     .transition(.scale)
             }
         }
-        .frame(minHeight: 240)
+        .frame(minHeight: 200)
         .background(GeometryReader { g in Color.clear.preference(key: ZoneKey.self, value: ["pond": g.frame(in: .named("scene"))]) })
     }
 
