@@ -36,12 +36,18 @@ enum Leo {
         "Organ", "Pipe Organ", "Princess", "Ralph", "Superstar", "Trinoids",
         "Whisper", "Wobble", "Zarvox", "Fred", "Bruce", "Agnes", "Vicki"
     ]
+    // (Rishi, Lee, Gordon and the other regional voices are real voices and
+    // stay in the pool — only the joke voices above are excluded.)
 
     /// Clear, natural, child-friendly voices, in the order we want them. Leo
     /// takes the best one installed; anything outside this list is a fallback.
+    /// Leo is a boy lion cub, so the male voices lead. Evan and Tom are the
+    /// warmest American male voices Apple ships; Alex is the old high-quality
+    /// one and is clear but adult; Daniel and Oliver are British. The female
+    /// voices stay as the fallback so he is never left with a robot.
     private static let preferred = [
-        "Ava", "Samantha", "Allison", "Susan", "Nicky", "Zoe", "Evan",
-        "Joelle", "Karen", "Serena", "Moira", "Tessa", "Daniel"
+        "Evan", "Tom", "Nathan", "Alex", "Daniel", "Oliver", "Rishi", "Lee",
+        "Ava", "Samantha", "Allison", "Nicky", "Zoe", "Karen", "Serena", "Tessa"
     ]
 
     /// English voices, best first: real voices only, highest quality first,
