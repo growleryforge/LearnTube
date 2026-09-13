@@ -140,34 +140,62 @@ struct GameStage<Content: View>: View {
     var mood: MascotMood
     var prompt: String
     var confetti: Bool = false
-    /// Drag games fill the screen instead of scrolling, so they must not be
-    /// forced to a 540pt floor and they want a smaller mascot on a phone.
+    /// Kept so older call sites still compile. Every game fills the screen now.
     var compact: Bool = false
     @ViewBuilder var content: Content
+
+    @Environment(\.horizontalSizeClass) private var hSize
+    private var narrow: Bool { hSize == .compact }
 
     var body: some View {
         ZStack(alignment: .top) {
             PlayScene {
-                VStack(spacing: compact ? 8 : 11) {
-                    // The clean-run bonus, live and visible WHILE he plays, so
-                    // carefulness pays where he can still choose it.
-                    CleanRunChip().padding(.top, compact ? 6 : 8)
-                    // Leo was 92pt of decoration above every game. On an iPad in
-                    // landscape that was the difference between the answers being
-                    // on screen and being below the fold.
-                    Mascot(mood: mood, size: compact ? 56 : 66)
-                    // Leo cheers out loud the moment he gets one right.
-                    SpeechBubble(text: mood == .cheer ? "🎉 Great job!" : prompt)
-                    if mood != .cheer { LeoSpeakButton(text: prompt) }
-                    content
-                    if !compact { Spacer(minLength: 18) }
+                VStack(spacing: 0) {
+                    topBar
+                    // The game gets everything below the bar. The ScrollView is
+                    // a safety net for the rare board that still overflows: the
+                    // minHeight makes it fill and centre when it fits, so in
+                    // practice nothing scrolls and the bar never leaves the top.
+                    GeometryReader { g in
+                        ScrollView(showsIndicators: false) {
+                            content
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                                .frame(minHeight: g.size.height)
+                        }
+                    }
                 }
-                .padding(.horizontal, 14)
             }
             if confetti { Confetti() }
         }
-        .frame(minHeight: compact ? 0 : 470, maxHeight: compact ? .infinity : nil)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+    }
+
+    /// Everything that is NOT the game, in one strip across the top: Leo, the
+    /// question, read-it-to-me, and the perfect-run chip. This used to be a
+    /// ~290pt vertical stack, which on an iPad in landscape pushed the answers
+    /// clean off the bottom of the screen.
+    private var topBar: some View {
+        HStack(spacing: 10) {
+            Mascot(mood: mood, size: narrow ? 38 : 46)
+            Text(mood == .cheer ? "🎉 Great job!" : prompt)
+                .font(.system(size: narrow ? 16 : 19, weight: .heavy, design: .rounded))
+                .foregroundStyle(Theme.ink)
+                .multilineTextAlignment(.leading)
+                .lineLimit(3)
+                .minimumScaleFactor(0.7)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            if mood != .cheer { LeoSpeakButton(text: prompt, compact: narrow) }
+            CleanRunChip(short: narrow)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.white)
+        .shadow(color: .black.opacity(0.10), radius: 5, y: 2)
+        .zIndex(2)
     }
 }
 
@@ -176,18 +204,24 @@ struct GameStage<Content: View>: View {
 /// the chance to earn it. After a miss it goes quiet rather than red: it
 /// informs him the bonus is gone for this round, it does not scold him.
 struct CleanRunChip: View {
+    /// On a phone the chip shares the top bar with the question, so it drops to
+    /// just the star and the number.
+    var short = false
     var body: some View {
         let clean = GameStats.wrongThisGame == 0
-        HStack(spacing: 6) {
+        let label = clean ? (short ? "+\(AppState.cleanRunBonus)" : "PERFECT  ·  +\(AppState.cleanRunBonus) min")
+                          : (short ? "" : "Perfect bonus: next game")
+        HStack(spacing: 5) {
             Image(systemName: clean ? "star.fill" : "star")
-                .font(.system(size: 14, weight: .black))
-            Text(clean ? "PERFECT SO FAR  ·  +\(AppState.cleanRunBonus) min"
-                       : "Perfect bonus: next game")
-                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                .font(.system(size: 13, weight: .black))
+            if !label.isEmpty {
+                Text(label).font(.system(size: 12, weight: .heavy, design: .rounded))
+            }
         }
-        .foregroundStyle(clean ? Theme.ink : .white.opacity(0.55))
-        .padding(.horizontal, 14).padding(.vertical, 7)
-        .background(clean ? AnyShapeStyle(Theme.gold) : AnyShapeStyle(Color.white.opacity(0.12)))
+        .fixedSize()
+        .foregroundStyle(clean ? Theme.ink : Theme.ink.opacity(0.35))
+        .padding(.horizontal, 10).padding(.vertical, 6)
+        .background(clean ? AnyShapeStyle(Theme.gold) : AnyShapeStyle(Color.black.opacity(0.06)))
         .clipShape(Capsule())
         .animation(.easeOut(duration: 0.25), value: clean)
     }
@@ -240,6 +274,15 @@ struct QuizPlayer: View {
     @State private var inRedo = false
     @State private var answered = 0
 
+    @Environment(\.horizontalSizeClass) private var hSize
+    private var narrow: Bool { hSize == .compact }
+    /// Word answers need the width; picture answers are square and tile happily.
+    private var answerColumns: Int {
+        let n = max(1, options.count)
+        if narrow { return n <= 2 ? n : 2 }
+        return min(n, 4)
+    }
+
     /// An illustration for the question — but NEVER one that is itself an answer
     /// choice, or we'd be handing him the answer (e.g. "Which face is SAD?" must
     /// not show the sad face above the choices).
@@ -275,7 +318,12 @@ struct QuizPlayer: View {
                 Text(hint.isEmpty ? (ready ? " " : "👀 Read the question…") : hint)
                     .font(.system(size: 15, weight: .heavy, design: .rounded))
                     .foregroundStyle(hint.isEmpty ? .white.opacity(0.7) : Theme.gold)
-                VStack(spacing: 12) {
+                // Answers go ACROSS, not one per row. Four stacked tiles were
+                // ~300pt of vertical, which is what pushed the last answer off
+                // the bottom of the screen. Two columns on a phone, one row on
+                // an iPad, so he can see every choice without moving.
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10),
+                                         count: answerColumns), spacing: 10) {
                     ForEach(Array(options.enumerated()), id: \.element.id) { i, choice in
                         Button { tap(choice) } label: { tile(choice, i) }
                             .wiggle(wrongId == choice.id)

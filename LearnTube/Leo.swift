@@ -153,18 +153,32 @@ struct LeoVoiceSection: View {
 struct LeoSpeakButton: View {
     let text: String
     var slow: Bool = false
+    /// In the game top bar on a phone there is no room for the words, so it
+    /// becomes the speaker on its own. Same size target, same job.
+    var compact: Bool = false
     @State private var bounce = false
     var body: some View {
         Button {
             Leo.say(text, slow: slow, force: true)
             withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) { bounce.toggle() }
         } label: {
-            Label("Read it to me", systemImage: "speaker.wave.2.fill")
-                .font(.system(size: 15, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
-                .padding(.horizontal, 14).padding(.vertical, 8)
-                .background(Theme.surfaceHi).clipShape(Capsule())
-                .scaleEffect(bounce ? 1.06 : 1)
+            Group {
+                if compact {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.system(size: 17, weight: .heavy))
+                        .foregroundStyle(.white)
+                        .frame(width: 42, height: 42)
+                        .background(Theme.surfaceHi).clipShape(Circle())
+                } else {
+                    Label("Read it to me", systemImage: "speaker.wave.2.fill")
+                        .font(.system(size: 15, weight: .heavy, design: .rounded))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14).padding(.vertical, 8)
+                        .background(Theme.surfaceHi).clipShape(Capsule())
+                }
+            }
+            .fixedSize()
+            .scaleEffect(bounce ? 1.06 : 1)
         }
         .buttonStyle(.plain)
     }

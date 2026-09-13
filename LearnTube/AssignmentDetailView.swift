@@ -27,15 +27,11 @@ struct WatchView: View {
     }
 
     /// Games he plays by DRAGGING must fit on one screen. Inside a scroll view
-    /// he has to scroll to see the pens and the thing in his hand at the same
-    /// time, which makes them unplayable on a phone. These fill the screen
-    /// instead, like a story does.
-    private var fillsScreen: Bool {
-        switch skill.lesson {
-        case .story, .sort, .buildSentence: return true
-        default: return false
-        }
-    }
+    /// Every game fills the screen. Scrolling to find the answers is the single
+    /// biggest reason he bounced: the question was at the top, the answers were
+    /// below the fold, and nothing on screen said there was more. GameStage now
+    /// puts the question in a bar across the top and hands the rest to the game.
+    private var fillsScreen: Bool { true }
 
     var body: some View {
         ZStack {
@@ -47,15 +43,9 @@ struct WatchView: View {
                         completionPanel.padding(.horizontal, 14).padding(.top, 8)
                         Color.clear.frame(height: 24)
                     }
-                } else if fillsScreen {
-                    LessonPlayerView(skill: skill, onComplete: finish).id(playRun)
-                        .padding(.horizontal, 14).padding(.vertical, 6)
                 } else {
-                    ScrollView {
-                        LessonPlayerView(skill: skill, onComplete: finish).id(playRun)
-                            .padding(.horizontal, 12).padding(.top, 6)
-                        Color.clear.frame(height: 20)
-                    }
+                    LessonPlayerView(skill: skill, onComplete: finish).id(playRun)
+                        .padding(.horizontal, 10).padding(.vertical, 6)
                 }
             }
             if showCelebrate {

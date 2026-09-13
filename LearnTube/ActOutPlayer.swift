@@ -33,6 +33,13 @@ struct ActOutPlayer: View {
     let accent: Color
     let onComplete: () -> Void
 
+    // The pond, the animals and the answer buttons all have to be on screen at
+    // once or the game does not work. On a phone everything shrinks a notch
+    // rather than pushing the answers below the fold.
+    @Environment(\.horizontalSizeClass) private var hSize
+    private var narrow: Bool { hSize == .compact }
+    private var tokenSize: CGFloat { narrow ? 58 : 74 }
+
     // MARK: One round
 
     /// A thing on the scene: an animal (value 1), a crate of ten, or a group
@@ -162,16 +169,11 @@ struct ActOutPlayer: View {
     private static func art(_ name: String) -> Image? { UIImage(named: name) != nil ? Image(name) : nil }
 
     private var pond: some View {
+        // The art is a BACKGROUND, never a sibling. As a sibling, a scaledToFill
+        // pond photo sized itself to the widest thing on screen and grew to
+        // several hundred points tall, shoving the answer buttons off the
+        // bottom. A background is painted into whatever the animals need.
         ZStack(alignment: .topTrailing) {
-            if let img = Self.art("act-pond") {
-                img.resizable().scaledToFill()
-                    .frame(minHeight: 200).clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
-                    .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(.white.opacity(0.35), lineWidth: 2))
-            } else {
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
-                                         startPoint: .top, endPoint: .bottom))
-            }
             VStack(spacing: 8) {
                 Spacer(minLength: 0)
                 if round.compare {
@@ -182,8 +184,8 @@ struct ActOutPlayer: View {
                     // A fixed column count so the animals cluster in the middle
                     // of the pond instead of hugging the top-left corner.
                     let onScene = round.tokens.filter { $0.place != .waiting }
-                    let cols = max(1, min(onScene.count, 5))
-                    LazyVGrid(columns: Array(repeating: GridItem(.fixed(84), spacing: 6), count: cols), spacing: 8) {
+                    let cols = max(1, min(onScene.count, narrow ? 4 : 6))
+                    LazyVGrid(columns: Array(repeating: GridItem(.fixed(tokenSize + 6), spacing: 6), count: cols), spacing: 6) {
                         ForEach(onScene) { t in tokenView(t) }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -197,7 +199,7 @@ struct ActOutPlayer: View {
                     .background(Capsule().fill(.black.opacity(0.45)))
             }
             .padding(12)
-            .frame(maxWidth: .infinity, minHeight: 200)
+            .frame(maxWidth: .infinity, minHeight: narrow ? 130 : 170)
             // Running count, big, while he's counting.
             if phase == .count || phase == .sentence {
                 Text("\(total)")
@@ -209,7 +211,18 @@ struct ActOutPlayer: View {
                     .transition(.scale)
             }
         }
-        .frame(minHeight: 200)
+        .background(
+            Group {
+                if let img = Self.art("act-pond") {
+                    img.resizable().scaledToFill()
+                } else {
+                    LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
+                                   startPoint: .top, endPoint: .bottom)
+                }
+            }
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(.white.opacity(0.35), lineWidth: 2))
         .background(GeometryReader { g in Color.clear.preference(key: ZoneKey.self, value: ["pond": g.frame(in: .named("scene"))]) })
     }
 
@@ -290,12 +303,12 @@ struct ActOutPlayer: View {
                         .offset(y: 30)
                 }
             }
-            .frame(width: 78, height: 78)
+            .frame(width: tokenSize, height: tokenSize)
             .overlay(
                 Circle().strokeBorder(Theme.gold, lineWidth: 4)
                     .opacity(canDrag || canCount ? 1 : 0)
             )
-            .frame(width: 78, height: 78)
+            .frame(width: tokenSize, height: tokenSize)
             .opacity(t.place == .gone ? 0 : 1)
             .scaleEffect(t.place == .gone ? 0.3 : (canDrag ? 1.04 : 1))
             .shadow(color: .black.opacity(canDrag ? 0.25 : 0), radius: 6, y: 3)
@@ -363,17 +376,19 @@ struct ActOutPlayer: View {
     }
 
     private var choiceRow: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: narrow ? 10 : 16) {
             ForEach(choices, id: \.self) { n in
                 Button { choose(n) } label: {
                     Text("\(n)")
-                        .font(.system(size: 34, weight: .black, design: .rounded))
+                        .font(.system(size: narrow ? 28 : 34, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
-                        .frame(width: 84, height: 84)
+                        .frame(width: narrow ? 66 : 84, height: narrow ? 66 : 84)
                         .background(Circle().fill(accent))
+                        .shadow(color: accent.opacity(0.5), radius: 5, y: 3)
                 }
             }
         }
+        .fixedSize()
     }
 
     // MARK: Flow
