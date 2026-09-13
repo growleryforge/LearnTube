@@ -60,6 +60,9 @@ struct ActOutPlayer: View {
         var emoji = "🦆"
         var name = "ducks"
         var place = "on the pond"
+        /// Ducks and fish get the pond. Cows, sheep and hens get a field. They
+        /// were all standing in water, which is just wrong and he noticed.
+        var water = true
         var tokens: [Token] = []
         var leaving = 0                // how many to drag off (take-away)
         var arriving = 0               // how many to drag in (adding)
@@ -89,12 +92,19 @@ struct ActOutPlayer: View {
     @State private var confetti = false
     @State private var seeded = false
     @State private var wiggleID: Int? = nil
+    @State private var pulse = false
     // Dragging
     @State private var dragID: Int? = nil
     @State private var dragOffset: CGSize = .zero
     @State private var zoneFrames: [String: CGRect] = [:]
 
     private var hasAct: Bool { round.leaving > 0 || round.arriving > 0 }
+
+    /// A board where nothing arrives and nothing leaves has nothing to predict:
+    /// every animal is already sitting there in plain sight. Asking him to guess
+    /// the total first only teaches him that guessing is allowed. So he counts
+    /// it out by touching each one, and THEN taps the number he landed on.
+    private var countThenChoose: Bool { !hasAct && stage >= 2 }
 
     /// The one-line instruction inside the pond.
     private var caption: String {
@@ -103,7 +113,9 @@ struct ActOutPlayer: View {
             let left = (round.leaving > 0 ? round.leaving : round.arriving) - moved
             return round.leaving > 0 ? "Drag \(left) to the path →" : "Drag \(left) in from the fence ↓"
         case .watch:    return "Watch! 👀"
-        case .count:    return round.pick ? "Touch the right one 👆" : "Touch each one to count 👆"
+        case .count:
+            if round.pick { return "Touch the right one 👆" }
+            return total > 0 ? "Keep going... \(total)  👆" : "Touch each one to count 👆"
         case .choose:   return "Tap the number below 👇"
         case .sentence: return "\(round.answer)!"
         }
@@ -114,7 +126,9 @@ struct ActOutPlayer: View {
         case .act:      return round.actLine
         case .watch:    return round.leaving > 0 ? "Watch... \(round.leaving) go away!" : "Here they come! \(round.arriving) more!"
         case .count:    return round.countLine
-        case .choose:   return stage == 3 ? round.predictLine : "So what's the number? Tap it!"
+        case .choose:
+            if countThenChoose { return "You counted them all. Which number is that? Tap it! 👇" }
+            return stage == 3 ? round.predictLine : "So what's the number? Tap it!"
         case .sentence:
             if stage == 3, let g = guess {
                 return g == round.answer ? "You said \(g), and \(g) it is! 🎉" : "You said \(g). Let's see... it's \(round.answer)!"
@@ -213,10 +227,13 @@ struct ActOutPlayer: View {
         }
         .background(
             Group {
-                if let img = Self.art("act-pond") {
+                if let img = Self.art(round.water ? "act-pond" : "act-field") {
                     img.resizable().scaledToFill()
-                } else {
+                } else if round.water {
                     LinearGradient(colors: [Color(red: 0.55, green: 0.82, blue: 0.98), Color(red: 0.36, green: 0.68, blue: 0.94)],
+                                   startPoint: .top, endPoint: .bottom)
+                } else {
+                    LinearGradient(colors: [Color(red: 0.62, green: 0.84, blue: 0.46), Color(red: 0.36, green: 0.64, blue: 0.30)],
                                    startPoint: .top, endPoint: .bottom)
                 }
             }
@@ -375,20 +392,38 @@ struct ActOutPlayer: View {
         .padding(.vertical, 6)
     }
 
+    /// The numbers are the one thing he has to touch next, so they say so: a
+    /// label above them, a white ring, and a gold halo that breathes.
     private var choiceRow: some View {
-        HStack(spacing: narrow ? 10 : 16) {
-            ForEach(choices, id: \.self) { n in
-                Button { choose(n) } label: {
-                    Text("\(n)")
-                        .font(.system(size: narrow ? 28 : 34, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
-                        .frame(width: narrow ? 66 : 84, height: narrow ? 66 : 84)
-                        .background(Circle().fill(accent))
-                        .shadow(color: accent.opacity(0.5), radius: 5, y: 3)
+        VStack(spacing: 8) {
+            Text("Tap your number 👇")
+                .font(.system(size: narrow ? 15 : 17, weight: .black, design: .rounded))
+                .foregroundStyle(Theme.gold)
+                .shadow(color: .black.opacity(0.35), radius: 3, y: 1)
+            HStack(spacing: narrow ? 12 : 20) {
+                ForEach(choices, id: \.self) { n in
+                    Button { choose(n) } label: {
+                        Text("\(n)")
+                            .font(.system(size: narrow ? 34 : 42, weight: .black, design: .rounded))
+                            .foregroundStyle(.white)
+                            .frame(width: narrow ? 76 : 94, height: narrow ? 76 : 94)
+                            .background(
+                                Circle().fill(LinearGradient(colors: [accent, accent.opacity(0.68)],
+                                                             startPoint: .top, endPoint: .bottom))
+                            )
+                            .overlay(Circle().strokeBorder(.white, lineWidth: 4))
+                            .overlay(Circle().strokeBorder(Theme.gold, lineWidth: 3)
+                                        .padding(-6).opacity(pulse ? 0.95 : 0.2))
+                            .shadow(color: accent.opacity(0.7), radius: 11, y: 5)
+                            .scaleEffect(pulse ? 1.05 : 1)
+                    }
                 }
             }
+            .fixedSize()
         }
-        .fixedSize()
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.85).repeatForever(autoreverses: true)) { pulse = true }
+        }
     }
 
     // MARK: Flow
@@ -404,7 +439,7 @@ struct ActOutPlayer: View {
             if hasAct { phase = .watch; DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { autoMove() } }
             else { phase = .count }
         default:
-            phase = .choose
+            phase = countThenChoose ? .count : .choose
         }
     }
 
@@ -430,7 +465,7 @@ struct ActOutPlayer: View {
         let need = round.tokens.filter { $0.countable && $0.place == .scene }.count
         if counted >= need {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                if stage == 2 { phase = .choose } else { land() }
+                if stage == 2 || countThenChoose { phase = .choose } else { land() }
             }
         }
     }
@@ -482,7 +517,7 @@ struct ActOutPlayer: View {
     }
 
     private func choose(_ n: Int) {
-        if stage == 3 {
+        if stage == 3 && !countThenChoose {
             guess = n
             // No buzzer: the animals show him. A miss is still recorded so the
             // dashboard can see where he's guessing.
@@ -540,11 +575,14 @@ enum ActScripts {
     static let green = Theme.green
     static let white = Color.white.opacity(0.85)
 
-    private static let scenes: [(String, String, String)] = [
-        ("🦆", "ducks", "on the pond"), ("🐔", "hens", "in the yard"), ("🐷", "pigs", "in the mud"),
-        ("🐐", "goats", "on the hill"), ("🐸", "frogs", "on the log"), ("🐝", "bees", "at the hive"),
-        ("🐑", "sheep", "in the field"), ("🐰", "bunnies", "in the garden"), ("🐥", "chicks", "by the barn"),
-        ("🐄", "cows", "in the barn"), ("🐴", "horses", "by the fence"), ("🐟", "fish", "in the pond")
+    /// emoji, plural name, where they are, and whether that place is water.
+    private static let scenes: [(String, String, String, Bool)] = [
+        ("🦆", "ducks", "on the pond", true),   ("🐔", "hens", "in the yard", false),
+        ("🐷", "pigs", "in the mud", false),    ("🐐", "goats", "on the hill", false),
+        ("🐸", "frogs", "on the log", true),    ("🐝", "bees", "at the hive", false),
+        ("🐑", "sheep", "in the field", false), ("🐰", "bunnies", "in the garden", false),
+        ("🐥", "chicks", "by the barn", false), ("🐄", "cows", "in the field", false),
+        ("🐴", "horses", "by the fence", false), ("🐟", "fish", "in the pond", true)
     ]
     private static var lastAnswer = -1
 
@@ -563,8 +601,8 @@ enum ActScripts {
     }
 
     private static func make(_ game: NumberGame) -> Round {
-        let (e, n, p) = scenes.randomElement()!
-        var r = Round(); r.emoji = e; r.name = n; r.place = p
+        let (e, n, p, w) = scenes.randomElement()!
+        var r = Round(); r.emoji = e; r.name = n; r.place = p; r.water = w
 
         func takeAway(start: Int, gone: Int) {
             r.tokens = tokens(start, e)
@@ -603,8 +641,8 @@ enum ActScripts {
         }
         func countAll(_ toks: [Token], answer: Int, words: String, equation: [(String, Color)]) {
             r.tokens = toks; r.answer = answer
-            r.predictLine = "How many \(n) do you think are here? Take a guess!"
-            r.countLine = "Touch each one to count! 👆"
+            r.predictLine = "Count the \(n)! Touch each one. 👆"
+            r.countLine = "Count the \(n) out loud! Touch each one, then tap the number. 👆"
             r.words = words; r.equation = equation
         }
 
@@ -655,7 +693,7 @@ enum ActScripts {
             let a = Int.random(in: 5...9); fillTo(start: a, target: a + Int.random(in: 1...4), subtractionSentence: true)
         case .howManyMore:
             let top = Int.random(in: 3...7), bottom = Int.random(in: 1...(top - 1))
-            let (e2, n2, _) = scenes.filter { $0.0 != e }.randomElement()!
+            let (e2, n2, _, _) = scenes.filter { $0.0 != e }.randomElement()!
             var toks = tokens(top, e, row: 0) + tokens(bottom, e2, startID: top, countable: false, row: 1)
             for i in 0..<bottom { toks[i].countable = false }      // the matched ones
             r.tokens = toks; r.compare = true; r.answer = top - bottom

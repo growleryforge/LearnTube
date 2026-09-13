@@ -6,10 +6,12 @@ struct HomeFeedView: View {
     @EnvironmentObject var state: AppState
     @State private var watch: Skill?
 
-    // Fit as many thumbnails as the screen allows at a consistent size:
-    // ~2 across on iPhone, more on a wide Mac, each roughly the same width.
+    // Tiles are all the same size and the row divides the width exactly, so
+    // there is no dead strip on the right and no ragged gap between rows.
+    // 230pt was leaving four fat cards on an iPad with air between them; 168
+    // gets five or six tighter ones that read as a single wall of games.
     private var cols: [GridItem] {
-        [GridItem(.adaptive(minimum: 230), spacing: 12)]
+        [GridItem(.adaptive(minimum: 168, maximum: 250), spacing: StopTile.gap)]
     }
 
     /// Games he can still pick: mastered games drop off so he moves on to new
@@ -138,7 +140,7 @@ struct HomeFeedView: View {
                             jumpBadges(proxy)
                             if !finishLineGames.isEmpty {
                                 finishLineHeader
-                                LazyVGrid(columns: cols, spacing: 12, pinnedViews: []) {
+                                LazyVGrid(columns: cols, spacing: StopTile.gap, pinnedViews: []) {
                                     ForEach(finishLineGames) { skill in
                                         let maxed = !state.canPlay(skill.id)
                                         StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
@@ -154,7 +156,7 @@ struct HomeFeedView: View {
                                     .font(.system(size: 22, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                                     .frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
                             }
-                            LazyVGrid(columns: cols, spacing: 12, pinnedViews: []) {
+                            LazyVGrid(columns: cols, spacing: StopTile.gap, pinnedViews: []) {
                                 ForEach(available) { skill in
                                     let maxed = !state.canPlay(skill.id)
                                     StopTile(skill: skill, done: state.isDoneToday(skill.id), maxed: maxed,
@@ -340,6 +342,11 @@ struct StopTile: View {
     var level: Int = 1          // current difficulty level (shown when > 1)
     var isNew: Bool = false     // never opened on any device: gets a NEW badge
     var ladder: (rung: Int, top: Int, onRung: Int)? = nil   // ladder games: which step he is on
+    /// Gap between tiles, and the fixed height of the label strip under each
+    /// thumbnail. Both live here so the grid and the tile can never disagree.
+    static let gap: CGFloat = 8
+    static let labelHeight: CGFloat = 60
+
     private var buddy: Buddy { Buddies.forSkill(skill) }
     private var mastered: Bool { ladder == nil && plays >= masteryGoal }
     private var masteryLabel: String {
@@ -386,32 +393,38 @@ struct StopTile: View {
             }
             .frame(maxWidth: .infinity)
             .aspectRatio(16.0 / 9.0, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .background(Theme.surfaceHi)
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 
-            VStack(alignment: .leading, spacing: 5) {
+            // Fixed height, always three lines' worth. A grid row is as tall as
+            // its tallest tile, so a card with a longer label used to push a
+            // band of empty space under every other card in that row.
+            VStack(alignment: .leading, spacing: 3) {
                 Text(skill.title)
-                    .font(.system(size: 15, weight: .bold, design: .rounded)).foregroundStyle(.white)
-                    .lineLimit(1)
+                    .font(.system(size: 14, weight: .bold, design: .rounded)).foregroundStyle(.white)
+                    .lineLimit(1).minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(skill.subject.title) • \(skill.lesson.kindLabel)")
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
                     .foregroundStyle(Theme.textSecondary).lineLimit(1)
                 // Mastery: how many times he's finished this game (under the title).
-                HStack(spacing: 5) {
+                HStack(spacing: 4) {
                     Image(systemName: mastered ? "star.fill" : "star")
-                        .font(.system(size: 12)).foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
+                        .font(.system(size: 11)).foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
                     Text(masteryLabel)
-                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
                         .foregroundStyle(mastered ? Theme.green : Theme.textSecondary)
+                        .lineLimit(1).minimumScaleFactor(0.8)
                 }
             }
-            .padding(.horizontal, 12).padding(.vertical, 10)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.horizontal, 9).padding(.vertical, 7)
+            .frame(maxWidth: .infinity, minHeight: StopTile.labelHeight,
+                   maxHeight: StopTile.labelHeight, alignment: .topLeading)
         }
         .frame(maxWidth: .infinity)
         .background(Theme.surface)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(done ? Theme.green.opacity(0.5) : .clear, lineWidth: 2))
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(done ? Theme.green.opacity(0.5) : .clear, lineWidth: 2))
         .opacity(maxed ? 0.5 : 1)
     }
 }
