@@ -184,6 +184,63 @@ final class FamilySync: ObservableObject {
     static let dbURL = "https://learntube-family-default-rtdb.firebaseio.com"
     private var pollTimer: Timer?
 
+    // MARK: - Freshness
+
+    // The grown-up dashboard needs to answer one question at a glance: is what
+    // I am looking at current? These three drive that. The 15s poll calls
+    // refreshAll too, so lastAttemptAt keeps moving and a stalled sync shows up
+    // as a timestamp falling behind rather than a screen that looks fine.
+
+    /// When the last COMPLETE, successful pull of every shared record landed.
+    @Published private(set) var lastSyncAt: Date? = nil
+    /// True only while a grown-up-tapped Refresh is in flight, so the button
+    /// can show a spinner. The background poll leaves this alone.
+    @Published private(set) var isRefreshing = false
+    /// Stamped on every attempt, good or bad. Publishing this on each poll is
+    /// what re-renders the header so `isStale` gets recomputed.
+    @Published private(set) var lastAttemptAt: Date? = nil
+
+    /// Six polls' worth. One dropped request should not cry wolf.
+    static let staleAfter: TimeInterval = 90
+
+    /// Has the data gone quiet long enough to warn about?
+    var isStale: Bool {
+        guard let t = lastSyncAt else { return true }
+        return Date().timeIntervalSince(t) > Self.staleAfter
+    }
+
+    /// Pull every shared record at once. Pass `manual: true` from the Refresh
+    /// button; the poll calls it with the default.
+    ///
+    /// `lastSyncAt` only advances when ALL five pulls reached Firebase. A
+    /// partial pull would leave the dashboard showing a mix of new and old
+    /// numbers under a fresh-looking timestamp, which is the exact lie this
+    /// whole feature exists to prevent.
+    func refreshAll(manual: Bool = false) {
+        if manual { isRefreshing = true }
+        lastAttemptAt = Date()
+
+        let group = DispatchGroup()
+        let lock = NSLock()
+        var allReached = true
+        func step(_ reached: Bool) {
+            lock.lock(); allReached = allReached && reached; lock.unlock()
+            group.leave()
+        }
+
+        group.enter(); pullTime(step)
+        group.enter(); pullProgress(step)
+        group.enter(); pullSettings(step)
+        group.enter(); pullDeviceNames(step)
+        group.enter(); pullExcluded(step)
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            if allReached { self.lastSyncAt = Date() }
+            if manual { self.isRefreshing = false }
+        }
+    }
+
     func writeSettings(_ s: FamilySettings) {
         settings = s
         guard let data = try? JSONEncoder().encode(s) else { return }
@@ -197,9 +254,10 @@ final class FamilySync: ObservableObject {
     }
 
     /// Pull shared grown-up settings from Firebase.
-    func pullSettings() {
-        guard let url = URL(string: "\(Self.dbURL)/family/settings.json") else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+    func pullSettings(_ done: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: "\(Self.dbURL)/family/settings.json") else { done?(false); return }
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
+            defer { done?(err == nil) }
             guard let data = data, data.count > 4,
                   let s = try? JSONDecoder().decode(FamilySettings.self, from: data) else { return }
             Task { @MainActor in if self?.settings != s { self?.settings = s } }
@@ -207,9 +265,10 @@ final class FamilySync: ObservableObject {
     }
 
     /// Pull grown-up-assigned device names from Firebase.
-    func pullDeviceNames() {
-        guard let url = URL(string: "\(Self.dbURL)/family/deviceNames.json") else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+    func pullDeviceNames(_ done: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: "\(Self.dbURL)/family/deviceNames.json") else { done?(false); return }
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
+            defer { done?(err == nil) }
             guard let data = data, data.count > 4,
                   let obj = try? JSONDecoder().decode([String: String].self, from: data) else { return }
             Task { @MainActor in if self?.deviceNames != obj { self?.deviceNames = obj } }
@@ -217,9 +276,10 @@ final class FamilySync: ObservableObject {
     }
 
     /// Pull the set of "don't count" devices from Firebase.
-    func pullExcluded() {
-        guard let url = URL(string: "\(Self.dbURL)/family/excludedDevices.json") else { return }
+    func pullExcluded(_ done: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: "\(Self.dbURL)/family/excludedDevices.json") else { done?(false); return }
         URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
+            defer { done?(err == nil) }
             guard err == nil, let data = data else { return }
             let obj = (try? JSONDecoder().decode([String: Bool].self, from: data)) ?? [:]
             let ids = Set(obj.filter { $0.value }.keys)
@@ -308,9 +368,9 @@ final class FamilySync: ObservableObject {
         store.synchronize()
         reload()
         // Start the shared sync (time + progress): pull now, then poll.
-        pullTime(); pullProgress(); pullSettings(); pullDeviceNames(); pullExcluded()
+        refreshAll()
         pollTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.pullTime(); self?.pullProgress(); self?.pullSettings(); self?.pullDeviceNames(); self?.pullExcluded() }
+            Task { @MainActor in self?.refreshAll() }
         }
     }
 
@@ -361,9 +421,10 @@ final class FamilySync: ObservableObject {
     // MARK: - Firebase shared time (REST)
 
     /// Pull the shared pool from Firebase and publish it if it changed.
-    func pullTime() {
-        guard let url = URL(string: "\(Self.dbURL)/family.json") else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+    func pullTime(_ done: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: "\(Self.dbURL)/family.json") else { done?(false); return }
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
+            defer { done?(err == nil) }
             guard let data = data,
                   let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
             else { return }
@@ -400,9 +461,10 @@ final class FamilySync: ObservableObject {
     // MARK: - Firebase shared progress (REST)
 
     /// Pull every device's progress snapshot from Firebase.
-    func pullProgress() {
-        guard let url = URL(string: "\(Self.dbURL)/family/progress.json") else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+    func pullProgress(_ done: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: "\(Self.dbURL)/family/progress.json") else { done?(false); return }
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
+            defer { done?(err == nil) }
             guard let data = data, data.count > 4,
                   let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
             else { return }

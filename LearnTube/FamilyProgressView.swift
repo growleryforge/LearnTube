@@ -353,6 +353,7 @@ struct TodayDigestView: View {
                 Spacer()
                 Text(df.string(from: Date())).font(.system(size: 15, weight: .medium, design: .rounded)).foregroundStyle(Theme.textSecondary)
             }
+            syncRow
             HStack(spacing: 10) {
                 kpi(finishedSkills > 0 ? "\(cleanSkills)/\(finishedSkills)" : "—", "clean runs",
                     finishedSkills > 0 && cleanSkills == finishedSkills ? Theme.green : (cleanSkills == 0 ? .orange : Theme.gold))
@@ -372,6 +373,54 @@ struct TodayDigestView: View {
         }
         .padding(16).frame(maxWidth: .infinity, alignment: .leading)
         .background(Theme.surface).clipShape(RoundedRectangle(cornerRadius: 18))
+    }
+
+    /// When this dashboard last heard from the family sync, plus a manual pull.
+    /// Everything above and below it is only as current as this line says.
+    /// Normally the 15s poll keeps the time ticking along on its own; if a pull
+    /// stops landing, the timestamp visibly falls behind and the row turns gold.
+    private var syncRow: some View {
+        let sync = state.family
+        let tf = DateFormatter(); tf.dateFormat = "h:mm a"
+        let stale = sync.isStale
+        let tint: Color = stale ? Theme.gold : Theme.textSecondary
+        return HStack(spacing: 8) {
+            Image(systemName: stale ? "exclamationmark.circle.fill" : "checkmark.circle.fill")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(stale ? Theme.gold : Theme.green)
+            Text(sync.lastSyncAt.map { "Updated \(tf.string(from: $0))" } ?? "Not synced yet")
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(tint)
+                .monospacedDigit()
+            if stale && sync.lastSyncAt != nil {
+                Text("· may be out of date")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Theme.gold)
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 8)
+            Button { sync.refreshAll(manual: true) } label: {
+                HStack(spacing: 6) {
+                    if sync.isRefreshing {
+                        ProgressView()
+                            .scaleEffect(0.6)
+                            .frame(width: 14, height: 14)
+                    } else {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 13, weight: .bold))
+                    }
+                    Text(sync.isRefreshing ? "Refreshing…" : "Refresh")
+                        .font(.system(size: 14, weight: .heavy, design: .rounded))
+                        .fixedSize()
+                }
+                .foregroundStyle(Theme.gold)
+                .padding(.horizontal, 12).padding(.vertical, 7)
+                .background(Theme.gold.opacity(0.16))
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+            .disabled(sync.isRefreshing)
+        }
     }
 
     private func kpi(_ value: String, _ label: String, _ color: Color) -> some View {
