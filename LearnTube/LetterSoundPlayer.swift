@@ -127,7 +127,7 @@ struct LetterSoundPlayer: View {
             SFX.win(); Leo.say("\(q.target.upper) says \(q.target.spoken), like \(q.target.word)!")
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             missed += 1
@@ -136,7 +136,7 @@ struct LetterSoundPlayer: View {
             GameStats.recordMiss(prompt: "Which letter says \(q.target.sound) (\(q.target.word))?",
                                  tapped: letter.upper, correct: q.target.upper)
             Leo.say("\(letter.upper) says \(letter.spoken). Listen again: \(q.target.spoken), \(q.target.word).", slow: true)
-            if missed >= 2 { withAnimation { revealed = true } }
+            if missed >= 2 { GameStats.oweRound(speak: false); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) { wrongId = nil }
         }
     }

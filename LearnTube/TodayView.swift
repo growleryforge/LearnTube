@@ -344,7 +344,7 @@ struct StopTile: View {
     private var mastered: Bool { ladder == nil && plays >= masteryGoal }
     private var masteryLabel: String {
         if maxed { return "All done today!" }
-        if let l = ladder { return "Step \(l.rung) of \(l.top) · \(l.onRung)/\(masteryGoal)" }
+        if let l = ladder { return "Level \(l.rung) of \(l.top) · \(l.onRung)/\(masteryGoal)" }
         return mastered ? "Mastered 🏆 · \(plays) plays" : "Mastery \(plays)/\(masteryGoal)"
     }
 

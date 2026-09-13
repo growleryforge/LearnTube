@@ -135,13 +135,14 @@ struct SpellPlayer: View {
                 Leo.say("\(letters.map(spoken).joined(separator: ", ")). \(word.word)!", slow: true)
                 withAnimation { cheer = true }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
-                    if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                    if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
                 }
             } else {
                 Leo.say(spoken(tiles[i]), slow: true)
             }
         } else {
             missed += 1
+            if missed == 2 { GameStats.oweRound(speak: false) }   // shown the letter: owes a round
             wrongIndex = i; SFX.wrong()
             GameStats.recordMiss(prompt: "Build \(word.word) (letter \(filled + 1))", tapped: String(tiles[i]), correct: String(letters[filled]))
             Leo.say("Not \(String(tiles[i])). \(word.word) needs \(spoken(letters[filled])).", slow: true)

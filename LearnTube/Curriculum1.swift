@@ -373,13 +373,15 @@ extension Curriculum {
         Skill(id: "ST-R2", grade: 0, subject: .reading,
               title: "Finish the Story",
               standard: "Stretch · CCSS RF.1",
-              activity: "Pick the word that makes the sentence make sense!",
+              activity: "Carry the missing word into the sentence and make it make sense!",
               parentTip: "Read the whole sentence with each choice and hear which one sounds right.",
-              lesson: .quiz([
-                Question("I ___ the dog.", correct: "👀 see", wrong: ["☀️ sun", "🪑 sit"]),
-                Question("We ___ to the park.", correct: "🚶 go", wrong: ["🎁 got", "🍬 gum"]),
-                Question("The bird can ___.", correct: "🕊️ fly", wrong: ["🔧 fix", "🎉 fun"]),
-                Question("I ___ a big cake.", correct: "👍 like", wrong: ["🏞️ lake", "👄 lip"])
+              lesson: .buildSentence(prompt: "A word is missing. Drag the right one into the gap.", lines: [
+                SentenceLine("🐶", "I", "the dog.", answer: "see", distractors: ["sun", "sit"]),
+                SentenceLine("🏞️", "We", "to the park.", answer: "go", distractors: ["got", "gum"]),
+                SentenceLine("🐦", "The bird can", "", answer: "fly", distractors: ["fix", "fun"]),
+                SentenceLine("🎂", "I", "a big cake.", answer: "like", distractors: ["lake", "lip"]),
+                SentenceLine("🐱", "The cat is", "the mat.", answer: "on", distractors: ["up", "if"]),
+                SentenceLine("☀️", "The sun is", "today.", answer: "hot", distractors: ["hat", "hop"])
               ]))
     ]
 }
@@ -458,28 +460,39 @@ extension Curriculum {
         Skill(id: "WU-R2", grade: -2, subject: .reading,
               title: "Beginning Sounds",
               standard: "Warm-Up · CCSS RF.K.3",
-              activity: "Every word starts with a sound. Tap the letter it starts with!",
+              activity: "Every word starts with a sound. Drag each one to its letter!",
               parentTip: "Say the word slowly and stretch the first sound: mmmoon starts with m.",
-              lesson: .quiz([
-                Question("🐶 Dog starts with...", correct: "d", wrong: ["b", "m"]),
-                Question("🐱 Cat starts with...", correct: "c", wrong: ["s", "t"]),
-                Question("🌙 Moon starts with...", correct: "m", wrong: ["n", "w"]),
-                Question("🐷 Pig starts with...", correct: "p", wrong: ["b", "d"])
-              ])),
+              lesson: .sort(prompt: "Listen to the word. Drag it to the letter it starts with.",
+                            bins: [SortBin("d", "d", "d"), SortBin("c", "c", "c"),
+                                   SortBin("m", "m", "m"), SortBin("p", "p", "p")],
+                            items: [
+                              SortThing("🐶", "dog", "d"), SortThing("🦆", "duck", "d"),
+                              SortThing("🚪", "door", "d"), SortThing("🥁", "drum", "d"),
+                              SortThing("🐱", "cat", "c"), SortThing("🐮", "cow", "c"),
+                              SortThing("🚗", "car", "c"), SortThing("🥤", "cup", "c"),
+                              SortThing("🌙", "moon", "m"), SortThing("🐭", "mouse", "m"),
+                              SortThing("🥛", "milk", "m"), SortThing("🗺️", "map", "m"),
+                              SortThing("🐷", "pig", "p"), SortThing("🖊️", "pen", "p"),
+                              SortThing("🍐", "pear", "p"), SortThing("🍕", "pizza", "p")
+                            ])),
 
         Skill(id: "WU-R3", grade: -2, subject: .reading,
               title: "Rhyme Time",
               standard: "Warm-Up · CCSS RF.K.2",
-              activity: "Rhyming words end the same. Tap the one that rhymes!",
+              activity: "Rhyming words end the same. Drag each word to its rhyme family!",
               parentTip: "Cat, hat, bat all end in -at. Make silly rhymes together.",
-              lesson: .quiz([
-                // Two choices, clear word families: the rhyme shares the exact
-                // ending, the other word sounds nothing alike.
-                Question("Which word rhymes with CAT?  (…at)", correct: "hat", wrong: ["dog"]),
-                Question("Which word rhymes with DOG?  (…og)", correct: "log", wrong: ["cat"]),
-                Question("Which word rhymes with SUN?  (…un)", correct: "bun", wrong: ["dog"]),
-                Question("Which word rhymes with PIG?  (…ig)", correct: "wig", wrong: ["cup"])
-              ]))
+              lesson: .sort(prompt: "Every word lands in the family it rhymes with. Drag it home!",
+                            bins: [SortBin("at", "…at  like cat", "🐱"),
+                                   SortBin("og", "…og  like dog", "🐶"),
+                                   SortBin("ig", "…ig  like pig", "🐷")],
+                            items: [
+                              SortThing("🎩", "hat", "at"), SortThing("🦇", "bat", "at"),
+                              SortThing("🐀", "rat", "at"), SortThing("🧉", "mat", "at"),
+                              SortThing("🪵", "log", "og"), SortThing("🐸", "frog", "og"),
+                              SortThing("🐗", "hog", "og"), SortThing("🌫️", "fog", "og"),
+                              SortThing("💇", "wig", "ig"), SortThing("⛏️", "dig", "ig"),
+                              SortThing("🌿", "twig", "ig"), SortThing("🫒", "fig", "ig")
+                            ]))
     ]
 }
 
@@ -540,25 +553,38 @@ extension Curriculum {
         Skill(id: "TK-M6", grade: -1, subject: .math,
               title: "Find the Shape",
               standard: "CA PLF Math",
-              activity: "Shapes have names. Tap the one that matches!",
+              activity: "Shapes have names. Drag each thing to the shape it is!",
               parentTip: "Hunt for circles and squares around the house together.",
-              lesson: .quiz([
-                Question("Which one is a circle?", correct: "🔵", wrong: ["🟦", "🔺"]),
-                Question("Which one is a square?", correct: "🟦", wrong: ["🔵", "🔺"]),
-                Question("Which one is a triangle?", correct: "🔺", wrong: ["🔵", "🟦"])
-              ])),
+              lesson: .sort(prompt: "What shape is it? Drag each one to its shape.",
+                            bins: [SortBin("circle", "Circle", "🔵"), SortBin("square", "Square", "🟦"),
+                                   SortBin("triangle", "Triangle", "🔺")],
+                            items: [
+                              SortThing("⚽️", "ball", "circle"), SortThing("🍪", "cookie", "circle"),
+                              SortThing("🕐", "clock", "circle"), SortThing("🪙", "coin", "circle"),
+                              SortThing("🪟", "window", "square"), SortThing("📦", "box", "square"),
+                              SortThing("🧇", "waffle", "square"), SortThing("🖼️", "picture frame", "square"),
+                              SortThing("🍕", "pizza slice", "triangle"), SortThing("⛰️", "mountain", "triangle"),
+                              SortThing("🎄", "fir tree", "triangle"), SortThing("📐", "set square", "triangle")
+                            ], perRound: 9)),
 
         Skill(id: "TK-C1", grade: -1, subject: .math,
               title: "Colors",
               standard: "CA PLF Math",
-              activity: "Each color has a name. Tap the right color!",
+              activity: "Each colour has a name. Drag everything into its colour bin!",
               parentTip: "Name colors of his toys and clothes through the day.",
-              lesson: .quiz([
-                Question("Which one is RED?", correct: "🔴", wrong: ["🔵", "🟢"]),
-                Question("Which one is BLUE?", correct: "🔵", wrong: ["🔴", "🟡"]),
-                Question("Which one is GREEN?", correct: "🟢", wrong: ["🔴", "🔵"]),
-                Question("Which one is YELLOW?", correct: "🟡", wrong: ["🟢", "🔴"])
-              ])),
+              lesson: .sort(prompt: "Tidy up by colour. Drag each thing into the bin that matches.",
+                            bins: [SortBin("red", "Red", "🔴"), SortBin("blue", "Blue", "🔵"),
+                                   SortBin("green", "Green", "🟢"), SortBin("yellow", "Yellow", "🟡")],
+                            items: [
+                              SortThing("🍎", "apple", "red"), SortThing("🍓", "strawberry", "red"),
+                              SortThing("🌹", "rose", "red"), SortThing("🚒", "fire engine", "red"),
+                              SortThing("🫐", "blueberry", "blue"), SortThing("🐳", "whale", "blue"),
+                              SortThing("👖", "jeans", "blue"), SortThing("🧊", "ice", "blue"),
+                              SortThing("🐸", "frog", "green"), SortThing("🥦", "broccoli", "green"),
+                              SortThing("🌳", "tree", "green"), SortThing("🐛", "caterpillar", "green"),
+                              SortThing("🍌", "banana", "yellow"), SortThing("🌻", "sunflower", "yellow"),
+                              SortThing("🐥", "chick", "yellow"), SortThing("🧀", "cheese", "yellow")
+                            ])),
 
         // ---------- Reading & letters ----------
         Skill(id: "TK-R1", grade: -1, subject: .reading,
@@ -573,26 +599,33 @@ extension Curriculum {
         Skill(id: "TK-R2", grade: -1, subject: .reading,
               title: "First Sounds",
               standard: "CA PLF Language",
-              activity: "Every word starts with a sound. Tap the first letter!",
+              activity: "Every word starts with a sound. Drag each one to its letter!",
               parentTip: "Say the word slowly and stretch the first sound: mmmoon.",
-              lesson: .quiz([
-                Question("🐶 Dog starts with...", correct: "D", wrong: ["B", "M"]),
-                Question("🐱 Cat starts with...", correct: "C", wrong: ["T", "S"]),
-                Question("🐻 Bear starts with...", correct: "B", wrong: ["D", "P"]),
-                Question("🐷 Pig starts with...", correct: "P", wrong: ["B", "G"])
-              ])),
+              lesson: .sort(prompt: "Listen to the word. Which letter does it start with?",
+                            bins: [SortBin("d", "D", "D"), SortBin("b", "B", "B"), SortBin("p", "P", "P")],
+                            items: [
+                              SortThing("🐶", "dog", "d"), SortThing("🦆", "duck", "d"),
+                              SortThing("🥁", "drum", "d"), SortThing("🚪", "door", "d"),
+                              SortThing("🐻", "bear", "b"), SortThing("⚽️", "ball", "b"),
+                              SortThing("🐝", "bee", "b"), SortThing("🛏️", "bed", "b"),
+                              SortThing("🐷", "pig", "p"), SortThing("🖊️", "pen", "p"),
+                              SortThing("🍐", "pear", "p"), SortThing("🍕", "pizza", "p")
+                            ], perRound: 6)),
 
         Skill(id: "TK-R3", grade: -1, subject: .reading,
               title: "Rhyme Time",
               standard: "CA PLF Language",
-              activity: "Rhyming words sound the same at the end. Tap the one that rhymes!",
+              activity: "Rhyming words sound the same at the end. Drag each word home!",
               parentTip: "Sing rhyming songs — the ear for rhyme comes before reading.",
-              lesson: .quiz([
-                Question("Which word rhymes with CAT?  (…at)", correct: "hat", wrong: ["dog"]),
-                Question("Which word rhymes with DOG?  (…og)", correct: "log", wrong: ["fish"]),
-                Question("Which word rhymes with BALL?  (…all)", correct: "wall", wrong: ["pig"]),
-                Question("Which word rhymes with BEE?  (…ee)", correct: "tree", wrong: ["cup"])
-              ])),
+              lesson: .sort(prompt: "Words that rhyme go home together. Cat or dog?",
+                            bins: [SortBin("at", "…at  like cat", "🐱"),
+                                   SortBin("og", "…og  like dog", "🐶")],
+                            items: [
+                              SortThing("🎩", "hat", "at"), SortThing("🦇", "bat", "at"),
+                              SortThing("🐀", "rat", "at"), SortThing("🧉", "mat", "at"),
+                              SortThing("🪵", "log", "og"), SortThing("🐸", "frog", "og"),
+                              SortThing("🐗", "hog", "og"), SortThing("🌫️", "fog", "og")
+                            ], perRound: 6)),
 
         // ---------- Science & animals (his special interest) ----------
         Skill(id: "TK-S1", grade: -1, subject: .science,
@@ -904,75 +937,100 @@ extension Curriculum {
         Skill(id: "FR-R1", grade: 1, subject: .reading,
               title: "Read the Word",
               standard: "Readiness · CCSS RF.1.3",
-              activity: "Read the word, then tap the picture it means!",
-              parentTip: "Sound it out slowly, then tap what it means. Picture answers, so he truly reads the word.",
-              lesson: .quiz([
-                Question("Read it:  cat", correct: "🐱", wrong: ["🐶"]),
-                Question("Read it:  dog", correct: "🐶", wrong: ["🐷"]),
-                Question("Read it:  pig", correct: "🐷", wrong: ["🐔"]),
-                Question("Read it:  sun", correct: "☀️", wrong: ["🌙"]),
-                Question("Read it:  bug", correct: "🐛", wrong: ["🐟"])
-              ])),
+              activity: "Read each word, then drag the picture that matches it!",
+              parentTip: "Sound it out slowly. The pens are words, not pictures, so he truly has to read.",
+              lesson: .sort(prompt: "Read the words on the pens, then take each picture to its word.",
+                            bins: [SortBin("cat", "cat", "cat"), SortBin("dog", "dog", "dog"),
+                                   SortBin("pig", "pig", "pig"), SortBin("sun", "sun", "sun")],
+                            items: [
+                              SortThing("🐱", "cat", "cat"), SortThing("🐈", "cat", "cat"),
+                              SortThing("🐶", "dog", "dog"), SortThing("🐕", "dog", "dog"),
+                              SortThing("🐷", "pig", "pig"), SortThing("🐖", "pig", "pig"),
+                              SortThing("☀️", "sun", "sun"), SortThing("🌞", "sun", "sun")
+                            ])),
 
         Skill(id: "FR-R2", grade: 1, subject: .reading,
               title: "Read the Word 2",
               standard: "Readiness · CCSS RF.1.3",
-              activity: "More words to read! Tap the picture it means.",
+              activity: "More words to read! Drag each picture to the word that says it.",
               parentTip: "Three-sound words like hen and fox. Stretch the sounds, then blend.",
-              lesson: .quiz([
-                Question("Read it:  hen", correct: "🐔", wrong: ["🐮"]),
-                Question("Read it:  fox", correct: "🦊", wrong: ["🐭"]),
-                Question("Read it:  bee", correct: "🐝", wrong: ["🐛"]),
-                Question("Read it:  cow", correct: "🐮", wrong: ["🐷"]),
-                Question("Read it:  fish", correct: "🐟", wrong: ["🐤"])
-              ])),
+              lesson: .sort(prompt: "Read the words, then bring each animal to its own word.",
+                            bins: [SortBin("hen", "hen", "hen"), SortBin("fox", "fox", "fox"),
+                                   SortBin("bee", "bee", "bee"), SortBin("cow", "cow", "cow")],
+                            items: [
+                              SortThing("🐔", "hen", "hen"), SortThing("🐓", "hen", "hen"),
+                              SortThing("🦊", "fox", "fox"), SortThing("🦊", "fox", "fox"),
+                              SortThing("🐝", "bee", "bee"), SortThing("🍯", "bee", "bee"),
+                              SortThing("🐮", "cow", "cow"), SortThing("🐄", "cow", "cow")
+                            ])),
 
         Skill(id: "FR-R3", grade: 1, subject: .reading,
               title: "Word Families",
               standard: "Readiness · CCSS RF.1.3",
-              activity: "Words in a family end the same. Tap the one that fits!",
+              activity: "Words in a family end the same. Send each word home to its family!",
               parentTip: "The -ig family: pig, wig, dig. Same ending, just a new first sound.",
-              lesson: .quiz([
-                Question("Which word is in the  -ig  family?", correct: "wig", wrong: ["cup"]),
-                Question("Which word is in the  -op  family?", correct: "mop", wrong: ["cat"]),
-                Question("Which word is in the  -ed  family?", correct: "bed", wrong: ["dog"]),
-                Question("Which word is in the  -un  family?", correct: "bun", wrong: ["pig"])
-              ])),
+              lesson: .sort(prompt: "Same ending, same family. Send each word home.",
+                            bins: [SortBin("ig", "-ig", "🐷"), SortBin("op", "-op", "🧹"),
+                                   SortBin("ed", "-ed", "🛏️"), SortBin("un", "-un", "☀️")],
+                            items: [
+                              SortThing("💇", "wig", "ig"), SortThing("⛏️", "dig", "ig"),
+                              SortThing("🫒", "fig", "ig"), SortThing("🌿", "twig", "ig"),
+                              SortThing("🧹", "mop", "op"), SortThing("🛍️", "shop", "op"),
+                              SortThing("🔝", "top", "op"), SortThing("🛑", "stop", "op"),
+                              SortThing("🛏️", "bed", "ed"), SortThing("🔴", "red", "ed"),
+                              SortThing("🍞", "bread", "ed"), SortThing("🧵", "thread", "ed"),
+                              SortThing("🥐", "bun", "un"), SortThing("🏃", "run", "un"),
+                              SortThing("🎉", "fun", "un"), SortThing("☀️", "sun", "un")
+                            ])),
 
         Skill(id: "FR-R4", grade: 1, subject: .reading,
               title: "Blends",
               standard: "Readiness · CCSS RF.1.2",
-              activity: "Two letters slide together at the start. Tap the picture!",
+              activity: "Two letters slide together at the start. Drag each one to its blend!",
               parentTip: "In a blend you hear both letters fast: st in star, fr in frog, sn in snake.",
-              lesson: .quiz([
-                Question("Starts with  st  (like star)", correct: "⭐️", wrong: ["🐟"]),
-                Question("Starts with  fr  (like frog)", correct: "🐸", wrong: ["🐶"]),
-                Question("Starts with  sn  (like snake)", correct: "🐍", wrong: ["🐰"]),
-                Question("Starts with  tr  (like tree)", correct: "🌳", wrong: ["🐝"])
-              ])),
+              lesson: .sort(prompt: "Two letters, sliding together. Which blend does it start with?",
+                            bins: [SortBin("st", "st", "st"), SortBin("fr", "fr", "fr"),
+                                   SortBin("sn", "sn", "sn"), SortBin("tr", "tr", "tr")],
+                            items: [
+                              SortThing("⭐️", "star", "st"), SortThing("🪜", "stairs", "st"),
+                              SortThing("🛑", "stop", "st"), SortThing("🥢", "stick", "st"),
+                              SortThing("🐸", "frog", "fr"), SortThing("🍟", "fries", "fr"),
+                              SortThing("🍓", "fruit", "fr"), SortThing("🧊", "frost", "fr"),
+                              SortThing("🐍", "snake", "sn"), SortThing("🐌", "snail", "sn"),
+                              SortThing("❄️", "snow", "sn"), SortThing("👃", "snout", "sn"),
+                              SortThing("🌳", "tree", "tr"), SortThing("🚂", "train", "tr"),
+                              SortThing("🚚", "truck", "tr"), SortThing("🏆", "trophy", "tr")
+                            ])),
 
         Skill(id: "FR-R5", grade: 1, subject: .reading,
               title: "Team Sounds",
               standard: "Readiness · CCSS RF.1.3",
-              activity: "Two letters make ONE sound. Tap the picture!",
+              activity: "Two letters make ONE sound. Drag each one to its team!",
               parentTip: "sh, ch, and th each make one sound from two letters: ship, chick, thumb.",
-              lesson: .quiz([
-                Question("Starts with  sh  (like ship)", correct: "🚢", wrong: ["🐟"]),
-                Question("Starts with  ch  (like chick)", correct: "🐤", wrong: ["🐛"]),
-                Question("Starts with  sh  (like sheep)", correct: "🐑", wrong: ["🐮"]),
-                Question("Starts with  th  (like thumb)", correct: "👍", wrong: ["🐶"])
-              ])),
+              lesson: .sort(prompt: "Two letters, one sound. Which team does it belong to?",
+                            bins: [SortBin("sh", "sh", "sh"), SortBin("ch", "ch", "ch"),
+                                   SortBin("th", "th", "th")],
+                            items: [
+                              SortThing("🚢", "ship", "sh"), SortThing("🐑", "sheep", "sh"),
+                              SortThing("🐚", "shell", "sh"), SortThing("👟", "shoe", "sh"),
+                              SortThing("🐤", "chick", "ch"), SortThing("🧀", "cheese", "ch"),
+                              SortThing("🍒", "cherry", "ch"), SortThing("🪑", "chair", "ch"),
+                              SortThing("👍", "thumb", "th"), SortThing("🌩️", "thunder", "th"),
+                              SortThing("3️⃣", "three", "th"), SortThing("🌵", "thorn", "th")
+                            ], perRound: 9)),
 
         Skill(id: "FR-R6", grade: 1, subject: .reading,
               title: "Finish the Sentence",
               standard: "Readiness · CCSS RF.1.4",
-              activity: "Pick the word that makes the sentence make sense!",
+              activity: "Carry the missing word into the sentence and make it make sense!",
               parentTip: "Read the whole sentence with each choice and hear which one sounds right.",
-              lesson: .quiz([
-                Question("The 🐟 can ___.", correct: "🏊 swim", wrong: ["🦘 jump"]),
-                Question("The 🐦 can ___.", correct: "🕊️ fly", wrong: ["🪑 sit"]),
-                Question("I ___ my mom.", correct: "❤️ love", wrong: ["🏃 run"]),
-                Question("We ___ to the barn.", correct: "🚶 go", wrong: ["☀️ sun"])
+              lesson: .buildSentence(prompt: "Drag the word that finishes the sentence.", lines: [
+                SentenceLine("🐟", "The fish can", "", answer: "swim", distractors: ["jump", "sing"]),
+                SentenceLine("🐦", "The bird can", "", answer: "fly", distractors: ["sit", "swim"]),
+                SentenceLine("❤️", "I", "my mom.", answer: "love", distractors: ["run", "red"]),
+                SentenceLine("🏚️", "We", "to the barn.", answer: "go", distractors: ["sun", "got"]),
+                SentenceLine("🐴", "The horse can", "", answer: "run", distractors: ["read", "rain"]),
+                SentenceLine("🐝", "The bee is", "the flower.", answer: "on", distractors: ["and", "one"])
               ])),
 
         Skill(id: "FR-R7", grade: 1, subject: .reading,
@@ -991,61 +1049,87 @@ extension Curriculum {
         Skill(id: "FR-S1", grade: 1, subject: .science,
               title: "Alive or Not?",
               standard: "Readiness · CA NGSS 1-LS",
-              activity: "Living things grow and eat. Tap the one that is ALIVE!",
+              activity: "Living things grow and eat. Drag each one into the right pen!",
               parentTip: "Living things need food, water, and air and can grow. Rocks and toys do not.",
-              lesson: .quiz([
-                Question("Which one is ALIVE?", correct: "🐶", wrong: ["🪨"]),
-                Question("Which one is ALIVE?", correct: "🌷", wrong: ["🚗"]),
-                Question("Which one is ALIVE?", correct: "🐟", wrong: ["⚽️"]),
-                Question("Which one is ALIVE?", correct: "🐝", wrong: ["🧱"])
-              ])),
+              lesson: .sort(prompt: "Alive, or not alive? Drag each one where it goes.",
+                            bins: [SortBin("alive", "Alive", "🌱"), SortBin("not", "Not alive", "🪨")],
+                            items: [
+                              SortThing("🐶", "dog", "alive"), SortThing("🌷", "flower", "alive"),
+                              SortThing("🐟", "fish", "alive"), SortThing("🐝", "bee", "alive"),
+                              SortThing("🌳", "tree", "alive"), SortThing("🐔", "hen", "alive"),
+                              SortThing("🐛", "worm", "alive"), SortThing("🐴", "horse", "alive"),
+                              SortThing("🪨", "rock", "not"), SortThing("🚗", "car", "not"),
+                              SortThing("⚽️", "ball", "not"), SortThing("🧱", "brick", "not"),
+                              SortThing("🥄", "spoon", "not"), SortThing("🪣", "bucket", "not"),
+                              SortThing("📗", "book", "not"), SortThing("🪑", "chair", "not")
+                            ])),
 
         Skill(id: "FR-S2", grade: 1, subject: .science,
               title: "Animal Teams",
               standard: "Readiness · CA NGSS 1-LS1",
-              activity: "Animals come in groups. Tap the group it belongs to!",
+              activity: "Animals come in groups. Drag each animal to its own team!",
               parentTip: "Mammals have fur, birds have feathers, fish have fins, bugs have six legs.",
-              lesson: .quiz([
-                Question("A 🐶 dog is a...", correct: "mammal", wrong: ["fish"]),
-                Question("A 🐟 that swims with fins is a...", correct: "fish", wrong: ["bird"]),
-                Question("A 🐦 robin is a...", correct: "bird", wrong: ["bug"]),
-                Question("A 🐝 bee is a...", correct: "bug", wrong: ["fish"])
-              ])),
+              lesson: .sort(prompt: "Put every animal on its team. Fur, feathers, fins or six legs?",
+                            bins: [SortBin("mammal", "Fur", "🐕"), SortBin("bird", "Feathers", "🐦"),
+                                   SortBin("fish", "Fins", "🐠"), SortBin("bug", "Six legs", "🐞")],
+                            items: [
+                              SortThing("🐶", "dog", "mammal"), SortThing("🐮", "cow", "mammal"),
+                              SortThing("🐰", "rabbit", "mammal"), SortThing("🐴", "horse", "mammal"),
+                              SortThing("🐦", "robin", "bird"), SortThing("🦆", "duck", "bird"),
+                              SortThing("🐔", "hen", "bird"), SortThing("🦉", "owl", "bird"),
+                              SortThing("🐟", "fish", "fish"), SortThing("🐠", "goldfish", "fish"),
+                              SortThing("🦈", "shark", "fish"), SortThing("🐡", "pufferfish", "fish"),
+                              SortThing("🐝", "bee", "bug"), SortThing("🐞", "ladybug", "bug"),
+                              SortThing("🦗", "cricket", "bug"), SortThing("🐜", "ant", "bug")
+                            ])),
 
         Skill(id: "FR-S3", grade: 1, subject: .science,
               title: "Who Eats What?",
               standard: "Readiness · CA NGSS K-LS1",
-              activity: "Every animal has a favorite food. Tap what it eats!",
+              activity: "Every animal has a favourite food. Drag the food to the animal!",
               parentTip: "Rabbits love carrots, cows eat grass, bees drink from flowers. Talk about your farm animals.",
-              lesson: .quiz([
-                Question("A 🐰 rabbit loves to eat...", correct: "🥕", wrong: ["🦴"]),
-                Question("A 🐮 cow eats...", correct: "🌾", wrong: ["🐟"]),
-                Question("A 🐝 bee drinks from...", correct: "🌷", wrong: ["🪨"]),
-                Question("A 🐶 dog chews a...", correct: "🦴", wrong: ["🌷"])
-              ])),
+              lesson: .sort(prompt: "Feed the animals. Drag each food to the one that eats it.",
+                            bins: [SortBin("rabbit", "Rabbit", "🐰"), SortBin("cow", "Cow", "🐮"),
+                                   SortBin("dog", "Dog", "🐶"), SortBin("bee", "Bee", "🐝")],
+                            items: [
+                              SortThing("🥕", "carrot", "rabbit"), SortThing("🥬", "lettuce", "rabbit"),
+                              SortThing("🌾", "hay", "cow"), SortThing("🌿", "grass", "cow"),
+                              SortThing("🦴", "bone", "dog"), SortThing("🍖", "meat", "dog"),
+                              SortThing("🌷", "tulip", "bee"), SortThing("🌼", "daisy", "bee")
+                            ])),
 
         Skill(id: "FR-S4", grade: 1, subject: .science,
               title: "Float or Sink?",
               standard: "Readiness · CA NGSS Physical Science",
-              activity: "Some things float, some sink. Tap what happens!",
+              activity: "Some things float, some sink. Drop each one in the pond!",
               parentTip: "Try it in the bathtub! Heavy dense things sink, light things float.",
-              lesson: .quiz([
-                Question("A heavy 🪨 rock will...", correct: "sink", wrong: ["float"]),
-                Question("A 🦆 duck will...", correct: "float", wrong: ["sink"]),
-                Question("A 🍃 leaf will...", correct: "float", wrong: ["sink"]),
-                Question("A metal 🔩 will...", correct: "sink", wrong: ["float"])
-              ])),
+              lesson: .sort(prompt: "Into the pond! Does it float on top, or sink to the bottom?",
+                            bins: [SortBin("float", "Floats", "🫧"), SortBin("sink", "Sinks", "⬇️")],
+                            items: [
+                              SortThing("🦆", "duck", "float"), SortThing("🍃", "leaf", "float"),
+                              SortThing("⛵️", "boat", "float"), SortThing("🍎", "apple", "float"),
+                              SortThing("🏀", "ball", "float"), SortThing("🪵", "log", "float"),
+                              SortThing("🪶", "feather", "float"), SortThing("🧽", "sponge", "float"),
+                              SortThing("🪨", "rock", "sink"), SortThing("🔩", "bolt", "sink"),
+                              SortThing("🔑", "key", "sink"), SortThing("🪙", "coin", "sink"),
+                              SortThing("🧱", "brick", "sink"), SortThing("🔨", "hammer", "sink"),
+                              SortThing("🥄", "spoon", "sink"), SortThing("⚓️", "anchor", "sink")
+                            ])),
 
         Skill(id: "FR-S5", grade: 1, subject: .life,
               title: "Push or Pull? 2",
               standard: "Readiness · CA NGSS K-PS2",
-              activity: "We move things by pushing or pulling. Tap which one!",
+              activity: "We move things by pushing or pulling. Drag each one to the right hand!",
               parentTip: "A push moves something away, a pull brings it closer. Point them out around the house.",
-              lesson: .quiz([
-                Question("To open a heavy door, you...", correct: "push", wrong: ["eat"]),
-                Question("A wagon behind you, you...", correct: "pull", wrong: ["sing"]),
-                Question("To ring a doorbell, you...", correct: "push", wrong: ["read"]),
-                Question("A dog on a leash, you...", correct: "pull", wrong: ["sleep"])
-              ]))
+              lesson: .sort(prompt: "Push it away, or pull it closer? Drag each one to the right hand.",
+                            bins: [SortBin("push", "Push away", "👋"), SortBin("pull", "Pull closer", "🤏")],
+                            items: [
+                              SortThing("🛒", "shopping cart", "push"), SortThing("🔔", "doorbell", "push"),
+                              SortThing("🚪", "heavy door", "push"), SortThing("🛝", "swing", "push"),
+                              SortThing("🧹", "broom", "push"), SortThing("🚲", "bike pedal", "push"),
+                              SortThing("🛷", "sled", "pull"), SortThing("🪢", "rope", "pull"),
+                              SortThing("🦮", "dog on a leash", "pull"), SortThing("🎣", "fishing line", "pull"),
+                              SortThing("🗄️", "drawer", "pull"), SortThing("🪁", "kite string", "pull")
+                            ]))
     ]
 }

@@ -32,6 +32,22 @@ enum GameStats {
     /// When true, nothing is recorded — used when a grown-up "tries" a game from
     /// the dashboard so their test play never lands in Gabriel's progress.
     static var suppressed = false
+    /// Rounds a game OWES because it had to show him the answer.
+    ///
+    /// Every game teaches after the second miss on a question: the right tile
+    /// lights up so he is never stuck. That is worth keeping. What is not worth
+    /// keeping is what it used to cost him, which was nothing — two deliberate
+    /// wrong taps were the fastest route through a question, and he found that
+    /// out. So a revealed answer now adds a round: being shown it makes the game
+    /// LONGER, never shorter, and getting it right first time is the quick way
+    /// out. Capped, so a genuinely stuck round can't run away from him.
+    static let maxOwedRounds = 2
+    static var owedRounds = 0
+    static func oweRound(speak: Bool = true) {
+        guard owedRounds < maxOwedRounds else { return }
+        owedRounds += 1
+        if speak { Leo.say("Let's learn this one. Here it is.", slow: true) }
+    }
     private static var pendingWrong: [String: Int] = [:]
     private static var pendingStart: [String: Int] = [:]
     /// AppState sets this to flush the deltas into persistent, synced storage.
@@ -48,10 +64,18 @@ enum GameStats {
         onChange?()
     }
 
+    /// When the current game opened, so a finish can be turned into a real
+    /// time-on-task number. Until this existed the app could count what he
+    /// finished but never how long he was actually playing, which is the one
+    /// thing nobody could answer about whether the games are long enough.
+    static var startedAt: Date?
+
     /// A game screen opened for this skill (counts as one "started").
     static func begin(_ id: String) {
         currentSkill = id
         wrongThisGame = 0          // fresh game, no misses yet
+        owedRounds = 0             // fresh game, owes nothing yet
+        startedAt = Date()
         guard !suppressed else { return }
         pendingStart[id, default: 0] += 1
         onChange?()

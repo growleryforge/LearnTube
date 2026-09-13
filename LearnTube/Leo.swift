@@ -24,16 +24,41 @@ enum Leo {
         set { UserDefaults.standard.set(newValue, forKey: idKey) }
     }
 
-    /// English voices, best first.
+    /// iOS ships a pile of NOVELTY voices next to the real ones — Albert, Bad
+    /// News, Bubbles, Zarvox, Trinoids — and they all report "default" quality.
+    /// The old sort was quality, then name, so on any device without an
+    /// Enhanced voice downloaded the alphabetically-first voice won, which is
+    /// "Albert": a croaky joke voice. That is why Leo was unintelligible.
+    /// These are never Leo.
+    private static let novelty: Set<String> = [
+        "Albert", "Bad News", "Bahh", "Bells", "Boing", "Bubbles", "Cellos",
+        "Deranged", "Good News", "Hysterical", "Jester", "Junior", "Kathy",
+        "Organ", "Pipe Organ", "Princess", "Ralph", "Superstar", "Trinoids",
+        "Whisper", "Wobble", "Zarvox", "Fred", "Bruce", "Agnes", "Vicki"
+    ]
+
+    /// Clear, natural, child-friendly voices, in the order we want them. Leo
+    /// takes the best one installed; anything outside this list is a fallback.
+    private static let preferred = [
+        "Ava", "Samantha", "Allison", "Susan", "Nicky", "Zoe", "Evan",
+        "Joelle", "Karen", "Serena", "Moira", "Tessa", "Daniel"
+    ]
+
+    /// English voices, best first: real voices only, highest quality first,
+    /// then our preferred names, then US English, then alphabetical.
     static func candidates() -> [AVSpeechSynthesisVoice] {
-        AVSpeechSynthesisVoice.speechVoices()
-            .filter { $0.language.hasPrefix("en") }
-            .sorted { a, b in
-                if a.quality != b.quality { return a.quality.rawValue > b.quality.rawValue }
-                let aUS = a.language == "en-US", bUS = b.language == "en-US"
-                if aUS != bUS { return aUS }
-                return a.name < b.name
-            }
+        let english = AVSpeechSynthesisVoice.speechVoices().filter { $0.language.hasPrefix("en") }
+        let real = english.filter { !novelty.contains($0.name) }
+        let pool = real.isEmpty ? english : real     // never leave him mute
+        return pool.sorted { a, b in
+            if a.quality != b.quality { return a.quality.rawValue > b.quality.rawValue }
+            let ai = preferred.firstIndex(of: a.name) ?? Int.max
+            let bi = preferred.firstIndex(of: b.name) ?? Int.max
+            if ai != bi { return ai < bi }
+            let aUS = a.language == "en-US", bUS = b.language == "en-US"
+            if aUS != bUS { return aUS }
+            return a.name < b.name
+        }
     }
 
     static func qualityName(_ v: AVSpeechSynthesisVoice) -> String {
@@ -45,7 +70,10 @@ enum Leo {
     }
 
     static var voice: AVSpeechSynthesisVoice? {
-        if !voiceID.isEmpty, let v = AVSpeechSynthesisVoice(identifier: voiceID) { return v }
+        // A voice picked before the novelty filter existed could still be a
+        // joke voice, so a saved choice only counts if it survives the filter.
+        if !voiceID.isEmpty, let v = AVSpeechSynthesisVoice(identifier: voiceID),
+           !novelty.contains(v.name) { return v }
         return candidates().first ?? AVSpeechSynthesisVoice(language: "en-US")
     }
 
@@ -64,8 +92,10 @@ enum Leo {
         if synth.isSpeaking { synth.stopSpeaking(at: .immediate) }
         let u = AVSpeechUtterance(string: clean)
         u.voice = voice
-        u.rate = slow ? 0.36 : 0.45
-        u.pitchMultiplier = 1.08
+        // Slower, and no pitch shift. Pushing the pitch up made a compact voice
+        // sound cuter in theory and mushier in practice.
+        u.rate = slow ? 0.32 : 0.40
+        u.pitchMultiplier = 1.0
         u.postUtteranceDelay = 0.1
         synth.speak(u)
     }

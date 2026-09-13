@@ -452,7 +452,7 @@ struct AdditionPlayer: View {
     var body: some View {
         ZStack {
             VStack(spacing: 18) {
-                ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
 
                 switch phase {
                 case .drag:
@@ -507,7 +507,7 @@ struct AdditionPlayer: View {
     private func celebrate() {
         withAnimation { cheer = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-            if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+            if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
         }
     }
 
@@ -605,7 +605,7 @@ struct SortCountPlayer: View {
         ZStack {
             VStack(spacing: 18) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 if showTally {
@@ -708,7 +708,7 @@ struct SortCountPlayer: View {
         SFX.win()
         withAnimation { cheer = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
-            if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+            if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
         }
     }
 }
@@ -860,7 +860,7 @@ struct ShapesPlayer: View {
         ZStack {
             VStack(spacing: 26) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 Text(q.prompt)
@@ -901,7 +901,7 @@ struct ShapesPlayer: View {
             SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             // Reshuffle: new shapes AND new positions, so mashing and
@@ -993,7 +993,7 @@ struct ShapeSpotPlayer: View {
         ZStack {
             VStack(spacing: 18) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 Text("Tap all the \(target.name)s!")
@@ -1045,7 +1045,7 @@ struct ShapeSpotPlayer: View {
                 SFX.win()
                 withAnimation { cheer = true }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                    if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                    if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
                 }
             }
         } else {
@@ -1152,7 +1152,7 @@ struct LetterDetectivePlayer: View {
         ZStack {
             VStack(spacing: 22) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 // The mystery object - he has to name it and hear its first sound.
@@ -1206,14 +1206,14 @@ struct LetterDetectivePlayer: View {
             SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             missed += 1
             wrongId = letter.id; SFX.wrong()
             GameStats.recordMiss(prompt: "Which letter does \(q.target.emoji) \(q.target.word) start with?",
                                  tapped: letter.upper, correct: q.target.upper)
-            if missed >= 2 { withAnimation { revealed = true } }   // teach: show and hold the answer
+            if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }   // teach: show and hold the answer
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if revealed { return }        // stop reshuffling — the answer stays put and green
@@ -1300,7 +1300,7 @@ struct WeatherPlayer: View {
         ZStack {
             VStack(spacing: 26) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 Text(prompt)
@@ -1341,10 +1341,10 @@ struct WeatherPlayer: View {
             SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = w.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = w.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -1436,7 +1436,7 @@ struct NumberDetectivePlayer: View {
         ZStack {
             VStack(spacing: 22) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 // The thing to read: a group of dots, or a big numeral.
@@ -1496,10 +1496,10 @@ struct NumberDetectivePlayer: View {
             SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongVal = v; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongVal = v; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongVal = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -1613,7 +1613,7 @@ struct SymbolPlayer: View {
         ZStack {
             VStack(spacing: 26) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 Text(prompt)
@@ -1658,10 +1658,10 @@ struct SymbolPlayer: View {
             SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = sym.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = sym.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -1742,7 +1742,7 @@ struct HelperPlayer: View {
         ZStack {
             VStack(spacing: 26) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
                 Text(prompt)
                     .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -1779,10 +1779,10 @@ struct HelperPlayer: View {
         if h.id == target.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = h.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = h.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -1879,7 +1879,7 @@ struct HolidayPlayer: View {
             } else {
                 VStack(spacing: 26) {
                     if level.rounds > 1 {
-                        ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                        ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                     }
                     Text(prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -1955,10 +1955,10 @@ struct HolidayPlayer: View {
         if h.id == target.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = h.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = h.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -2134,7 +2134,7 @@ struct FamilyMemberPlayer: View {
         ZStack {
             VStack(spacing: 20) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 // A picture of what the question is about (teaching, computers...).
@@ -2191,10 +2191,10 @@ struct FamilyMemberPlayer: View {
         if m.id == target.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = m.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = m.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -2277,7 +2277,7 @@ struct PatternPlayer: View {
         ZStack {
             VStack(spacing: 22) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
                 Text("What comes next?")
                     .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -2325,10 +2325,10 @@ struct PatternPlayer: View {
         if c.id == q.answer.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = c.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = c.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -2419,7 +2419,7 @@ struct RhymePlayer: View {
         ZStack {
             VStack(spacing: 18) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
 
                 ZStack {
@@ -2471,12 +2471,12 @@ struct RhymePlayer: View {
         if item.id == correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             missed += 1
             wrongId = item.id; SFX.wrong()
-            if missed >= 2 { withAnimation { revealed = true } }   // teach: show and hold the answer
+            if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }   // teach: show and hold the answer
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if revealed { return }        // stop reshuffling — the answer stays put and green
@@ -2622,7 +2622,7 @@ struct FlatSolidPlayer: View {
                     .background(Theme.surface).clipShape(Capsule())
 
                     if level.rounds > 1 {
-                        ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                        ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                     }
                     Text(prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -2703,10 +2703,10 @@ struct FlatSolidPlayer: View {
         if item.id == target.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = item.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = item.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -2829,7 +2829,7 @@ struct LivingThingsPlayer: View {
         ZStack {
             VStack(spacing: 26) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
                 Text(prompt)
                     .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -2866,10 +2866,10 @@ struct LivingThingsPlayer: View {
         if thing.id == correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = thing.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = thing.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -2983,7 +2983,7 @@ struct CompareObjectsPlayer: View {
         ZStack {
             VStack(spacing: 26) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
                 Text(prompt)
                     .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -3021,10 +3021,10 @@ struct CompareObjectsPlayer: View {
         if obj.id == correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongId = obj.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongId = obj.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongId = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -3244,7 +3244,7 @@ struct ShapeBuilderPlayer: View {
             } else {
                 VStack(spacing: 16) {
                     if level.rounds > 1 {
-                        ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                        ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                     }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -3316,10 +3316,10 @@ struct ShapeBuilderPlayer: View {
         if k == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrongKind = k; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrongKind = k; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrongKind = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -3401,7 +3401,7 @@ struct CritterCountPlayer: View {
         ZStack {
             VStack(spacing: 22) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
                 Text("How many?")
                     .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -3459,10 +3459,10 @@ struct CritterCountPlayer: View {
         if n == count {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -3534,7 +3534,7 @@ struct FamilyAddPlayer: View {
         ZStack {
             VStack(spacing: 20) {
                 if level.rounds > 1 {
-                    ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                    ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                 }
                 Text("How many in all?")
                     .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -3596,10 +3596,10 @@ struct FamilyAddPlayer: View {
         if n == sum {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -3717,7 +3717,7 @@ struct WordProblemPlayer: View {
             } else {
                 VStack(spacing: 16) {
                     if level.rounds > 1 {
-                        ProgressDots(total: level.rounds, done: round, accent: Theme.red)
+                        ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red)
                     }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
@@ -3794,10 +3794,10 @@ struct WordProblemPlayer: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -3875,7 +3875,7 @@ struct PushPullPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 24) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Push or pull?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                     // Watch first: the hand pushes the thing away, or pulls it close.
@@ -3935,7 +3935,7 @@ struct PushPullPlayer: View {
         if kind == (item.isPush ? "push" : "pull") {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             wrong = kind; SFX.wrong()
@@ -4007,7 +4007,7 @@ struct NeedsPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -4042,10 +4042,10 @@ struct NeedsPlayer: View {
         if opt == data.need {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = opt; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = opt; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4121,7 +4121,7 @@ struct PositionPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 22) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -4158,10 +4158,10 @@ struct PositionPlayer: View {
         if pos == data.target {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = pos; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = pos; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4252,7 +4252,7 @@ struct SightWordsPlayer: View {
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
-                if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                 Text(level.hear ? "Listen, then find the word:" : "Find this word:")
                     .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(Theme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -4306,10 +4306,10 @@ struct SightWordsPlayer: View {
         if w == data.word {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = w; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = w; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4401,7 +4401,7 @@ struct NumberOrderPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 24) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -4433,10 +4433,10 @@ struct NumberOrderPlayer: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4592,7 +4592,7 @@ struct AnimalHomesPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -4641,10 +4641,10 @@ struct AnimalHomesPlayer: View {
         if a.id == data.correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4724,7 +4724,7 @@ struct LegsPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 22) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("How many legs?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                     EmojiView(emoji: data.animal.emoji, size: 130, tint: .white)
@@ -4758,10 +4758,10 @@ struct LegsPlayer: View {
         if n == data.animal.legs {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4848,7 +4848,7 @@ struct CoveringsPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -4887,10 +4887,10 @@ struct CoveringsPlayer: View {
         if a.id == data.correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -4963,7 +4963,7 @@ struct EatPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5006,10 +5006,10 @@ struct EatPlayer: View {
         if f == data.animal.food {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = f; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = f; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5077,7 +5077,7 @@ struct TeenPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 16) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("How many in all?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                     HStack(alignment: .center, spacing: 10) {
@@ -5124,10 +5124,10 @@ struct TeenPlayer: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5197,7 +5197,7 @@ struct BabyPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 16) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("The \(data.name)'s baby is a...")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5237,12 +5237,12 @@ struct BabyPlayer: View {
         if e == data.baby {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             missed += 1
             wrong = e; SFX.wrong()
-            if missed >= 2 { withAnimation { revealed = true } }   // teach: show and hold the answer
+            if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }   // teach: show and hold the answer
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if revealed { return }        // stop reshuffling — the answer stays put and green
@@ -5322,7 +5322,7 @@ struct LivingNotPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5354,10 +5354,10 @@ struct LivingNotPlayer: View {
         if t.id == data.correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = t.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = t.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5433,7 +5433,7 @@ struct DayNightPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5465,10 +5465,10 @@ struct DayNightPlayer: View {
         if a.id == data.correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5531,7 +5531,7 @@ struct Make5Player: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 18) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("How many more make 5?")
                         .font(.system(size: 25, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5569,10 +5569,10 @@ struct Make5Player: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5647,7 +5647,7 @@ struct Make10Player: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("How many more make 10?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5685,10 +5685,10 @@ struct Make10Player: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5747,7 +5747,7 @@ struct TakeAwayPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("How many are left?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5787,10 +5787,10 @@ struct TakeAwayPlayer: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5850,7 +5850,7 @@ struct DoublesPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Double it! How many in all?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5889,10 +5889,10 @@ struct DoublesPlayer: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -5950,7 +5950,7 @@ struct OrdinalPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Which one is \(data.word)?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -5989,10 +5989,10 @@ struct OrdinalPlayer: View {
         if e == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6052,7 +6052,7 @@ struct BeginningSoundPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Which one starts with \(data.letter)?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6087,10 +6087,10 @@ struct BeginningSoundPlayer: View {
         if e == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6151,7 +6151,7 @@ struct LifeCyclePlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("What comes next?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6191,10 +6191,10 @@ struct LifeCyclePlayer: View {
         if e == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6253,7 +6253,7 @@ struct TensPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("What comes next?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6293,10 +6293,10 @@ struct TensPlayer: View {
         if n == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = n; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6349,7 +6349,7 @@ struct FastSlowPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Is it fast or slow?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6382,7 +6382,7 @@ struct FastSlowPlayer: View {
         if v == data.fast {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             wrong = v; SFX.wrong()
@@ -6433,7 +6433,7 @@ struct SinkFloatPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Does it sink or float?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6466,7 +6466,7 @@ struct SinkFloatPlayer: View {
         if v == data.floats {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             wrong = v; SFX.wrong()
@@ -6523,7 +6523,7 @@ struct LetterCasePlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("Find the little \(data.big.lowercased())")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6558,10 +6558,10 @@ struct LetterCasePlayer: View {
         if s == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = s; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = s; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6618,7 +6618,7 @@ struct FiveSensesPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("What do you \(data.verb) with?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6649,10 +6649,10 @@ struct FiveSensesPlayer: View {
         if e == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6710,7 +6710,7 @@ struct OppositesPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 30) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text("What's the opposite of \(data.word)?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6744,10 +6744,10 @@ struct OppositesPlayer: View {
         if e == data.answer {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = e; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -6815,7 +6815,7 @@ struct WhichMorePlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.askMore ? "Which has more?" : "Which has fewer?")
                         .font(.system(size: 40, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                     HStack(spacing: 14) {
@@ -6848,7 +6848,7 @@ struct WhichMorePlayer: View {
         if side == correctSide {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
             wrong = side; SFX.wrong()
@@ -6925,7 +6925,7 @@ struct EggPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -6957,10 +6957,10 @@ struct EggPlayer: View {
         if a.id == data.correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still
@@ -7036,7 +7036,7 @@ struct WildPetPlayer: View {
                 } onStart: { withAnimation { phase = .play } }
             } else {
                 VStack(spacing: 20) {
-                    if level.rounds > 1 { ProgressDots(total: level.rounds, done: round, accent: Theme.red) }
+                    if level.rounds > 1 { ProgressDots(total: level.rounds + GameStats.owedRounds, done: round, accent: Theme.red) }
                     Text(data.prompt)
                         .font(.system(size: 40, weight: .heavy, design: .rounded))
                         .foregroundStyle(.white).multilineTextAlignment(.center)
@@ -7068,10 +7068,10 @@ struct WildPetPlayer: View {
         if a.id == data.correct.id {
             SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
-                if round + 1 < level.rounds { round += 1; newRound() } else { onComplete() }
+                if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
         } else {
-            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { withAnimation { revealed = true } }
+            missed += 1; wrong = a.id; SFX.wrong(); if missed >= 2 { GameStats.oweRound(); withAnimation { revealed = true } }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                 wrong = nil
                 if GameStats.wrongThisGame >= 2 { return }   // struggling: hold the answer still

@@ -100,6 +100,11 @@ struct LessonRunner: View {
                 StoryPlayer(storyId: id, accent: accent, onComplete: onComplete)
             case .trace(let prompt, let items):
                 TracePlayer(prompt: prompt, items: items, accent: accent, onComplete: onComplete)
+            case .buildSentence(let prompt, let lines):
+                SentencePlayer(prompt: prompt, lines: lines, accent: accent, onComplete: onComplete)
+            case .sort(let prompt, let bins, let items, let perRound):
+                SortPlayer(prompt: prompt, bins: bins, items: items,
+                           perRound: perRound, accent: accent, onComplete: onComplete)
             case .traceScene(let prompt, let steps):
                 TracePlayer(prompt: prompt, steps: steps, accent: accent, onComplete: onComplete)
             }
@@ -141,7 +146,10 @@ struct GameStage<Content: View>: View {
         ZStack(alignment: .top) {
             PlayScene {
                 VStack(spacing: 14) {
-                    Mascot(mood: mood, size: 92).padding(.top, 16)
+                    // The clean-run bonus, live and visible WHILE he plays, so
+                    // carefulness pays where he can still choose it.
+                    CleanRunChip().padding(.top, 12)
+                    Mascot(mood: mood, size: 92)
                     // Leo cheers out loud the moment he gets one right.
                     SpeechBubble(text: mood == .cheer ? "🎉 Great job!" : prompt)
                     if mood != .cheer { LeoSpeakButton(text: prompt) }
@@ -154,6 +162,28 @@ struct GameStage<Content: View>: View {
         }
         .frame(minHeight: 540)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+    }
+}
+
+/// "PERFECT SO FAR · +5 min" while he has not missed once this game. The whole
+/// point of a clean-run bonus is that he can see it paying while he still has
+/// the chance to earn it. After a miss it goes quiet rather than red: it
+/// informs him the bonus is gone for this round, it does not scold him.
+struct CleanRunChip: View {
+    var body: some View {
+        let clean = GameStats.wrongThisGame == 0
+        HStack(spacing: 6) {
+            Image(systemName: clean ? "star.fill" : "star")
+                .font(.system(size: 14, weight: .black))
+            Text(clean ? "PERFECT SO FAR  ·  +\(AppState.cleanRunBonus) min"
+                       : "Perfect bonus: next game")
+                .font(.system(size: 13, weight: .heavy, design: .rounded))
+        }
+        .foregroundStyle(clean ? Theme.ink : .white.opacity(0.55))
+        .padding(.horizontal, 14).padding(.vertical, 7)
+        .background(clean ? AnyShapeStyle(Theme.gold) : AnyShapeStyle(Color.white.opacity(0.12)))
+        .clipShape(Capsule())
+        .animation(.easeOut(duration: 0.25), value: clean)
     }
 }
 
@@ -196,6 +226,13 @@ struct QuizPlayer: View {
     @State private var disabled: Set<UUID> = []
     @State private var revealed = false
     @State private var missCount = 0
+    // Missing is never the fast way out. A question he had to be SHOWN comes
+    // back at the end of the round, so answering it right the first time is the
+    // shortest path to the finish. Each question can only come back once.
+    @State private var redoQueue: [Int] = []
+    @State private var redoSeen: Set<Int> = []
+    @State private var inRedo = false
+    @State private var answered = 0
 
     /// An illustration for the question — but NEVER one that is itself an answer
     /// choice, or we'd be handing him the answer (e.g. "Which face is SAD?" must
@@ -228,7 +265,7 @@ struct QuizPlayer: View {
                         .animation(.spring(response: 0.35, dampingFraction: 0.5), value: ready)
                         .animation(.spring(response: 0.3, dampingFraction: 0.5), value: correctId)
                 }
-                ProgressDots(total: questions.count, done: index, accent: accent)
+                ProgressDots(total: questions.count + redoSeen.count, done: answered, accent: accent)
                 Text(hint.isEmpty ? (ready ? " " : "👀 Read the question…") : hint)
                     .font(.system(size: 15, weight: .heavy, design: .rounded))
                     .foregroundStyle(hint.isEmpty ? .white.opacity(0.7) : Theme.gold)
@@ -306,8 +343,13 @@ struct QuizPlayer: View {
         if c.isCorrect {
             correctId = c.id; mood = .cheer; SFX.correct()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                if index + 1 < questions.count {
+                answered += 1
+                if !inRedo && index + 1 < questions.count {
                     index += 1; correctId = nil; wrongId = nil; mood = .idle; load()
+                } else if !redoQueue.isEmpty {
+                    // Back round for the ones he had to be shown.
+                    index = redoQueue.removeFirst(); inRedo = true
+                    correctId = nil; wrongId = nil; mood = .idle; load()
                 } else { SFX.win(); onComplete() }
             }
         } else if c.isJoke {
@@ -325,12 +367,19 @@ struct QuizPlayer: View {
                                  correct: questions[index].options.first(where: { $0.isCorrect })?.label ?? "")
             locked = true
             if missCount >= 2 {
-                // Second miss: stop testing, start teaching. Reveal the answer,
-                // grey out the rest, and invite him to tap the green one himself.
+                // Second miss: stop testing, start teaching. Leo says the answer
+                // out loud and the tile lights up — but this takes a real beat,
+                // and the question comes back before the round ends. Being shown
+                // the answer is the LONG way round, never the shortcut.
                 revealed = true
                 for opt in options where !opt.isCorrect { disabled.insert(opt.id) }
-                hint = "Here it is! Tap the green one 💚"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                let answer = options.first(where: { $0.isCorrect })?.label ?? ""
+                hint = "Let's learn this one together 💚"
+                Leo.say("This one is \(answer). Tap \(answer).", slow: true)
+                if !inRedo && !redoSeen.contains(index) {
+                    redoSeen.insert(index); redoQueue.append(index)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
                     wrongId = nil; mood = .happy; locked = false
                 }
             } else {
@@ -625,6 +674,9 @@ struct NumberPadPlayer: View {
     // numbers forever.
     @State private var wrongThisQ = 0
     @State private var revealed = false
+    // Same rule as the quiz: a problem he had to be shown comes back at the end
+    // of the round, once. Typing the answer yourself is the quick way out.
+    @State private var redoSeen: Set<UUID> = []
     // Shuffle the problems each play so counting games can't be ridden as a
     // pattern (2, 3, 4, 5...) — he has to actually count each group.
     @State private var deck: [NumberProblem] = []
@@ -648,7 +700,7 @@ struct NumberPadPlayer: View {
                     .wiggle(state == .wrong)
                 // Teach after the 2nd miss: show the answer so he types it.
                 if revealed {
-                    Text("The answer is \(items[index].answer) — tap it! 💚")
+                    Text("Let's learn this one: it is \(items[index].answer) 💚")
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
                         .foregroundStyle(Theme.green)
                         .multilineTextAlignment(.center)
@@ -705,9 +757,23 @@ struct NumberPadPlayer: View {
         } else {
             wrongThisQ += 1
             state = .wrong; mood = .oops; SFX.wrong()
-            // Second miss: reveal and teach the answer so he stops guessing.
-            if wrongThisQ >= 2 { revealed = true }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { entry = ""; state = .typing; mood = .idle }
+            // Second miss: stop testing, start teaching. Leo says it aloud, and
+            // the problem goes back on the end of the deck so being shown the
+            // answer makes the round LONGER, not shorter.
+            var beat = 0.7
+            if wrongThisQ >= 2 && !revealed {
+                revealed = true
+                let a = items[index].answer
+                Leo.say("This one is \(a). Type \(a).", slow: true)
+                let here = items[index]
+                if !redoSeen.contains(here.id) {
+                    redoSeen.insert(here.id)
+                    if deck.isEmpty { deck = problems }   // materialise before appending
+                    deck.append(here)
+                }
+                beat = 2.2
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + beat) { entry = ""; state = .typing; mood = .idle }
         }
     }
 }

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 // MARK: - Mascot (a cartoon Gabriel that hosts the games)
 
@@ -17,8 +18,39 @@ struct Mascot: View {
     private let nose = Color(red: 0.45, green: 0.28, blue: 0.22)
 
     var body: some View {
+        Group {
+            // Leo's illustrated portrait when it has been installed, and the
+            // drawn cub below when it hasn't, so the app never ships a blank
+            // mascot if an asset is missing.
+            if let art = UIImage(named: "leo-" + moodKey) {
+                Image(uiImage: art).resizable().scaledToFit()
+            } else {
+                drawn
+            }
+        }
+        .frame(width: size, height: size)
+        .scaleEffect(mood == .cheer ? 1.1 : 1)
+        .rotationEffect(.degrees(mood == .oops ? -5 : 0))
+        .offset(y: bob ? -4 : 4)
+        .animation(.spring(response: 0.35, dampingFraction: 0.5), value: mood)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) { bob = true }
+        }
+    }
+
+    private var moodKey: String {
+        switch mood {
+        case .idle:  return "idle"
+        case .happy: return "happy"
+        case .cheer: return "cheer"
+        case .oops:  return "oops"
+        }
+    }
+
+    /// The original hand-drawn cub, kept as the fallback.
+    private var drawn: some View {
         let s = size
-        ZStack {
+        return ZStack {
             // little body/chest peeking below the head
             Ellipse().fill(coat).frame(width: s * 0.5, height: s * 0.4).offset(y: s * 0.5)
             // soft cub mane — a ring of little tufts behind the face
@@ -51,14 +83,6 @@ struct Mascot: View {
                 .rotationEffect(.degrees(180)).offset(y: s * 0.02)
             eyes.offset(y: -s * 0.04)
             mouth
-        }
-        .frame(width: size, height: size)
-        .scaleEffect(mood == .cheer ? 1.1 : 1)
-        .rotationEffect(.degrees(mood == .oops ? -5 : 0))
-        .offset(y: bob ? -4 : 4)
-        .animation(.spring(response: 0.35, dampingFraction: 0.5), value: mood)
-        .onAppear {
-            withAnimation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) { bob = true }
         }
     }
 

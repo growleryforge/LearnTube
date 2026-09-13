@@ -161,6 +161,14 @@ enum Lesson: Hashable {
     case faceMatch(exprs: [FaceExpr], perRound: Int)
     /// A multi-part story reader + reading-skill games (content looked up by id).
     case story(id: String)
+    /// Drag each thing into the pen it belongs in. The science games are really
+    /// sorting tasks, and sorting is something he DOES rather than something he
+    /// reads and taps. `perRound` is how many items one play asks for.
+    case sort(prompt: String, bins: [SortBin], items: [SortThing], perRound: Int = 8)
+    /// Finish a sentence by DRAGGING the missing word into the gap, rather than
+    /// tapping one of three tiles. The sentence stays on screen throughout and
+    /// Leo reads it back once the word is in.
+    case buildSentence(prompt: String, lines: [SentenceLine])
     /// Trace each letter/word with a finger — real on-screen writing practice.
     case trace(prompt: String, items: [String])
     /// Tracing with a story: an animal at the start of every stroke, somewhere
@@ -185,6 +193,8 @@ enum Lesson: Hashable {
         case .story: return 9
         case .trace(_, let i): return i.count
         case .traceScene(_, let s): return s.count
+        case .sort(_, _, let items, let per): return min(items.count, per) + 1
+        case .buildSentence(_, let l): return l.count + 1
         }
     }
 
@@ -198,6 +208,42 @@ enum Lesson: Hashable {
         case .faceMatch: return "Tap to match"
         case .story: return "Story time"
         case .trace, .traceScene: return "Trace it"
+        case .sort: return "Sort them out"
+        case .buildSentence: return "Finish the sentence"
         }
+    }
+}
+
+/// One pen to sort into: a key the items refer to, plus what he sees on it.
+struct SortBin: Hashable {
+    let key: String
+    let label: String
+    let emoji: String
+    init(_ key: String, _ label: String, _ emoji: String) {
+        self.key = key; self.label = label; self.emoji = emoji
+    }
+}
+
+/// One sentence with a hole in it: the words either side of the gap, the word
+/// that belongs there, and the wrong words offered alongside it.
+struct SentenceLine: Hashable {
+    let picture: String
+    let before: String
+    let after: String
+    let answer: String
+    let distractors: [String]
+    init(_ picture: String, _ before: String, _ after: String, answer: String, distractors: [String]) {
+        self.picture = picture; self.before = before; self.after = after
+        self.answer = answer; self.distractors = distractors
+    }
+}
+
+/// One thing to be sorted, and the bin key it belongs in.
+struct SortThing: Hashable {
+    let emoji: String
+    let name: String
+    let bin: String
+    init(_ emoji: String, _ name: String, _ bin: String) {
+        self.emoji = emoji; self.name = name; self.bin = bin
     }
 }

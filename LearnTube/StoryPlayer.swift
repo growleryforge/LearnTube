@@ -233,6 +233,11 @@ struct StoryQuizView: View {
     @State private var hint = ""
     @State private var missed = 0
     @State private var revealed = false
+    // A question he had to be SHOWN comes back before the round ends, once, so
+    // being told the answer is the long way round rather than the shortcut.
+    @State private var redoQueue: [Int] = []
+    @State private var redoSeen: Set<Int> = []
+    @State private var inRedo = false
 
     private var q: StoryQuestion { questions[index] }
 
@@ -304,8 +309,11 @@ struct StoryQuizView: View {
         if c.correct {
             correctId = c.id; SFX.correct()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                if index + 1 < questions.count {
+                if !inRedo && index + 1 < questions.count {
                     index += 1; correctId = nil; wrongId = nil; load()
+                } else if !redoQueue.isEmpty {
+                    index = redoQueue.removeFirst(); inRedo = true
+                    correctId = nil; wrongId = nil; load()
                 } else { SFX.win(); onComplete() }
             }
         } else {
@@ -318,11 +326,16 @@ struct StoryQuizView: View {
                                  correct: choices.first(where: { $0.correct })?.label ?? "")
             locked = true
             if missed >= 2 {
-                // Second miss: stop testing, start teaching. Show the answer in
-                // green (it stays put — no reshuffle) and invite the tap.
+                // Second miss: stop testing, start teaching. The answer goes
+                // green and Leo says it, over a real beat — and the question
+                // comes back later, so this is the LONG way round, not a way out.
                 withAnimation { revealed = true }
-                hint = "Here it is! Tap the green one 💚"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                hint = "Let's learn this one together 💚"
+                Leo.say("This one is \(choices.first(where: { $0.correct })?.label ?? ""). Tap the green one.", slow: true)
+                if !inRedo && !redoSeen.contains(index) {
+                    redoSeen.insert(index); redoQueue.append(index)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
                     wrongId = nil; locked = false
                 }
             } else {

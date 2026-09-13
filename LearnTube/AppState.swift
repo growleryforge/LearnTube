@@ -41,6 +41,14 @@ struct SavedState: Codable {
     var recentStarts: [String: [String: Int]] = [:]  // games opened by day
     var recentPlays: [String: [String: Int]] = [:]   // games finished by day
     var misses: [MissEvent] = []                     // recent wrong answers, newest first
+    // Mastery bonuses. Optional so that adding them cannot break decoding of an
+    // existing save (SavedState is decoded with `try?` and falls back to blank,
+    // so a missing non-optional key would wipe his progress on this device).
+    var levelsBeaten: [String: Int]? = nil           // highest ladder level beaten per skill
+    var masteryBonusPaid: [String]? = nil            // skills already paid the mastery bonus
+    // Time on task. Optional for the same decoding reason as the two above.
+    var secondsByDay: [String: Int]? = nil           // "yyyy-MM-dd" -> seconds played
+    var secondsBySkill: [String: Int]? = nil         // lessonID -> seconds played
 }
 
 /// One specific wrong answer, so grown-ups can drill into what he actually
@@ -412,10 +420,31 @@ final class AppState: ObservableObject {
     /// mastery, so the game stays in his feed until he does it for real.
     static let maxWrongForCredit = 10
 
+    // MARK: - Mastery bonuses
+    //
+    // Extra minutes ON TOP of the flat per-win rate. Nothing is ever taken away:
+    // every finish still pays `minutesPerConcept` exactly as before. These only
+    // add a top end, so getting better is worth more than just doing more.
+    static let newLevelBonus = 5      // first time he beats a given level
+    static let cleanRunBonus = 5      // a round with no wrong taps at all
+    static let masteryBonus = 30      // once, when a game is finished for good
+
+    /// The longest a single finish may count as time on task. A game left open
+    /// while the iPad sits on the sofa must not land as two hours of learning —
+    /// that is exactly the bug that made the watched-minutes figures useless.
+    static let maxSecondsPerPlay = 600
+
+    /// What the last finish paid in bonus, and why, so the win screen can show
+    /// him that being good earned him more than just showing up.
+    private(set) var lastWinBonus = 0
+    private(set) var lastWinBonusReasons: [String] = []
+
     @discardableResult
     func markDone(_ id: String) -> Buddy? {
         defer { pushSnapshot() }   // share updated progress after every game
-        let messy = GameStats.wrongThisGame > AppState.maxWrongForCredit
+        let wrongCount = GameStats.wrongThisGame
+        lastWinBonus = 0; lastWinBonusReasons = []
+        let messy = wrongCount > AppState.maxWrongForCredit
         GameStats.wrongThisGame = 0            // reset for the next game
         let plays = playsToday(id)
         saved.lastPlayed[id] = Date()
@@ -423,7 +452,10 @@ final class AppState: ObservableObject {
         // the play is logged. We never withhold the reward (PDA).
         saved.recentPlays[id, default: [:]][AppState.dayKey, default: 0] += 1
         saved.recentPlays = AppState.pruneRecent(saved.recentPlays)
-        if plays < saved.maxPlaysPerDay { addFamilyMinutes(saved.minutesPerConcept) }
+        recordTimeOnTask(id)
+        if plays < saved.maxPlaysPerDay {
+            addFamilyMinutes(saved.minutesPerConcept + playBonuses(id, wrong: wrongCount, messy: messy))
+        }
         saved.completionsToday[id] = plays + 1
         guard let skill = Curriculum.skill(id: id) else { return nil }
         logWin(WinEvent(text: "Finished \(skill.title)!", emoji: "🎉", date: Date()))
@@ -436,6 +468,7 @@ final class AppState: ObservableObject {
         if newCount == saved.masteryThreshold {
             logWin(WinEvent(text: "Mastered \(skill.title)!", emoji: "⭐️", date: Date()))
         }
+        payMasteryBonusIfEarned(id, title: skill.title)
         let buddy = Buddies.forSkill(skill)
         if !hasBuddy(buddy.id) {   // not earned on ANY device yet
             saved.earnedBuddies.append(buddy.id)
@@ -444,6 +477,74 @@ final class AppState: ObservableObject {
         }
         return nil
     }
+
+    /// How long this play actually took, banked by day and by game. Clamped, so
+    /// a game he walked away from and came back to cannot inflate the number.
+    private func recordTimeOnTask(_ id: String) {
+        guard let started = GameStats.startedAt else { return }
+        GameStats.startedAt = nil
+        let secs = min(Self.maxSecondsPerPlay, max(0, Int(Date().timeIntervalSince(started))))
+        guard secs > 0 else { return }
+        var byDay = saved.secondsByDay ?? [:]
+        byDay[AppState.dayKey, default: 0] += secs
+        saved.secondsByDay = byDay
+        var bySkill = saved.secondsBySkill ?? [:]
+        bySkill[id, default: 0] += secs
+        saved.secondsBySkill = bySkill
+    }
+
+    /// Minutes actually spent playing today, and the average length of a game.
+    var minutesOnTaskToday: Int { ((saved.secondsByDay ?? [:])[AppState.dayKey] ?? 0) / 60 }
+    func averagePlaySeconds(_ id: String) -> Int? {
+        let total = (saved.secondsBySkill ?? [:])[id] ?? 0
+        let plays = saved.completionCounts[id] ?? 0
+        guard total > 0, plays > 0 else { return nil }
+        return total / plays
+    }
+
+    /// Bonus minutes for this finish: beating a level he has never beaten
+    /// before, and a round with no wrong taps. A level pays its bonus once;
+    /// replaying it still pays the normal rate. A mash earns neither.
+    private func playBonuses(_ id: String, wrong: Int, messy: Bool) -> Int {
+        guard !messy else { return 0 }
+        var bonus = 0
+        if Self.levelableSkills.contains(id) {
+            let rung = max(1, GameDifficulty.rung)
+            var beaten = saved.levelsBeaten ?? [:]
+            if rung > (beaten[id] ?? 0) {
+                beaten[id] = rung
+                saved.levelsBeaten = beaten
+                bonus += Self.newLevelBonus
+                lastWinBonusReasons.append("🔥 New level")
+                logWin(WinEvent(text: "New level beaten! +\(Self.newLevelBonus) min", emoji: "🔥", date: Date()))
+            }
+        }
+        if wrong == 0 {
+            bonus += Self.cleanRunBonus
+            lastWinBonusReasons.insert("🎯 No mistakes", at: 0)   // loudest first
+            logWin(WinEvent(text: "Clean run, no mistakes! +\(Self.cleanRunBonus) min", emoji: "🎯", date: Date()))
+        }
+        lastWinBonus += bonus
+        return bonus
+    }
+
+    /// Paid once, the first time a game is done for good: every level beaten on
+    /// a ladder game, or mastered on a plain one.
+    private func payMasteryBonusIfEarned(_ id: String, title: String) {
+        guard isLearned(id) else { return }
+        var paid = saved.masteryBonusPaid ?? []
+        guard !paid.contains(id) else { return }
+        paid.append(id)
+        saved.masteryBonusPaid = paid
+        addFamilyMinutes(Self.masteryBonus)
+        lastWinBonus += Self.masteryBonus
+        lastWinBonusReasons.append("🏆 Mastered it")
+        logWin(WinEvent(text: "MASTERED \(title)! +\(Self.masteryBonus) min", emoji: "🏆", date: Date()))
+    }
+
+    /// Levels beaten across every ladder game — the long view for the grown-up
+    /// area and for him: proof of how much he has actually climbed.
+    var levelsBeatenTotal: Int { (saved.levelsBeaten ?? [:]).values.reduce(0, +) }
 
     private func logWin(_ e: WinEvent) {
         saved.winsLog.insert(e, at: 0)
@@ -775,6 +876,13 @@ final class AppState: ObservableObject {
     static let concreteStages = 3
     static let concreteSkills: Set<String> = levelableSkills
 
+    /// How many rungs of one ladder game he may climb in a single sitting.
+    /// A round ends, the win screen offers "Keep going", and he can step up the
+    /// ladder this many times before the offer stops and he goes back to the
+    /// feed to pick something else. Raise it if the sittings still end too fast.
+    /// (Paige, Sept 2026: the games were over too quickly.)
+    static let maxChainRungs = 3
+
     /// The rung a skill is on (1-based), from how many times it has been
     /// mastered across the family. For most games this is the same as the
     /// level; for concrete-first games rungs 1-3 are the act-it-out stages.
@@ -787,9 +895,13 @@ final class AppState: ObservableObject {
     /// Current difficulty level (1...maxLevel) for a skill, from how many times
     /// it has been mastered across the family. A concrete-first game is at
     /// level 1 until it has climbed past its act-it-out stages.
-    func currentLevel(_ id: String) -> Int {
+    func currentLevel(_ id: String) -> Int { level(forRung: currentRung(id), id: id) }
+
+    /// The difficulty level a given rung plays at. `currentLevel` is this
+    /// applied to the rung he has earned; a chained sitting uses it to look one
+    /// rung ahead without touching his earned progress.
+    func level(forRung rung: Int, id: String) -> Int {
         guard Self.levelableSkills.contains(id) else { return 1 }
-        let rung = currentRung(id)
         if Self.concreteSkills.contains(id) { return max(1, min(Self.maxLevel, rung - Self.concreteStages)) }
         return min(Self.maxLevel, rung)
     }
@@ -867,6 +979,12 @@ final class AppState: ObservableObject {
         lines.append("Gabriel this week (\(df.string(from: cutoff)) to \(df.string(from: Date())))")
         lines.append("")
         lines.append("Finished \(finishes) games across \(played.count) skills.")
+        let secs = (saved.secondsByDay ?? [:]).values.reduce(0, +)
+        if secs > 0 {
+            let mins = secs / 60
+            let avg = finishes > 0 ? secs / finishes : 0
+            lines.append("Time actually playing: \(mins) min, about \(avg)s per game.")
+        }
         if !newlyMastered.isEmpty {
             lines.append("Mastered: " + newlyMastered.map(\.title).sorted().joined(separator: ", "))
         }
