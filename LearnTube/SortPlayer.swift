@@ -45,6 +45,9 @@ struct SortPlayer: View {
     // enough to place an item, and the game walked itself to the finish.
     @State private var moved = false
     @State private var landing = false
+    /// Mac only: he has clicked the thing and is holding it, waiting to click
+    /// a pen. There is no drag on a trackpad worth asking a seven-year-old for.
+    @State private var carrying = false
     /// Phone or iPad. On a phone four pens in one row are unhittable, so they
     /// wrap to two columns and everything shrinks to fit one screen.
     @Environment(\.horizontalSizeClass) private var hSize
@@ -52,8 +55,15 @@ struct SortPlayer: View {
 
     private var current: SortThing? { deck.first }
 
+    /// On a Mac the job is in two halves, so the prompt says which half he is
+    /// in. On a touch screen it is one drag and the prompt is left alone.
+    private var stagePrompt: String {
+        guard Pointer.isMac else { return prompt }
+        return carrying ? "Now click the pen it belongs in." : prompt
+    }
+
     var body: some View {
-        GameStage(mood: mood, prompt: prompt,
+        GameStage(mood: mood, prompt: stagePrompt,
                   confetti: justLanded != nil && deck.isEmpty, compact: true) {
             VStack(spacing: narrow ? 10 : 14) {
                 ProgressDots(total: max(1, placed + deck.count), done: placed, accent: accent)
@@ -107,6 +117,11 @@ struct SortPlayer: View {
                 .scaleEffect(landed ? 1.05 : 1)
                 .animation(.spring(response: 0.35, dampingFraction: 0.6), value: justLanded)
                 .animation(.easeOut(duration: 0.25), value: taughtBin)
+                .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .onTapGesture {
+                    guard Pointer.isMac, carrying, let it = current else { return }
+                    place(it, into: bin)
+                }
                 .background(GeometryReader { g in
                     Color.clear.preference(key: BinKey.self,
                                            value: [bin.key: g.frame(in: .named("sortscene"))])
@@ -127,8 +142,8 @@ struct SortPlayer: View {
                 }
                 .overlay(Circle().strokeBorder(Theme.gold, lineWidth: 4).frame(width: dot, height: dot))
                 .offset(dragOffset)
-                .scaleEffect(dragging ? 1.12 : 1)
-                .shadow(color: .black.opacity(dragging ? 0.3 : 0), radius: 8, y: 4)
+                .scaleEffect(dragging || carrying ? 1.12 : 1)
+                .shadow(color: .black.opacity(dragging || carrying ? 0.3 : 0), radius: 8, y: 4)
                 .wiggle(wiggling)
                 .zIndex(10)
                 .contentShape(Circle())
@@ -159,7 +174,7 @@ struct SortPlayer: View {
 
     private func start() {
         deck = Array(items.shuffled().prefix(max(1, perRound)))
-        placedIn = [:]; placed = 0; missesHere = 0; taughtBin = nil
+        placedIn = [:]; placed = 0; missesHere = 0; taughtBin = nil; carrying = false
         Leo.say(prompt)
         if let first = deck.first {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) { Leo.say(first.name) }
@@ -173,6 +188,9 @@ struct SortPlayer: View {
         // penalty, no placement.
         guard realDrag, !landing else {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) { dragOffset = .zero }
+            // Mac: a click that did not move picks the thing up, or puts it
+            // back down. The pen is then one more click away.
+            if Pointer.isMac, !landing { carrying.toggle() }
             return
         }
         let hit = bins.first { binFrames[$0.key]?.contains(point) ?? false }
@@ -181,6 +199,14 @@ struct SortPlayer: View {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) { dragOffset = .zero }
             return
         }
+        place(it, into: bin)
+    }
+
+    /// The moment of judgement, reached either by a finger dropping the thing
+    /// on a pen or by a Mac click on one.
+    private func place(_ it: SortThing, into bin: SortBin) {
+        guard !landing else { return }
+        carrying = false
         if bin.key == it.bin {
             land(it, in: bin)
         } else {

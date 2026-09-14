@@ -85,6 +85,14 @@ struct TracePlayer: View {
                             .onChanged { v in touch(v.location) }
                             .onEnded { _ in lift() }
                     )
+                    // Mac: the stroke follows the pointer with no button held.
+                    // Holding a click for a whole letter is hard with a mouse
+                    // and worse on a trackpad, where running out of trackpad
+                    // forces a release halfway through a letter.
+                    .onContinuousHover(coordinateSpace: .local) { phase in
+                        guard Pointer.isMac else { return }
+                        if case .active(let p) = phase { touch(p) }
+                    }
                     .padding(10)
                 }
                 .frame(height: 340)
@@ -203,7 +211,10 @@ struct TracePlayer: View {
             // with a nudge toward the green dot.
             guard let first = cur.first else { return }
             if hypot(p.x - first.x, p.y - first.y) > startRadius {
-                if hint.isEmpty { hint = "Start at the green dot 👆"; mood = .idle }
+                if hint.isEmpty {
+                    hint = Pointer.isMac ? "Move to the green dot 🖱️" : "Start at the green dot 👆"
+                    mood = .idle
+                }
                 return
             }
             tracing = true; hint = ""; ink = [p]; nextDot = 0
@@ -219,7 +230,15 @@ struct TracePlayer: View {
             // Still allowed if he's near the part of the stroke he has done
             // (a wobble); wandering away from the whole stroke resets it.
             let near = cur.prefix(max(nextDot + 8, 1)).contains { hypot(p.x - $0.x, p.y - $0.y) <= offPath }
-            if !near { failStroke("Oops! Stay on the dots. Start at the green dot 👆"); return }
+            if !near {
+                // Mac: the pointer drifting off the path just pauses the
+                // stroke where it stands. He moves back to the dots and
+                // carries on. A finger cannot leave the glass by accident, so
+                // touch keeps the stricter rule.
+                if Pointer.isMac { return }
+                failStroke("Oops! Stay on the dots. Start at the green dot 👆")
+                return
+            }
         }
         if nextDot >= cur.count { completeStroke() }
     }
@@ -229,6 +248,9 @@ struct TracePlayer: View {
         let cur = strokes[strokeIndex]
         // Reaching the last dot or two counts; lifting anywhere else resets.
         if nextDot >= cur.count - 2 { completeStroke() }
+        // A mouse button released, or a trackpad that ran out of room, is not
+        // a mistake. His progress stands and the pointer picks it back up.
+        else if Pointer.isMac { return }
         else { failStroke("Keep your finger down all the way to the end. Try again from the green dot 👆") }
     }
 

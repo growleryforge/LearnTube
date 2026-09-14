@@ -59,18 +59,94 @@ the `PARENT` flag:
 Separate bundle ids mean both can be installed on the same device without
 colliding.
 
+## Finger or pointer
+
+Every game he plays by moving something was written for a finger on glass. A
+Mac has no finger: a drag there means holding the button down for the whole
+movement, which is awkward with a mouse and close to impossible on a trackpad,
+where the pointer runs out of trackpad and the button releases mid-stroke. The
+old `TracePlayer.lift()` read that forced release as a mistake and told him
+"keep your finger down all the way to the end", so the hardware failed and the
+app blamed him.
+
+`Pointer.isMac` (`Pointer.swift`, `ProcessInfo.processInfo.isMacCatalystApp`)
+is the single switch. On a Mac:
+
+| Game | Touch | Mac |
+|---|---|---|
+| `TracePlayer` | Finger down, follow the dots, lift at the end. | The stroke follows the pointer with **no button held**. Drifting off the path pauses and keeps his progress; releasing is not a mistake. |
+| `SortPlayer` | Drag the thing into a pen. | Click the thing to pick it up, click the pen to put it down. |
+| `SentencePlayer` | Drag the word into the gap. | Click the word, click the gap. |
+| `ActOutPlayer` | Drag the animal to the pond or the gate. | Click the animal, click the pond or the gate. The carried animal has one legal destination; a click on the wrong zone does nothing rather than counting as a miss. |
+| `AdditionGame` chips | Drag the group down into the pen. | Click the group. |
+
+Two rules held onto deliberately:
+
+- **No new shortcut.** He still has to carry the thing to the right place, so
+  being shown the answer after two misses still saves him nothing. This is the
+  property that made the sort and sentence conversions work in the first place.
+- **Forgiveness is Mac-only.** A finger cannot leave the glass by accident, so
+  touch keeps the stricter rules. Only the pointer gets the pause-and-resume
+  behaviour.
+
+Anything new that asks him to move something needs a pointer path too, or it is
+broken on his laptop.
+
 ## Build and deploy
 
 Requires Xcode on a Mac. Do not try to build from the Cowork container.
 
-| Script | What it does |
+Everything goes through `tools/run.sh`. Double-clicking **Build LearnTube.app**
+in the repo root runs the default. Output lands in `build/run.log` and
+`build/xcodebuild.log` so a Cowork session can read what happened.
+
+| Mode | What it does |
 |---|---|
-| `deploy_to_phones.sh` | Kid build to every connected iPhone/iPad. Bumps `CURRENT_PROJECT_VERSION` in the pbxproj. |
-| `deploy_to_mac.sh` | Kid build as Mac Catalyst, staged to `dist/` on the NAS for Gabriel's Mac. |
-| `deploy_admin_mac.sh` | Grown-up build installed on this Mac. |
-| `deploy_admin_iphone.sh` | Grown-up build to a parent's iPhone. |
-| `deploy_parent_mac.sh` | Grown-up build, ad-hoc signed and portable, staged to `dist/` for Paige's Mac. |
-| `Update Parent Admin.command` | One-click version of the above for this Mac. Stamps a `YYMMDDHHMM` build number. |
+| (default) | Kid build to Gabriel's phones/iPads, grown-up build to the parents' phones and this Mac, and the Mac builds refreshed in `dist/` for Gabriel's and Paige's laptops. |
+| `check` | Compiles both builds, installs nothing. |
+| `devices` | Lists what is reachable, phones and Macs, and which build each gets. |
+| `mac` | Grown-up build into `/Applications` on this Mac. |
+| `kid "Name"` / `admin "Name"` | One device by name or UDID. |
+| `dist` / `macs` | Mac Catalyst builds into `dist/`, Developer ID signed and notarized. |
+| `all` | Everything. |
+
+### The three Macs
+
+devicectl cannot see Macs at all, so they are handled separately:
+
+| Mac | Build | How it lands |
+|---|---|---|
+| This Mac (the build Mac) | Grown-up | `ditto` straight into `/Applications`. |
+| Gabriel's laptop | Kid | `dist/LearnTube.app` on the NAS, picked up by the auto-updater on his Mac (or `dist/Install LearnTube.command` by hand, or a direct ssh push). |
+| Paige's Mac | Grown-up | `dist/LearnTube Parent.app`, then `dist/Install LearnTube Parent.command`. |
+
+**The same double-click works on every Mac.** `tools/run.sh` checks for
+`/Applications/Xcode.app` first. If it is missing, this is not the build Mac, so
+instead of compiling it installs the newest app staged in `dist/` (kid app,
+unless the computer name matches `ADMIN_DEVICES`, which gets the parent
+dashboard), strips quarantine, turns auto-update on, and opens it. Nothing
+touches the pbxproj on a Mac that cannot build. So double-clicking **Build
+LearnTube.app** on Gabriel's laptop installs LearnTube there; on the Xcode Mac it
+builds and deploys as always.
+
+**Gabriel's Mac auto-updates.** `dist/Enable Auto Update.command`, double-clicked
+once on his laptop, copies `tools/mac_updater.sh` to
+`~/Library/Application Support/LearnTube/update.sh` and installs the LaunchAgent
+`com.turley.learntube.update` (every 30 minutes). The updater compares
+`CFBundleVersion` on the NAS copy with the installed one and swaps it in only
+when LearnTube is closed and the NAS is mounted. Its log is
+`~/Library/Logs/LearnTube-update.log`. The NAS path it watches is recorded in
+`updater.conf` at enable time, so re-run the enabler if the share ever remounts
+somewhere else.
+
+Set `GABRIEL_MAC_SSH=user@host` at the top of `tools/run.sh` (Remote Login on,
+ssh key in place) and every `dist` run also pushes straight to the laptop via
+`tools/mac_install_remote.sh`. An asleep laptop is not an error: the build just
+waits in `dist/`.
+
+`STAGE_MACS_BY_DEFAULT=0` in `tools/run.sh` goes back to the old behaviour where
+only `dist` and `all` refresh the Mac builds. The default run skips notarization
+to stay quick; `run.sh dist` notarizes.
 
 Target: iOS 16.0, Mac Catalyst. Swift 5.0. Automatic signing, team `2286RHQ434`.
 No Swift Package or CocoaPods dependencies at all, and it should stay that way.

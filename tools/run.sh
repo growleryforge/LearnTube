@@ -10,7 +10,16 @@
 #   bash tools/run.sh kid "Name"   kid build to one device by name (or UDID)
 #   bash tools/run.sh admin "Name" grown-up build to one device by name (or UDID)
 #   bash tools/run.sh dist         Catalyst builds for the other Macs into dist/
+#   bash tools/run.sh macs         same thing, said out loud (Gabriel + Paige)
 #   bash tools/run.sh all          everything above
+#
+# The default run now also refreshes the Mac builds in dist/, so Gabriel's
+# laptop and Paige's Mac are never left behind on an older build than the
+# iPads. Set STAGE_MACS_BY_DEFAULT=0 below to go back to the old behaviour.
+#
+# Double-clicking this on a Mac WITHOUT Xcode (Gabriel's laptop, Paige's Mac)
+# does not fail: it installs the newest build staged in dist/ on that Mac and
+# turns on auto-update, so the same double-click works everywhere.
 #
 # Double-clicking "Build LearnTube.app" (or .command) in the repo root runs the
 # default in a Terminal window. Everything is also written to build/run.log
@@ -40,6 +49,24 @@ ADMIN_DEVICES=("GT Command Center" "GT Command" "Mrs. Turley" "Mrs Turley" "Paig
 # always skipped.
 IGNORE_DEVICES=("Watch")
 
+# ---- the Macs ----------------------------------------------------------------
+# Macs are not phones: devicectl cannot see them, so each one gets a Catalyst
+# build staged in dist/ on the NAS and installed one of two ways:
+#   - automatically, if dist/"Enable Auto Update.command" was double-clicked
+#     once on that Mac (it checks the NAS every 30 minutes), or
+#   - by hand, by double-clicking dist/"Install LearnTube.command" there.
+#
+#   Gabriel's Mac  -> dist/LearnTube.app         (kid games app)
+#   Paige's Mac    -> dist/LearnTube Parent.app  (grown-up dashboard)
+#   this Mac       -> /Applications              (grown-up dashboard, direct)
+#
+# 1 = every default run refreshes both, so Gabriel's laptop tracks the iPads.
+STAGE_MACS_BY_DEFAULT=1
+# Optional straight-to-the-laptop push. Set to user@host (Remote Login on and
+# an ssh key set up on Gabriel's Mac) and the build installs itself there when
+# the laptop is awake. Empty = leave it on the NAS for the updater to pick up.
+GABRIEL_MAC_SSH="${GABRIEL_MAC_SSH:-}"
+
 # ---- logging -----------------------------------------------------------------
 mkdir -p build
 RUNLOG="$REPO/build/run.log"
@@ -47,6 +74,77 @@ XLOG="$REPO/build/xcodebuild.log"
 : > "$RUNLOG"; : > "$XLOG"
 log() { echo "$*" | tee -a "$RUNLOG"; }
 die() { log "!! $*"; log "   (details: build/xcodebuild.log)"; exit 1; }
+
+# ---- is this the build Mac? --------------------------------------------------
+# Only one Mac in the house has Xcode. On the others (Gabriel's laptop, Paige's
+# Mac) the same double-click installs the newest build staged in dist/ instead
+# of trying to compile, and switches auto-update on while it is there.
+this_mac_name() { scutil --get ComputerName 2>/dev/null || hostname 2>/dev/null || echo "this Mac"; }
+mac_wants_admin() {
+    local n="$1" a
+    for a in "${ADMIN_DEVICES[@]}"; do [[ "$n" == *"$a"* ]] && return 0; done
+    return 1
+}
+companion_install() {
+    local name src label target
+    name="$(this_mac_name)"
+    log "LearnTube installer  ·  $(date '+%a %b %d %H:%M')"
+    log "$name has no Xcode, so it is not the build Mac. Installing instead of building."
+    if mac_wants_admin "$name"; then
+        src="dist/LearnTube Parent.app"; label="grown-up dashboard"; target="LearnTube Parent.app"
+    else
+        src="dist/LearnTube.app"; label="kid games app"; target="LearnTube.app"
+    fi
+    if [ ! -d "$src" ]; then
+        log "!! Nothing staged at $src."
+        log "   Run the build once on the Mac with Xcode, then try this again."
+        return 1
+    fi
+    local v age
+    v=$(defaults read "$PWD/$src/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null || echo "?")
+    age=$(( ( $(date +%s) - $(stat -f '%m' "$src") ) / 86400 ))
+    log "==> Staged $label: v$v, built $(stat -f '%Sm' -t '%b %d %H:%M' "$src") ($age day(s) ago)."
+    [ "$age" -gt 2 ] && log "    NOTE: that is not today's build. Run the build on the Xcode Mac for the newest one."
+
+    osascript -e 'quit app "LearnTube"' 2>/dev/null
+    pkill -9 -f "$target/Contents/MacOS" 2>/dev/null
+    sleep 2
+
+    local dest=""
+    if rm -rf "/Applications/$target" 2>/dev/null && ditto "$src" "/Applications/$target" 2>>"$XLOG"; then
+        dest="/Applications/$target"
+    else
+        mkdir -p "$HOME/Applications"
+        rm -rf "$HOME/Applications/$target" 2>/dev/null
+        ditto "$src" "$HOME/Applications/$target" 2>>"$XLOG" && dest="$HOME/Applications/$target"
+    fi
+    if [ -z "$dest" ]; then
+        log "!! Could not write the app. Is the NAS still connected?"
+        return 1
+    fi
+    xattr -dr com.apple.quarantine "$dest" 2>/dev/null
+    log "==> Installed v$v to $dest"
+
+    # Keep this Mac current on its own from now on (kid app only; the parent
+    # dashboard is updated deliberately, not behind Paige's back).
+    if [ "$label" = "kid games app" ] && [ -f tools/enable_auto_update.command ]; then
+        if [ ! -f "$HOME/Library/LaunchAgents/com.turley.learntube.update.plist" ]; then
+            log "==> Turning on auto-update for this Mac (checks the NAS every 30 min)."
+            bash tools/enable_auto_update.command >> "$XLOG" 2>&1 || log "    (auto-update setup failed; app is still installed)"
+        else
+            log "==> Auto-update is already on for this Mac."
+        fi
+    fi
+    open "$dest" 2>/dev/null || true
+    log ""
+    log "Done. Nothing else to do on this Mac."
+    return 0
+}
+
+if [ ! -d "/Applications/Xcode.app" ]; then
+    companion_install
+    exit $?
+fi
 
 # Version: bump the PATCH on every build so the number on screen is short and
 # comparable (2.1.4 is obviously newer than 2.1.3). Bump MAJOR.MINOR by hand in
@@ -147,6 +245,28 @@ show_devices() {
     done
     [ $any -eq 0 ] && log "    (none: unlock the phone, same Wi-Fi or plugged in)"
     ipad_note
+    show_macs
+}
+
+show_macs() {
+    log "==> Macs (staged in dist/ on the NAS, not through devicectl):"
+    log "    this Mac         ->  grown-up app, straight into /Applications"
+    local g="dist/LearnTube.app" p="dist/LearnTube Parent.app"
+    if [ -d "$g" ]; then
+        log "    Gabriel's Mac    ->  kid app        (dist/LearnTube.app, staged $(stat -f '%Sm' -t '%b %d %H:%M' "$g"))"
+    else
+        log "    Gabriel's Mac    ->  kid app        (nothing staged yet; run.sh dist)"
+    fi
+    if [ -n "$GABRIEL_MAC_SSH" ]; then
+        log "                         direct push to $GABRIEL_MAC_SSH when it is awake"
+    else
+        log "                         picked up by the auto-updater, or Install LearnTube.command"
+    fi
+    if [ -d "$p" ]; then
+        log "    Paige's Mac      ->  grown-up app   (dist/LearnTube Parent.app, staged $(stat -f '%Sm' -t '%b %d %H:%M' "$p"))"
+    else
+        log "    Paige's Mac      ->  grown-up app   (nothing staged yet; run.sh dist)"
+    fi
 }
 
 # install <app> <udid> <name>
@@ -189,6 +309,27 @@ install_mac() {
     log "==> Grown-up app installed to /Applications and opened (LearnTube $VERSION)."
 }
 
+# ---- Gabriel's Mac, over the wire --------------------------------------------
+# Only used when GABRIEL_MAC_SSH is set. Never fatal: an asleep laptop just
+# means the build waits in dist/ for the auto-updater.
+push_gabriel_mac() {
+    [ -n "$GABRIEL_MAC_SSH" ] || return 0
+    [ -d "dist/LearnTube.app" ] || return 0
+    log "==> Pushing to Gabriel's Mac ($GABRIEL_MAC_SSH) ..."
+    if ! ssh -o ConnectTimeout=8 -o BatchMode=yes "$GABRIEL_MAC_SSH" true >> "$XLOG" 2>&1; then
+        log "    not reachable (asleep, off the network, or Remote Login is off)."
+        log "    The build is in dist/; his Mac picks it up on its next check."
+        return 0
+    fi
+    ssh "$GABRIEL_MAC_SSH" 'rm -rf /tmp/LearnTube-push && mkdir -p /tmp/LearnTube-push' >> "$XLOG" 2>&1
+    if rsync -a --delete "dist/LearnTube.app" "$GABRIEL_MAC_SSH:/tmp/LearnTube-push/" >> "$XLOG" 2>&1 \
+       && ssh "$GABRIEL_MAC_SSH" 'bash -s' < tools/mac_install_remote.sh >> "$XLOG" 2>&1; then
+        log "    installed on Gabriel's Mac."
+    else
+        log "    push failed; left in dist/ for the updater (details: build/xcodebuild.log)."
+    fi
+}
+
 # ---- dist/ for the other Macs ------------------------------------------------
 # Kid app for Gabriel's Mac (Developer ID signed and notarized when the key is
 # present) and a portable ad-hoc grown-up app for Paige's Mac. Both land in
@@ -202,7 +343,9 @@ make_dist() {
     printf '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0"><dict/></plist>\n' > "$ent"
     if codesign --force --deep --options runtime --timestamp --entitlements "$ent" --sign "$devid" "$KIDMAC_APP" >> "$XLOG" 2>&1; then
         log "    Developer ID signed."
-        if [ -f "$key" ]; then
+        if [ "${NOTARIZE:-1}" != 1 ]; then
+            log "    (skipping notarization on this run; 'run.sh dist' notarizes)"
+        elif [ -f "$key" ]; then
             local zip=/tmp/LearnTube-notarize.zip; rm -f "$zip"; ditto -c -k --keepParent "$KIDMAC_APP" "$zip"
             log "==> Notarizing (1-3 minutes) ..."
             if xcrun notarytool submit "$zip" --key "$key" --key-id 93Z3AGX448 \
@@ -215,13 +358,18 @@ make_dist() {
         codesign --force --deep --sign - "$KIDMAC_APP" >> "$XLOG" 2>&1 || true
     fi
     mkdir -p dist; rm -rf "dist/LearnTube.app"; ditto "$KIDMAC_APP" "dist/LearnTube.app"
-    log "==> dist/LearnTube.app ready for Gabriel's Mac (Install LearnTube.command)."
+    # Keep the two double-clickables beside the app; dist/ is gitignored and
+    # gets wiped, tools/ is the tracked copy.
+    cp tools/enable_auto_update.command "dist/Enable Auto Update.command" 2>/dev/null
+    chmod +x "dist/Enable Auto Update.command" 2>/dev/null
+    log "==> dist/LearnTube.app ready for Gabriel's Mac (auto-updater, or Install LearnTube.command)."
 
     [ -d "$MAC_APP" ] || build_admin_mac || return 1
     rm -f "$MAC_APP/Contents/embedded.provisionprofile"
     codesign --force --deep --sign - "$MAC_APP" >> "$XLOG" 2>&1 || true
     rm -rf "dist/LearnTube Parent.app"; ditto "$MAC_APP" "dist/LearnTube Parent.app"
     log "==> dist/LearnTube Parent.app ready for Paige's Mac (Install LearnTube Parent.command)."
+    push_gabriel_mac
 }
 
 # ---- phones ------------------------------------------------------------------
@@ -259,14 +407,19 @@ case "$MODE" in
         id=$(resolve "$TARGET"); [ -n "$id" ] || die "no reachable device matches \"$TARGET\" (try: run.sh devices)"
         if [ "$MODE" = kid ]; then build_kid_ios && install_to "$KID_APP" "$id" "$(device_name "$id")"
         else build_admin_ios && install_to "$ADMIN_APP" "$id" "$(device_name "$id")"; fi ;;
-    dist)
+    dist|macs)
         make_dist ;;
     all)
         deploy_phones; build_admin_mac && install_mac; make_dist ;;
     default|"")
-        deploy_phones; build_admin_mac && install_mac ;;
+        deploy_phones; build_admin_mac && install_mac
+        if [ "$STAGE_MACS_BY_DEFAULT" = 1 ]; then
+            NOTARIZE=0
+            make_dist || log "!! staging the Mac builds failed; phones and this Mac are still updated."
+            NOTARIZE=1
+        fi ;;
     *)
-        die "unknown mode '$MODE' (check | devices | mac | kid NAME | admin NAME | dist | all)" ;;
+        die "unknown mode '$MODE' (check | devices | mac | kid NAME | admin NAME | dist | macs | all)" ;;
 esac
 status=$?
 log ""

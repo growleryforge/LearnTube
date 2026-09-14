@@ -39,6 +39,8 @@ struct SentencePlayer: View {
     @State private var slotFrame: CGRect = .zero
     /// Same guard as SortPlayer: only a genuine finger drag may fill the gap.
     @State private var moved = false
+    /// Mac only: the word he has picked up and is carrying to the gap.
+    @State private var carried: String? = nil
 
     /// The sentence in front of him. Guarded so a malformed lesson can never
     /// crash the game in his hands.
@@ -48,8 +50,14 @@ struct SentencePlayer: View {
         return lines[min(order[min(pos, order.count - 1)], lines.count - 1)]
     }
 
+    /// Two halves on a Mac, one drag on a touch screen.
+    private var stagePrompt: String {
+        guard Pointer.isMac else { return prompt }
+        return carried == nil ? prompt : "Now click the gap in the sentence."
+    }
+
     var body: some View {
-        GameStage(mood: mood, prompt: prompt,
+        GameStage(mood: mood, prompt: stagePrompt,
                   confetti: filled != nil && pos + 1 >= order.count, compact: true) {
             VStack(spacing: 12) {
                 ProgressDots(total: lines.count + redoSeen.count, done: answered, accent: accent)
@@ -98,6 +106,12 @@ struct SentencePlayer: View {
         }
         .frame(width: 150, height: 52)
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: filled)
+        .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .onTapGesture {
+            guard Pointer.isMac, filled == nil, let c = carried else { return }
+            carried = nil
+            if c == line.answer { land(c) } else { miss(c) }
+        }
         .background(GeometryReader { g in
             Color.clear.preference(key: SlotKey.self, value: g.frame(in: .named("sentence")))
         })
@@ -120,8 +134,8 @@ struct SentencePlayer: View {
                     )
                     .wiggle(wrongWord == t)
                     .offset(dragWord == t ? dragOffset : .zero)
-                    .scaleEffect(dragWord == t ? 1.1 : 1)
-                    .zIndex(dragWord == t ? 10 : 0)
+                    .scaleEffect(dragWord == t || carried == t ? 1.1 : 1)
+                    .zIndex(dragWord == t || carried == t ? 10 : 0)
                     .opacity(filled != nil ? 0.35 : 1)
                     .contentShape(Rectangle())
                     // Priority over the surrounding scroll view, same as the
@@ -149,7 +163,7 @@ struct SentencePlayer: View {
     }
 
     private func load() {
-        filled = nil; wrongWord = nil; misses = 0; taught = false
+        filled = nil; wrongWord = nil; misses = 0; taught = false; carried = nil
         tiles = ([line.answer] + line.distractors).shuffled()
         Leo.say(spoken(line, blank: true))
     }
@@ -166,6 +180,13 @@ struct SentencePlayer: View {
         moved = false
         let onSlot = slotFrame.insetBy(dx: -40, dy: -40).contains(point)
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) { dragWord = nil; dragOffset = .zero }
+        // Mac: a click that did not move picks the word up; the gap is then
+        // one more click. He still carries it there, so nothing here turns
+        // this back into a game he can win with a single tap.
+        if Pointer.isMac, !realDrag, filled == nil {
+            carried = (carried == t) ? nil : t
+            return
+        }
         guard realDrag, onSlot, filled == nil else { return }
         if t == line.answer { land(t) } else { miss(t) }
     }

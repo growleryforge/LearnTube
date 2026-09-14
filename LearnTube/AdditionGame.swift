@@ -379,6 +379,14 @@ struct DragCombineView: View {
         }
     }
 
+    /// A group of animals goes into the pen, whether it was dragged there or
+    /// clicked there.
+    private func pen(_ penned: Binding<Bool>) {
+        SFX.correct()
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) { penned.wrappedValue = true; wiggle = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { wiggle = false; check() }
+    }
+
     private func chip(_ animals: [String], off: Binding<CGSize>, penned: Binding<Bool>, color: Color) -> some View {
         HStack(spacing: 2) {
             ForEach(Array(animals.enumerated()), id: \.offset) { _, a in EmojiView(emoji: a, size: 32, tint: .white) }
@@ -386,14 +394,19 @@ struct DragCombineView: View {
         .padding(12).background(color.opacity(0.85))
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .offset(off.wrappedValue)
+        // Mac: dragging a group down into the pen means holding the button the
+        // whole way, so a click puts the group in instead.
+        .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .onTapGesture {
+            guard Pointer.isMac, !penned.wrappedValue else { return }
+            pen(penned)
+        }
         .highPriorityGesture(
             DragGesture()
                 .onChanged { v in off.wrappedValue = v.translation }
                 .onEnded { v in
                     if v.translation.height > 70 {
-                        SFX.correct()
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) { penned.wrappedValue = true; wiggle = true }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { wiggle = false; check() }
+                        pen(penned)
                     } else {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { off.wrappedValue = .zero }
                     }
