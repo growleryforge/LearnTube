@@ -206,7 +206,20 @@ struct ActOutPlayer: View {
             VStack(spacing: 8) {
                 Spacer(minLength: 0)
                 if round.arriving > 0 {
-                    addBoard
+                    // The instruction sits on the picture, directly over the
+                    // animals it is talking about. In the white bar at the top
+                    // it was a caption on someone else's screen; here it is
+                    // the first thing he reads on his way to the animals.
+                    VStack(spacing: 8) {
+                        Text(sceneLine)
+                            .font(.system(size: narrow ? 17 : 21, weight: .black, design: .rounded))
+                            .foregroundStyle(.white)
+                            .lineLimit(1).minimumScaleFactor(0.75)
+                            .padding(.horizontal, 16).padding(.vertical, 8)
+                            .background(Capsule().fill(.black.opacity(0.42)))
+                            .shadow(color: .black.opacity(0.35), radius: 4, y: 2)
+                        addBoard
+                    }
                 } else if round.compare {
                     VStack(alignment: .leading, spacing: 10) {
                         row(0); row(1)
@@ -222,15 +235,17 @@ struct ActOutPlayer: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 Spacer(minLength: 0)
-                // What to do, right where he's looking. Hidden while he is
-                // choosing: the number row has its own label under his thumb.
-                if phase != .choose && !(round.arriving > 0 && phase == .act) {
-                    Text(caption)
-                        .font(.system(size: narrow ? 15 : 17, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
-                        .lineLimit(2).multilineTextAlignment(.center)
-                        .padding(.horizontal, 14).padding(.vertical, 7)
-                        .background(Capsule().fill(.black.opacity(0.45)))
+                // What to do, right where he's looking, and the way back if it
+                // went wrong. Both hidden while he is choosing: the number row
+                // has its own label under his thumb. On an adding round the two
+                // boxes already say "4 hens" and "add 4 more", so the caption
+                // would only repeat them and cost a line.
+                // An adding round says everything on the picture already, so
+                // down here there is only the way back.
+                if round.arriving > 0 {
+                    if canStartOver { startOverButton }
+                } else if phase != .choose {
+                    captionChip
                 }
             }
             .padding(12)
@@ -261,6 +276,7 @@ struct ActOutPlayer: View {
                                    startPoint: .top, endPoint: .bottom)
                 }
             }
+            .allowsHitTesting(false)     // scenery, same as the fence
         )
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 24)
@@ -304,22 +320,38 @@ struct ActOutPlayer: View {
 
     /// One box on the adding board. `dashed` empty rings show how many are
     /// still to come, which is what makes "2 more" something he can see.
+    ///
+    /// The rows are laid out by hand rather than with a LazyVGrid. A lazy grid
+    /// inside a height-constrained box quietly declines to render its last row,
+    /// so the fourth chicken of four went in and was simply not there. An
+    /// animal that vanishes with no way to get it back is the worst thing this
+    /// screen can do to him.
     private func penBox(tokens: [Token], caption: String, dashed: Int, live: Bool) -> some View {
-        let cols = max(1, min(max(tokens.count + dashed, 1), narrow ? 3 : 4))
+        let cells: [Token?] = tokens.map { Optional($0) } + Array(repeating: nil, count: max(0, dashed))
+        let cols = max(1, min(max(cells.count, 1), narrow ? 3 : 4))
+        let rows = stride(from: 0, to: cells.count, by: cols).map { Array(cells[$0..<min($0 + cols, cells.count)]) }
         return VStack(spacing: 6) {
-            LazyVGrid(columns: Array(repeating: GridItem(.fixed(chipSize + 4), spacing: 4), count: cols), spacing: 4) {
-                ForEach(tokens) { t in tokenView(t, size: chipSize) }
-                ForEach(0..<dashed, id: \.self) { _ in
-                    Circle()
-                        .strokeBorder(.white.opacity(live ? 0.95 : 0.5),
-                                      style: StrokeStyle(lineWidth: 3, dash: [7, 6]))
-                        .frame(width: chipSize, height: chipSize)
-                }
-            }
+            // Name first, animals under it. He reads down to what he has to do.
             Text(caption)
                 .font(.system(size: narrow ? 13 : 15, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
                 .lineLimit(1).minimumScaleFactor(0.7)
+            VStack(spacing: 4) {
+                ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
+                    HStack(spacing: 4) {
+                        ForEach(Array(row.enumerated()), id: \.offset) { _, cell in
+                            if let t = cell {
+                                tokenView(t, size: chipSize)
+                            } else {
+                                Circle()
+                                    .strokeBorder(.white.opacity(live ? 0.95 : 0.5),
+                                                  style: StrokeStyle(lineWidth: 3, dash: [7, 6]))
+                                    .frame(width: chipSize, height: chipSize)
+                            }
+                        }
+                    }
+                }
+            }
         }
         .padding(narrow ? 7 : 10)
         .background(RoundedRectangle(cornerRadius: 18, style: .continuous)
@@ -369,29 +401,45 @@ struct ActOutPlayer: View {
         .background(GeometryReader { g in Color.clear.preference(key: ZoneKey.self, value: [key: g.frame(in: .named("scene"))]) })
     }
 
+    /// The animals still waiting to be carried in. They used to sit ON the
+    /// fence picture, where a yellow chick on yellow straw is genuinely hard to
+    /// pick out. Now they stand on a clear shelf and the fence is a strip
+    /// underneath them, so the things he can touch are the things that stand out.
     private var fence: some View {
-        HStack(spacing: 6) {
-            Text("🌾").font(.system(size: narrow ? 22 : 30))
-            ForEach(round.tokens.filter { $0.place == .waiting }) { t in tokenView(t) }
-            Spacer(minLength: 0)
-            // Without a line limit this wrapped to one letter per line down the
-            // right edge of the fence.
-            if !narrow {
-                Text("drag them in ↑")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.85))
+        VStack(spacing: 0) {
+            HStack(spacing: narrow ? 8 : 12) {
+                ForEach(round.tokens.filter { $0.place == .waiting }) { t in
+                    tokenView(t, size: chipSize)
+                }
+                Spacer(minLength: 0)
+                Text("drag them up ↑")
+                    .font(.system(size: narrow ? 12 : 14, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.9))
                     .lineLimit(1).fixedSize()
             }
-        }
-        .padding(narrow ? 7 : 10)
-        .background(
-            ZStack {
-                RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(red: 0.45, green: 0.68, blue: 0.30))
+            .padding(.horizontal, narrow ? 10 : 14)
+            .padding(.vertical, narrow ? 8 : 10)
+            .frame(maxWidth: .infinity)
+            .background(.black.opacity(0.22))
+
+            Group {
                 if let img = Self.art("act-fence") {
-                    img.resizable().scaledToFill().clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    img.resizable().scaledToFill()
+                } else {
+                    Color(red: 0.62, green: 0.45, blue: 0.28)
                 }
             }
-        )
+            .frame(height: narrow ? 34 : 44)
+            .clipped()
+            // scaledToFill makes the fence picture far bigger than its frame,
+            // and .clipped() only clips the DRAWING, not the touches. The
+            // invisible overflow sat on top of the animals and swallowed every
+            // tap on them. It is scenery: it gets no touches at all.
+            .allowsHitTesting(false)
+        }
+        .background(Color(red: 0.45, green: 0.68, blue: 0.30))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: A token
@@ -400,6 +448,7 @@ struct ActOutPlayer: View {
         let side = size ?? tokenSize
         let canDrag = phase == .act && ((round.leaving > 0 && t.place == .scene && t.value == round.leaveValue)
                                         || (round.arriving > 0 && t.place == .waiting))
+        let canUndo = canReturn(t)
         let canCount = phase == .count && t.countable && t.place == .scene && t.number == nil
         let crate = t.value > 1
         return ZStack(alignment: .topTrailing) {
@@ -461,7 +510,7 @@ struct ActOutPlayer: View {
         .highPriorityGesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .named("scene"))
                 .onChanged { v in
-                    guard canDrag else { return }
+                    guard canDrag || canUndo else { return }
                     if abs(v.translation.width) > 4 || abs(v.translation.height) > 4 {
                         dragID = t.id; dragOffset = v.translation
                     }
@@ -473,12 +522,22 @@ struct ActOutPlayer: View {
                         withAnimation(.spring(response: 0.3)) { dragID = nil; dragOffset = .zero }
                         if canCount { count(t) }
                         else if phase == .count { nudge(t) }
+                        // Tap one he has carried in and it goes back to the
+                        // fence. Works the same by finger and by click.
+                        else if canUndo { sendBack(t) }
                         // Mac: no drag. Clicking the animal picks it up and
                         // the pond or the gate is then one more click.
                         else if Pointer.isMac, canDrag { carryID = (carryID == t.id) ? nil : t.id }
                         return
                     }
                     guard dragID == t.id else { return }
+                    // Dragged one back off the board: any real move sends it
+                    // home, because there is nowhere else for it to go.
+                    if canUndo {
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) { dragID = nil; dragOffset = .zero }
+                        sendBack(t)
+                        return
+                    }
                     let ok: Bool
                     if t.place == .waiting {
                         // The pen is the target, but a sloppy drop anywhere on
@@ -583,6 +642,82 @@ struct ActOutPlayer: View {
         guard wanted.contains(zone) else { return }
         carryID = nil
         move(t)
+    }
+
+    /// One he has already carried in. During the act he can take it back: tap
+    /// it, or drag it back down to the fence. Nothing he does here is a
+    /// mistake and nothing is recorded as one.
+    private func canReturn(_ t: Token) -> Bool {
+        phase == .act && round.arriving > 0 && t.row == 1 && t.place == .scene
+    }
+
+    private func sendBack(_ t: Token) {
+        guard let i = round.tokens.firstIndex(where: { $0.id == t.id }),
+              round.tokens[i].place == .scene else { return }
+        carryID = nil
+        withAnimation(.spring(response: 0.45, dampingFraction: 0.75)) {
+            round.tokens[i].place = .waiting
+            round.tokens[i].number = nil
+        }
+        moved = max(0, moved - 1)
+        SFX.tap()
+    }
+
+    /// Put every newcomer back on the fence and start the round again, same
+    /// numbers. For when it has gone wrong and he wants a clean run at it.
+    private func startOver() {
+        carryID = nil; dragID = nil; dragOffset = .zero
+        withAnimation(.spring(response: 0.45, dampingFraction: 0.75)) {
+            for i in round.tokens.indices {
+                round.tokens[i].number = nil
+                if round.tokens[i].row == 1 { round.tokens[i].place = .waiting }
+            }
+            phase = .act
+        }
+        moved = 0; counted = 0; total = round.countFrom; guess = nil; mood = .idle
+        SFX.tap()
+    }
+
+    private var captionChip: some View {
+        Text(caption)
+            .font(.system(size: narrow ? 15 : 17, weight: .black, design: .rounded))
+            .foregroundStyle(.white)
+            .lineLimit(2).multilineTextAlignment(.center)
+            .padding(.horizontal, 14).padding(.vertical, 7)
+            .background(Capsule().fill(.black.opacity(0.45)))
+    }
+
+    /// The line printed over the animals on an adding round.
+    private var sceneLine: String {
+        switch phase {
+        case .act:
+            let left = max(0, round.arriving - moved)
+            return left == 1 ? "Drag 1 more over!" : "Drag \(left) more over!"
+        case .watch:    return "Here they come!"
+        case .count:    return total > 0 ? "Keep counting... \(total)" : "Touch each one to count 👆"
+        case .choose:   return "How many in all?"
+        case .sentence: return "\(round.answer)!"
+        }
+    }
+
+    /// There is a way back for as long as the round is still his to change:
+    /// while he is carrying them in, and while he is counting what he carried.
+    private var canStartOver: Bool {
+        round.arriving > 0 && moved > 0 && (phase == .act || phase == .count)
+    }
+
+    /// Small and calm, under the board, and only once there is something to
+    /// undo. It says what it does in his words.
+    private var startOverButton: some View {
+        Button { startOver() } label: {
+            Text("↺  put them back")
+                .font(.system(size: narrow ? 14 : 16, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 16).padding(.vertical, 8)
+                .background(Capsule().fill(.black.opacity(0.38)))
+                .overlay(Capsule().strokeBorder(.white.opacity(0.5), lineWidth: 2))
+        }
+        .buttonStyle(.plain)
     }
 
     private func move(_ t: Token) {
