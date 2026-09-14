@@ -584,6 +584,14 @@ struct CountPlayer: View {
 
 // MARK: - Order
 
+/// Put the steps in order.
+///
+/// The board used to be an adaptive grid: on anything wider than a phone it
+/// packed five 90pt chips into the top-left corner and left the rest of the
+/// screen empty sky, with the answer row and the choices almost touching. This
+/// version gives it an actual board - numbered slots for the answer, big
+/// centred tiles for the choices - and the same way back out that the dragging
+/// games got: take the last one back, or start the whole thing over.
 struct OrderPlayer: View {
     let prompt: String
     let items: [String]
@@ -594,28 +602,139 @@ struct OrderPlayer: View {
     @State private var placed: [String] = []
     @State private var wrong: String?
     @State private var mood: MascotMood = .idle
-    private let cols = [GridItem(.adaptive(minimum: 92), spacing: 10)]
+
+    @Environment(\.horizontalSizeClass) private var hSize
+    private var narrow: Bool { hSize == .compact }
+
+    private var slotW: CGFloat { narrow ? 94 : 138 }
+    private var slotH: CGFloat { narrow ? 60 : 80 }
+    private var tileW: CGFloat { narrow ? 110 : 172 }
+    private var tileH: CGFloat { narrow ? 68 : 96 }
+    private var perRow: Int { max(1, min(items.count, narrow ? 3 : 5)) }
 
     var body: some View {
         GameStage(mood: mood, prompt: prompt, confetti: placed.count == items.count) {
-            VStack(spacing: 12) {
-                FlowChips(items: placed, accent: Theme.green, filled: true).frame(minHeight: 40)
-                LazyVGrid(columns: cols, spacing: 10) {
-                    ForEach(Array(pool.enumerated()), id: \.offset) { i, item in
-                        Button { tap(item) } label: {
-                            Text(item)
-                                .font(.system(size: 19, weight: .heavy, design: .rounded))
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity).padding(.vertical, 16)
-                                .background(wrong == item ? Theme.red : tileColor(i))
-                                .clipShape(RoundedRectangle(cornerRadius: 14))
-                        }
-                        .wiggle(wrong == item)
+            VStack(spacing: narrow ? 16 : 26) {
+                answerStrip
+                if !pool.isEmpty { choiceBoard }
+                if !placed.isEmpty && placed.count < items.count { startOverButton }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 6)
+        }
+        .onAppear { pool = items.shuffled() }
+    }
+
+    // MARK: the answer being built
+
+    /// One slot per step, numbered, so the shape of the answer is visible
+    /// before he has placed anything. The next slot glows gold; the last one
+    /// he filled is tappable to take it back.
+    private var answerStrip: some View {
+        let idxRows = rows(Array(0..<items.count))
+        return VStack(spacing: narrow ? 8 : 12) {
+            ForEach(idxRows.indices, id: \.self) { r in
+                HStack(spacing: narrow ? 8 : 12) {
+                    ForEach(idxRows[r], id: \.self) { i in slot(i) }
+                }
+            }
+        }
+    }
+
+    private func slot(_ i: Int) -> some View {
+        let filled = i < placed.count
+        let isNext = i == placed.count
+        let isLast = filled && i == placed.count - 1
+        return Button { if isLast { sendBack() } } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(filled ? Theme.green : Color.white.opacity(0.32))
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(isNext ? Theme.gold : Color.white.opacity(0.8),
+                                  style: StrokeStyle(lineWidth: isNext ? 4 : 3,
+                                                     dash: filled ? [] : [7, 6]))
+                if filled {
+                    Text(placed[i])
+                        .font(.system(size: narrow ? 16 : 21, weight: .heavy, design: .rounded))
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.6).lineLimit(2)
+                        .padding(.horizontal, 6)
+                } else {
+                    Text("\(i + 1)")
+                        .font(.system(size: narrow ? 20 : 27, weight: .black, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.9))
+                }
+            }
+            .frame(width: slotW, height: slotH)
+            .overlay(alignment: .topTrailing) {
+                if isLast {
+                    Text("\u{21BA}")
+                        .font(.system(size: 13, weight: .black, design: .rounded))
+                        .foregroundStyle(Theme.green)
+                        .frame(width: 22, height: 22)
+                        .background(Circle().fill(.white))
+                        .shadow(color: .black.opacity(0.2), radius: 2, y: 1)
+                        .offset(x: 7, y: -7)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(!isLast)
+    }
+
+    // MARK: the choices
+
+    private var choiceBoard: some View {
+        let idxRows = rows(Array(pool.indices))
+        return VStack(spacing: narrow ? 10 : 14) {
+            ForEach(idxRows.indices, id: \.self) { r in
+                HStack(spacing: narrow ? 10 : 14) {
+                    ForEach(idxRows[r], id: \.self) { i in
+                        if i < pool.count { tile(pool[i]) }
                     }
                 }
             }
         }
-        .onAppear { pool = items.shuffled() }
+    }
+
+    private func tile(_ item: String) -> some View {
+        Button { tap(item) } label: {
+            Text(item)
+                .font(.system(size: narrow ? 18 : 24, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.6).lineLimit(2)
+                .padding(.horizontal, 8)
+                .frame(width: tileW, height: tileH)
+                .background(wrong == item ? Theme.red : tileColor(colorIndex(item)))
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .shadow(color: .black.opacity(0.18), radius: 4, y: 2)
+        }
+        .buttonStyle(.plain)
+        .wiggle(wrong == item)
+    }
+
+    private var startOverButton: some View {
+        Button { startOver() } label: {
+            Text("\u{21BA}  start over")
+                .font(.system(size: narrow ? 14 : 16, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 16).padding(.vertical, 8)
+                .background(Capsule().fill(.black.opacity(0.35)))
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: helpers
+
+    private func colorIndex(_ item: String) -> Int { items.firstIndex(of: item) ?? 0 }
+
+    private func rows<T>(_ xs: [T]) -> [[T]] {
+        guard !xs.isEmpty else { return [] }
+        return stride(from: 0, to: xs.count, by: perRow).map {
+            Array(xs[$0..<min($0 + perRow, xs.count)])
+        }
     }
 
     private func tap(_ item: String) {
@@ -633,6 +752,25 @@ struct OrderPlayer: View {
             wrong = item; mood = .oops; SFX.wrong()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { wrong = nil; mood = .idle }
         }
+    }
+
+    /// Take the last one back. Same idea as "put them back" on the act-it-out
+    /// board: a wrong move he can see is a wrong move he can undo himself.
+    private func sendBack() {
+        guard let last = placed.last else { return }
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            placed.removeLast()
+            pool.append(last)
+        }
+        mood = .idle; SFX.tap()
+    }
+
+    private func startOver() {
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+            placed.removeAll()
+            pool = items.shuffled()
+        }
+        mood = .idle; SFX.tap()
     }
 }
 

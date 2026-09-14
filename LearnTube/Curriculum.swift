@@ -116,6 +116,9 @@ enum Curriculum {
         "TK-M1", "TK-M2", "TK-M3", "TK-M4", "TK-M6", "TK-C1",
         "TK-R1", "TK-R2", "TK-R3",
         "TK-S1", "TK-S2", "TK-S3", "TK-L1",
+        // From Paige's lesson library, re-cut as doing games rather than the
+        // multiple choice the source pages end in. See CurriculumTK.swift.
+        "TK-L2", "TK-L3", "TK-S4", "TK-L4",
         // NEW — concrete "count what you see" number games, in his winning style,
         // up top so he sees them first (replace the abstract skip-counting).
         "K-NUM1", "K-NUM2", "K-NUM3", "K-NUM4",
@@ -297,14 +300,14 @@ enum Curriculum {
     static func skills(for grade: Int) -> [Skill] {
         switch grade {
         case -2: return warmUps
-        case -1: return transitionalK
+        case -1: return transitionalK + paigeTK
         case 0: return kindergarten + stretch + writingClub
         case 1: return firstGrade + bridge + readiness
         default: return []
         }
     }
 
-    static var allSeededSkills: [Skill] { warmUps + transitionalK + kindergarten + stretch + writingClub + firstGrade + bridge + readiness }
+    static var allSeededSkills: [Skill] { warmUps + transitionalK + paigeTK + kindergarten + stretch + writingClub + firstGrade + bridge + readiness }
 
     static func skill(id: String) -> Skill? {
         allSeededSkills.first { $0.id == id }
