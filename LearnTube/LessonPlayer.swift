@@ -85,14 +85,21 @@ struct LessonRunner: View {
                 MatchPlayer(prompt: prompt, pairs: pairs, accent: accent, onComplete: onComplete)
             case .numberPad(let problems):
                 NumberPadPlayer(problems: problems, accent: accent, onComplete: onComplete)
-            case .numberGen(let game, let rounds, let boost):
+            case .numberGen(let game, _, let boost):
                 // Every number game is acted out with animals for the first
                 // three rungs of its ladder; the number pad comes after.
+                //
+                // The per-skill `rounds:` is deliberately ignored here. Those
+                // numbers were written when a round was one tap; a round is now
+                // a drag, a count and a tap, and three chained levels of 4 is a
+                // twelve-round sitting. AppState.numberRoundsPerLevel is the
+                // single dial for how long one level runs.
+                let n = AppState.numberRoundsPerLevel
                 if GameDifficulty.rung <= AppState.concreteStages {
-                    ActOutPlayer(game: game, stage: GameDifficulty.rung, rounds: rounds, accent: accent, onComplete: onComplete)
+                    ActOutPlayer(game: game, stage: GameDifficulty.rung, rounds: n, accent: accent, onComplete: onComplete)
                 } else {
                     // Fresh problems every play, at the difficulty the home tile set.
-                    NumberPadPlayer(problems: ProblemGen.problems(game, rounds: rounds, boost: boost), accent: accent, onComplete: onComplete)
+                    NumberPadPlayer(problems: ProblemGen.problems(game, rounds: n, boost: boost), accent: accent, onComplete: onComplete)
                 }
             case .faceMatch(let exprs, let perRound):
                 DragMatchPlayer(exprs: exprs, perRound: perRound, accent: accent, onComplete: onComplete)

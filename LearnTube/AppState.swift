@@ -883,6 +883,14 @@ final class AppState: ObservableObject {
     /// (Paige, Sept 2026: the games were over too quickly.)
     static let maxChainRungs = 3
 
+    /// Rounds in ONE level of a generated number game. The curriculum entries
+    /// still carry a `rounds:` number each, but those were written when a round
+    /// was a single tap. A round is now a drag, a count and a tap, and with
+    /// three levels chained the old 4 made a sitting 12 of them long — which is
+    /// what Doosy hit: "it is really long, I never wanted more than 3 at once."
+    /// This is the one dial. Three levels of 2 is a six-round sitting.
+    static let numberRoundsPerLevel = 2
+
     /// The rung a skill is on (1-based), from how many times it has been
     /// mastered across the family. For most games this is the same as the
     /// level; for concrete-first games rungs 1-3 are the act-it-out stages.
