@@ -5,8 +5,18 @@ import UIKit
 ///
 ///   * a letter is its STROKES, in order (stroke 1, then stroke 2...)
 ///   * a stroke starts at the green dot and follows the dots in order
-///   * one stroke = one finger-down; lifting early resets that stroke
-///   * wandering off the path resets that stroke (no reward for scribbling)
+///   * a stroke can be written in more than one go: lifting PAUSES it where
+///     it stands and the green dot moves to where he stopped
+///   * wandering off the path also pauses, and never advances him (no reward
+///     for scribbling)
+///
+/// That pausing rule came from his own data. "Write goat and dog" was the
+/// reddest game on the dashboard, and every single logged miss was the same
+/// line: "Keep your finger down all the way to the end." He knew the letters.
+/// He was being marked wrong for lifting his finger, then made to write the
+/// whole stroke again from the start. The Mac side had already been forgiven
+/// this (a trackpad runs out of room), and the iPad - the one he actually
+/// uses - had not.
 ///
 /// Only the current stroke takes ink. The others are shown as faint guides
 /// so he can see the whole letter, and finished strokes stay drawn in colour.
@@ -161,14 +171,18 @@ struct TracePlayer: View {
             }
             // The start: big green ring with the stroke number, and a finger
             // until he's on his way.
-            if let first = cur.first, nextDot == 0 {
+            // Shown at the start of the stroke, and again wherever he paused,
+            // so "go back to the green dot" always points at somewhere he can
+            // actually carry on from.
+            if !tracing, let at = cur.indices.contains(min(nextDot, cur.count - 1)) ? cur[min(nextDot, cur.count - 1)] : nil {
                 let r: CGFloat = 17
-                ctx.fill(Path(ellipseIn: CGRect(x: first.x - r, y: first.y - r, width: r * 2, height: r * 2)),
+                ctx.fill(Path(ellipseIn: CGRect(x: at.x - r, y: at.y - r, width: r * 2, height: r * 2)),
                          with: .color(Theme.green))
-                ctx.draw(Text("\(strokeIndex + 1)").font(.system(size: 18, weight: .black, design: .rounded)).foregroundColor(.white),
-                         at: first)
+                ctx.draw(Text(nextDot == 0 ? "\(strokeIndex + 1)" : "▸")
+                            .font(.system(size: 18, weight: .black, design: .rounded)).foregroundColor(.white),
+                         at: at)
                 ctx.draw(Text("👆").font(.system(size: 34)),
-                         at: CGPoint(x: min(first.x + 26, size.width - 24), y: min(first.y + 34, size.height - 22)))
+                         at: CGPoint(x: min(at.x + 26, size.width - 24), y: min(at.y + 34, size.height - 22)))
             }
         }
         // The finger's ink on the current stroke.
@@ -207,17 +221,20 @@ struct TracePlayer: View {
         guard !justFinished, strokeIndex < strokes.count else { return }
         let cur = strokes[strokeIndex]
         if !tracing {
-            // A stroke has to begin at its start dot. Anywhere else is ignored,
-            // with a nudge toward the green dot.
-            guard let first = cur.first else { return }
-            if hypot(p.x - first.x, p.y - first.y) > startRadius {
+            // Where the green dot is right now: the start of the stroke, or -
+            // if he is part way through and lifted - the next dot he needs.
+            guard let resume = resumePoint else { return }
+            if hypot(p.x - resume.x, p.y - resume.y) > startRadius {
                 if hint.isEmpty {
                     hint = Pointer.isMac ? "Move to the green dot 🖱️" : "Start at the green dot 👆"
                     mood = .idle
                 }
                 return
             }
-            tracing = true; hint = ""; ink = [p]; nextDot = 0
+            tracing = true; hint = ""; mood = .idle
+            // Picking a paused stroke back up keeps the ink he already laid
+            // down and the dots he already hit.
+            if nextDot == 0 { ink = [p] } else { ink.append(p) }
             SFX.tap()
         }
         ink.append(p)
@@ -228,15 +245,24 @@ struct TracePlayer: View {
         }
         if !advanced {
             // Still allowed if he's near the part of the stroke he has done
-            // (a wobble); wandering away from the whole stroke resets it.
+            // (a wobble); wandering away from the whole stroke stops it.
             let near = cur.prefix(max(nextDot + 8, 1)).contains { hypot(p.x - $0.x, p.y - $0.y) <= offPath }
             if !near {
-                // Mac: the pointer drifting off the path just pauses the
-                // stroke where it stands. He moves back to the dots and
-                // carries on. A finger cannot leave the glass by accident, so
-                // touch keeps the stricter rule.
+                // Mac: the pointer drifting off the path is nothing at all -
+                // there is no button held, so the pointer is always somewhere.
                 if Pointer.isMac { return }
-                failStroke("Oops! Stay on the dots. Start at the green dot 👆")
+                // Off the path: pause rather than wipe. He keeps his ink, but
+                // nextDot does not advance, so scribbling still gets him
+                // nowhere. This one is still logged, because leaving the path
+                // says something about the shape; lifting only said something
+                // about his finger.
+                pauseStroke("Oops! Stay on the dots. Back to the green dot 👆")
+                mood = .oops
+                let what = label.isEmpty ? "shape" : label
+                GameStats.recordMiss(prompt: "Write \(what) (stroke \(strokeIndex + 1))",
+                                     tapped: "went off the dots", correct: what)
+                withAnimation(.easeInOut(duration: 0.35)) { shake += 1 }
+                SFX.wrong()
                 return
             }
         }
@@ -246,23 +272,33 @@ struct TracePlayer: View {
     private func lift() {
         guard tracing, !justFinished else { return }
         let cur = strokes[strokeIndex]
-        // Reaching the last dot or two counts; lifting anywhere else resets.
+        // Reaching the last dot or two counts as finishing the stroke.
         if nextDot >= cur.count - 2 { completeStroke() }
         // A mouse button released, or a trackpad that ran out of room, is not
         // a mistake. His progress stands and the pointer picks it back up.
         else if Pointer.isMac { return }
-        else { failStroke("Keep your finger down all the way to the end. Try again from the green dot 👆") }
+        // Neither is a finger coming off the glass. It used to wipe the stroke
+        // and log a miss; now it just pauses, and the green dot moves to where
+        // he stopped so he can carry on from there.
+        else if nextDot > 0 { pauseStroke("Good! Put your finger on the green dot and keep going 👆") }
+        else { pauseStroke("Start on the green dot and follow the dots 👆") }
     }
 
-    private func failStroke(_ msg: String) {
-        tracing = false; ink = []; nextDot = 0
-        hint = msg; mood = .oops
-        withAnimation(.easeInOut(duration: 0.35)) { shake += 1 }
-        // Log which glyph and which stroke reset, so the grown-up view shows
-        // "L stroke 2" rather than a bare miss count.
-        let what = label.isEmpty ? "shape" : label
-        GameStats.recordMiss(prompt: "Write \(what) (stroke \(strokeIndex + 1))", tapped: msg, correct: what)
-        SFX.wrong()
+    /// Stop taking ink, but keep everything he has done. He resumes by
+    /// touching the green dot, which is now wherever he got to.
+    private func pauseStroke(_ msg: String) {
+        tracing = false
+        hint = msg
+        mood = .idle
+    }
+
+    /// Where the green ring sits: the start of the stroke, or the next dot he
+    /// needs if he is part way through a paused one.
+    private var resumePoint: CGPoint? {
+        guard strokeIndex < strokes.count else { return nil }
+        let cur = strokes[strokeIndex]
+        guard !cur.isEmpty else { return nil }
+        return cur[min(nextDot, cur.count - 1)]
     }
 
     private func completeStroke() {

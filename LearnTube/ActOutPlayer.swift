@@ -851,13 +851,31 @@ struct ActOutPlayer: View {
             guess = n
             // No buzzer: the animals show him. A miss is still recorded so the
             // dashboard can see where he's guessing.
-            if n != round.answer { GameStats.markWrong() }
+            if n != round.answer { GameStats.markWrong(); logMiss(n) }
             if hasAct { phase = .watch; DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { autoMove() } }
             else { autoCount() }
         } else {
             if n == round.answer { land() }
-            else { SFX.wrong(); mood = .oops; DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { mood = .idle } }
+            else {
+                logMiss(n)
+                SFX.wrong(); mood = .oops
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { mood = .idle }
+            }
         }
+    }
+
+    /// Write down WHICH number he picked, not just that he picked wrong.
+    ///
+    /// The math games were counting misses and nothing else, so a game could
+    /// go red on the dashboard - Teen Numbers at 41%, Animal Add-Up at 57% -
+    /// and the detail panel would say "no specific wrong answers saved yet".
+    /// A count tells you he is struggling; it does not tell you he is landing
+    /// one short every time, or reading 13 as 31, which is the thing worth
+    /// knowing.
+    private func logMiss(_ n: Int) {
+        let asked = !round.predictLine.isEmpty ? round.predictLine
+                  : (!round.countLine.isEmpty ? round.countLine : "How many in all?")
+        GameStats.recordMiss(prompt: asked, tapped: "\(n)", correct: "\(round.answer)")
     }
 
     private func land() {

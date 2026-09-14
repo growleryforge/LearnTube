@@ -607,9 +607,9 @@ struct OrderPlayer: View {
     private var narrow: Bool { hSize == .compact }
 
     private var slotW: CGFloat { narrow ? 94 : 138 }
-    private var slotH: CGFloat { narrow ? 60 : 80 }
+    private var slotH: CGFloat { narrow ? 68 : 92 }
     private var tileW: CGFloat { narrow ? 110 : 172 }
-    private var tileH: CGFloat { narrow ? 68 : 96 }
+    private var tileH: CGFloat { narrow ? 86 : 118 }
     private var perRow: Int { max(1, min(items.count, narrow ? 3 : 5)) }
 
     var body: some View {
@@ -654,12 +654,16 @@ struct OrderPlayer: View {
                                   style: StrokeStyle(lineWidth: isNext ? 4 : 3,
                                                      dash: filled ? [] : [7, 6]))
                 if filled {
-                    Text(placed[i])
-                        .font(.system(size: narrow ? 16 : 21, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.6).lineLimit(2)
-                        .padding(.horizontal, 6)
+                    let p = parts(placed[i])
+                    VStack(spacing: 0) {
+                        if !p.art.isEmpty { Text(p.art).font(.system(size: narrow ? 22 : 30)) }
+                        Text(p.word)
+                            .font(.system(size: narrow ? 13 : 16, weight: .heavy, design: .rounded))
+                            .foregroundStyle(.white)
+                            .multilineTextAlignment(.center)
+                            .minimumScaleFactor(0.6).lineLimit(1)
+                    }
+                    .padding(.horizontal, 6)
                 } else {
                     Text("\(i + 1)")
                         .font(.system(size: narrow ? 20 : 27, weight: .black, design: .rounded))
@@ -699,12 +703,18 @@ struct OrderPlayer: View {
     }
 
     private func tile(_ item: String) -> some View {
-        Button { tap(item) } label: {
-            Text(item)
-                .font(.system(size: narrow ? 18 : 24, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.6).lineLimit(2)
+        let p = parts(item)
+        return Button { tap(item) } label: {
+            VStack(spacing: 2) {
+                if !p.art.isEmpty {
+                    Text(p.art).font(.system(size: narrow ? 30 : 42))
+                }
+                Text(p.word)
+                    .font(.system(size: narrow ? 16 : 21, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.6).lineLimit(2)
+            }
                 .padding(.horizontal, 8)
                 .frame(width: tileW, height: tileH)
                 .background(wrong == item ? Theme.red : tileColor(colorIndex(item)))
@@ -729,6 +739,18 @@ struct OrderPlayer: View {
     // MARK: helpers
 
     private func colorIndex(_ item: String) -> Int { items.firstIndex(of: item) ?? 0 }
+
+    /// Order items are written "💧 Wet". Doosy: the ordering was confusing, and
+    /// emojis would help. They were already there - just set as a small mark in
+    /// front of the word, which a seven-year-old reads right past. Split apart,
+    /// the picture becomes the thing he is actually sorting and the word sits
+    /// under it as the label.
+    private func parts(_ item: String) -> (art: String, word: String) {
+        let bits = item.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
+        guard bits.count == 2, let head = bits.first, let lead = head.unicodeScalars.first,
+              lead.properties.isEmoji, lead.value > 0x238C else { return ("", item) }
+        return (String(head), String(bits[1]))
+    }
 
     private func rows<T>(_ xs: [T]) -> [[T]] {
         guard !xs.isEmpty else { return [] }
