@@ -226,11 +226,54 @@ is_admin_device() {
 is_ignored() {
     local n="$1"; for a in "${IGNORE_DEVICES[@]}"; do [[ "$n" == *"$a"* ]] && return 0; done; return 1
 }
-# Gabriel's iPad is iOS 16 and never appears to devicectl. xctrace sees it.
+# Gabriel's old iPad (iPad6,11, iOS 16.7.16) never appears to devicectl, and
+# Xcode 26 cannot install to it either: Run builds and then silently does
+# nothing, because devicectl is the only install path it has. ios-deploy still
+# speaks the older protocol, so that is how this one gets updated. It is built
+# from source once (no brew and no npm on this Mac) and kept in tools/bin.
+#
+# The iPad has to be plugged in over USB and unlocked.
+OLD_IPAD_UDID=a83e7d4e1b9252ad7c5ebf53faeef5aee3280dc6
+IOS_DEPLOY="$REPO/tools/bin/ios-deploy"
+
+old_ipad_attached() {
+    xcrun xctrace list devices 2>/dev/null \
+        | grep -v "Devices Offline" \
+        | grep -qi "$OLD_IPAD_UDID"
+}
+
+build_ios_deploy() {
+    [ -x "$IOS_DEPLOY" ] && return 0
+    log "==> Building ios-deploy (once) so the old iPad can be updated ..."
+    local src=/tmp/ios-deploy-src
+    rm -rf "$src"
+    git clone --depth 1 https://github.com/ios-control/ios-deploy.git "$src" >> "$XLOG" 2>&1 || {
+        log "    could not fetch ios-deploy."; return 1; }
+    ( cd "$src" && xcodebuild -project ios-deploy.xcodeproj -configuration Release \
+        SYMROOT="$src/build" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
+        CODE_SIGNING_ALLOWED=NO ) >> "$XLOG" 2>&1 || { log "    build failed."; return 1; }
+    mkdir -p "$REPO/tools/bin"
+    cp "$src/build/Release/ios-deploy" "$IOS_DEPLOY" || return 1
+    log "    built."
+    return 0
+}
+
+install_old_ipad() {
+    old_ipad_attached || return 0
+    build_ios_deploy || {
+        log "    old iPad is attached but ios-deploy is not available; skipping it."
+        return 1; }
+    log "==> Installing LearnTube.app to Gabriel's old iPad (iOS 16, via ios-deploy) ..."
+    if "$IOS_DEPLOY" --id "$OLD_IPAD_UDID" --bundle "$KID_APP" --no-wifi --justlaunch >> "$XLOG" 2>&1; then
+        log "    done."
+    else
+        log "    did not take it. It must be plugged in over USB and unlocked."
+    fi
+}
+
 ipad_note() {
-    if xcrun xctrace list devices 2>/dev/null | grep -qiE "iPad.*\(16\."; then
-        log "    NOTE: an iOS 16 iPad is attached (Gabriel's). devicectl cannot install to it."
-        log "          Open LearnTube.xcodeproj in Xcode, pick that iPad, press Cmd-R (Cmd-B installs nothing)."
+    if old_ipad_attached; then
+        log "    NOTE: Gabriel's old iOS 16 iPad is attached; it is updated over USB with ios-deploy."
     fi
 }
 show_devices() {
@@ -376,7 +419,15 @@ make_dist() {
 deploy_phones() {
     scan_devices
     local ids; ids=$(device_ids)
-    if [ -z "$ids" ]; then log "==> No phone or iPad reachable; skipped the phones."; ipad_note; return 0; fi
+    if [ -z "$ids" ]; then
+        if old_ipad_attached; then
+            build_kid_ios || return 1
+            install_old_ipad
+        else
+            log "==> No phone or iPad reachable; skipped the phones."
+        fi
+        return 0
+    fi
     local need_kid=0 need_admin=0
     for id in $ids; do
         local n; n=$(device_name "$id"); is_ignored "$n" && continue
@@ -391,7 +442,7 @@ deploy_phones() {
         else install_to "$KID_APP" "$id" "$n" && ok=$((ok+1)); fi
     done
     log "==> $ok device(s) updated to LearnTube $VERSION."
-    ipad_note
+    install_old_ipad
 }
 
 # ---- modes -------------------------------------------------------------------
