@@ -238,7 +238,7 @@ IOS_DEPLOY="$REPO/tools/bin/ios-deploy"
 
 old_ipad_attached() {
     xcrun xctrace list devices 2>/dev/null \
-        | grep -v "Devices Offline" \
+        | awk '/^== Devices Offline ==/{exit} {print}' \
         | grep -qi "$OLD_IPAD_UDID"
 }
 
@@ -264,7 +264,8 @@ install_old_ipad() {
         log "    old iPad is attached but ios-deploy is not available; skipping it."
         return 1; }
     log "==> Installing LearnTube.app to Gabriel's old iPad (iOS 16, via ios-deploy) ..."
-    if "$IOS_DEPLOY" --id "$OLD_IPAD_UDID" --bundle "$KID_APP" --no-wifi --justlaunch >> "$XLOG" 2>&1; then
+    if "$IOS_DEPLOY" --id "$OLD_IPAD_UDID" --bundle "$KID_APP" --no-wifi --justlaunch \
+            --timeout 15 >> "$XLOG" 2>&1; then
         log "    done."
     else
         log "    did not take it. It must be plugged in over USB and unlocked."
