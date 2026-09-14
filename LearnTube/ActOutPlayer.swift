@@ -195,7 +195,18 @@ struct ActOutPlayer: View {
 
     /// Canva art for the scene pieces (see tools/thumbs/scene.json). Each one
     /// is optional: the drawn version stands in until the image lands.
-    private static func art(_ name: String) -> Image? { UIImage(named: name) != nil ? Image(name) : nil }
+    /// UIImage(named:) is a catalog lookup, and this runs four times for every
+    /// pass SwiftUI makes over the scene — which is every drag frame. The
+    /// answer never changes while the app is running, so ask once.
+    private static var artExists: [String: Bool] = [:]
+    private static func art(_ name: String) -> Image? {
+        let ok = artExists[name] ?? {
+            let found = UIImage(named: name) != nil
+            artExists[name] = found
+            return found
+        }()
+        return ok ? Image(name) : nil
+    }
 
     private var pond: some View {
         // The art is a BACKGROUND, never a sibling. As a sibling, a scaledToFill

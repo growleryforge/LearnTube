@@ -75,12 +75,41 @@ enum Leo {
         }
     }
 
-    static var voice: AVSpeechSynthesisVoice? {
+    /// candidates() calls AVSpeechSynthesisVoice.speechVoices(), which walks
+    /// every voice installed on the device and is slow enough to be felt. It
+    /// used to run on the main thread for EVERY line Leo spoke, so the first
+    /// line of a game was paid for while the screen was trying to draw.
+    /// Resolved once and kept; the saved id is the cache key, so changing the
+    /// voice in the grown-up settings picks the new one up straight away.
+    private static var cachedVoice: AVSpeechSynthesisVoice??
+    private static var cachedFor: String?
+
+    private static func resolveVoice() -> AVSpeechSynthesisVoice? {
         // A voice picked before the novelty filter existed could still be a
         // joke voice, so a saved choice only counts if it survives the filter.
         if !voiceID.isEmpty, let v = AVSpeechSynthesisVoice(identifier: voiceID),
            !novelty.contains(v.name) { return v }
         return candidates().first ?? AVSpeechSynthesisVoice(language: "en-US")
+    }
+
+    static var voice: AVSpeechSynthesisVoice? {
+        let key = voiceID
+        if cachedFor == key, let v = cachedVoice { return v }
+        let v = resolveVoice()
+        cachedVoice = v; cachedFor = key
+        return v
+    }
+
+    /// Work the voice list out in the background at launch so the first thing
+    /// Leo says does not stutter.
+    static func warmUp() {
+        let key = voiceID
+        DispatchQueue.global(qos: .utility).async {
+            let v = resolveVoice()
+            DispatchQueue.main.async {
+                if cachedFor == nil { cachedVoice = v; cachedFor = key }
+            }
+        }
     }
 
     /// Speak a line, dropping emoji and symbols so they are not read as names.

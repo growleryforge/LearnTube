@@ -11,6 +11,7 @@ struct LearnTubeApp: App {
                 .tint(Theme.green)
                 .onAppear {
                     state.refreshForToday()
+                    Warmup.run()
                     #if targetEnvironment(macCatalyst)
                     // Open filling the whole screen (maximized, not macOS full-screen).
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { maximizeCatalystWindow() }

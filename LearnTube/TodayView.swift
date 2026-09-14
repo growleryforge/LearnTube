@@ -437,11 +437,21 @@ struct StopTile: View {
 struct LessonThumb: View {
     let skill: Skill
 
+    /// One catalog lookup per game for the life of the app, instead of one per
+    /// tile per layout pass while he scrolls the feed.
+    private static var artExists: [String: Bool] = [:]
+    static func hasArt(_ id: String) -> Bool {
+        if let known = artExists[id] { return known }
+        let found = UIImage(named: "thumb-\(id)") != nil
+        artExists[id] = found
+        return found
+    }
+
     var body: some View {
         // v2.0 art: a Canva-designed thumbnail named "thumb-<skill id>" in
         // Assets.xcassets wins over the drawn preview whenever one exists, so
         // art can land game by game without touching this code.
-        if UIImage(named: "thumb-\(skill.id)") != nil {
+        if LessonThumb.hasArt(skill.id) {
             // Shown whole, at its 16:9 shape: the art carries the title, so
             // nothing gets cropped off the sides.
             Image("thumb-\(skill.id)")
