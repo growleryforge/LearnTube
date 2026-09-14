@@ -154,6 +154,9 @@ struct GameStage<Content: View>: View {
     var confetti: Bool = false
     /// Kept so older call sites still compile. Every game fills the screen now.
     var compact: Bool = false
+    /// A game that already prints its own line onto the scene (the act-it-out
+    /// board does) sets this so the stage does not say it twice.
+    var showsOwnPrompt: Bool = false
     @ViewBuilder var content: Content
 
     @Environment(\.horizontalSizeClass) private var hSize
@@ -170,11 +173,14 @@ struct GameStage<Content: View>: View {
                     // practice nothing scrolls and the bar never leaves the top.
                     GeometryReader { g in
                         ScrollView(showsIndicators: false) {
-                            content
-                                .frame(maxWidth: .infinity)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 10)
-                                .frame(minHeight: g.size.height)
+                            VStack(spacing: 10) {
+                                if !showsOwnPrompt { promptChip }
+                                content
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .frame(minHeight: g.size.height)
                         }
                     }
                 }
@@ -185,21 +191,34 @@ struct GameStage<Content: View>: View {
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 
-    /// Everything that is NOT the game, in one strip across the top: Leo, the
-    /// question, read-it-to-me, and the perfect-run chip. This used to be a
-    /// ~290pt vertical stack, which on an iPad in landscape pushed the answers
-    /// clean off the bottom of the screen.
+    /// What to do, printed ON the game rather than in the white strip above it.
+    ///
+    /// Doosy and Paige arrived at this from opposite ends on the same evening,
+    /// about different games: in a bar at the top it reads as a caption on
+    /// somebody else's screen, and a seven-year-old's eyes are on the animals.
+    /// Over the board it is the first thing he reads on the way to the thing he
+    /// has to touch.
+    private var promptChip: some View {
+        Text(mood == .cheer ? "🎉 Great job!" : prompt)
+            .font(.system(size: narrow ? 17 : 21, weight: .black, design: .rounded))
+            .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
+            .lineLimit(3)
+            .minimumScaleFactor(0.7)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 18).padding(.vertical, 10)
+            .background(Capsule().fill(.black.opacity(0.42)))
+            .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
+            .padding(.horizontal, 6)
+    }
+
+    /// Everything that is NOT the game, in one strip across the top: Leo,
+    /// read-it-to-me, and the perfect-run chip. The question itself moved down
+    /// onto the board (see promptChip), so this is now a thin strip.
     private var topBar: some View {
         HStack(spacing: 10) {
             Mascot(mood: mood, size: narrow ? 38 : 46)
-            Text(mood == .cheer ? "🎉 Great job!" : prompt)
-                .font(.system(size: narrow ? 16 : 19, weight: .heavy, design: .rounded))
-                .foregroundStyle(Theme.ink)
-                .multilineTextAlignment(.leading)
-                .lineLimit(3)
-                .minimumScaleFactor(0.7)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            Spacer(minLength: 0)
             if mood != .cheer { LeoSpeakButton(text: prompt, compact: narrow) }
             CleanRunChip(short: narrow)
         }
@@ -327,7 +346,7 @@ struct QuizPlayer: View {
                         .animation(.spring(response: 0.3, dampingFraction: 0.5), value: correctId)
                 }
                 ProgressDots(total: questions.count + redoSeen.count, done: answered, accent: accent)
-                Text(hint.isEmpty ? (ready ? " " : "👀 Read the question…") : hint)
+                Text(hint.isEmpty ? " " : hint)
                     .font(.system(size: 15, weight: .heavy, design: .rounded))
                     .foregroundStyle(hint.isEmpty ? .white.opacity(0.7) : Theme.gold)
                 // Answers go ACROSS, not one per row. Four stacked tiles were
@@ -341,9 +360,15 @@ struct QuizPlayer: View {
                             .wiggle(wrongId == choice.id)
                     }
                 }
-                .opacity(ready ? 1 : 0.3)
+                // The answers used to sit at 30% opacity and refuse taps for a
+                // FULL SECOND AND A HALF on every question, with a "read the
+                // question" nag where the hint goes. Paige tried Farm Helpers
+                // and called it slow and weird, and she is right: a greyed-out
+                // board that ignores you reads as broken, not as patience. The
+                // tiles are live and lit now; the short guard below is only
+                // there so a tap meant for the previous screen cannot land on
+                // this one.
                 .allowsHitTesting(ready && !locked)
-                .animation(.easeOut(duration: 0.25), value: ready)
             }
         }
         .onAppear(perform: load)
@@ -398,7 +423,7 @@ struct QuizPlayer: View {
         Leo.say(questions[index].prompt)
         ready = false; locked = false; hint = ""
         disabled = []; revealed = false; missCount = 0
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { ready = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { ready = true }
     }
 
     private func tap(_ c: Choice) {
@@ -408,7 +433,7 @@ struct QuizPlayer: View {
         if c.label.contains(where: { $0.isLetter }) { Leo.say(c.label) }   // read the word he chose
         if c.isCorrect {
             correctId = c.id; mood = .cheer; SFX.correct()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 answered += 1
                 if !inRedo && index + 1 < questions.count {
                     index += 1; correctId = nil; wrongId = nil; mood = .idle; load()
@@ -423,8 +448,10 @@ struct QuizPlayer: View {
             // out of play, and record nothing: a joke is not a struggle signal.
             disabled.insert(c.id); SFX.tap(); mood = .happy
             hint = ["😂 Ha! Good one. Now the real one?", "🤣 Nice try! Which one really helps?"].randomElement()!
+            // Farm Helpers is built on these: he taps "Blame the dog" on
+            // purpose, every time. Laugh and hand the game straight back.
             locked = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { locked = false }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) { locked = false }
         } else {
             // Rule this wrong choice out for good, so re-tapping it does nothing.
             wrongId = c.id; disabled.insert(c.id); missCount += 1

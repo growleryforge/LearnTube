@@ -152,7 +152,7 @@ struct ActOutPlayer: View {
     }
 
     var body: some View {
-        GameStage(mood: mood, prompt: bubble, confetti: confetti) {
+        GameStage(mood: mood, prompt: bubble, confetti: confetti, showsOwnPrompt: true) {
             VStack(spacing: 12) {
                 ProgressDots(total: max(rounds, 1), done: roundIndex, accent: accent)
                 scene
