@@ -648,9 +648,9 @@ struct OrderPlayer: View {
         return Button { if isLast { sendBack() } } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(filled ? Theme.green : Color.white.opacity(0.32))
+                    .fill(filled ? Theme.green : Color.black.opacity(0.34))
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .strokeBorder(isNext ? Theme.gold : Color.white.opacity(0.8),
+                    .strokeBorder(isNext ? Theme.gold : Color.white.opacity(0.55),
                                   style: StrokeStyle(lineWidth: isNext ? 4 : 3,
                                                      dash: filled ? [] : [7, 6]))
                 if filled {
@@ -663,7 +663,7 @@ struct OrderPlayer: View {
                 } else {
                     Text("\(i + 1)")
                         .font(.system(size: narrow ? 20 : 27, weight: .black, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.9))
+                        .foregroundStyle(.white)
                 }
             }
             .frame(width: slotW, height: slotH)
@@ -1140,8 +1140,9 @@ struct ProgressDots: View {
         HStack(spacing: 6) {
             ForEach(0..<total, id: \.self) { i in
                 Capsule()
-                    .fill(i < done ? Theme.green : (i == done ? .white : .white.opacity(0.5)))
+                    .fill(i < done ? Theme.green : (i == done ? Theme.gold : .black.opacity(0.28)))
                     .frame(width: i == done ? 22 : 10, height: 8)
+                    .overlay(Capsule().strokeBorder(.black.opacity(0.18), lineWidth: 1))
             }
         }
     }

@@ -105,15 +105,21 @@ struct SortPlayer: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, narrow ? 8 : 12).padding(.horizontal, 6)
+                // Doosy, on the first four TK games: white on the light blue
+                // sky is hard to read. It was - the pens were a 13% white wash
+                // over a pale scene, so the label was near-white on near-white.
+                // They now use the same dark panel the prompt chip uses, which
+                // is the one thing on these boards that always read cleanly.
                 .background(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .fill(Color.white.opacity(landed ? 0.30 : 0.13))
+                        .fill(Color.black.opacity(landed ? 0.55 : 0.40))
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .strokeBorder(glow ? Theme.green : Color.white.opacity(0.22),
+                        .strokeBorder(glow ? Theme.green : Color.white.opacity(0.40),
                                       lineWidth: glow ? 5 : 2)
                 )
+                .shadow(color: .black.opacity(0.22), radius: 5, y: 2)
                 .scaleEffect(landed ? 1.05 : 1)
                 .animation(.spring(response: 0.35, dampingFraction: 0.6), value: justLanded)
                 .animation(.easeOut(duration: 0.25), value: taughtBin)
@@ -137,7 +143,7 @@ struct SortPlayer: View {
             let dot: CGFloat = narrow ? 84 : 104
             VStack(spacing: narrow ? 4 : 8) {
                 ZStack {
-                    Circle().fill(.white.opacity(0.22)).frame(width: dot, height: dot)
+                    Circle().fill(.white.opacity(0.92)).frame(width: dot, height: dot)
                     EmojiView(emoji: it.emoji, size: narrow ? 50 : 64, tint: .white)
                 }
                 .overlay(Circle().strokeBorder(Theme.gold, lineWidth: 4).frame(width: dot, height: dot))
@@ -159,12 +165,18 @@ struct SortPlayer: View {
                         }
                         .onEnded { v in drop(it, at: v.location) }
                 )
-                Text(it.name)
-                    .font(.system(size: narrow ? 19 : 22, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
-                Text(deck.count > 1 ? "\(deck.count - 1) more to sort" : "last one!")
-                    .font(.system(size: 12, weight: .heavy, design: .rounded))
-                    .foregroundStyle(Theme.textSecondary)
+                VStack(spacing: 2) {
+                    Text(it.name)
+                        .font(.system(size: narrow ? 19 : 22, weight: .black, design: .rounded))
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                    Text(deck.count > 1 ? "\(deck.count - 1) more to sort" : "last one!")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.85))
+                }
+                .padding(.horizontal, 14).padding(.vertical, 7)
+                .background(Capsule().fill(.black.opacity(0.42)))
+                .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             }
             .animation(.spring(response: 0.4, dampingFraction: 0.75), value: dragging)
         }

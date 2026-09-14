@@ -29,7 +29,8 @@ extension Curriculum {
               lesson: .sort(prompt: "Who would help? Take each one to the right person.",
                             bins: [SortBin("fire", "Firefighter", "🚒"),
                                    SortBin("doc", "Doctor", "👩‍⚕️"),
-                                   SortBin("lib", "Librarian", "📚")],
+                                   SortBin("lib", "Librarian", "📚"),
+                                   SortBin("vet", "Vet", "🐾")],
                             items: [
                               SortThing("🔥", "a fire", "fire"),
                               SortThing("🚨", "an alarm", "fire"),
@@ -39,7 +40,10 @@ extension Curriculum {
                               SortThing("💊", "medicine", "doc"),
                               SortThing("📖", "a story book", "lib"),
                               SortThing("🔖", "a bookmark", "lib"),
-                              SortThing("🗂️", "the card file", "lib")
+                              SortThing("🗂️", "the card file", "lib"),
+                              SortThing("🐕", "a sick puppy", "vet"),
+                              SortThing("🐄", "a cow to check", "vet"),
+                              SortThing("🐈", "a sore paw", "vet")
                             ])),
 
         // --- Feelings, past happy and sad -----------------------------------
@@ -53,7 +57,8 @@ extension Curriculum {
               lesson: .sort(prompt: "What is this face feeling? Take it to the word.",
                             bins: [SortBin("happy", "Happy", "😊"),
                                    SortBin("sad", "Sad", "😢"),
-                                   SortBin("angry", "Angry", "😠")],
+                                   SortBin("angry", "Angry", "😠"),
+                                   SortBin("scared", "Scared", "😨")],
                             items: [
                               SortThing("😄", "a big smile", "happy"),
                               SortThing("🥳", "cheering", "happy"),
@@ -63,7 +68,10 @@ extension Curriculum {
                               SortThing("😞", "head down", "sad"),
                               SortThing("😡", "very cross", "angry"),
                               SortThing("😤", "steaming", "angry"),
-                              SortThing("😾", "a grumpy cat", "angry")
+                              SortThing("😾", "a grumpy cat", "angry"),
+                              SortThing("😰", "wide eyes", "scared"),
+                              SortThing("😱", "a fright", "scared"),
+                              SortThing("🙀", "a startled cat", "scared")
                             ])),
 
         // --- The five senses ------------------------------------------------
