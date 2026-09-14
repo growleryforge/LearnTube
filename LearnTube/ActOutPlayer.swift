@@ -241,11 +241,13 @@ struct ActOutPlayer: View {
                 // boxes already say "4 hens" and "add 4 more", so the caption
                 // would only repeat them and cost a line.
                 // An adding round says everything on the picture already, so
-                // down here there is only the way back.
-                if round.arriving > 0 {
-                    if canStartOver { startOverButton }
-                } else if phase != .choose {
-                    captionChip
+                // there the caption would only repeat itself. A take-away round
+                // still needs its line, and both need the way back.
+                if phase != .choose {
+                    HStack(spacing: 10) {
+                        if round.arriving == 0 { captionChip }
+                        if canStartOver { startOverButton }
+                    }
                 }
             }
             .padding(12)
@@ -383,13 +385,38 @@ struct ActOutPlayer: View {
     }
 
     private func zone(_ key: String, label: String, caption: String) -> some View {
-        VStack(spacing: 4) {
-            if let img = Self.art("act-gate") {
-                img.resizable().scaledToFit().frame(width: 84)
+        // The ones that walked off used to vanish into nothing, which meant a
+        // duck dragged away by mistake was gone for good. They wait here on the
+        // path instead: he can see that 2 went away, point at them to count
+        // them, and tap one to call it back.
+        let gone = round.tokens.filter { $0.place == .gone }
+        let cols = gone.count > 2 ? 2 : 1
+        let pathRows = stride(from: 0, to: gone.count, by: cols).map { Array(gone[$0..<min($0 + cols, gone.count)]) }
+        return VStack(spacing: 4) {
+            if gone.isEmpty {
+                Group {
+                    if let img = Self.art("act-gate") {
+                        img.resizable().scaledToFit().frame(width: 84)
+                    } else {
+                        Text(label).font(.system(size: 44))
+                    }
+                }
+                .allowsHitTesting(false)
             } else {
-                Text(label).font(.system(size: 44))
+                VStack(spacing: 3) {
+                    ForEach(Array(pathRows.enumerated()), id: \.offset) { _, row in
+                        HStack(spacing: 3) {
+                            ForEach(Array(row.enumerated()), id: \.offset) { _, t in
+                                tokenView(t, size: chipSize * 0.78, onPath: true)
+                            }
+                        }
+                    }
+                }
             }
-            Text(caption).font(.system(size: 13, weight: .heavy, design: .rounded)).foregroundStyle(.white.opacity(0.9))
+            Text(gone.isEmpty || phase != .act ? caption : "tap to bring back")
+                .font(.system(size: 12, weight: .heavy, design: .rounded))
+                .foregroundStyle(.white.opacity(0.9))
+                .lineLimit(1).minimumScaleFactor(0.7)
         }
         .frame(width: 96)
         .frame(maxHeight: .infinity)
@@ -444,11 +471,15 @@ struct ActOutPlayer: View {
 
     // MARK: A token
 
-    private func tokenView(_ t: Token, size: CGFloat? = nil) -> some View {
+    /// `onPath` is the copy standing on the path after it walked off. The copy
+    /// in the pond stays where it was, faded out, so the leaving still reads as
+    /// leaving and the empty space shows what is missing.
+    private func tokenView(_ t: Token, size: CGFloat? = nil, onPath: Bool = false) -> some View {
         let side = size ?? tokenSize
+        let ghost = t.place == .gone && !onPath
         let canDrag = phase == .act && ((round.leaving > 0 && t.place == .scene && t.value == round.leaveValue)
                                         || (round.arriving > 0 && t.place == .waiting))
-        let canUndo = canReturn(t)
+        let canUndo = canReturn(t, onPath: onPath)
         let canCount = phase == .count && t.countable && t.place == .scene && t.number == nil
         let crate = t.value > 1
         return ZStack(alignment: .topTrailing) {
@@ -485,10 +516,10 @@ struct ActOutPlayer: View {
                     .opacity(canDrag || canCount ? 1 : 0)
             )
             .frame(width: side, height: side)
-            .opacity(t.place == .gone ? 0 : 1)
-            .scaleEffect(t.place == .gone ? 0.3 : (carryID == t.id ? 1.16 : (canDrag ? 1.04 : 1)))
+            .opacity(ghost ? 0 : 1)
+            .scaleEffect(ghost ? 0.3 : (carryID == t.id ? 1.16 : (canDrag || canUndo ? 1.04 : 1)))
             .shadow(color: .black.opacity(canDrag ? 0.25 : 0), radius: 6, y: 3)
-            .offset(x: t.place == .gone ? 220 : 0)
+            .offset(x: ghost ? 220 : 0)
             .animation(.spring(response: 0.6, dampingFraction: 0.75), value: t.place)
             if let n = t.number {
                 Text("\(n)")
@@ -504,6 +535,9 @@ struct ActOutPlayer: View {
         .zIndex(dragID == t.id ? 10 : 0)
         .wiggle(wiggleID == t.id)
         .contentShape(Rectangle())
+        // The faded copy left behind in the pond is scenery. Without this it is
+        // an invisible button sitting in the middle of the board.
+        .allowsHitTesting(!ghost)
         // One gesture does both tap and drag, and it takes priority over the
         // scroll view every game sits in (otherwise the scroll view eats the
         // finger and the animal never moves).
@@ -644,19 +678,26 @@ struct ActOutPlayer: View {
         move(t)
     }
 
-    /// One he has already carried in. During the act he can take it back: tap
-    /// it, or drag it back down to the fence. Nothing he does here is a
-    /// mistake and nothing is recorded as one.
-    private func canReturn(_ t: Token) -> Bool {
-        phase == .act && round.arriving > 0 && t.row == 1 && t.place == .scene
+    /// One he has already moved. During the act he can put it back, whichever
+    /// way it went: an animal carried into the pen goes home to the fence, and
+    /// one sent down the path comes back to the field. Tap it, or drag it back.
+    /// Nothing here is a mistake and nothing is recorded as one.
+    private func canReturn(_ t: Token, onPath: Bool = false) -> Bool {
+        guard phase == .act else { return false }
+        if round.arriving > 0 { return t.row == 1 && t.place == .scene }
+        if round.leaving > 0 { return onPath && t.place == .gone }
+        return false
     }
 
     private func sendBack(_ t: Token) {
-        guard let i = round.tokens.firstIndex(where: { $0.id == t.id }),
-              round.tokens[i].place == .scene else { return }
+        guard let i = round.tokens.firstIndex(where: { $0.id == t.id }) else { return }
+        switch round.tokens[i].place {
+        case .scene:  round.tokens[i].place = .waiting   // carried in -> back to the fence
+        case .gone:   round.tokens[i].place = .scene     // walked off -> back to the field
+        case .waiting: return
+        }
         carryID = nil
         withAnimation(.spring(response: 0.45, dampingFraction: 0.75)) {
-            round.tokens[i].place = .waiting
             round.tokens[i].number = nil
         }
         moved = max(0, moved - 1)
@@ -670,7 +711,8 @@ struct ActOutPlayer: View {
         withAnimation(.spring(response: 0.45, dampingFraction: 0.75)) {
             for i in round.tokens.indices {
                 round.tokens[i].number = nil
-                if round.tokens[i].row == 1 { round.tokens[i].place = .waiting }
+                if round.arriving > 0, round.tokens[i].row == 1 { round.tokens[i].place = .waiting }
+                if round.leaving > 0, round.tokens[i].place == .gone { round.tokens[i].place = .scene }
             }
             phase = .act
         }
@@ -703,7 +745,7 @@ struct ActOutPlayer: View {
     /// There is a way back for as long as the round is still his to change:
     /// while he is carrying them in, and while he is counting what he carried.
     private var canStartOver: Bool {
-        round.arriving > 0 && moved > 0 && (phase == .act || phase == .count)
+        hasAct && moved > 0 && (phase == .act || phase == .count)
     }
 
     /// Small and calm, under the board, and only once there is something to
