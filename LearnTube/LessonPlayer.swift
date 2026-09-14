@@ -110,8 +110,13 @@ struct LessonRunner: View {
             case .buildSentence(let prompt, let lines):
                 SentencePlayer(prompt: prompt, lines: lines, accent: accent, onComplete: onComplete)
             case .sort(let prompt, let bins, let items, let perRound):
+                // A ceiling, not a fixed length: the sorts written at 3 stay at
+                // 3, the ones written at 8 or 9 come down. Every item here is a
+                // pick-up, a carry and a drop, so eight of them was more work
+                // than a whole math sitting.
                 SortPlayer(prompt: prompt, bins: bins, items: items,
-                           perRound: perRound, accent: accent, onComplete: onComplete)
+                           perRound: min(perRound, AppState.sortItemsPerPlay),
+                           accent: accent, onComplete: onComplete)
             case .traceScene(let prompt, let steps):
                 TracePlayer(prompt: prompt, steps: steps, accent: accent, onComplete: onComplete)
             }

@@ -891,6 +891,13 @@ final class AppState: ObservableObject {
     /// This is the one dial. Three levels of 2 is a six-round sitting.
     static let numberRoundsPerLevel = 2
 
+    /// The MOST items one sorting game asks him to carry in a single play.
+    /// Most sorts were written at 8 (a couple at 9), which made them the
+    /// longest thing left in the app once the math sittings came down to six
+    /// rounds. This is a ceiling, not a fixed number: a sort deliberately
+    /// written short stays short.
+    static let sortItemsPerPlay = 6
+
     /// The rung a skill is on (1-based), from how many times it has been
     /// mastered across the family. For most games this is the same as the
     /// level; for concrete-first games rungs 1-3 are the act-it-out stages.
