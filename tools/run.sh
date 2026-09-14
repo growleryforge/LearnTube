@@ -458,6 +458,9 @@ case "$MODE" in
         id=$(resolve "$TARGET"); [ -n "$id" ] || die "no reachable device matches \"$TARGET\" (try: run.sh devices)"
         if [ "$MODE" = kid ]; then build_kid_ios && install_to "$KID_APP" "$id" "$(device_name "$id")"
         else build_admin_ios && install_to "$ADMIN_APP" "$id" "$(device_name "$id")"; fi ;;
+    oldipad)
+        if old_ipad_attached; then build_kid_ios && install_old_ipad
+        else die "Gabriel's old iPad is not attached. Plug it in with a cable and unlock it."; fi ;;
     dist|macs)
         make_dist ;;
     all)
@@ -470,7 +473,7 @@ case "$MODE" in
             NOTARIZE=1
         fi ;;
     *)
-        die "unknown mode '$MODE' (check | devices | mac | kid NAME | admin NAME | dist | macs | all)" ;;
+        die "unknown mode '$MODE' (check | devices | mac | kid NAME | admin NAME | oldipad | dist | macs | all)" ;;
 esac
 status=$?
 log ""

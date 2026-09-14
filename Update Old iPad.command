@@ -1,6 +1,10 @@
 #!/bin/bash
-# One-off: update ONLY Gabriel's old iPad, without a full build of everything.
-# A normal "Build LearnTube" run already does this automatically when the iPad
-# is plugged in, so this is just the shortcut.
+# Update ONLY Gabriel's old iPad, without rebuilding and reinstalling
+# everything else. A normal "Build LearnTube" run already does this on its own
+# when the iPad is plugged in; this is just the shortcut.
+#
+# The iPad has to be plugged in with a cable and unlocked.
 cd "$(dirname "$0")"
-exec ./tools/run.sh kid "Gabriel’s iPad"
+./tools/run.sh oldipad
+echo
+read -n 1 -s -r -p "Press any key to close."
