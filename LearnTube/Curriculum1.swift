@@ -458,7 +458,7 @@ extension Curriculum {
               ])),
 
         Skill(id: "WU-R2", grade: -2, subject: .reading,
-              title: "Beginning Sounds",
+              title: "Sort the First Sounds",
               standard: "Warm-Up · CCSS RF.K.3",
               activity: "Every word starts with a sound. Drag each one to its letter!",
               parentTip: "Say the word slowly and stretch the first sound: mmmoon starts with m.",
@@ -477,7 +477,7 @@ extension Curriculum {
                             ])),
 
         Skill(id: "WU-R3", grade: -2, subject: .reading,
-              title: "Rhyme Time",
+              title: "Sort the Rhymes: Three Families",
               standard: "Warm-Up · CCSS RF.K.2",
               activity: "Rhyming words end the same. Drag each word to its rhyme family!",
               parentTip: "Cat, hat, bat all end in -at. Make silly rhymes together.",
@@ -613,7 +613,7 @@ extension Curriculum {
                             ], perRound: 6)),
 
         Skill(id: "TK-R3", grade: -1, subject: .reading,
-              title: "Rhyme Time",
+              title: "Sort the Rhymes",
               standard: "CA PLF Language",
               activity: "Rhyming words sound the same at the end. Drag each word home!",
               parentTip: "Sing rhyming songs — the ear for rhyme comes before reading.",
@@ -652,7 +652,7 @@ extension Curriculum {
                                      .init("🐶", "🏠 house")])),
 
         Skill(id: "TK-S3", grade: -1, subject: .science,
-              title: "Baby Animals",
+              title: "Who's the Baby?",
               standard: "CA PLF Science",
               activity: "Baby animals have special names. Tap the right one!",
               parentTip: "A puppy, a kitten, a calf, a chick — name the babies on the farm.",

@@ -55,10 +55,12 @@ struct ProgressSnapshot: Codable, Identifiable {
     var masteredCount: Int?          // games reaching the mastery goal
     var lastPlayed: [String: Date]?  // lessonID -> when it was last finished
     var wrongCounts: [String: Int]?  // lessonID -> total wrong taps (struggle)
+    var rightCounts: [String: Int]?  // lessonID -> total right answers (the other half of accuracy)
     var startedCounts: [String: Int]? // lessonID -> games opened (finished + abandoned)
     // Day-bucketed recent activity (lessonID -> "yyyy-MM-dd" -> count) for the
     // rolling recent window in Insights.
     var recentWrong: [String: [String: Int]]?
+    var recentRight: [String: [String: Int]]?
     var recentStarts: [String: [String: Int]]?
     var recentPlays: [String: [String: Int]]?
     var misses: [MissEvent]?          // recent specific wrong answers (newest first)
@@ -66,13 +68,15 @@ struct ProgressSnapshot: Codable, Identifiable {
     var winsLog: [WinEvent]?          // celebration feed (so My Wins is family-wide)
 
     enum CodingKeys: String, CodingKey {
-        case deviceID, name, dayKey, todayCounts, buddyCount, updatedAt, allCounts, masteredCount, lastPlayed, wrongCounts, startedCounts, recentWrong, recentStarts, recentPlays, misses, earnedBuddies, winsLog
+        case deviceID, name, dayKey, todayCounts, buddyCount, updatedAt, allCounts, masteredCount, lastPlayed, wrongCounts, rightCounts, startedCounts, recentWrong, recentRight, recentStarts, recentPlays, misses, earnedBuddies, winsLog
     }
     init(deviceID: String, name: String, dayKey: String, todayCounts: [String: Int],
          buddyCount: Int, updatedAt: Date, allCounts: [String: Int]?, masteredCount: Int?,
          lastPlayed: [String: Date]? = nil, wrongCounts: [String: Int]? = nil,
+         rightCounts: [String: Int]? = nil,
          startedCounts: [String: Int]? = nil,
          recentWrong: [String: [String: Int]]? = nil,
+         recentRight: [String: [String: Int]]? = nil,
          recentStarts: [String: [String: Int]]? = nil,
          recentPlays: [String: [String: Int]]? = nil,
          misses: [MissEvent]? = nil,
@@ -81,8 +85,10 @@ struct ProgressSnapshot: Codable, Identifiable {
         self.deviceID = deviceID; self.name = name; self.dayKey = dayKey
         self.todayCounts = todayCounts; self.buddyCount = buddyCount; self.updatedAt = updatedAt
         self.allCounts = allCounts; self.masteredCount = masteredCount; self.lastPlayed = lastPlayed
-        self.wrongCounts = wrongCounts; self.startedCounts = startedCounts
-        self.recentWrong = recentWrong; self.recentStarts = recentStarts; self.recentPlays = recentPlays
+        self.wrongCounts = wrongCounts; self.rightCounts = rightCounts
+        self.startedCounts = startedCounts
+        self.recentWrong = recentWrong; self.recentRight = recentRight
+        self.recentStarts = recentStarts; self.recentPlays = recentPlays
         // Cap what we sync so the record stays small.
         self.misses = misses.map { Array($0.prefix(60)) }
         self.earnedBuddies = earnedBuddies
@@ -101,8 +107,10 @@ struct ProgressSnapshot: Codable, Identifiable {
         masteredCount = try? c.decode(Int.self, forKey: .masteredCount)
         lastPlayed = try? c.decode([String: Date].self, forKey: .lastPlayed)
         wrongCounts = try? c.decode([String: Int].self, forKey: .wrongCounts)
+        rightCounts = try? c.decode([String: Int].self, forKey: .rightCounts)
         startedCounts = try? c.decode([String: Int].self, forKey: .startedCounts)
         recentWrong = try? c.decode([String: [String: Int]].self, forKey: .recentWrong)
+        recentRight = try? c.decode([String: [String: Int]].self, forKey: .recentRight)
         recentStarts = try? c.decode([String: [String: Int]].self, forKey: .recentStarts)
         recentPlays = try? c.decode([String: [String: Int]].self, forKey: .recentPlays)
         misses = try? c.decode([MissEvent].self, forKey: .misses)
@@ -113,8 +121,10 @@ struct ProgressSnapshot: Codable, Identifiable {
     var id: String { deviceID }
     func playedTime(_ id: String) -> Date? { lastPlayed?[id] }
     var wrongTaps: [String: Int] { wrongCounts ?? [:] }
+    var rightTaps: [String: Int] { rightCounts ?? [:] }
     var starts: [String: Int] { startedCounts ?? [:] }
     var recentWrongMap: [String: [String: Int]] { recentWrong ?? [:] }
+    var recentRightMap: [String: [String: Int]] { recentRight ?? [:] }
     var recentStartsMap: [String: [String: Int]] { recentStarts ?? [:] }
     var recentPlaysMap: [String: [String: Int]] { recentPlays ?? [:] }
     var missList: [MissEvent] { misses ?? [] }

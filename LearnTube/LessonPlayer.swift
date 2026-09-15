@@ -772,6 +772,8 @@ struct OrderPlayer: View {
             }
         } else {
             wrong = item; mood = .oops; SFX.wrong()
+            GameStats.recordMiss(prompt: "\(prompt) (step \(placed.count + 1))",
+                                 tapped: parts(item).word, correct: parts(next).word)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { wrong = nil; mood = .idle }
         }
     }
@@ -903,6 +905,8 @@ struct MatchPlayer: View {
             }
         } else {
             wrongRight = item; mood = .oops; SFX.wrong()
+            GameStats.recordMiss(prompt: "\(prompt) — \(l)",
+                                 tapped: item, correct: partner ?? "")
             // Second miss on this pick: glow the correct home so he learns it.
             wrongForLeft[l, default: 0] += 1
             if wrongForLeft[l, default: 0] >= 2 { withAnimation { hintRight = partner } }
@@ -1010,6 +1014,8 @@ struct NumberPadPlayer: View {
         } else {
             wrongThisQ += 1
             state = .wrong; mood = .oops; SFX.wrong()
+            GameStats.recordMiss(prompt: items[index].prompt,
+                                 tapped: entry, correct: "\(items[index].answer)")
             // Second miss: stop testing, start teaching. Leo says it aloud, and
             // the problem goes back on the end of the deck so being shown the
             // answer makes the round LONGER, not shorter.
@@ -1134,6 +1140,8 @@ struct DragMatchPlayer: View {
             }
         } else {
             wrongWord = w; mood = .oops; SFX.wrong()
+            GameStats.recordMiss(prompt: "Which feeling is this face?",
+                                 tapped: w.word, correct: sel.word)
             // Second miss on this face: glow its correct feeling so he learns it.
             wrongForFace[sel, default: 0] += 1
             if wrongForFace[sel, default: 0] >= 2 { withAnimation { hintWord = sel } }

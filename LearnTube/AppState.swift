@@ -33,11 +33,14 @@ struct SavedState: Codable {
     var winsLog: [WinEvent] = []                 // recent celebrations for My Wins
     var lastPlayed: [String: Date] = [:]         // lessonID -> when it was last finished
     var wrongCounts: [String: Int] = [:]         // lessonID -> total wrong taps (struggle signal)
+    // Optional so adding it cannot break decoding of an existing save.
+    var rightCounts: [String: Int]? = nil        // lessonID -> total right answers (the other half of accuracy)
     var startedCounts: [String: Int] = [:]       // lessonID -> games opened (finished + abandoned)
     // Day-bucketed recent activity (lessonID -> "yyyy-MM-dd" -> count) so Insights
     // can show a rolling recent window: old struggles drop out over time, and a
     // skill he re-engages with successfully changes how it's flagged.
     var recentWrong: [String: [String: Int]] = [:]   // wrong taps by day
+    var recentRight: [String: [String: Int]]? = nil  // right answers by day
     var recentStarts: [String: [String: Int]] = [:]  // games opened by day
     var recentPlays: [String: [String: Int]] = [:]   // games finished by day
     var misses: [MissEvent] = []                     // recent wrong answers, newest first
@@ -119,11 +122,14 @@ final class AppState: ObservableObject {
     /// storage. Called (deferred to the main actor) whenever GameStats changes.
     func flushGameStats() {
         let d = GameStats.drain()
-        guard !d.wrong.isEmpty || !d.start.isEmpty || !d.misses.isEmpty else { return }
+        guard !d.wrong.isEmpty || !d.start.isEmpty || !d.right.isEmpty || !d.misses.isEmpty else { return }
         var w = saved.wrongCounts, s = saved.startedCounts
+        var r = saved.rightCounts ?? [:]
         for (id, c) in d.wrong { w[id, default: 0] += c }
         for (id, c) in d.start { s[id, default: 0] += c }
+        for (id, c) in d.right { r[id, default: 0] += c }
         saved.wrongCounts = w
+        saved.rightCounts = r
         // Keep the detail of recent wrong answers (newest first, capped).
         if !d.misses.isEmpty {
             var m = saved.misses
@@ -138,10 +144,13 @@ final class AppState: ObservableObject {
         // Also record into today's bucket for the rolling recent window.
         let day = AppState.dayKey
         var rw = saved.recentWrong, rs = saved.recentStarts
+        var rr = saved.recentRight ?? [:]
         for (id, c) in d.wrong { rw[id, default: [:]][day, default: 0] += c }
         for (id, c) in d.start { rs[id, default: [:]][day, default: 0] += c }
+        for (id, c) in d.right { rr[id, default: [:]][day, default: 0] += c }
         saved.recentWrong = AppState.pruneRecent(rw)
         saved.recentStarts = AppState.pruneRecent(rs)
+        saved.recentRight = AppState.pruneRecent(rr)
     }
 
     /// Keep only day buckets within the recent window so the maps stay small.
@@ -284,8 +293,10 @@ final class AppState: ObservableObject {
             masteredCount: mastered,
             lastPlayed: saved.lastPlayed,
             wrongCounts: saved.wrongCounts,
+            rightCounts: saved.rightCounts,
             startedCounts: saved.startedCounts,
             recentWrong: saved.recentWrong,
+            recentRight: saved.recentRight,
             recentStarts: saved.recentStarts,
             recentPlays: saved.recentPlays,
             misses: saved.misses,
@@ -750,6 +761,19 @@ final class AppState: ObservableObject {
     }
     func mergedWrongCount(_ id: String) -> Int { mergedWrong[id] ?? 0 }
 
+    /// Right answers per skill, family-wide.
+    var mergedRight: [String: Int] {
+        var out: [String: Int] = [:]
+        for snap in family.snapshots where snap.deviceID != saved.deviceID && !family.excludedIDs.contains(snap.deviceID) {
+            for (id, c) in snap.rightTaps { out[id, default: 0] += c }
+        }
+        if !family.excludedIDs.contains(saved.deviceID) {
+            for (id, c) in saved.rightCounts ?? [:] { out[id, default: 0] += c }
+        }
+        return out
+    }
+    func mergedRightCount(_ id: String) -> Int { mergedRight[id] ?? 0 }
+
     /// Total games opened per skill (finished + abandoned), family-wide.
     var mergedStarted: [String: Int] {
         var out: [String: Int] = [:]
@@ -771,10 +795,24 @@ final class AppState: ObservableObject {
         max(0, mergedStartedCount(id) - mergedCount(id))
     }
 
-    /// Rough accuracy for a skill: finishes vs. finishes + wrong taps.
-    /// Nil when there isn't enough activity to be meaningful.
+    /// How often he gets an ITEM right: right answers over right + wrong.
+    ///
+    /// This used to be finishes / (finishes + wrong taps), which measured how
+    /// many questions a game asks rather than how well he answers them. A
+    /// three-letter tracing game costs a dozen taps per finish and read 6%; a
+    /// one-question game read 100%. Same child, same day. Since that number
+    /// also feeds struggleScore (at 8x) and struggleScore orders his feed, the
+    /// long games were being marked hard and pushed to the back for no reason
+    /// other than being long.
+    ///
+    /// Falls back to the old shape only where there is no right-answer data
+    /// yet, so history recorded before this still reads as something.
     func accuracy(_ id: String) -> Double? {
-        let done = mergedCount(id), wrong = mergedWrongCount(id)
+        let right = mergedRightCount(id), wrong = mergedWrongCount(id)
+        let answered = right + wrong
+        if answered >= 3 { return Double(right) / Double(answered) }
+        guard right == 0 else { return nil }
+        let done = mergedCount(id)
         let attempts = done + wrong
         guard attempts >= 3 else { return nil }
         return Double(done) / Double(attempts)
@@ -801,6 +839,9 @@ final class AppState: ObservableObject {
     func recentWrong(_ id: String, days: Int = AppState.recentWindowDays) -> Int {
         mergedRecent({ $0.recentWrongMap }, saved.recentWrong, id, days: days)
     }
+    func recentRight(_ id: String, days: Int = AppState.recentWindowDays) -> Int {
+        mergedRecent({ $0.recentRightMap }, saved.recentRight ?? [:], id, days: days)
+    }
     func recentDone(_ id: String, days: Int = AppState.recentWindowDays) -> Int {
         mergedRecent({ $0.recentPlaysMap }, saved.recentPlays, id, days: days)
     }
@@ -811,7 +852,13 @@ final class AppState: ObservableObject {
         max(0, recentStarted(id, days: days) - recentDone(id, days: days))
     }
     func recentAccuracy(_ id: String, days: Int = AppState.recentWindowDays) -> Double? {
-        let done = recentDone(id, days: days), wrong = recentWrong(id, days: days)
+        let right = recentRight(id, days: days), wrong = recentWrong(id, days: days)
+        let answered = right + wrong
+        if answered >= 3 { return Double(right) / Double(answered) }
+        // Only fall back to the old completions-per-mistake shape where no
+        // right-answer data exists yet (see accuracy(_:) for why it was wrong).
+        guard right == 0 else { return nil }
+        let done = recentDone(id, days: days)
         let attempts = done + wrong
         guard attempts >= 3 else { return nil }
         return Double(done) / Double(attempts)

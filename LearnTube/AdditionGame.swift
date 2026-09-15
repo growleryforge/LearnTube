@@ -318,7 +318,7 @@ struct TapCountView: View {
         withAnimation(.spring(response: 0.25, dampingFraction: 0.5)) { bump = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { bump = false }
         if tapped.count == items.count {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) { SFX.win(); onDone() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) { GameStats.markRight(); SFX.win(); onDone() }
         }
     }
 }
@@ -527,7 +527,7 @@ struct AdditionPlayer: View {
     private func tap(_ c: AddChoice) {
         guard !cheer else { return }
         if c.correct {
-            SFX.win(); celebrate()
+            GameStats.markRight(); SFX.win(); celebrate()
         } else {
             // Reshuffle so mashing and elimination can't work: new positions AND
             // new numbers each time. No penalty - he just keeps trying.
@@ -718,7 +718,7 @@ struct SortCountPlayer: View {
 
     private func finishRound() {
         withAnimation { showTally = true }
-        SFX.win()
+        GameStats.markRight(); SFX.win()
         withAnimation { cheer = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
             if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -911,7 +911,7 @@ struct ShapesPlayer: View {
     private func tap(_ i: Int) {
         guard !cheer else { return }
         if options[i] == q.target {
-            SFX.win()
+            GameStats.markRight(); SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -1055,7 +1055,7 @@ struct ShapeSpotPlayer: View {
         if item.kind == target {
             found.insert(item.id); SFX.tap()
             if found.count == targetCount {
-                SFX.win()
+                GameStats.markRight(); SFX.win()
                 withAnimation { cheer = true }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                     if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -1216,7 +1216,7 @@ struct LetterDetectivePlayer: View {
     private func tap(_ letter: LetterInfo) {
         guard !cheer else { return }
         if letter.id == q.target.id {
-            SFX.win()
+            GameStats.markRight(); SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -1351,7 +1351,7 @@ struct WeatherPlayer: View {
     private func tap(_ w: WeatherKind) {
         guard !cheer else { return }
         if w.id == target.id {
-            SFX.win()
+            GameStats.markRight(); SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -1506,7 +1506,7 @@ struct NumberDetectivePlayer: View {
     private func tap(_ v: Int) {
         guard !cheer else { return }
         if v == q.answer {
-            SFX.win()
+            GameStats.markRight(); SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -1668,7 +1668,7 @@ struct SymbolPlayer: View {
     private func tap(_ sym: NatSymbol) {
         guard !cheer else { return }
         if sym.id == target.id {
-            SFX.win()
+            GameStats.markRight(); SFX.win()
             withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
@@ -1790,7 +1790,7 @@ struct HelperPlayer: View {
     private func tap(_ h: HelperKind) {
         guard !cheer else { return }
         if h.id == target.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -1966,7 +1966,7 @@ struct HolidayPlayer: View {
     private func tap(_ h: HolidayKind) {
         guard !cheer else { return }
         if h.id == target.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -2202,7 +2202,7 @@ struct FamilyMemberPlayer: View {
     private func tap(_ m: FamilyMember) {
         guard !cheer else { return }
         if m.id == target.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -2336,7 +2336,7 @@ struct PatternPlayer: View {
     private func tap(_ c: PatColor) {
         guard !cheer else { return }
         if c.id == q.answer.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -2482,7 +2482,7 @@ struct RhymePlayer: View {
         guard !cheer else { return }
         Leo.say(item.id == correct.id ? "\(target.word), \(item.word). They rhyme!" : "\(target.word), \(item.word).")
         if item.id == correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -2714,7 +2714,7 @@ struct FlatSolidPlayer: View {
     private func tap(_ item: GeoItem) {
         guard !cheer else { return }
         if item.id == target.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -2877,7 +2877,7 @@ struct LivingThingsPlayer: View {
     private func tap(_ thing: LivingThing) {
         guard !cheer else { return }
         if thing.id == correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -3032,7 +3032,7 @@ struct CompareObjectsPlayer: View {
     private func tap(_ obj: CompObject) {
         guard !cheer else { return }
         if obj.id == correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -3327,7 +3327,7 @@ struct ShapeBuilderPlayer: View {
     private func tap(_ k: ShapeKind) {
         guard !cheer else { return }
         if k == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -3470,7 +3470,7 @@ struct CritterCountPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == count {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -3607,7 +3607,7 @@ struct FamilyAddPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == sum {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -3805,7 +3805,7 @@ struct WordProblemPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -3946,7 +3946,7 @@ struct PushPullPlayer: View {
     private func tap(_ kind: String) {
         guard !cheer else { return }
         if kind == (item.isPush ? "push" : "pull") {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4053,7 +4053,7 @@ struct NeedsPlayer: View {
     private func tap(_ opt: String) {
         guard !cheer else { return }
         if opt == data.need {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4169,7 +4169,7 @@ struct PositionPlayer: View {
     private func tap(_ pos: PosWord) {
         guard !cheer else { return }
         if pos == data.target {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4317,7 +4317,7 @@ struct SightWordsPlayer: View {
         if level.hear { Leo.say(w == data.word ? "\(w)! Yes!" : "That says \(w). Find \(data.word).", slow: true) }
         if w != data.word { GameStats.recordMiss(prompt: "Find the word \(data.word)", tapped: w, correct: data.word) }
         if w == data.word {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4444,7 +4444,7 @@ struct NumberOrderPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4652,7 +4652,7 @@ struct AnimalHomesPlayer: View {
     private func tap(_ a: AnimalHome) {
         guard !cheer else { return }
         if a.id == data.correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4769,7 +4769,7 @@ struct LegsPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.animal.legs {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -4898,7 +4898,7 @@ struct CoveringsPlayer: View {
     private func tap(_ a: CoverAnimal) {
         guard !cheer else { return }
         if a.id == data.correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5017,7 +5017,7 @@ struct EatPlayer: View {
     private func tap(_ f: String) {
         guard !cheer else { return }
         if f == data.animal.food {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5135,7 +5135,7 @@ struct TeenPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5248,7 +5248,7 @@ struct BabyPlayer: View {
     private func tap(_ e: String) {
         guard !cheer else { return }
         if e == data.baby {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5365,7 +5365,7 @@ struct LivingNotPlayer: View {
     private func tap(_ t: LiveThing) {
         guard !cheer else { return }
         if t.id == data.correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5476,7 +5476,7 @@ struct DayNightPlayer: View {
     private func tap(_ a: DNAnimal) {
         guard !cheer else { return }
         if a.id == data.correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5580,7 +5580,7 @@ struct Make5Player: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5696,7 +5696,7 @@ struct Make10Player: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5798,7 +5798,7 @@ struct TakeAwayPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -5900,7 +5900,7 @@ struct DoublesPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6000,7 +6000,7 @@ struct OrdinalPlayer: View {
     private func tap(_ e: String) {
         guard !cheer else { return }
         if e == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6098,7 +6098,7 @@ struct BeginningSoundPlayer: View {
     private func tap(_ e: String) {
         guard !cheer else { return }
         if e == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6202,7 +6202,7 @@ struct LifeCyclePlayer: View {
     private func tap(_ e: String) {
         guard !cheer else { return }
         if e == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6304,7 +6304,7 @@ struct TensPlayer: View {
     private func tap(_ n: Int) {
         guard !cheer else { return }
         if n == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6393,7 +6393,7 @@ struct FastSlowPlayer: View {
     private func tap(_ v: Bool) {
         guard !cheer else { return }
         if v == data.fast {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6477,7 +6477,7 @@ struct SinkFloatPlayer: View {
     private func tap(_ v: Bool) {
         guard !cheer else { return }
         if v == data.floats {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6569,7 +6569,7 @@ struct LetterCasePlayer: View {
     private func tap(_ s: String) {
         guard !cheer else { return }
         if s == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6660,7 +6660,7 @@ struct FiveSensesPlayer: View {
     private func tap(_ e: String) {
         guard !cheer else { return }
         if e == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6755,7 +6755,7 @@ struct OppositesPlayer: View {
     private func tap(_ e: String) {
         guard !cheer else { return }
         if e == data.answer {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6859,7 +6859,7 @@ struct WhichMorePlayer: View {
     private func tap(_ side: String) {
         guard !cheer else { return }
         if side == correctSide {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -6968,7 +6968,7 @@ struct EggPlayer: View {
     private func tap(_ a: EggAnimal) {
         guard !cheer else { return }
         if a.id == data.correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }
@@ -7079,7 +7079,7 @@ struct WildPetPlayer: View {
     private func tap(_ a: WildAnimal) {
         guard !cheer else { return }
         if a.id == data.correct.id {
-            SFX.win(); withAnimation { cheer = true }
+            GameStats.markRight(); SFX.win(); withAnimation { cheer = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) {
                 if round + 1 < level.rounds + GameStats.owedRounds { round += 1; newRound() } else { onComplete() }
             }

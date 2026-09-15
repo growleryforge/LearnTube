@@ -319,7 +319,7 @@ extension Curriculum {
               lesson: .story(id: "baby-animals")),
 
         Skill(id: "K-S10", grade: 0, subject: .science,
-              title: "Alive or Not?",
+              title: "Alive or Not? On the Farm",
               standard: "CA NGSS K-LS1",
               activity: "Living things grow, eat, and move! Drag each one into the right pen.",
               parentTip: "Characteristics of living things. Point out what's alive vs. an object on a walk.",

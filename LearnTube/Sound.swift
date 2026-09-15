@@ -50,6 +50,18 @@ enum GameStats {
     }
     private static var pendingWrong: [String: Int] = [:]
     private static var pendingStart: [String: Int] = [:]
+    /// Right answers, counted per ITEM the same way wrong taps are.
+    ///
+    /// Without this, "accuracy" had to be built out of the only two numbers
+    /// the app had - games finished and wrong taps - which made it
+    /// finishes / (finishes + wrong). That is not accuracy, it is completions
+    /// per mistake, and it scales with how many questions a game asks. A
+    /// one-question game he gets right reads 100%; a tracing game where one
+    /// finish costs a dozen taps reads 6% for the same child on the same day.
+    /// Worse, that number is fed into struggleScore at 8x, and struggleScore
+    /// is what orders his feed - so the LENGTH of a game was quietly deciding
+    /// which games looked hard and which ones he saw first.
+    private static var pendingRight: [String: Int] = [:]
     /// AppState sets this to flush the deltas into persistent, synced storage.
     static var onChange: (() -> Void)?
 
@@ -80,6 +92,12 @@ enum GameStats {
         pendingStart[id, default: 0] += 1
         onChange?()
     }
+    /// A right answer in the current game, one per item.
+    static func markRight() {
+        guard !currentSkill.isEmpty, !suppressed else { return }
+        pendingRight[currentSkill, default: 0] += 1
+        onChange?()
+    }
     /// A wrong tap in the current game.
     static func markWrong() {
         guard !currentSkill.isEmpty else { return }
@@ -89,10 +107,10 @@ enum GameStats {
         onChange?()
     }
     /// Hand the accumulated deltas to AppState and clear them.
-    static func drain() -> (wrong: [String: Int], start: [String: Int], misses: [Miss]) {
-        let w = pendingWrong, s = pendingStart, m = pendingMisses
-        pendingWrong = [:]; pendingStart = [:]; pendingMisses = []
-        return (w, s, m)
+    static func drain() -> (wrong: [String: Int], start: [String: Int], right: [String: Int], misses: [Miss]) {
+        let w = pendingWrong, s = pendingStart, r = pendingRight, m = pendingMisses
+        pendingWrong = [:]; pendingStart = [:]; pendingRight = [:]; pendingMisses = []
+        return (w, s, r, m)
     }
 }
 
@@ -103,7 +121,7 @@ enum SFX {
     private static var sessionReady = false
 
     static func tap()     { impact(.light) }
-    static func correct()  { play(freq: 880,  dur: 0.10, vol: 0.05, key: "correct"); notify(.success) }
+    static func correct()  { play(freq: 880,  dur: 0.10, vol: 0.05, key: "correct"); notify(.success); GameStats.markRight() }
     static func wrong()    { impact(.soft); GameStats.markWrong(); DispatchQueue.main.async { GameGate.shared.block() } }
     static func win()      { play(freq: 1046, dur: 0.16, vol: 0.06, key: "win"); notify(.success) }
 
