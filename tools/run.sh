@@ -264,12 +264,25 @@ install_old_ipad() {
         log "    old iPad is attached but ios-deploy is not available; skipping it."
         return 1; }
     log "==> Installing LearnTube.app to Gabriel's old iPad (iOS 16, via ios-deploy) ..."
-    if "$IOS_DEPLOY" --id "$OLD_IPAD_UDID" --bundle "$KID_APP" --no-wifi --justlaunch \
-            --timeout 15 >> "$XLOG" 2>&1; then
+    # Grade this on whether the app actually INSTALLED, not on ios-deploy's exit
+    # code. On this iPad the copy and install run all the way to
+    # "[100%] InstallComplete" and then the tool fails in its debug phase,
+    # because iOS 16.7.16 has no matching DeviceSupport Symbols directory for
+    # the installed Xcode. That is a debugger-attach problem, not an install
+    # problem - but the exit code is non-zero either way, so for two runs this
+    # reported "did not take it" about an iPad that had just taken it.
+    local out; out="$(mktemp)"
+    "$IOS_DEPLOY" --id "$OLD_IPAD_UDID" --bundle "$KID_APP" --no-wifi --justlaunch \
+        --timeout 15 > "$out" 2>&1
+    cat "$out" >> "$XLOG"
+    if grep -q "InstallComplete\|Installed package" "$out"; then
         log "    done."
+        grep -q "Unable to locate DeviceSupport" "$out" && \
+            log "    (installed, but not auto-launched - tap LearnTube on the iPad.)"
     else
         log "    did not take it. It must be plugged in over USB and unlocked."
     fi
+    rm -f "$out"
 }
 
 ipad_note() {
