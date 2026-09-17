@@ -802,10 +802,21 @@ struct ActOutPlayer: View {
 
     /// Touched something that isn't part of this count (a "pick the right one"
     /// game): a wiggle, and past stage 1 it counts as a miss.
+    ///
+    /// Only a real wrong pick is a miss. Touching one he has ALREADY counted
+    /// (kids re-touch while they count), or one still on the shelf or on the
+    /// path, is just a wiggle. Before this, those re-touches buzzed, blocked
+    /// the screen and counted as wrong taps with nothing written down, which
+    /// is why the math games showed wrong taps and a blank detail panel.
     private func nudge(_ t: Token) {
         wiggleID = t.id
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { wiggleID = nil }
-        if stage > 1 { SFX.wrong() } else { SFX.tap() }
+        let realPick = stage > 1 && t.place == .scene && t.number == nil && !t.countable
+        guard realPick else { SFX.tap(); return }
+        SFX.wrong()
+        let what = t.tag.map { "\(t.emoji) number \($0)" } ?? "\(t.emoji) that isn't part of this count"
+        let asked = round.countLine.isEmpty ? "Touch the right ones" : round.countLine
+        GameStats.recordMiss(prompt: asked, tapped: "touched \(what)", correct: "\(round.answer)")
     }
 
     /// Stages 2 and 3: the animals move on their own, one at a time.

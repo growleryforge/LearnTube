@@ -945,6 +945,18 @@ final class AppState: ObservableObject {
     /// written short stays short.
     static let sortItemsPerPlay = 6
 
+    /// The MOST rounds one story-backed game (the 52 bespoke games reached
+    /// through Story.swift) asks for in a single play. Those games set their
+    /// own lengths - one game of 6 rounds, or 6 games of 1 round, or a quiz of
+    /// several questions - so this is applied as a ceiling in all three
+    /// places: rounds per level, games per story, questions per story quiz.
+    /// As of Sept 2026 almost all of them already sit at 6 (one at 5, a few
+    /// at 3), which matches a math sitting and a sort, so today it changes
+    /// nothing. It is the one place to turn if they need to come down or go
+    /// up. Miss-penalty rounds (GameStats.owedRounds, at most 2) still add on.
+    nonisolated static let storyRoundsPerPlay = 6
+    nonisolated static func storyRounds(_ written: Int) -> Int { min(written, storyRoundsPerPlay) }
+
     /// The rung a skill is on (1-based), from how many times it has been
     /// mastered across the family. For most games this is the same as the
     /// level; for concrete-first games rungs 1-3 are the act-it-out stages.

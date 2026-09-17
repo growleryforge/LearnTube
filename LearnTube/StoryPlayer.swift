@@ -86,7 +86,7 @@ struct StoryPlayer: View {
                 Group {
                 switch g.activity {
                 case .quiz(let questions):
-                    StoryQuizView(questions: questions, accent: accent, onComplete: nextGame).id(game)
+                    StoryQuizView(questions: Array(questions.prefix(AppState.storyRoundsPerPlay)), accent: accent, onComplete: nextGame).id(game)
                 case .order(let prompt, let steps):
                     StoryOrderView(prompt: prompt, steps: steps, accent: accent, onComplete: nextGame).id(game)
                 case .lesson(let lesson):
@@ -207,7 +207,7 @@ struct StoryPlayer: View {
     }
 
     private func nextGame() {
-        if game + 1 < (story?.games.count ?? 0) { game += 1 }
+        if game + 1 < AppState.storyRounds(story?.games.count ?? 0) { game += 1 }
         else { onComplete() }
     }
 }
@@ -432,7 +432,7 @@ struct StoryOrderView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { SFX.win(); onComplete() }
             }
         } else {
-            wrongId = step.id; SFX.wrong()
+            wrongId = step.id; SFX.wrong(); GameStats.miss(tapped: step, correct: next, prompt: "What comes next?")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { wrongId = nil }
         }
     }

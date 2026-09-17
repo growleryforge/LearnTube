@@ -76,6 +76,34 @@ enum GameStats {
         onChange?()
     }
 
+    /// Record a miss from any of the bespoke players, which hold their
+    /// choices as small structs (an animal, a home, a shape) rather than
+    /// strings. Before this, 48 of those players buzzed and counted a wrong
+    /// tap but wrote nothing down, so "needs a look" could only say that a
+    /// game was hard, never what he picked instead.
+    static func miss(tapped: Any, correct: Any, prompt: String? = nil) {
+        let asked = prompt ?? Curriculum.skill(id: currentSkill)?.title ?? "Pick the right one"
+        recordMiss(prompt: asked, tapped: label(tapped), correct: label(correct))
+    }
+
+    /// A readable name for a choice: its word or name, with its picture when
+    /// it has one ("🐷 pig"), falling back to the value itself.
+    static func label(_ x: Any) -> String {
+        if let s = x as? String { return s }
+        if let n = x as? Int { return String(n) }
+        if let b = x as? Bool { return b ? "yes" : "no" }
+        var text: String?, pic: String?
+        for c in Mirror(reflecting: x).children {
+            guard let key = c.label, let v = c.value as? String, !v.isEmpty else { continue }
+            if pic == nil, ["emoji", "icon", "symbol", "picture"].contains(key) { pic = v }
+            if text == nil, ["word", "name", "label", "title", "text", "answer"].contains(key) { text = v }
+        }
+        if let p = pic, let t = text { return p == t ? t : "\(p) \(t)" }
+        if let p = pic { return p }
+        if let t = text { return t }
+        return String(String(describing: x).prefix(40))
+    }
+
     /// When the current game opened, so a finish can be turned into a real
     /// time-on-task number. Until this existed the app could count what he
     /// finished but never how long he was actually playing, which is the one
