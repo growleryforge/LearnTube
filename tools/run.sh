@@ -214,9 +214,16 @@ build_kid_mac()   { build "kid app (Mac)" "$KIDMAC_DD" 'platform=macOS,variant=M
 # "available (paired)" count; "unavailable" is a dead pairing, not a device.
 DEV_LIST=""
 scan_devices() {
-    DEV_LIST=$(xcrun devicectl list devices 2>/dev/null | grep -iE "connected|available" | grep -viE "unavailable")
+    # Physical phones and iPads only: simulators and watches also show up as
+    # "available" in newer Xcodes, and neither can take the app.
+    DEV_LIST=$(xcrun devicectl list devices 2>/dev/null | grep -iE "connected|available" \
+        | grep -viE "unavailable|simulated|watch")
 }
-device_ids()  { echo "$DEV_LIST" | grep -oiE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}'; }
+# Xcode 26.x lists real devices by hardware UDID (00008120-0016515A1EFB601E,
+# 8-16 hex) where older versions printed a UUID (8-4-4-4-12). Matching only the
+# UUID shape is why every build since the Xcode update said "No phone or iPad
+# reachable" while devicectl could see all of them.
+device_ids()  { echo "$DEV_LIST" | grep -oiE '[0-9A-F]{8}-[0-9A-F]{16}|[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | sort -u; }
 # devicectl's table is: Name   Hostname   Identifier   State   Model, columns
 # separated by runs of spaces; the name itself may have single spaces in it.
 device_name() { echo "$DEV_LIST" | grep -i "$1" | head -1 | sed -E 's/ {2,}.*//'; }
