@@ -111,16 +111,25 @@ extension Curriculum {
         Skill(id: "K-R11", grade: 0, subject: .reading,
               title: "Beginning Sounds",
               standard: "CA CCSS RF.K.3",
-              activity: "Which animal starts with that letter? Tap the matching sound!",
+              activity: "Which sound does it start with? Carry each picture to its letter!",
               parentTip: "Letter-sound matching. Say the animal's name slowly: b-b-bear.",
-              lesson: .story(id: "beginning-sounds")),
+              lesson: .sort(prompt: "Say the picture's name. Which sound does it start with?",
+                            bins: [SortBin("m", "", "M"), SortBin("s", "", "S"),
+                                   SortBin("t", "", "T"), SortBin("b", "", "B")],
+                            items: [
+                              SortThing("🐒", "monkey", "m"), SortThing("🌙", "moon", "m"),
+                              SortThing("☀️", "sun", "s"), SortThing("🧦", "sock", "s"),
+                              SortThing("🐯", "tiger", "t"), SortThing("🍅", "tomato", "t"),
+                              SortThing("🐻", "bear", "b"), SortThing("🍌", "banana", "b")
+                            ], perRound: 6)),
 
         Skill(id: "K-S14", grade: 0, subject: .science,
               title: "Growing Up",
               standard: "CA NGSS 1-LS1-1",
-              activity: "Living things grow and change! Tap what comes next.",
+              activity: "Put the chicken's life in order, from egg to hen!",
               parentTip: "Life cycles. Talk about how your animals grow from babies.",
-              lesson: .story(id: "life-cycle")),
+              lesson: .order(prompt: "How does a chick grow up? Put it in order.",
+                             items: ["🥚 Egg", "🐣 Hatching", "🐥 Chick", "🐔 Hen"])),
 
         Skill(id: "K-MATH20", grade: 0, subject: .math,
               title: "Count by 10s",
@@ -132,37 +141,72 @@ extension Curriculum {
         Skill(id: "K-S15", grade: 0, subject: .science,
               title: "Fast or Slow",
               standard: "CA NGSS K-PS2-1",
-              activity: "Is the animal fast or slow? Tap to sort it!",
+              activity: "Fast or slow? Carry each animal to its pen!",
               parentTip: "Comparing how things move. Talk about fast and slow animals you know.",
-              lesson: .story(id: "fast-slow")),
+              lesson: .sort(prompt: "Is it FAST or SLOW? Carry each animal to its pen.",
+                            bins: [SortBin("fast", "Fast", "💨"), SortBin("slow", "Slow", "🐢")],
+                            items: [
+                              SortThing("🐆", "cheetah", "fast"), SortThing("🐇", "rabbit", "fast"),
+                              SortThing("🐎", "horse", "fast"), SortThing("🦅", "eagle", "fast"),
+                              SortThing("🐌", "snail", "slow"), SortThing("🦥", "sloth", "slow"),
+                              SortThing("🐛", "caterpillar", "slow"), SortThing("🐨", "koala", "slow")
+                            ], perRound: 6)),
 
         Skill(id: "K-S16", grade: 0, subject: .science,
               title: "Sink or Float",
               standard: "CA NGSS 2-PS1-1",
-              activity: "Will it sink or float? Tap your guess!",
+              activity: "Sink or float? Carry each thing to the water!",
               parentTip: "Predicting sink or float. Try it in the bath or a bowl of water together.",
-              lesson: .story(id: "sink-float")),
+              lesson: .sort(prompt: "Will it FLOAT on top or SINK to the bottom? Carry it over.",
+                            bins: [SortBin("float", "Floats", "🛟"), SortBin("sink", "Sinks", "⚓️")],
+                            items: [
+                              SortThing("🦆", "rubber duck", "float"), SortThing("🍃", "leaf", "float"),
+                              SortThing("⛵️", "boat", "float"), SortThing("🪵", "log", "float"),
+                              SortThing("🪨", "rock", "sink"), SortThing("🔑", "key", "sink"),
+                              SortThing("🥄", "spoon", "sink"), SortThing("🪙", "coin", "sink")
+                            ], perRound: 6)),
 
         Skill(id: "K-R12", grade: 0, subject: .reading,
               title: "Big & Little Letters",
               standard: "CA CCSS RF.K.1d",
-              activity: "Find the little letter that matches the big one!",
+              activity: "Carry each little letter to its big letter!",
               parentTip: "Matching uppercase and lowercase. Point them out on signs and books.",
-              lesson: .story(id: "letter-case")),
+              lesson: .sort(prompt: "Carry each little letter to its big letter.",
+                            bins: [SortBin("a", "", "A"), SortBin("b", "", "B"),
+                                   SortBin("d", "", "D"), SortBin("e", "", "E")],
+                            items: [
+                              SortThing("a", "little a", "a"), SortThing("b", "little b", "b"),
+                              SortThing("d", "little d", "d"), SortThing("e", "little e", "e")
+                            ], perRound: 4)),
 
         Skill(id: "K-S17", grade: 0, subject: .science,
               title: "Five Senses",
               standard: "CA NGSS K-LS1",
-              activity: "See, hear, smell, taste, touch — tap the part you use!",
+              activity: "Which sense do you use? Carry each one to its sense!",
               parentTip: "The five senses. Name which sense you're using during the day.",
-              lesson: .story(id: "five-senses")),
+              lesson: .sort(prompt: "Which sense tells you about it? Carry it to that pen.",
+                            bins: [SortBin("see", "See", "👀"), SortBin("hear", "Hear", "👂"),
+                                   SortBin("smell", "Smell", "👃"), SortBin("taste", "Taste", "👅")],
+                            items: [
+                              SortThing("🌈", "a rainbow", "see"), SortThing("🎆", "fireworks", "see"),
+                              SortThing("🔔", "a bell", "hear"), SortThing("🥁", "a drum", "hear"),
+                              SortThing("🌸", "a flower", "smell"), SortThing("🦨", "a skunk", "smell"),
+                              SortThing("🍋", "a lemon", "taste"), SortThing("🍦", "ice cream", "taste")
+                            ], perRound: 6)),
 
         Skill(id: "K-R13", grade: 0, subject: .reading,
               title: "Opposites",
               standard: "CA CCSS L.K.5b",
-              activity: "What's the opposite? Big and little, hot and cold!",
+              activity: "Drag in the opposite to finish each sentence!",
               parentTip: "Opposite words. Play an opposites game while you walk or cook.",
-              lesson: .story(id: "opposites")),
+              lesson: .buildSentence(prompt: "Drag in the OPPOSITE to finish the sentence.", lines: [
+                SentenceLine("🐘", "An elephant is big. A mouse is", "", answer: "little", distractors: ["big", "hot"]),
+                SentenceLine("🔥", "Fire is hot. Snow is", "", answer: "cold", distractors: ["hot", "up"]),
+                SentenceLine("☀️", "The sun is out in the day. The moon is out at", "", answer: "night", distractors: ["day", "fast"]),
+                SentenceLine("🐆", "A cheetah is fast. A snail is", "", answer: "slow", distractors: ["fast", "sad"]),
+                SentenceLine("🎈", "The balloon goes up. The rain comes", "", answer: "down", distractors: ["up", "big"]),
+                SentenceLine("😀", "I was sad. Now I am", "", answer: "happy", distractors: ["cold", "down"])
+              ])),
 
         Skill(id: "K-S6", grade: 0, subject: .science,
               title: "Animal Homes",
@@ -220,9 +264,17 @@ extension Curriculum {
         Skill(id: "K-R16", grade: 0, subject: .reading,
               title: "Letter Sounds",
               standard: "CA CCSS RF.K.3a",
-              activity: "Leo says a sound and a farm word. Tap the letter that makes that sound!",
+              activity: "Say the picture. Carry it to the letter it starts with!",
               parentTip: "Sound first, letter second. Say the sound with him: /g/, /g/, goat.",
-              lesson: .story(id: "letter-sounds")),
+              lesson: .sort(prompt: "Leo says each picture. Carry it to the letter it starts with.",
+                            bins: [SortBin("g", "", "G"), SortBin("h", "", "H"),
+                                   SortBin("j", "", "J"), SortBin("l", "", "L")],
+                            items: [
+                              SortThing("🐐", "goat", "g"), SortThing("🎁", "gift", "g"),
+                              SortThing("🐴", "horse", "h"), SortThing("🎩", "hat", "h"),
+                              SortThing("🧃", "juice", "j"), SortThing("🪁", "jump rope", "j"),
+                              SortThing("🦁", "lion", "l"), SortThing("🍋", "lemon", "l")
+                            ], perRound: 6)),
 
         Skill(id: "K-R14", grade: 0, subject: .reading,
               title: "Syllable Safari",
@@ -234,23 +286,47 @@ extension Curriculum {
         Skill(id: "K-S18", grade: 0, subject: .science,
               title: "Animal Groups",
               standard: "CA NGSS K-LS1",
-              activity: "Mammal, bird, fish, reptile, or bug? Tap the group each animal belongs to!",
+              activity: "Mammal, bird, fish or bug? Carry each animal to its group!",
               parentTip: "Sorting animals into groups by their traits (fur, feathers, scales, fins, six legs).",
-              lesson: .story(id: "animal-groups")),
+              lesson: .sort(prompt: "Fur, feathers, fins or six legs? Carry each animal to its group.",
+                            bins: [SortBin("mammal", "Mammals (fur)", "🐻"), SortBin("bird", "Birds (feathers)", "🪶"),
+                                   SortBin("fish", "Fish (fins)", "🐠"), SortBin("bug", "Bugs (6 legs)", "🐞")],
+                            items: [
+                              SortThing("🐮", "cow", "mammal"), SortThing("🐶", "dog", "mammal"), SortThing("🐴", "horse", "mammal"),
+                              SortThing("🐔", "hen", "bird"), SortThing("🦉", "owl", "bird"), SortThing("🦆", "duck", "bird"),
+                              SortThing("🐟", "trout", "fish"), SortThing("🐡", "pufferfish", "fish"), SortThing("🦈", "shark", "fish"),
+                              SortThing("🐝", "bee", "bug"), SortThing("🐜", "ant", "bug"), SortThing("🦋", "butterfly", "bug")
+                            ], perRound: 6)),
 
         Skill(id: "K-S19", grade: 0, subject: .science,
               title: "Animal Sounds",
               standard: "CA NGSS K-LS1",
-              activity: "Moo, woof, quack! Tap the sound each animal makes.",
+              activity: "Who says it? Carry each animal to its sound!",
               parentTip: "Animal sounds. Make the sounds together and guess the animal.",
-              lesson: .story(id: "animal-sounds")),
+              lesson: .sort(prompt: "Listen to each animal. Carry it to the sound it makes.",
+                            bins: [SortBin("moo", "Moo", "🔊"), SortBin("oink", "Oink", "🔊"),
+                                   SortBin("baa", "Baa", "🔊"), SortBin("cluck", "Cluck", "🔊")],
+                            items: [
+                              SortThing("🐄", "cow", "moo"), SortThing("🐮", "calf", "moo"),
+                              SortThing("🐖", "pig", "oink"), SortThing("🐷", "piglet", "oink"),
+                              SortThing("🐑", "sheep", "baa"), SortThing("🐏", "ram", "baa"),
+                              SortThing("🐔", "hen", "cluck"), SortThing("🐓", "rooster", "cluck")
+                            ], perRound: 6)),
 
         Skill(id: "K-S20", grade: 0, subject: .science,
               title: "Four Seasons",
               standard: "CA NGSS K-ESS2-1",
-              activity: "Spring, summer, fall, or winter? Tap the season that matches the picture.",
+              activity: "Winter, spring, summer or fall? Carry each thing to its season!",
               parentTip: "The four seasons and their weather. Talk about what changes each season.",
-              lesson: .story(id: "seasons")),
+              lesson: .sort(prompt: "When do you see it? Carry each one to its season.",
+                            bins: [SortBin("winter", "Winter", "❄️"), SortBin("spring", "Spring", "🌷"),
+                                   SortBin("summer", "Summer", "☀️"), SortBin("fall", "Fall", "🍂")],
+                            items: [
+                              SortThing("⛄️", "snowman", "winter"), SortThing("🧤", "mittens", "winter"),
+                              SortThing("🐣", "baby chicks", "spring"), SortThing("🌸", "blossoms", "spring"),
+                              SortThing("🏖️", "the beach", "summer"), SortThing("🍉", "watermelon", "summer"),
+                              SortThing("🎃", "pumpkins", "fall"), SortThing("🍁", "falling leaves", "fall")
+                            ], perRound: 6)),
 
         Skill(id: "K-S21", grade: 0, subject: .science,
               title: "Swim, Fly, or Walk?",
@@ -286,23 +362,44 @@ extension Curriculum {
         Skill(id: "K-R15", grade: 0, subject: .reading,
               title: "Baby Animal Names",
               standard: "CA CCSS L.K.5",
-              activity: "A baby dog is a puppy! Tap the special name for each baby animal.",
+              activity: "Baby animals have special names. Carry each grown-up to its baby!",
               parentTip: "Animal vocabulary. Quiz each other on baby animal names.",
-              lesson: .story(id: "baby-names")),
+              lesson: .sort(prompt: "Carry each grown-up to its baby. Leo will say the baby's name.",
+                            bins: [SortBin("lamb", "Lamb", "🐑"), SortBin("foal", "Foal", "🐴"),
+                                   SortBin("piglet", "Piglet", "🐷"), SortBin("duckling", "Duckling", "🐥")],
+                            items: [
+                              SortThing("🐏", "sheep", "lamb"), SortThing("🐎", "horse", "foal"),
+                              SortThing("🐖", "pig", "piglet"), SortThing("🦆", "duck", "duckling")
+                            ], perRound: 4)),
 
         Skill(id: "K-S22", grade: 0, subject: .science,
               title: "Parts of a Plant",
               standard: "CA NGSS K-LS1",
-              activity: "Roots, stem, leaves, or flower? Tap the part that does each job!",
+              activity: "Root, leaf, flower or fruit? Carry each plant part to its pen!",
               parentTip: "Parts of a plant and their jobs. Look at a real plant together.",
-              lesson: .story(id: "plant-parts")),
+              lesson: .sort(prompt: "Which part of the plant do we see? Carry it to its pen.",
+                            bins: [SortBin("root", "Roots", "🟫"), SortBin("leaf", "Leaves", "🍃"),
+                                   SortBin("flower", "Flowers", "🌼"), SortBin("fruit", "Fruit", "🍎")],
+                            items: [
+                              SortThing("🥕", "carrot", "root"), SortThing("🫚", "ginger", "root"),
+                              SortThing("🥬", "lettuce", "leaf"), SortThing("🌿", "herbs", "leaf"),
+                              SortThing("🌷", "tulip", "flower"), SortThing("🌻", "sunflower", "flower"),
+                              SortThing("🍓", "strawberry", "fruit"), SortThing("🍅", "tomato", "fruit")
+                            ], perRound: 6)),
 
         Skill(id: "K-S23", grade: 0, subject: .science,
               title: "Hot or Cold?",
               standard: "CA NGSS K-PS3",
-              activity: "Fire, ice, sun, snow — tap whether each thing is hot or cold!",
+              activity: "Hot or cold? Carry each one to its pen!",
               parentTip: "Temperature — hot vs cold. Point out hot and cold things at home.",
-              lesson: .story(id: "hot-cold")),
+              lesson: .sort(prompt: "Is it HOT or COLD? Carry it to its pen.",
+                            bins: [SortBin("hot", "Hot", "🔥"), SortBin("cold", "Cold", "🧊")],
+                            items: [
+                              SortThing("☀️", "the sun", "hot"), SortThing("☕️", "hot cocoa", "hot"),
+                              SortThing("🌋", "a volcano", "hot"), SortThing("🍲", "soup", "hot"),
+                              SortThing("⛄️", "a snowman", "cold"), SortThing("🍦", "ice cream", "cold"),
+                              SortThing("🐧", "a penguin's home", "cold"), SortThing("❄️", "snow", "cold")
+                            ], perRound: 6)),
 
         Skill(id: "K-MATH13", grade: 0, subject: .math,
               title: "Teen Numbers",
@@ -314,9 +411,15 @@ extension Curriculum {
         Skill(id: "K-S9", grade: 0, subject: .science,
               title: "Baby Animals",
               standard: "CA NGSS 1-LS3-1",
-              activity: "Baby animals look like their parents! Find each animal's baby.",
+              activity: "Carry each baby to its grown-up!",
               parentTip: "Young animals resemble their parents. Look at baby and grown animals together.",
-              lesson: .story(id: "baby-animals")),
+              lesson: .sort(prompt: "Carry each baby to its grown-up.",
+                            bins: [SortBin("hen", "Hen", "🐔"), SortBin("pig", "Pig", "🐖"),
+                                   SortBin("horse", "Horse", "🐎"), SortBin("rabbit", "Rabbit", "🐇")],
+                            items: [
+                              SortThing("🐣", "chick", "hen"), SortThing("🐷", "piglet", "pig"),
+                              SortThing("🐴", "foal", "horse"), SortThing("🐰", "bunny", "rabbit")
+                            ], perRound: 4)),
 
         Skill(id: "K-S10", grade: 0, subject: .science,
               title: "Alive or Not? On the Farm",
@@ -434,9 +537,17 @@ extension Curriculum {
         Skill(id: "K-R10", grade: 0, subject: .reading,
               title: "Rhyme Time",
               standard: "CA CCSS RF.K.2a",
-              activity: "Find the word that rhymes! Cat and hat, dog and frog. Say them out loud!",
+              activity: "Carry each picture to the words it rhymes with!",
               parentTip: "Rhyming is a key reading sound skill. Say the words aloud together to hear the rhyme.",
-              lesson: .story(id: "rhyme-time")),
+              lesson: .sort(prompt: "Say it out loud. Which family does it rhyme with?",
+                            bins: [SortBin("ee", "bee, tree", "🐝"), SortBin("ar", "star, car", "⭐️"),
+                                   SortBin("ox", "fox, box", "🦊"), SortBin("oon", "moon, spoon", "🌙")],
+                            items: [
+                              SortThing("🔑", "key", "ee"), SortThing("🍵", "tea", "ee"),
+                              SortThing("🫙", "jar", "ar"), SortThing("🎸", "guitar", "ar"),
+                              SortThing("🧦", "socks", "ox"), SortThing("📦", "box", "ox"),
+                              SortThing("🎈", "balloon", "oon"), SortThing("🥄", "spoon", "oon")
+                            ], perRound: 6)),
 
         Skill(id: "K-MATH6", grade: 0, subject: .math,
               title: "Number Detective",
@@ -449,13 +560,16 @@ extension Curriculum {
         Skill(id: "K-R1", grade: 0, subject: .reading,
               title: "Capital Letter Detective",
               standard: "CA CCSS RF.K.1d",
-              activity: "Capital letters are the big ones. Spot the capitals hiding in each row!",
+              activity: "Big letter or little letter? Carry each one to its pen!",
               parentTip: "Big letters start sentences and names. Let him say each one aloud.",
-              lesson: .quiz([
-                Question("Tap the CAPITAL (big) letter.", correct: "B", wrong: ["b", "d"]),
-                Question("Which one is uppercase?", correct: "G", wrong: ["g", "q"]),
-                Question("Find the big letter.", correct: "R", wrong: ["r", "n"])
-              ])),
+              lesson: .sort(prompt: "Is it a BIG (capital) letter or a little letter?",
+                            bins: [SortBin("big", "Big letters", "A"), SortBin("little", "Little letters", "a")],
+                            items: [
+                              SortThing("B", "big B", "big"), SortThing("G", "big G", "big"),
+                              SortThing("R", "big R", "big"), SortThing("M", "big M", "big"),
+                              SortThing("b", "little b", "little"), SortThing("g", "little g", "little"),
+                              SortThing("r", "little r", "little"), SortThing("m", "little m", "little")
+                            ], perRound: 6)),
 
         Skill(id: "K-R2", grade: 0, subject: .reading,
               title: "Match the Letter Buddies",
@@ -504,32 +618,31 @@ extension Curriculum {
         Skill(id: "K-R5", grade: 0, subject: .reading,
               title: "Sound It Out",
               standard: "CA CCSS RF.K.2c",
-              activity: "Stretch the sounds, then snap them together into a word!",
+              activity: "Stretch the sounds, snap them together, then carry them to the picture!",
               parentTip: "Robot-talk the sounds slowly, then blend fast.",
-              lesson: .quiz([
-                // Answer is a PICTURE, never the word — he blends the sounds
-                // into a word and taps what it means, instead of matching letters.
-                Question("Blend it:  c - a - t", correct: "🐱", wrong: ["🐶", "🐟"]),
-                Question("Blend it:  d - o - g", correct: "🐶", wrong: ["🐱", "🐷"]),
-                Question("Blend it:  p - i - g", correct: "🐷", wrong: ["🐔", "🐝"])
-              ])),
+              lesson: .sort(prompt: "Stretch the sounds, snap them together, and carry them to the picture.",
+                            bins: [SortBin("hen", "", "🐔"), SortBin("bug", "", "🐛"),
+                                   SortBin("fox", "", "🦊"), SortBin("bat", "", "🦇")],
+                            items: [
+                              SortThing("h e n", "h, e, n", "hen"), SortThing("b u g", "b, u, g", "bug"),
+                              SortThing("f o x", "f, o, x", "fox"), SortThing("b a t", "b, a, t", "bat"),
+                            ], perRound: 4)),
 
         Skill(id: "K-R6", grade: 0, subject: .reading,
               title: "Star Words",
               standard: "CA CCSS RF.K.3c",
-              activity: "Read the little sentence and pick the star word that fits!",
+              activity: "Read the little sentence and drag in the star word that fits!",
               parentTip: "Star words (see, go, is, like, and…) show up in every sentence. He reads the whole sentence and picks the word that makes sense — reading, not just matching. Read it aloud together with each choice if he's stuck.",
-              // Reading-in-context, NOT shape-matching. The star word is the blank,
-              // so he can't tap a look-alike — he has to read the sentence to know
-              // which word fits. A picture anchors the meaning. Two choices, and
-              // QuizPlayer reveals the answer in green after two misses.
-              lesson: .quiz([
-                Question("I ___ the 🐶.", correct: "see", wrong: ["go"]),
-                Question("We ___ to the 🚜.", correct: "go", wrong: ["is"]),
-                Question("The 🐔 ___ here.", correct: "is", wrong: ["and"]),
-                Question("I ___ my 🐰.", correct: "like", wrong: ["to"]),
-                Question("The 🐷 ___ the 🐮 play.", correct: "and", wrong: ["is"]),
-                Question("This snack is ___ me.", correct: "for", wrong: ["up"])
+              // Reading-in-context, NOT shape-matching. The star word is the gap,
+              // so he has to read the sentence to know which word fits, then
+              // drag it in. A picture anchors the meaning.
+              lesson: .buildSentence(prompt: "Read the sentence. Drag in the star word that fits.", lines: [
+                SentenceLine("🐶", "I", "the dog.", answer: "see", distractors: ["go", "is"]),
+                SentenceLine("🚜", "We", "to the tractor.", answer: "go", distractors: ["is", "see"]),
+                SentenceLine("🐔", "The hen", "here.", answer: "is", distractors: ["and", "go"]),
+                SentenceLine("🐰", "I", "my bunny.", answer: "like", distractors: ["to", "is"]),
+                SentenceLine("🐷", "The pig", "the cow play.", answer: "and", distractors: ["is", "go"]),
+                SentenceLine("🍎", "This snack is", "me.", answer: "for", distractors: ["up", "see"])
               ])),
 
         Skill(id: "K-R7", grade: 0, subject: .reading,
@@ -543,20 +656,25 @@ extension Curriculum {
         Skill(id: "K-R8", grade: 0, subject: .reading,
               title: "How Books Work",
               standard: "CA CCSS RF.K.1a",
-              activity: "Books have a secret map. Show that you know which way the words go!",
+              activity: "Books have a secret map. Put the words in reading order, left to right!",
               parentTip: "These print rules make reading click.",
-              lesson: .quiz([
-                Question("Where do we start reading?", correct: "Top left", wrong: ["Bottom right", "The middle"]),
-                Question("Which way do the words go?", correct: "Left to right", wrong: ["Right to left", "Up and down"]),
-                Question("When a line ends, go to the...", correct: "Next line down", wrong: ["Back of the book", "Same line again"])
-              ])),
+              lesson: .order(prompt: "We read left to right. Put the words in reading order.",
+                             items: ["The", "hen", "sat", "on", "her", "eggs."])),
 
         Skill(id: "K-R9", grade: 0, subject: .reading,
               title: "Letter Detective",
               standard: "CA CCSS RF.K.1d / RF.K.3a",
-              activity: "Find letters by their name or the sound they make. Big and little letters with a sound and a word for each!",
+              activity: "Find the letters! Carry each one to its matching pen!",
               parentTip: "Letter recognition and letter sounds. Say the sound, not the name: /b/, not 'bee'.",
-              lesson: .story(id: "letter-detective")),
+              lesson: .sort(prompt: "Carry each letter, big or little, to its pen.",
+                            bins: [SortBin("g", "", "G"), SortBin("h", "", "H"),
+                                   SortBin("j", "", "J"), SortBin("k", "", "K")],
+                            items: [
+                              SortThing("g", "little g", "g"), SortThing("G", "big G", "g"),
+                              SortThing("h", "little h", "h"), SortThing("H", "big H", "h"),
+                              SortThing("j", "little j", "j"), SortThing("J", "big J", "j"),
+                              SortThing("k", "little k", "k"), SortThing("K", "big K", "k")
+                            ], perRound: 6)),
 
         // ---------- Writing (hands-on) ----------
         Skill(id: "K-W1", grade: 0, subject: .writing,
@@ -700,9 +818,16 @@ extension Curriculum {
         Skill(id: "K-M5", grade: 0, subject: .math,
               title: "Who Has More?",
               standard: "CA CCSS K.CC.4-6",
-              activity: "What comes next when we count? Which number is more or less? Tap it!",
+              activity: "Count each group, then carry it to MORE than 5 or FEWER than 5!",
               parentTip: "Connect to snacks: 'who has more?' and count up together.",
-              lesson: .story(id: "number-order")),
+              lesson: .sort(prompt: "Count each group. MORE than 5, or FEWER than 5?",
+                            bins: [SortBin("more", "More than 5", "🖐️➕"), SortBin("fewer", "Fewer than 5", "🖐️➖")],
+                            items: [
+                              SortThing("🍎🍎🍎🍎🍎🍎🍎", "apples", "more"), SortThing("🐥🐥🐥🐥🐥🐥", "chicks", "more"),
+                              SortThing("🥚🥚🥚🥚🥚🥚🥚🥚", "eggs", "more"), SortThing("🐟🐟🐟🐟🐟🐟🐟🐟🐟", "fish", "more"),
+                              SortThing("🍓🍓", "berries", "fewer"), SortThing("🐸🐸🐸", "frogs", "fewer"),
+                              SortThing("🐝", "bee", "fewer"), SortThing("🥕🥕🥕🥕", "carrots", "fewer")
+                            ], perRound: 6)),
 
         Skill(id: "K-M6", grade: 0, subject: .math,
               title: "Adding On",
@@ -729,101 +854,151 @@ extension Curriculum {
         Skill(id: "K-M8", grade: 0, subject: .math,
               title: "2D Shape Hunt",
               standard: "CA CCSS K.G.2",
-              activity: "Flat shapes have names. Tap the right one!",
+              activity: "Carry each thing to the shape it looks like!",
               parentTip: "Spot these shapes together on a walk.",
-              lesson: .quiz([
-                Question("Round, with no corners", correct: "Circle", wrong: ["Square", "Triangle"]),
-                Question("Has 3 sides", correct: "Triangle", wrong: ["Circle", "Square"]),
-                Question("Has 4 equal sides", correct: "Square", wrong: ["Triangle", "Rectangle"])
-              ])),
+              lesson: .sort(prompt: "Circle, square or triangle? Carry each one to its shape.",
+                            bins: [SortBin("circle", "Circle", "⚪️"), SortBin("square", "Square", "🟥"), SortBin("triangle", "Triangle", "🔺")],
+                            items: [
+                              SortThing("🍪", "cookie", "circle"), SortThing("🕛", "clock", "circle"),
+                              SortThing("🎁", "present", "square"), SortThing("🧇", "waffle", "square"),
+                              SortThing("🍕", "pizza slice", "triangle"), SortThing("⛺️", "tent", "triangle")
+                            ], perRound: 6)),
 
         Skill(id: "K-M9", grade: 0, subject: .math,
               title: "Solid Shapes",
               standard: "CA CCSS K.G.2",
-              activity: "Some shapes you can hold. Match the object to its shape!",
+              activity: "Ball, box or can? Carry each thing to its solid shape!",
               parentTip: "Hold a ball, a box, and a can while you play.",
-              lesson: .quiz([
-                Question("A ball is shaped like a...", correct: "Sphere", wrong: ["Cube", "Cylinder"]),
-                Question("A box is shaped like a...", correct: "Cube", wrong: ["Sphere", "Cone"]),
-                Question("A can is shaped like a...", correct: "Cylinder", wrong: ["Cube", "Sphere"])
-              ])),
+              lesson: .sort(prompt: "Sphere, cube or cylinder? Carry each one to its shape.",
+                            bins: [SortBin("sphere", "Sphere", "⚽️"), SortBin("cube", "Cube", "🧊"), SortBin("cylinder", "Cylinder", "🥫")],
+                            items: [
+                              SortThing("🏀", "basketball", "sphere"), SortThing("🌍", "globe", "sphere"),
+                              SortThing("🎲", "dice", "cube"), SortThing("📦", "box", "cube"),
+                              SortThing("🥤", "cup", "cylinder"), SortThing("🕯️", "candle", "cylinder")
+                            ], perRound: 6)),
 
         Skill(id: "K-M10", grade: 0, subject: .math,
               title: "Which One Is Different?",
               standard: "CA CCSS K.MD.3",
-              activity: "Sorting means things that belong together. Tap the odd one out!",
+              activity: "Animal, color or shape? Carry each one to its group!",
               parentTip: "Ask him to explain why it doesn't belong.",
-              lesson: .quiz([
-                Question("Which is NOT an animal?", correct: "Apple", wrong: ["Cow", "Hen"]),
-                Question("Which is NOT a color?", correct: "Dog", wrong: ["Red", "Green"]),
-                Question("Which is NOT a shape?", correct: "Banana", wrong: ["Circle", "Square"])
-              ])),
+              lesson: .sort(prompt: "Is it an animal, a food or a shape? Carry it to its group.",
+                            bins: [SortBin("animal", "Animals", "🐮"), SortBin("food", "Food", "🍎"), SortBin("shape", "Shapes", "🔷")],
+                            items: [
+                              SortThing("🐔", "hen", "animal"), SortThing("🐴", "horse", "animal"),
+                              SortThing("🍌", "banana", "food"), SortThing("🥕", "carrot", "food"),
+                              SortThing("⭐️", "star", "shape"), SortThing("🔺", "triangle", "shape")
+                            ], perRound: 6)),
 
         Skill(id: "K-M11", grade: 0, subject: .math,
               title: "What Comes Next?",
               standard: "CA CCSS K (Patterns)",
-              activity: "Patterns repeat. Find what comes next in the pattern!",
+              activity: "Finish the pattern by putting the pieces in order!",
               parentTip: "Try clap-stomp body patterns too.",
-              lesson: .quiz([
-                Question("red, blue, red, blue, ___", correct: "red", wrong: ["blue", "green"]),
-                Question("sun, moon, sun, moon, ___", correct: "sun", wrong: ["moon", "star"]),
-                Question("A, B, A, B, ___", correct: "A", wrong: ["B", "C"])
-              ])),
+              lesson: .order(prompt: "Make the pattern: sun, moon, sun, moon. Tap them in order.",
+                             items: ["☀️", "🌙", "☀️", "🌙", "☀️", "🌙"])),
 
         // ---------- Science ----------
         Skill(id: "K-S1", grade: 0, subject: .science,
               title: "Weather Watcher",
               standard: "CA NGSS K-ESS2-1",
-              activity: "Be the weather reporter. Match the weather to what you'd do!",
+              activity: "Rainy, sunny or snowy? Carry each thing to the weather it's for!",
               parentTip: "Look out the window together first.",
-              lesson: .quiz([
-                Question("If it's raining, wear a...", correct: "Raincoat", wrong: ["Swimsuit", "Sunglasses only"]),
-                Question("Hot sunny day, wear a...", correct: "Sun hat", wrong: ["Heavy coat", "Mittens"]),
-                Question("Snow means it is...", correct: "Cold", wrong: ["Hot", "Warm"])
-              ])),
+              lesson: .sort(prompt: "Would you need it on a RAINY day, a SUNNY day or a SNOWY day?",
+                            bins: [SortBin("rain", "Rainy", "🌧️"), SortBin("sun", "Sunny", "☀️"), SortBin("snow", "Snowy", "❄️")],
+                            items: [
+                              SortThing("🧥", "raincoat", "rain"), SortThing("☂️", "umbrella", "rain"),
+                              SortThing("👒", "sun hat", "sun"), SortThing("🕶️", "sunglasses", "sun"),
+                              SortThing("🧤", "mittens", "snow"), SortThing("🧣", "scarf", "snow")
+                            ], perRound: 6)),
 
         Skill(id: "K-S2", grade: 0, subject: .science,
               title: "What They Need",
               standard: "CA NGSS K-LS1-1",
-              activity: "Plants and animals need food, water, and sunlight. Tap what each one needs!",
+              activity: "What does a living thing need? Carry each one to its pen!",
               parentTip: "Walk to your plants and animals and talk about what they need.",
-              lesson: .story(id: "living-needs")),
+              lesson: .sort(prompt: "Do living things NEED it to live? Carry each one over.",
+                            bins: [SortBin("need", "Living things need it", "🌱"), SortBin("toy", "Nice, but not needed", "🎈")],
+                            items: [
+                              SortThing("💧", "water", "need"), SortThing("☀️", "sunlight", "need"),
+                              SortThing("🍎", "food", "need"), SortThing("🌬️", "air", "need"),
+                              SortThing("📺", "a TV", "toy"), SortThing("🎮", "a game", "toy"),
+                              SortThing("🧸", "a teddy bear", "toy"), SortThing("🎁", "a present", "toy")
+                            ], perRound: 6)),
 
         Skill(id: "K-S3", grade: 0, subject: .science,
               title: "Push or Pull?",
               standard: "CA NGSS K-PS2-1",
-              activity: "Things move when we push or pull. Tap how each one moves!",
+              activity: "Push or pull? Carry each one to its pen!",
               parentTip: "Try it together with a cart, a door, and a wagon afterward.",
-              lesson: .story(id: "push-pull")),
+              lesson: .sort(prompt: "Do you PUSH it away or PULL it close? Carry it over.",
+                            bins: [SortBin("push", "Push", "🫸"), SortBin("pull", "Pull", "🫷")],
+                            items: [
+                              SortThing("🛒", "shopping cart", "push"), SortThing("🧹", "broom", "push"),
+                              SortThing("🛴", "scooter", "push"), SortThing("⚽️", "kick a ball", "push"),
+                              SortThing("🛷", "sled up the hill", "pull"), SortThing("🪢", "tug-of-war rope", "pull"),
+                              SortThing("🪁", "kite string", "pull"), SortThing("🎣", "fishing line", "pull")
+                            ], perRound: 6)),
 
         Skill(id: "K-S4", grade: 0, subject: .science,
               title: "Weather Watch",
               standard: "CA NGSS K-ESS2-1",
-              activity: "Look at the weather and name it: sunny, rainy, cloudy, snowy, windy, or stormy. Find it by name or by what it does!",
+              activity: "What would you need? Carry each thing to its weather!",
               parentTip: "Observing and describing weather. Look out the window together and name today's weather.",
-              lesson: .story(id: "weather-watch")),
+              lesson: .sort(prompt: "What would you need? Carry each thing to its weather.",
+                            bins: [SortBin("sunny", "Sunny", "☀️"), SortBin("rainy", "Rainy", "🌧️"),
+                                   SortBin("snowy", "Snowy", "❄️"), SortBin("windy", "Windy", "💨")],
+                            items: [
+                              SortThing("🕶️", "sunglasses", "sunny"), SortThing("👒", "sun hat", "sunny"),
+                              SortThing("☂️", "umbrella", "rainy"), SortThing("🥾", "rain boots", "rainy"),
+                              SortThing("🧤", "mittens", "snowy"), SortThing("🛷", "sled", "snowy"),
+                              SortThing("🪁", "kite", "windy"), SortThing("🍃", "blowing leaves", "windy")
+                            ], perRound: 6)),
 
         // ---------- Social Studies ----------
         Skill(id: "K-SS1", grade: 0, subject: .life,
               title: "American Symbols",
               standard: "CA HSS K.2",
-              activity: "Find the U.S. flag, the Statue of Liberty, the bald eagle, and more! Learn what each one means.",
+              activity: "Is it an American symbol? Carry each one to its pen!",
               parentTip: "Identifying national symbols. Point them out on money, at school, and around town.",
-              lesson: .story(id: "american-symbols")),
+              lesson: .sort(prompt: "Is it an American symbol? Carry each one to its pen.",
+                            bins: [SortBin("symbol", "American symbols", "🇺🇸"), SortBin("not", "Not a symbol", "🙅")],
+                            items: [
+                              SortThing("🗽", "Statue of Liberty", "symbol"), SortThing("🦅", "bald eagle", "symbol"),
+                              SortThing("🔔", "Liberty Bell", "symbol"), SortThing("🏛️", "White House", "symbol"),
+                              SortThing("🍕", "pizza", "not"), SortThing("🚲", "bike", "not"),
+                              SortThing("🧸", "teddy bear", "not"), SortThing("🐸", "frog", "not")
+                            ], perRound: 6)),
 
         Skill(id: "K-SS2", grade: 0, subject: .life,
               title: "Community Helpers",
               standard: "CA HSS K.3",
-              activity: "Who puts out fires? Who helps you learn? Find the community helpers and what they do!",
+              activity: "Whose tool is it? Carry each tool to its helper!",
               parentTip: "Identifying helpers in school and the community. Talk about helpers you meet in daily life.",
-              lesson: .story(id: "community-helpers")),
+              lesson: .sort(prompt: "Whose tool is it? Carry each one to the helper who uses it.",
+                            bins: [SortBin("fire", "Firefighter", "🚒"), SortBin("doctor", "Doctor", "🩺"),
+                                   SortBin("farmer", "Farmer", "🚜"), SortBin("chef", "Chef", "🍳")],
+                            items: [
+                              SortThing("🧯", "fire extinguisher", "fire"), SortThing("🪜", "tall ladder", "fire"),
+                              SortThing("🌡️", "thermometer", "doctor"), SortThing("🩹", "bandage", "doctor"),
+                              SortThing("🌽", "corn to plant", "farmer"), SortThing("🐄", "cow to milk", "farmer"),
+                              SortThing("🥣", "mixing bowl", "chef"), SortThing("🍲", "soup pot", "chef")
+                            ], perRound: 6)),
 
         Skill(id: "K-SS3", grade: 0, subject: .life,
               title: "Party on the Farm!",
               standard: "CA HSS K.1",
-              activity: "What does Thanksgiving celebrate? What about MLK Day? Match each holiday to what it means!",
+              activity: "Which party is it for? Carry each thing to its holiday!",
               parentTip: "Knowing what major holidays celebrate. Connect each to your own family traditions.",
-              lesson: .story(id: "holidays")),
+              lesson: .sort(prompt: "Which holiday is it for? Carry each one to its party.",
+                            bins: [SortBin("halloween", "Halloween", "🎃"), SortBin("thanks", "Thanksgiving", "🦃"),
+                                   SortBin("july4", "Fourth of July", "🎆"), SortBin("valentine", "Valentine's Day", "💝")],
+                            items: [
+                              SortThing("👻", "ghost costume", "halloween"), SortThing("🍬", "candy", "halloween"),
+                              SortThing("🥧", "pumpkin pie", "thanks"), SortThing("🌽", "corn", "thanks"),
+                              SortThing("🇺🇸", "flag", "july4"), SortThing("🎇", "sparkler", "july4"),
+                              SortThing("💌", "love card", "valentine"), SortThing("🌹", "rose", "valentine")
+                            ], perRound: 6)),
 
         Skill(id: "K-SS4", grade: 0, subject: .life,
               title: "My Family",

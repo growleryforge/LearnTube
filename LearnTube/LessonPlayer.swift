@@ -763,7 +763,9 @@ struct OrderPlayer: View {
         let next = items[placed.count]
         if item == next {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                placed.append(item); pool.removeAll { $0 == item }
+                placed.append(item)
+                // One tile only: pattern games repeat the same piece.
+                if let j = pool.firstIndex(of: item) { pool.remove(at: j) }
             }
             mood = .happy; SFX.tap()
             if placed.count == items.count {

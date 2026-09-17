@@ -222,6 +222,10 @@ struct SortBin: Hashable {
     init(_ key: String, _ label: String, _ emoji: String) {
         self.key = key; self.label = label; self.emoji = emoji
     }
+    /// What Leo calls this pen. A pen can hide its printed word (the blending
+    /// games show only the picture, so he cannot match letters to letters);
+    /// Leo still names it by its key.
+    var spoken: String { label.isEmpty ? key : label }
 }
 
 /// One sentence with a hole in it: the words either side of the gap, the word

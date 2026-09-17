@@ -89,19 +89,24 @@ struct SortPlayer: View {
                 VStack(spacing: 4) {
                     EmojiView(emoji: bin.emoji, size: narrow ? 30 : 40, tint: .white)
                         .frame(height: narrow ? 34 : 44)
+                    if !bin.label.isEmpty {
                     Text(bin.label)
                         .font(.system(size: narrow ? 14 : 16, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
                         .multilineTextAlignment(.center)
                         .lineLimit(2).minimumScaleFactor(0.7)
+                    }
                     // What he has already put in this pen, so the sort adds up
                     // to something he can see rather than vanishing.
                     HStack(spacing: 2) {
                         ForEach(Array((placedIn[bin.key] ?? []).suffix(5).enumerated()), id: \.offset) { _, it in
                             Text(it.emoji).font(.system(size: narrow ? 15 : 18))
+                                .lineLimit(1).minimumScaleFactor(0.3)
+                                .foregroundStyle(.white)
                         }
                     }
                     .frame(height: narrow ? 18 : 22)
+                    .frame(maxWidth: .infinity)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, narrow ? 8 : 12).padding(.horizontal, 6)
@@ -144,7 +149,25 @@ struct SortPlayer: View {
             VStack(spacing: narrow ? 4 : 8) {
                 ZStack {
                     Circle().fill(.white.opacity(0.92)).frame(width: dot, height: dot)
-                    EmojiView(emoji: it.emoji, size: narrow ? 50 : 64, tint: .white)
+                    if it.emoji.isPlainText {
+                        // Letters, sounds and numbers ("c a t", "54", "sh"):
+                        // dark on the white disc, shrunk to fit inside it.
+                        Text(it.emoji)
+                            .font(.system(size: narrow ? 38 : 46, weight: .black, design: .rounded))
+                            .foregroundStyle(Color(red: 0.12, green: 0.14, blue: 0.22))
+                            .lineLimit(1).minimumScaleFactor(0.35)
+                            .frame(width: dot - 16)
+                    } else if it.emoji.count > 1 {
+                        // A little group to count ("🍎🍎🍎🍎🍎🍎🍎"): wrap it
+                        // inside the disc instead of running off the side.
+                        Text(it.emoji)
+                            .font(.system(size: narrow ? 20 : 24))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(3).minimumScaleFactor(0.5)
+                            .frame(width: dot - 14, height: dot - 14)
+                    } else {
+                        EmojiView(emoji: it.emoji, size: narrow ? 50 : 64, tint: .white)
+                    }
                 }
                 .overlay(Circle().strokeBorder(Theme.gold, lineWidth: 4).frame(width: dot, height: dot))
                 .offset(dragOffset)
@@ -234,7 +257,7 @@ struct SortPlayer: View {
         placed += 1
         missesHere = 0; taughtBin = nil
         mood = .cheer; SFX.correct(); justLanded = bin.key
-        Leo.say("\(it.name), \(bin.label).")
+        Leo.say("\(it.name), \(bin.spoken).")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
             justLanded = nil; landing = false
             if deck.isEmpty { SFX.win(); onComplete() }
@@ -246,8 +269,8 @@ struct SortPlayer: View {
         missesHere += 1
         mood = .oops; SFX.wrong()      // SFX.wrong also arms the app-wide pause
         GameStats.recordMiss(prompt: "Where does \(it.name) go?",
-                             tapped: tried.label,
-                             correct: bins.first { $0.key == it.bin }?.label ?? it.bin)
+                             tapped: tried.spoken,
+                             correct: bins.first { $0.key == it.bin }?.spoken ?? it.bin)
         withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) { dragOffset = .zero }
         wiggling = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) { wiggling = false; mood = .idle }
@@ -256,7 +279,7 @@ struct SortPlayer: View {
         // has never saved him anything.
         if missesHere >= 2, let right = bins.first(where: { $0.key == it.bin }) {
             taughtBin = right.key
-            Leo.say("\(it.name) goes in \(right.label). Take it there.", slow: true)
+            Leo.say("\(it.name) goes in \(right.spoken). Take it there.", slow: true)
         }
     }
 }
@@ -265,5 +288,14 @@ private struct BinKey: PreferenceKey {
     static var defaultValue: [String: CGRect] = [:]
     static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
         value.merge(nextValue()) { $1 }
+    }
+}
+
+
+extension String {
+    /// True for ordinary letters, digits and punctuation, false as soon as
+    /// there is a picture emoji in it. Sort items use the emoji slot for both.
+    var isPlainText: Bool {
+        !isEmpty && unicodeScalars.allSatisfy { $0.value < 0x2000 && !$0.properties.isEmojiPresentation }
     }
 }
