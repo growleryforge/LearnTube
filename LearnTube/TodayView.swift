@@ -82,18 +82,32 @@ struct HomeFeedView: View {
         return pinned.filter { !lineIDs.contains($0.id) } + feed.filter { !pinned.contains($0) && !lineIDs.contains($0.id) }
     }
 
+    /// How many never-opened TK/K games the Finish Line row pulls forward.
+    static let finishLineFreshSlots = 2
+
     /// The Finish Line row: TK and K games one to three plays from mastered,
-    /// closest to done first, calmest first, and still playable today.
+    /// closest to done first, calmest first, and still playable today, plus a
+    /// couple he has never opened so the row can actually close TK and K out.
     private var finishLineGames: [Skill] {
-        state.finishLine
-            .filter { state.canPlay($0.id) }
-            .sorted { a, b in
-                let ca = state.mergedCount(a.id), cb = state.mergedCount(b.id)
-                if ca != cb { return ca > cb }
-                let sa = state.struggleScore(a.id), sb = state.struggleScore(b.id)
-                if sa != sb { return sa < sb }
-                return a.grade < b.grade
-            }
+        let ready = state.finishLine.filter { state.canPlay($0.id) }
+        let sorted = ready.sorted { a, b in
+            let ca = state.mergedCount(a.id), cb = state.mergedCount(b.id)
+            if ca != cb { return ca > cb }
+            let sa = state.struggleScore(a.id), sb = state.struggleScore(b.id)
+            if sa != sb { return sa < sb }
+            return a.grade < b.grade
+        }
+        // Closest-to-done leads, which is right, but a game he has never opened
+        // has zero finishes and so sorted DEAD LAST every time: the row whose
+        // whole job is closing out TK and K was the one place they never
+        // appeared. Pull a couple forward, after the first pair of near-misses.
+        let fresh = Array(sorted.filter { !state.everStarted($0.id) }.prefix(Self.finishLineFreshSlots))
+        guard !fresh.isEmpty else { return sorted }
+        let freshIDs = Set(fresh.map(\.id))
+        var rest = sorted.filter { !freshIDs.contains($0.id) }
+        let head = Array(rest.prefix(2))
+        rest.removeFirst(min(2, rest.count))
+        return head + fresh + rest
     }
 
     private var finishLineHeader: some View {
@@ -349,6 +363,14 @@ struct StopTile: View {
 
     private var buddy: Buddy { Buddies.forSkill(skill) }
     private var mastered: Bool { ladder == nil && plays >= masteryGoal }
+    /// Mastery progress for a plain (non-ladder) game he has started but not
+    /// finished off. Ladder games show their level instead, and a plain game
+    /// used to wear no badge at all, so a card one clean run from done looked
+    /// exactly like one he had never finished.
+    private var stepBadge: String? {
+        guard ladder == nil, !mastered, plays > 0 else { return nil }
+        return "\(plays)/\(masteryGoal)"
+    }
     private var masteryLabel: String {
         if maxed { return "All done today!" }
         if let l = ladder { return "Level \(l.rung) of \(l.top) · \(l.onRung)/\(masteryGoal)" }
@@ -378,11 +400,12 @@ struct StopTile: View {
                         .background(.black.opacity(0.7)).clipShape(Capsule())
                         .padding(7)
                 } }
-                if level > 1 || isNew {
+                if level > 1 || isNew || stepBadge != nil {
                     // Top-left badge, YouTube-style: NEW for a game he has never
-                    // opened, otherwise the difficulty level once it climbs.
+                    // opened, the difficulty level once a ladder game climbs,
+                    // and otherwise how far along mastery a plain game is.
                     VStack { HStack {
-                        Text(isNew ? "NEW" : "Lv \(level)")
+                        Text(isNew ? "NEW" : (level > 1 ? "Lv \(level)" : (stepBadge ?? "")))
                             .font(.system(size: 11, weight: .heavy, design: .rounded)).foregroundStyle(.white)
                             .padding(.horizontal, 7).padding(.vertical, 3)
                             .background(Theme.redGradient).clipShape(Capsule())

@@ -19,6 +19,7 @@ struct WatchView: View {
     @State private var climbStreak = 1       // levels beaten back to back (the cheer)
     @State private var wrongLastRound = 0    // misses in the round just finished
     @State private var beatLevel: Int? = nil // the level he just beat, for the overlay
+    @State private var stepAdvanced = false  // this finish actually counted toward mastery
     @State private var bonusMinutes = 0      // extra minutes this finish paid
     @State private var bonusReasons: [String] = []
 
@@ -53,6 +54,13 @@ struct WatchView: View {
                     MasteryOverlay(title: skill.title)
                 } else if let lvl = beatLevel, let top = ladderTop {
                     LevelUpOverlay(level: lvl, top: top, streak: climbStreak)
+                } else if let step = masteryStep {
+                    // A plain game climbs too: three finishes light its barn.
+                    // It used to get the identical flat cheer at 1 of 3 and at
+                    // 2 of 3, so outside the math ladders there was nothing to
+                    // aim at and no sign he was nearly done.
+                    LevelUpOverlay(level: step.done, top: step.goal, streak: 1,
+                                   headline: "\(step.done) OF \(step.goal)", word: "NICE!")
                 } else {
                     CelebrationOverlay()
                 }
@@ -267,6 +275,17 @@ struct WatchView: View {
     /// How many levels this game's ladder has, if it is a ladder game at all.
     private var ladderTop: Int? { state.ladder(skill.id)?.top }
 
+    /// For a plain game, how far this finish moved him toward lighting its barn.
+    /// Nil for ladder games, which have their own levels, and nil on the finish
+    /// that earns mastery outright, which gets the bigger MasteryOverlay.
+    private var masteryStep: (done: Int, goal: Int)? {
+        guard ladderTop == nil, stepAdvanced else { return nil }
+        let goal = state.saved.masteryThreshold
+        let done = state.mergedCount(skill.id)
+        guard done >= 1, done < goal else { return nil }
+        return (done, goal)
+    }
+
     /// The whole ladder on show: beaten levels lit gold, the rest waiting. This
     /// is the long view — he can see there is more to beat, not just one round.
     private func levelPips(beaten: Int, top: Int) -> some View {
@@ -338,7 +357,7 @@ struct WatchView: View {
 
     private func restartPlayer() {
         GameStats.begin(skill.id)
-        newBuddy = nil; justMastered = false
+        newBuddy = nil; justMastered = false; stepAdvanced = false
         playRun += 1
         withAnimation { completed = false }
     }
@@ -354,6 +373,10 @@ struct WatchView: View {
         // Did THIS finish push him over the top into mastery? Then it's the big
         // three-star, ribbons-and-stars celebration, not the regular one.
         justMastered = before < threshold && state.completionCount(skill.id) >= threshold
+        // A mash (more than maxWrongForCredit wrong taps) earns the time but no
+        // credit, so markDone leaves the count alone. Don't hand him a climbing
+        // trophy for it: that is the shortcut this whole pass is closing.
+        stepAdvanced = state.completionCount(skill.id) > before
         withAnimation { completed = true }
         showCelebrate = true
         hapticSuccess()
@@ -388,6 +411,10 @@ struct LevelUpOverlay: View {
     let level: Int
     let top: Int
     let streak: Int
+    /// Ladder games say LEVEL n / BEATEN. A plain game borrows the same pips
+    /// and trophy with its own words, so mastery looks like a climb everywhere.
+    var headline: String? = nil
+    var word: String? = nil
     @State private var pop = false
     @State private var spin = false
     private let gold = Color(red: 1.0, green: 0.82, blue: 0.25)
@@ -400,13 +427,13 @@ struct LevelUpOverlay: View {
             Confetti()
             if streak >= 3 || allDone { BalloonsView() }
             VStack(spacing: 12) {
-                Text(allDone ? "ALL LEVELS BEATEN!" : "LEVEL \(level)")
+                Text(headline ?? (allDone ? "ALL LEVELS BEATEN!" : "LEVEL \(level)"))
                     .font(.system(size: 30, weight: .black, design: .rounded))
                     .foregroundStyle(gold)
                 TrophyView(size: allDone ? 178 : 150)
                     .rotationEffect(.degrees(spin ? -4 : 4))
                     .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: spin)
-                Text(allDone ? "CHAMPION!" : "BEATEN!")
+                Text(word ?? (allDone ? "CHAMPION!" : "BEATEN!"))
                     .font(.system(size: 40, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 28).padding(.vertical, 10)

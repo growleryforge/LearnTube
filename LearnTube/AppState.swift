@@ -18,6 +18,7 @@ struct SavedState: Codable {
     var todayKey: String = ""
     var lastGrantDayLocal: String = ""   // last day this device applied the daily free-minutes reset
     var guessedResetV1: Bool = false     // one-time reset of topics he only guessed through
+    var bugWrongCapV1: Bool = false      // one-time cap on wrong taps the fixed drag/trace bugs logged
     var todayMenu: [String] = []
     var todayDone: [String] = []
     var lastUnlockKey: String = ""
@@ -273,6 +274,49 @@ final class AppState: ObservableObject {
         }
     }
 
+    /// One-time: the drag and trace players carried real bugs into mid-September.
+    /// A zero-distance drop solved a sort by itself, scenery layered over the
+    /// waiting pieces swallowed every tap on them, and the trace rules were
+    /// calibrated for a fingertip. Every wrong tap those logged is still on his
+    /// lifetime record and still counts against `isGuessy`, so games he really
+    /// did finish, Rhyme Time and Letters S to Z among them, could never be
+    /// mastered. Cap the lifetime tally for those engines at just under the
+    /// guessing line: the struggle stays on the record for the grown-up
+    /// dashboard, it just stops being a life sentence. Finishes are never
+    /// touched, and `recentWrong` is left alone so recent form stays honest.
+    func capBugWrongTapsIfNeeded() {
+        guard !saved.bugWrongCapV1 else { return }
+        var s = saved
+        var changed = false
+        for (id, done) in s.completionCounts where done >= 1 {
+            guard let lesson = Curriculum.skill(id: id)?.lesson,
+                  AppState.isRepairedEngine(lesson) else { continue }
+            if (s.wrongCounts[id] ?? 0) >= done {
+                s.wrongCounts[id] = max(0, done - 1)
+                changed = true
+            }
+        }
+        s.bugWrongCapV1 = true
+        suppressPush = true
+        saved = s                                          // persist locally only
+        suppressPush = false
+        // Authoritative cloud write with the capped values (last write wins),
+        // because the normal push only ever grows counts.
+        if changed {
+            family.overwriteCounts(deviceID: saved.deviceID,
+                                   allCounts: saved.completionCounts,
+                                   wrongCounts: saved.wrongCounts)
+        }
+    }
+
+    /// The engines whose players were repaired in September.
+    private static func isRepairedEngine(_ lesson: Lesson) -> Bool {
+        switch lesson {
+        case .sort, .buildSentence, .trace, .traceScene: return true
+        default: return false
+        }
+    }
+
     /// Share this device's current progress to iCloud for the family view.
     private func pushSnapshot() {
         guard !saved.deviceID.isEmpty else { return }
@@ -344,6 +388,7 @@ final class AppState: ObservableObject {
         }
         // One-time: clear the topics he only guessed through so he re-earns them.
         resetGuessedTopicsIfNeeded()
+        capBugWrongTapsIfNeeded()
     }
 
     // MARK: - Menu generation
@@ -716,13 +761,32 @@ final class AppState: ObservableObject {
     }
     func mergedCount(_ id: String) -> Int { mergedCounts[id] ?? 0 }
 
+    /// Wrong taps per finish at or above this reads as brute-forcing.
+    static let guessyRatio = 1.0
+    /// Finishes inside the recent window before recent form outranks the
+    /// lifetime tally.
+    static let guessyMinRecentFinishes = 2
+
     /// He's "guessing his way through" this game when he averages about one or
     /// more wrong taps for every finish — brute-forcing, not knowing it. Such a
     /// game does NOT count as mastered no matter how many times he finished it.
+    ///
+    /// Judged on RECENT form first. The old rule divided every wrong tap he had
+    /// ever made by every finish, and `wrongCounts` only ever grows, so one bad
+    /// week (or a bug in a player, which is where the biggest counts came from)
+    /// marked a game guessed-through for good. Rhyme Time sat at 4 finishes and
+    /// 7 wrong taps and would have needed four more flawless runs just to clear
+    /// the flag. Now two finishes inside the window decide it on how he is
+    /// playing NOW, and the lifetime ratio only speaks for a game he has not
+    /// touched lately.
     func isGuessy(_ id: String) -> Bool {
+        let recent = recentDone(id)
+        if recent >= AppState.guessyMinRecentFinishes {
+            return Double(recentWrong(id)) / Double(recent) >= AppState.guessyRatio
+        }
         let d = mergedCount(id)
         guard d >= 1 else { return false }
-        return Double(mergedWrongCount(id)) / Double(d) >= 1.0
+        return Double(mergedWrongCount(id)) / Double(d) >= AppState.guessyRatio
     }
     /// Mastered = finished enough times AND actually getting it right (not guessing).
     func mergedMastered(_ id: String) -> Bool {
