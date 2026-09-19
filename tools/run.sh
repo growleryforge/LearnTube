@@ -165,9 +165,16 @@ bump_version() {
     BUILDNO=$((BUILDNO + 1))
     sed -i '' "s/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = $BUILDNO;/g" "$PBX"
 }
-bump_version
-STAMP="$VERSION"
+read_version() {
+    VERSION=$(grep -m1 'MARKETING_VERSION = ' "$PBX" | sed 's/.*MARKETING_VERSION = //; s/;//')
+    BUILDNO=$(grep -m1 'CURRENT_PROJECT_VERSION = ' "$PBX" | sed 's/.*CURRENT_PROJECT_VERSION = //; s/;//')
+}
 MODE="${1:-default}"; TARGET="${2:-}"
+# `push` installs an app that is already built and `devices` only reports, so
+# neither may bump the version: the number on screen has to keep matching the
+# binary that was actually compiled.
+case "$MODE" in push|devices) read_version ;; *) bump_version ;; esac
+STAMP="$VERSION"
 log "LearnTube $VERSION (build $BUILDNO)  ·  mode: $MODE  ·  $(date '+%a %b %d %H:%M')"
 log "repo: $REPO"
 
@@ -470,6 +477,39 @@ deploy_phones() {
 case "$MODE" in
     check)
         build_kid_ios && build_admin_ios && log "==> Both builds compile. Nothing installed." ;;
+    prebuild)
+        # Update the GROWN-UPS now, hold the KID app for a chosen moment.
+        # Gabriel's install is the only one that interrupts anybody, so the kid
+        # app is compiled and left staged in $KID_DD while the grown-up phones
+        # and this Mac go ahead and update. Send the kid app with `push` when
+        # his time runs out. One version number covers all of it.
+        build_kid_ios || exit 1
+        scan_devices
+        grownup_ok=0; need_admin=0
+        for id in $(device_ids); do
+            n=$(device_name "$id"); is_ignored "$n" && continue
+            is_admin_device "$n" && need_admin=1
+        done
+        [ $need_admin -eq 1 ] && { build_admin_ios || exit 1; }
+        for id in $(device_ids); do
+            n=$(device_name "$id")
+            is_ignored "$n" && { log "==> Skipping $n."; continue; }
+            if is_admin_device "$n"; then
+                install_to "$ADMIN_APP" "$id" "$n" && grownup_ok=$((grownup_ok+1))
+            else
+                log "==> Holding the kid app back from $n (send it with: run.sh push \"$n\")."
+            fi
+        done
+        build_admin_mac && install_mac
+        log "==> Grown-ups updated to LearnTube $VERSION ($grownup_ok phone(s) + this Mac)."
+        log "==> Kid app $VERSION (build $BUILDNO) is BUILT AND STAGED, installed to nobody."
+        log "    Send it the moment he needs it:  run.sh push \"Turley Farms\"" ;;
+    push)
+        # Install the staged kid app. No compile, so this takes seconds.
+        [ -n "$TARGET" ] || die "usage: run.sh push \"Device Name\""
+        [ -d "$KID_APP" ] || die "no staged kid build at $KID_APP -- run: run.sh prebuild"
+        id=$(resolve "$TARGET"); [ -n "$id" ] || die "no reachable device matches \"$TARGET\" (try: run.sh devices)"
+        install_to "$KID_APP" "$id" "$(device_name "$id")" ;;
     devices)
         show_devices ;;
     mac)
@@ -494,7 +534,7 @@ case "$MODE" in
             NOTARIZE=1
         fi ;;
     *)
-        die "unknown mode '$MODE' (check | devices | mac | kid NAME | admin NAME | oldipad | dist | macs | all)" ;;
+        die "unknown mode '$MODE' (check | devices | mac | kid NAME | admin NAME | prebuild | push NAME | oldipad | dist | macs | all)" ;;
 esac
 status=$?
 log ""

@@ -165,7 +165,21 @@ enum Curriculum {
         // bank above is worked through. New standards, familiar style.
         "FR-M14", "FR-M15", "FR-M16", "FR-M17", "FR-M18",
         // Reading, First Grade: build words from letters (the drag-the-animals idea for reading).
-        "G1-R8", "G1-R9"
+        "G1-R8", "G1-R9",
+        // ===== First Grade, in the style that works =====
+        // Sept 19: until now the only First Grade he ever met was the FR number
+        // ladders, 27 of which he has never once finished, so First Grade read
+        // as a wall of math. These nine are the First Grade games that run on
+        // the SORTING engine — the one he plays voluntarily — so the grade
+        // arrives as more of what he likes rather than as harder arithmetic.
+        // They land with levels: sorting now climbs 3 things, then 4, then 6.
+        //
+        // Held back deliberately:
+        //   G1-R2 Team Sounds and G1-R7 Blends duplicate FR-R5 and FR-R4, which
+        //   are already live (G1-R7's blends are a subset of FR-R4's).
+        //   G1-M8 Tell Time is in, but clock skills also belong to Hickory;
+        //   pick one owner before building on it.
+        "G1-R1", "G1-M6", "G1-S1", "G1-W2", "G1-M10", "G1-R6", "G1-S3", "G1-L3", "G1-M8"
         // The rest of First grade is still NOT in his daily feed yet — he's still
         // working through TK and Kindergarten, and serving First Grade games
         // (add/subtract within 20, long stories) just piled up losses. When he's

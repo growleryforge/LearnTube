@@ -17,8 +17,13 @@ struct SavedState: Codable {
     var completionCounts: [String: Int] = [:]
     var todayKey: String = ""
     var lastGrantDayLocal: String = ""   // last day this device applied the daily free-minutes reset
-    var guessedResetV1: Bool = false     // one-time reset of topics he only guessed through
-    var bugWrongCapV1: Bool = false      // one-time cap on wrong taps the fixed drag/trace bugs logged
+    // One-time migration flags. Optional for the same reason as the fields
+    // further down: SavedState is decoded with `try?` and falls back to a blank
+    // state, and the synthesized decoder does NOT fall back to a default value
+    // for a missing key, so a new non-optional flag wipes progress on every
+    // device upgrading from a build that predates it. nil means "not yet run".
+    var guessedResetV1: Bool? = nil      // one-time reset of topics he only guessed through
+    var bugWrongCapV1: Bool? = nil       // one-time cap on wrong taps the fixed drag/trace bugs logged
     var todayMenu: [String] = []
     var todayDone: [String] = []
     var lastUnlockKey: String = ""
@@ -250,7 +255,7 @@ final class AppState: ObservableObject {
     /// so those topics return to his feed and he re-earns them cleanly on the
     /// now-fixed games. Runs once per device.
     func resetGuessedTopicsIfNeeded() {
-        guard !saved.guessedResetV1 else { return }
+        guard saved.guessedResetV1 != true else { return }
         let thr = saved.masteryThreshold
         var s = saved
         var changed = false
@@ -285,7 +290,7 @@ final class AppState: ObservableObject {
     /// dashboard, it just stops being a life sentence. Finishes are never
     /// touched, and `recentWrong` is left alone so recent form stays honest.
     func capBugWrongTapsIfNeeded() {
-        guard !saved.bugWrongCapV1 else { return }
+        guard saved.bugWrongCapV1 != true else { return }
         var s = saved
         var changed = false
         for (id, done) in s.completionCounts where done >= 1 {
@@ -1008,6 +1013,29 @@ final class AppState: ObservableObject {
     /// rounds. This is a ceiling, not a fixed number: a sort deliberately
     /// written short stays short.
     static let sortItemsPerPlay = 6
+
+    /// Sorting is a ladder now, not one flat play repeated.
+    ///
+    /// A sort took three finishes to master and all three were the same size,
+    /// so outside the number games there was nothing to climb and no sign he
+    /// was getting anywhere. The three finishes he already had to do are now
+    /// three levels that visibly grow: 3 things to carry, then 4, then 6.
+    ///
+    /// Deliberately mapped onto masteryThreshold rather than onto a new ladder:
+    /// mastery still takes the same three finishes, the "N OF 3" cheer and pips
+    /// already on screen line up with the step, and no game that was finished
+    /// becomes unfinished. This covers 60 live sorting games, the engine most
+    /// of the app now runs on.
+    static let sortItemsByStep = [3, 4, 6]
+
+    /// How many things the given sorting game asks him to carry right now.
+    /// Step 1 on the first play, step 2 once he has finished it once, and the
+    /// full six from the third play on.
+    func sortItems(for id: String) -> Int {
+        let steps = Self.sortItemsByStep
+        let step = min(steps.count, max(1, mergedCount(id) + 1))
+        return steps[step - 1]
+    }
 
     /// The MOST rounds one story-backed game (the 52 bespoke games reached
     /// through Story.swift) asks for in a single play. Those games set their

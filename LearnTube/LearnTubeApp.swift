@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct LearnTubeApp: App {
     @StateObject private var state = AppState()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -16,6 +17,16 @@ struct LearnTubeApp: App {
                     // Open filling the whole screen (maximized, not macOS full-screen).
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { maximizeCatalystWindow() }
                     #endif
+                }
+                .onChange(of: scenePhase) { phase in
+                    // refreshForToday used to run only from AppState.init and
+                    // ContentView.onAppear, so an iPad that keeps LearnTube
+                    // resident overnight never rolled the day over: the Today
+                    // card read yesterday's dayKey and went blank, and
+                    // completionsToday still held yesterday's counts, which
+                    // silently spent his three plays per game. Coming back to
+                    // the foreground now rolls the day.
+                    if phase == .active { state.refreshForToday() }
                 }
         }
     }

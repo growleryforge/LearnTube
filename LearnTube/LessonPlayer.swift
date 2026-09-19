@@ -14,7 +14,8 @@ struct LessonPlayerView: View {
                 withAnimation(.easeInOut(duration: 0.2)) { showIntro = false }
             }
         } else {
-            LessonRunner(lesson: skill.lesson, accent: skill.subject.color, onComplete: onComplete)
+            LessonRunner(lesson: skill.lesson, accent: skill.subject.color,
+                         onComplete: onComplete, skillID: skill.id)
         }
     }
 }
@@ -71,6 +72,17 @@ struct LessonRunner: View {
     let lesson: Lesson
     let accent: Color
     let onComplete: () -> Void
+    /// The skill this lesson belongs to, when there is one. Story Mode reuses
+    /// this runner for lessons with no skill of their own, so it is optional
+    /// and anything keyed off it falls back to the gentlest setting.
+    var skillID: String? = nil
+    @EnvironmentObject var state: AppState
+
+    /// How many things this sort asks him to carry, for the step he is on.
+    private var sortItems: Int {
+        guard let id = skillID else { return AppState.sortItemsByStep.first ?? 3 }
+        return state.sortItems(for: id)
+    }
 
     var body: some View {
         Group {
@@ -114,8 +126,13 @@ struct LessonRunner: View {
                 // 3, the ones written at 8 or 9 come down. Every item here is a
                 // pick-up, a carry and a drop, so eight of them was more work
                 // than a whole math sitting.
+                //
+                // The ceiling now CLIMBS with the step he is on (3, then 4,
+                // then 6) so a sort is three levels that visibly grow instead
+                // of the same play three times. Mastery still takes the same
+                // three finishes, so nothing already earned is taken back.
                 SortPlayer(prompt: prompt, bins: bins, items: items,
-                           perRound: min(perRound, AppState.sortItemsPerPlay),
+                           perRound: min(perRound, sortItems),
                            accent: accent, onComplete: onComplete)
             case .traceScene(let prompt, let steps):
                 TracePlayer(prompt: prompt, steps: steps, accent: accent, onComplete: onComplete)

@@ -222,18 +222,42 @@ struct TodayDigestView: View {
         return Array(latest.values)
     }
 
+    /// Every device that isn't excluded. Deliberately NOT filtered on dayKey.
+    /// A device that keeps LearnTube resident reports the dayKey it last rolled
+    /// over on, so filtering on it dropped the whole device and every number
+    /// here went to zero -- while the minutes pill and watched counter, which
+    /// read family-level nodes with no day filter, stayed correct. That is the
+    /// "0 games, 0m earned, Nothing yet today" card seen on Sept 18 next to a
+    /// clean run that had really happened.
+    ///
+    /// Today's activity is read per skill out of the day-bucketed maps below
+    /// instead, which is what recentStarts and recentWrong already did. A day
+    /// that was missed also renders retroactively once the device syncs.
     private var todayCards: [ProgressSnapshot] {
-        cards.filter { $0.dayKey == AppState.dayKey && !state.isDeviceExcluded($0.deviceID) }
+        cards.filter { !state.isDeviceExcluded($0.deviceID) }
     }
 
     private var todayKey: String { AppState.dayKey }
 
-    private var gamesToday: Int { todayCards.reduce(0) { $0 + $1.totalToday } }
+    /// lessonID -> games finished today, summed across devices, from the
+    /// day-bucketed history rather than the device's own today counter.
+    private var finishedTodayBySkill: [String: Int] {
+        var out: [String: Int] = [:]
+        for s in todayCards {
+            for (id, days) in s.recentPlaysMap where (days[todayKey] ?? 0) > 0 {
+                out[id, default: 0] += days[todayKey] ?? 0
+            }
+        }
+        return out
+    }
+
+    private var gamesToday: Int { finishedTodayBySkill.values.reduce(0, +) }
     private var earnedToday: Int {
+        // The three-plays-per-game-per-day cap is what he can be paid for, so
+        // cap each game's summed total rather than each device's share of it.
         let cap = state.saved.maxPlaysPerDay
-        var games = 0
-        for s in todayCards { for (_, c) in s.todayCounts { games += min(c, cap) } }
-        return games * state.saved.minutesPerConcept
+        let paid = finishedTodayBySkill.values.reduce(0) { $0 + min($1, cap) }
+        return paid * state.saved.minutesPerConcept
     }
 
     enum Status { case look, getting, good }
@@ -272,13 +296,9 @@ struct TodayDigestView: View {
     /// Every skill practiced today, most wrong taps first, each carrying today's
     /// finished/started/wrong-tap counts and the specific questions he missed.
     private var skillDays: [SkillDay] {
-        var finished: [String: Int] = [:], started: [String: Int] = [:], wrong: [String: Int] = [:]
-        var lastTime: [String: Date] = [:]
+        let finished = finishedTodayBySkill
+        var started: [String: Int] = [:], wrong: [String: Int] = [:]
         for s in todayCards {
-            for (id, c) in s.todayCounts where c > 0 {
-                finished[id, default: 0] += c
-                if let t = s.playedTime(id), lastTime[id] == nil || t > lastTime[id]! { lastTime[id] = t }
-            }
             for (id, days) in s.recentStartsMap { if let v = days[todayKey] { started[id, default: 0] += v } }
             for (id, days) in s.recentWrongMap { if let v = days[todayKey] { wrong[id, default: 0] += v } }
         }
@@ -287,6 +307,14 @@ struct TodayDigestView: View {
             missBySkill[m.skill, default: []].append(m)
         }
         let ids = Set(finished.keys).union(started.keys).union(wrong.keys).union(missBySkill.keys)
+        // Only for the skills that made today's list, so a stale last-played
+        // time can't attach itself to a game he hasn't touched today.
+        var lastTime: [String: Date] = [:]
+        for s in todayCards {
+            for id in ids {
+                if let t = s.playedTime(id), lastTime[id] == nil || t > lastTime[id]! { lastTime[id] = t }
+            }
+        }
         let out = ids.map { id -> SkillDay in
             let sk = Curriculum.skill(id: id)
             return SkillDay(id: id, title: sk?.title ?? id, standard: sk?.standard ?? "",
